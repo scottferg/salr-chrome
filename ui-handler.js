@@ -87,7 +87,7 @@ function onToolbarClick(element) {
 		if (username) {
 			usernameInput.val(username);
 		}
-    }
+	}
 
     usernameFieldDeployed = !usernameFieldDeployed;
 }
