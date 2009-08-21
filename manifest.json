@@ -1,0 +1,19 @@
+{
+  "name": "SALR Extension", 
+  "version": "0.1",
+  "description": "Highlights posts which quote the user", 
+  "content_scripts": [
+    {
+      "js": [
+        "jquery.js",
+        "salr.js"
+      ],
+      "matches": [
+        "http://forums.somethingawful.com/*"
+      ]
+    }
+  ], 
+  "toolstrips": [
+    "salr-chrome.html"
+  ]
+}
