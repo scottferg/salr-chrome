@@ -95,37 +95,24 @@ jQuery('tr.thread.seen').each(function() {
 	var darkShade = (newPosts) ? "#99CC99" : "#6699CC";
 	var lightShade = (newPosts) ? "#CCFFCC" : "#99CCFF";
 
-	// Thread icon
-	jQuery(this).children('td.icon').each(function() {
+	// Thread icon, author, view count, and last post
+	jQuery(this).children('td.icon, td.author, td.views, td.lastpost').each(function() {
 		jQuery(this).css({ "background-color" : darkShade, 
 						   "background-image" : "url('" + chrome.extension.getURL("images/") + "gradient.png')",
 						   "background-repeat" : "repeat-x"
 						 });
 	});
 
-	// Thread title
-	jQuery(this).find('td.title').each(function() {
+	// Thread title, replies, and rating
+	jQuery(this).find('td.title, td.replies, td.rating').each(function() {
 		jQuery(this).css({ "background-color" : lightShade, 
 						   "background-image" : "url('" + chrome.extension.getURL("images/") + "gradient.png')",
 						   "background-repeat" : "repeat-x"
 						 });
 	});
 
-	// Thread author
-	jQuery(this).find('td.author').each(function() {
-		jQuery(this).css({ "background-color" : darkShade, 
-						   "background-image" : "url('" + chrome.extension.getURL("images/") + "gradient.png')",
-						   "background-repeat" : "repeat-x"
-						 });
-	});
-
-	// Thread reply count
+	// Display number of new replies for each thread
 	jQuery(this).find('td.replies').each(function() {
-		jQuery(this).css({ "background-color" : lightShade, 
-						   "background-image" : "url('" + chrome.extension.getURL("images/") + "gradient.png')",
-						   "background-repeat" : "repeat-x"
-						 });
-
 		// Add in number of new replies
 		if (newPostCount != 0) {
 			var currentHtml = jQuery(this).html();
@@ -136,31 +123,7 @@ jQuery('tr.thread.seen').each(function() {
 			jQuery(this).html(currentHtml + "<br /><div style='font-size: 12px;'>(" + newPostCount + ")</div>");
 		}
 	});
-
-	// Thread view count
-	jQuery(this).find('td.views').each(function() {
-		jQuery(this).css({ "background-color" : darkShade, 
-						   "background-image" : "url('" + chrome.extension.getURL("images/") + "gradient.png')",
-						   "background-repeat" : "repeat-x"
-						 });
-	});
-
-	// Thread rating
-	jQuery(this).find('td.rating').each(function() {
-		jQuery(this).css({ "background-color" : lightShade, 
-						   "background-image" : "url('" + chrome.extension.getURL("images/") + "gradient.png')",
-						   "background-repeat" : "repeat-x"
-						 });
-	});
-
-	// Last post
-	jQuery(this).find('td.lastpost').each(function() {
-		jQuery(this).css({ "background-color" : darkShade, 
-						   "background-image" : "url('" + chrome.extension.getURL("images/") + "gradient.png')",
-						   "background-repeat" : "repeat-x"
-						 });
-	});
-
+    
 	// Eliminate last-seen styling
 	jQuery(this).find('.lastseen').each(function() {
 		jQuery(this).css("background", "none");
