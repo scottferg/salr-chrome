@@ -23,8 +23,6 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-var usernameFieldDeployed = false;
-
 /**
  * Message event listener so that we can talk to the content-script
  *
@@ -47,21 +45,6 @@ jQuery(document).ready(function() {
     jQuery('.toolstrip-button > img').click(function() {
         onToolbarClick(jQuery(this).parent());
     });
-
-    // Set focus handler for the text input
-    jQuery('.toolstrip-button > input#username').focus(function() {
-        onUsernameSelect(jQuery(this));
-    });
-
-    // Set blur handler for the text input
-    jQuery('.toolstrip-button > input#username').blur(function() {
-        onUsernameDeSelect(jQuery(this));
-    });
-
-    // Set click handler for the okay button
-    jQuery('.toolstrip-button > input#submit').click(function() {
-        onSubmitClicked(jQuery(this));
-    });
 });
 
 /**
@@ -70,60 +53,5 @@ jQuery(document).ready(function() {
  * @param element - Toolstrip element
  */
 function onToolbarClick(element) {
-    var usernameInput = jQuery('input#username', element);
-    var okayButton = jQuery('input#submit', element);
-
-    // If the input fields are visible hide them,
-    // otherwise display them
-    if (usernameFieldDeployed) {
-        usernameInput.css('display', 'none');
-        okayButton.css('display', 'none');
-    } else {
-        usernameInput.css('display', 'block');
-        okayButton.css('display', 'block');
-
-		var username = localStorage.getItem('username');
-
-		if (username) {
-			usernameInput.val(username);
-		}
-	}
-
-    usernameFieldDeployed = !usernameFieldDeployed;
-}
-
-/**
- * Event handler for focusing on the username input
- *
- * @param element - Input element
- */
-function onUsernameSelect(element) {
-    element.css('color', '#000000');
-    element.val('');
-}
-
-/**
- * Event handler for blurring the username input
- *
- * @param element - Input element
- */
-function onUsernameDeSelect(element) {
-    element.css('color', '#999999');
-}
-
-/**
- * Event handler for clicking the submit button 
- *
- * @param element - Input element
- */
-function onSubmitClicked(element) {
-    var usernameField = jQuery('input#username', element.parent());
-    var okayButton = jQuery('input#submit', element.parent());
-
-    usernameField.css('display', 'none');
-    okayButton.css('display', 'none');
-
-    // Store the username locally so that the page can
-    // request it
-    localStorage.setItem('username', usernameField.val());
+    window.open(chrome.extension.getURL('') + 'settings.html', 'salr-settings', 'location=0,links=no,scrollbars=no,toolbar=no,width=275,height=275');
 }
