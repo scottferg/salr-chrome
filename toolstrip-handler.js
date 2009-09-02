@@ -31,7 +31,11 @@ chrome.extension.onConnect.addListener(function(port) {
     port.onMessage.addListener(function(data) {
         // Respond with the username
         port.postMessage({
-            'username': localStorage.getItem('username')
+            'username': localStorage.getItem('username'),
+            'darkRead' : localStorage.getItem('dark-read'),
+            'lightRead' : localStorage.getItem('light-read'),
+            'darkNewReplies' : localStorage.getItem('dark-new-replies'),
+            'lightNewReplies' : localStorage.getItem('light-new-replies')
         });
     });
 });
@@ -53,5 +57,5 @@ jQuery(document).ready(function() {
  * @param element - Toolstrip element
  */
 function onToolbarClick(element) {
-    window.open(chrome.extension.getURL('') + 'settings.html', 'salr-settings', 'location=0,links=no,scrollbars=no,toolbar=no,width=275,height=275');
+    window.open(chrome.extension.getURL('') + 'settings.html', 'salr-settings', 'location=0,scrollbars=0,toolbar=0,resizable=0,menubar=0,status=0,width=375,height=375');
 }

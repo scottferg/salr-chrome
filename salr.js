@@ -23,6 +23,8 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+var settings = {};
+
 /**
  * Event listener for when a user enters their username within
  * the extension UI.  Currently this only works when you're
@@ -34,103 +36,112 @@
 var port = chrome.extension.connect();
 
 port.onMessage.addListener(function(data) {
-    // Set the localStorage at the forums.somethingawful.com domain
-    localStorage.setItem('username', data.username);
+    settings.darkRead = data.darkRead;
+    settings.lightRead = data.lightRead;
+    settings.lightNew = data.lightNewReplies;
+    settings.darkNew = data.darkNewReplies;
+    settings.username = data.username;
+
+    // Update the styles now that we have
+    // the settings
+    updateStyling();
 });
 
 // Request the username from the extension UI
 port.postMessage({
-    'message': 'GetUsername'
+    'message': 'GetPageSettings'
 });
 
-// If a post has the user quoted, highlight it a pleasant green
-jQuery('.bbc-block h4').each(function() {
-    var username = localStorage.getItem('username');
+// Since we have to wait to receive the settings from the extension,
+// stash the styling logic in it's own function that we can call
+// once we're ready
+function updateStyling() {
+    // If a post has the user quoted, highlight it a pleasant green
+    jQuery('.bbc-block h4').each(function() {
+        if (jQuery(this).html() == settings.username + ' posted:') {
+            jQuery(this).parent().css("background-color", "#a2cd5a");
+        }
+    });
 
-    console.log(username);
-    if (jQuery(this).html() == username + ' posted:') {
-        jQuery(this).parent().css("background-color", "#a2cd5a");
-    }
-});
+    var newPosts = false;
+    var newPostCount = 0;
 
-var newPosts = false;
-var newPostCount = 0;
+    // Iterate over each .thread .seen td element.  This is necessary
+    // so we can track each thread's designated color (read/not read)
+    jQuery('tr.thread.seen').each(function() {
+        // Re-style the "mark unread" link
+        jQuery(this).find('a.x').each(function() {
+            // Set the image styles
+		    jQuery(this).css("background", "none");
+		    jQuery(this).css("background-image", "url('" + chrome.extension.getURL("images/") + "unvisit.png')");
+		    jQuery(this).css("height", "16px");
+		    jQuery(this).css("width", "14px");
 
-// Iterate over each .thread .seen td element.  This is necessary
-// so we can track each thread's designated color (read/not read)
-jQuery('tr.thread.seen').each(function() {
-	// Re-style the "mark unread" link
-	jQuery(this).find('a.x').each(function() {
-		// Set the image styles
-		jQuery(this).css("background", "none");
-		jQuery(this).css("background-image", "url('" + chrome.extension.getURL("images/") + "unvisit.png')");
-		jQuery(this).css("height", "16px");
-		jQuery(this).css("width", "14px");
+    		// Remove the 'X' from the anchor tag
+    		jQuery(this).html('');
+    	});
 
-		// Remove the 'X' from the anchor tag
-		jQuery(this).html('');
-	});
+    	// Re-style the new post count link
+        jQuery(this).find('a.count').each(function() {
+	    	// If we find an a.count, then we have new posts
+    		newPosts = true;
+	    	newPostCount = jQuery(this).html();
 
-	// Re-style the new post count link
-	jQuery(this).find('a.count').each(function() {
-		// If we find an a.count, then we have new posts
-		newPosts = true;
-		newPostCount = jQuery(this).html();
+		    // Remove the left split border
+    		jQuery(this).css("border-left", "none");
 
-		// Remove the left split border
-		jQuery(this).css("border-left", "none");
-
-		// Resize, shift, and add in the background image
-		jQuery(this).css("width", "7px");
-		jQuery(this).css("height", "16px");
-		jQuery(this).css("padding-right", "11px");
-		jQuery(this).css("background-image", "url('" + chrome.extension.getURL("images/") + "lastpost.png')");
+    		// Resize, shift, and add in the background image
+    		jQuery(this).css("width", "7px");
+    		jQuery(this).css("height", "16px");
+    		jQuery(this).css("padding-right", "11px");
+    		jQuery(this).css("background-image", "url('" + chrome.extension.getURL("images/") + "lastpost.png')");
 		
-		// Remove the count from the element
-		jQuery(this).html('');
-	});
+    		// Remove the count from the element
+    		jQuery(this).html('');
+    	});
 	
-	// If the thread has new posts, display the green shade,
-	// otherwise show the blue shade
-	var darkShade = (newPosts) ? "#99CC99" : "#6699CC";
-	var lightShade = (newPosts) ? "#CCFFCC" : "#99CCFF";
+    	// If the thread has new posts, display the green shade,
+    	// otherwise show the blue shade
+    	var darkShade = (newPosts) ? settings.darkNew : settings.darkRead;
+    	var lightShade = (newPosts) ? settings.lightNew : settings.lightRead;
 
-	// Thread icon, author, view count, and last post
-	jQuery(this).children('td.icon, td.author, td.views, td.lastpost').each(function() {
-		jQuery(this).css({ "background-color" : darkShade, 
-						   "background-image" : "url('" + chrome.extension.getURL("images/") + "gradient.png')",
-						   "background-repeat" : "repeat-x"
-						 });
-	});
+    	// Thread icon, author, view count, and last post
+    	jQuery(this).children('td.icon, td.author, td.views, td.lastpost').each(function() {
+    		jQuery(this).css({ "background-color" : darkShade, 
+    						   "background-image" : "url('" + chrome.extension.getURL("images/") + "gradient.png')",
+    						   "background-repeat" : "repeat-x"
+    						 });
+    	});
 
-	// Thread title, replies, and rating
-	jQuery(this).find('td.title, td.replies, td.rating').each(function() {
-		jQuery(this).css({ "background-color" : lightShade, 
-						   "background-image" : "url('" + chrome.extension.getURL("images/") + "gradient.png')",
-						   "background-repeat" : "repeat-x"
-						 });
-	});
+    	// Thread title, replies, and rating
+    	jQuery(this).find('td.title, td.replies, td.rating').each(function() {
+    		jQuery(this).css({ "background-color" : lightShade, 
+    						   "background-image" : "url('" + chrome.extension.getURL("images/") + "gradient.png')",
+    						   "background-repeat" : "repeat-x"
+    						 });
+    	});
 
-	// Display number of new replies for each thread
-	jQuery(this).find('td.replies').each(function() {
-		// Add in number of new replies
-		if (newPostCount != 0) {
-			var currentHtml = jQuery(this).html();
-
-			// Strip HTML tags
-			newPostCount = parseInt(newPostCount.replace(/(<([^>]+)>)/ig, ""));
-			// Set the HTML value
-			jQuery(this).html(currentHtml + "<br /><div style='font-size: 12px;'>(" + newPostCount + ")</div>");
-		}
-	});
+    	// Display number of new replies for each thread
+    	jQuery(this).find('td.replies').each(function() {
+    		// Add in number of new replies
+    		if (newPostCount != 0) {
+    			var currentHtml = jQuery(this).html();
     
-	// Eliminate last-seen styling
-	jQuery(this).find('.lastseen').each(function() {
-		jQuery(this).css("background", "none");
-		jQuery(this).css("border", "none");
-	});
+    			// Strip HTML tags
+    			newPostCount = parseInt(newPostCount.replace(/(<([^>]+)>)/ig, ""));
+    			// Set the HTML value
+    			jQuery(this).html(currentHtml + "<br /><div style='font-size: 12px;'>(" + newPostCount + ")</div>");
+    		}
+    	});
+    
+    	// Eliminate last-seen styling
+    	jQuery(this).find('.lastseen').each(function() {
+    		jQuery(this).css("background", "none");
+    		jQuery(this).css("border", "none");
+    	});
 
-    // Reset post counts
-	newPosts = false;
-	newPostCount = 0;
-});
+        // Reset post counts
+    	newPosts = false;
+    	newPostCount = 0;
+    });
+}

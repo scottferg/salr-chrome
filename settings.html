@@ -1,21 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="jquery.js"></script>
+<link rel="stylesheet" media="screen" type="text/css" href="css/colorpicker.css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/colorpicker.js"></script>
 <script type="text/javascript" src="settings-handler.js"></script>
+<title>SALR Settings</title>
 </head>
 <style type="text/css">
     body {
+        font-family: arial, sans;
+        font-size: 10pt;
         background-image: url('images/salr_backdrop.jpg');
+    }
+
+    div.username-field, div.color-preference {
+        width: 350px;
+    }
+
+    input.color-select-box {
+        position: relative;
+        width: 24px;
+        height: 24px;
     }
 </style>
 <body>
     <div class="settings-panel">
-        <input type='text' size='10' value='Username' class='text-entry' id='username' style='color: #999999;' /><br />
-        <input type='text' size='7' value='#6699CC' class='text-entry' id='dark-read' style='color: #999999;' /><br />
-        <input type='text' size='7' value='#99CCFF' class='text-entry' id='light-read' style='color: #999999;' /><br />
-        <input type='text' size='7' value='#99CC99' class='text-entry' id='dark-new-replies' style='color: #999999;' /><br />
-        <input type='text' size='7' value='#CCFFCC' class='text-entry' id='light-new-replies' style='color: #999999;' /><br />
+        <div class='username-field'>
+            Username: <input type='text' size='10' default='Username' class='text-entry' id='username' style='color: #999999;' /><br />
+        </div>
+        <div class='color-preference'>
+            Read threads #1: <input type='text' size='7' default='#6699cc' class='color-select-text text-entry' id='dark-read' />
+            <span class='color-select'>
+                <img class='color-select-box' src='images/select.png' />
+            </span>
+        </div>
+        <div class='color-preference'>
+            Read threads #2: <input type='text' size='7' default='#99ccff' class='color-select-text text-entry' id='light-read' />
+            <span class='color-select'>
+                <img class='color-select-box' src='images/select.png' />
+            </span>
+        </div>
+        <div class='color-preference'>
+            New thread replies #1: <input type='text' size='7' default='#99cc99' class='color-select-text text-entry' id='dark-new-replies' />
+            <span class='color-select'>
+                <img class='color-select-box' src='images/select.png' />
+            </span>
+        </div>
+        <div class='color-preference'>
+            New thread replies #2: <input type='text' size='7' default='#ccffcc' class='color-select-text text-entry' id='light-new-replies' />
+            <span class='color-select'>
+                <img class='color-select-box' src='images/select.png' />
+            </span>
+        </div>
         <input type='button' value='Okay' id='submit' />
     </div>
 </body>

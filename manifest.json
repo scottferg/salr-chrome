@@ -5,7 +5,7 @@
   "content_scripts": [
     {
       "js": [
-        "jquery.js",
+        "js/jquery.js",
         "salr.js"
       ],
       "matches": [

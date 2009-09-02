@@ -29,7 +29,7 @@
  */
 jQuery(document).ready(function() {
     // Initialize text entry fields
-    jQuery('.settings-panel > input.text-entry').each(function() {
+    jQuery('.settings-panel > .username-field > input.text-entry').each(function() {
         // Pre-populate settings field
         populateValues(jQuery(this));
 
@@ -42,6 +42,17 @@ jQuery(document).ready(function() {
         jQuery(this).blur(function() {
             onInputDeselect(jQuery(this));
         });
+    });
+  
+    // Initialize color entry fields
+    jQuery('.settings-panel > .color-preference > input.color-select-text').each(function() {
+        populateValues(jQuery(this));
+    });
+
+    // Set color selectors
+    jQuery('img.color-select-box').each(function() {
+        var backgroundColor = jQuery(this).parent().parent().find('input.color-select-text').val();
+        jQuery(this).css('background-color', backgroundColor);
     });
  
     // Set click handler for the okay button
@@ -88,7 +99,14 @@ function onInputDeselect(element) {
 function populateValues(element) {
     var value = localStorage.getItem(element.attr('id'));
 
-    element.val(value);
+    if (!value) {
+        // If there is no stored setting, use the default
+        // value stored within the DOM
+        element.val(element.attr('default'));
+    } else {
+        // Otherwise, write the stored preference
+        element.val(value);
+    }
 }
 
 /**
@@ -107,11 +125,13 @@ function onSubmitClicked(element) {
 
     // Store the preferences locally so that the page can
     // request it
-    localStorage.setItem('username', usernameField.val());
-    localStorage.setItem('dark-read', darkReadField.val());
-    localStorage.setItem('light-read', lightReadField.val());
-    localStorage.setItem('dark-new-replies', darkNewRepliesField.val());
-    localStorage.setItem('light-new-replies', lightNewRepliesField.val());
+    // We use window.opener to assign it to the toolstrip localStorage, since
+    // the toolstrip handles all communication with the page
+    window.opener.localStorage.setItem('username', usernameField.val());
+    window.opener.localStorage.setItem('dark-read', darkReadField.val());
+    window.opener.localStorage.setItem('light-read', lightReadField.val());
+    window.opener.localStorage.setItem('dark-new-replies', darkNewRepliesField.val());
+    window.opener.localStorage.setItem('light-new-replies', lightNewRepliesField.val());
 
     // Close the settings window
     window.close();
