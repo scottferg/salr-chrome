@@ -41,6 +41,9 @@ port.onMessage.addListener(function(data) {
     settings.lightNew = data.lightNewReplies;
     settings.darkNew = data.darkNewReplies;
     settings.username = data.username;
+    settings.hideAdvertisements = data.hideAdvertisements;
+    settings.hideFooterLinks = data.hideFooterLinks;
+    settings.hideHeaderLinks = data.hideHeaderLinks;
 
     // Update the styles now that we have
     // the settings
@@ -144,4 +147,31 @@ function updateStyling() {
     	newPosts = false;
     	newPostCount = 0;
     });
+
+    console.log(settings);
+    // Hide header/footer links
+    if (settings.hideHeaderLinks == 'true') {
+        jQuery('div#globalmenu').each(function() {
+            jQuery(this).html('');
+            jQuery(this).css('height', '0px');
+        });
+
+        jQuery('ul#nav_purchase').each(function() {
+            jQuery(this).html('');
+            jQuery(this).css('height', '0px');
+        });
+    }
+
+    // Hide the advertisements
+    if (settings.hideAdvertisements == 'true') {
+        jQuery('div.oma_pal').each(function() {
+            jQuery(this).html('');
+            jQuery(this).css('height', '0px');
+        });
+
+        jQuery('div#ad_banner_user').each(function() {
+            jQuery(this).html('');
+            jQuery(this).css('height', '0px');
+        });
+    }
 }

@@ -6,7 +6,6 @@
 <script type="text/javascript" src="js/colorpicker.js"></script>
 <script type="text/javascript" src="settings-handler.js"></script>
 <title>SALR Settings</title>
-</head>
 <style type="text/css">
     body {
         font-family: arial, sans;
@@ -24,6 +23,7 @@
         height: 24px;
     }
 </style>
+</head>
 <body>
     <div class="settings-panel">
         <div class='username-field'>
@@ -52,6 +52,12 @@
             <span class='color-select'>
                 <img class='color-select-box' src='images/select.png' />
             </span>
+        </div>
+        <div class='display-preference'>
+            Hide header/footer ads: <input id='hide-advertisements' type='checkbox' />
+        </div>
+        <div class='display-preference'>
+            Hide header links: <input id='hide-header-links' type='checkbox' />
         </div>
         <input type='button' value='Okay' id='submit' />
     </div>

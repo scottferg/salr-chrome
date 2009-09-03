@@ -49,6 +49,11 @@ jQuery(document).ready(function() {
         populateValues(jQuery(this));
     });
 
+    // Initialize checkbox fields
+    jQuery('div.display-preference > input').each(function() {
+        populateCheckboxes(jQuery(this));
+    });
+
     // Set color selectors
     jQuery('img.color-select-box').each(function() {
         var backgroundColor = jQuery(this).parent().parent().find('input.color-select-text').val();
@@ -97,7 +102,7 @@ function onInputDeselect(element) {
  *
  */
 function populateValues(element) {
-    var value = localStorage.getItem(element.attr('id'));
+    var value = window.opener.localStorage.getItem(element.attr('id'));
 
     if (!value) {
         // If there is no stored setting, use the default
@@ -106,6 +111,26 @@ function populateValues(element) {
     } else {
         // Otherwise, write the stored preference
         element.val(value);
+    }
+}
+
+/**
+ * Populates any checkboxes with their stored value
+ *
+ * @param element - Input (checkbox) element
+ *
+ */
+function populateCheckboxes(element) {
+    var value = window.opener.localStorage.getItem(element.attr('id'));
+
+    // Make sure we're getting passed a checkbox
+    if (element.attr('type') != 'checkbox')
+        return;
+
+    // If there is a value in localStorage, then set it,
+    // otherwise leave it unchecked
+    if (value == 'true') {
+        element.attr('checked', true);
     }
 }
 
@@ -121,7 +146,10 @@ function onSubmitClicked(element) {
     var lightReadField = jQuery('#light-read', element.parent());
     var darkNewRepliesField = jQuery('#dark-new-replies', element.parent());
     var lightNewRepliesField = jQuery('#light-new-replies', element.parent());
-    var okayButton = jQuery('#submit', element.parent());
+
+    // Set checkbox values
+    var hideAdvertisements = jQuery('#hide-advertisements').attr('checked');
+    var headerLinks = jQuery('#hide-header-links').attr('checked');
 
     // Store the preferences locally so that the page can
     // request it
@@ -132,6 +160,8 @@ function onSubmitClicked(element) {
     window.opener.localStorage.setItem('light-read', lightReadField.val());
     window.opener.localStorage.setItem('dark-new-replies', darkNewRepliesField.val());
     window.opener.localStorage.setItem('light-new-replies', lightNewRepliesField.val());
+    window.opener.localStorage.setItem('hide-advertisements', hideAdvertisements);
+    window.opener.localStorage.setItem('hide-header-links', headerLinks);
 
     // Close the settings window
     window.close();
