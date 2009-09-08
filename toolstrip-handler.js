@@ -32,6 +32,7 @@ chrome.extension.onConnect.addListener(function(port) {
         // Respond with the username
         port.postMessage({
             'username': localStorage.getItem('username'),
+            'userQuote': localStorage.getItem('user-quote'),
             'darkRead' : localStorage.getItem('dark-read'),
             'lightRead' : localStorage.getItem('light-read'),
             'darkNewReplies' : localStorage.getItem('dark-new-replies'),

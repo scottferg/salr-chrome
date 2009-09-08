@@ -41,6 +41,7 @@ port.onMessage.addListener(function(data) {
     settings.lightNew = data.lightNewReplies;
     settings.darkNew = data.darkNewReplies;
     settings.username = data.username;
+    settings.userQuote = data.userQuote;
     settings.hideAdvertisements = data.hideAdvertisements;
     settings.hideFooterLinks = data.hideFooterLinks;
     settings.hideHeaderLinks = data.hideHeaderLinks;
@@ -62,7 +63,7 @@ function updateStyling() {
     // If a post has the user quoted, highlight it a pleasant green
     jQuery('.bbc-block h4').each(function() {
         if (jQuery(this).html() == settings.username + ' posted:') {
-            jQuery(this).parent().css("background-color", "#a2cd5a");
+            jQuery(this).parent().css("background-color", settings.userQuote);
         }
     });
 

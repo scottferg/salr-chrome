@@ -61,7 +61,7 @@ jQuery(document).ready(function() {
     });
  
     // Set click handler for the okay button
-    jQuery('.settings-panel > input#submit').click(function() {
+    jQuery('.submit-panel > input#submit').click(function() {
         onSubmitClicked(jQuery(this));
     });
     
@@ -145,6 +145,7 @@ function populateCheckboxes(element) {
  */
 function onSubmitClicked(element) {
     var usernameField = jQuery('#username', element.parent().parent());
+    var usernameQuote = jQuery('#user-quote', element.parent().parent());
     var darkReadField = jQuery('#dark-read', element.parent().parent());
     var lightReadField = jQuery('#light-read', element.parent().parent());
     var darkNewRepliesField = jQuery('#dark-new-replies', element.parent().parent());
@@ -159,6 +160,7 @@ function onSubmitClicked(element) {
     // We use window.opener to assign it to the toolstrip localStorage, since
     // the toolstrip handles all communication with the page
     window.opener.localStorage.setItem('username', usernameField.val());
+    window.opener.localStorage.setItem('user-quote', usernameQuote.val());
     window.opener.localStorage.setItem('dark-read', darkReadField.val());
     window.opener.localStorage.setItem('light-read', lightReadField.val());
     window.opener.localStorage.setItem('dark-new-replies', darkNewRepliesField.val());
