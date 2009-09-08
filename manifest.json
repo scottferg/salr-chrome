@@ -6,7 +6,7 @@
     {
       "js": [
         "js/jquery.js",
-        "salr.js"
+        "js/salr.js"
       ],
       "matches": [
         "http://forums.somethingawful.com/*"
