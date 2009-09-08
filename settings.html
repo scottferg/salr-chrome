@@ -44,7 +44,7 @@
     input#submit {
         border: 1px solid;
         border-color: #999999;
-        background-color: #cccccc;
+        background-color: #d8d8d8;
         font-size: 10pt;
     }
 </style>
@@ -52,13 +52,27 @@
 <body>
     <div id="tabs">
     	<ul>
-	    	<li><a href="#tabs-1">Highlight</a></li>
-    		<li><a href="#tabs-2">Page Display</a></li>
+	    	<li><a href="#tabs-1">General</a></li>
+	    	<li><a href="#tabs-2">Highlighting</a></li>
+    		<li><a href="#tabs-3">Page Display</a></li>
 	    </ul>
     	<div id="tabs-1">
             <div class="settings-panel">
                 <div class='username-field'>
                     Username: <input type='text' size='10' default='Username' class='text-entry' id='username' style='color: #999999;' /><br />
+                </div>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    	<div id="tabs-2">
+            <div class="settings-panel">
+                <div class='color-preference'>
+                    <div class='color-select-input'>
+                        User quoted: <input type='text' size='7' default='#a2cd5a' class='color-select-text text-entry' id='user-quote' />
+                    </div>
+                    <div class='color-select'>
+                        <div class='color-select-box'></div>
+                    </div>
                 </div>
                 <div class='color-preference'>
                     <div class='color-select-input'>
@@ -95,7 +109,7 @@
             </div>
             <div style="clear: both;"></div>
         </div>
-    	<div id="tabs-2">
+    	<div id="tabs-3">
             <div class="settings-panel">
                 <div class='display-preference'>
                     Hide header/footer ads: <input id='hide-advertisements' type='checkbox' />
@@ -104,6 +118,7 @@
                     Hide header links: <input id='hide-header-links' type='checkbox' />
                 </div>
             </div>
+            <div style="clear: both;"></div>
 	    </div>
     </div>
     <div class="settings-panel">
