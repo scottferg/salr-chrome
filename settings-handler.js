@@ -144,11 +144,11 @@ function populateCheckboxes(element) {
  *
  */
 function onSubmitClicked(element) {
-    var usernameField = jQuery('#username', element.parent());
-    var darkReadField = jQuery('#dark-read', element.parent());
-    var lightReadField = jQuery('#light-read', element.parent());
-    var darkNewRepliesField = jQuery('#dark-new-replies', element.parent());
-    var lightNewRepliesField = jQuery('#light-new-replies', element.parent());
+    var usernameField = jQuery('#username', element.parent().parent());
+    var darkReadField = jQuery('#dark-read', element.parent().parent());
+    var lightReadField = jQuery('#light-read', element.parent().parent());
+    var darkNewRepliesField = jQuery('#dark-new-replies', element.parent().parent());
+    var lightNewRepliesField = jQuery('#light-new-replies', element.parent().parent());
 
     // Set checkbox values
     var hideAdvertisements = jQuery('#hide-advertisements').attr('checked');
