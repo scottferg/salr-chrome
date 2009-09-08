@@ -60,5 +60,5 @@ jQuery(document).ready(function() {
  * @param element - Toolstrip element
  */
 function onToolbarClick(element) {
-    window.open(chrome.extension.getURL('') + 'settings.html', 'salr-settings', 'location=0,scrollbars=0,toolbar=0,resizable=0,menubar=0,status=0,width=375,height=375');
+    window.open(chrome.extension.getURL('') + 'settings.html', 'salr-settings', 'location=0,scrollbars=0,toolbar=0,resizable=0,menubar=0,status=0,width=380,height=375');
 }

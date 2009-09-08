@@ -45,7 +45,7 @@ jQuery(document).ready(function() {
     });
   
     // Initialize color entry fields
-    jQuery('.settings-panel > .color-preference > input.color-select-text').each(function() {
+    jQuery('.settings-panel > .color-preference > .color-select-input > input.color-select-text').each(function() {
         populateValues(jQuery(this));
     });
 
@@ -55,7 +55,7 @@ jQuery(document).ready(function() {
     });
 
     // Set color selectors
-    jQuery('img.color-select-box').each(function() {
+    jQuery('div.color-select-box').each(function() {
         var backgroundColor = jQuery(this).parent().parent().find('input.color-select-text').val();
         jQuery(this).css('background-color', backgroundColor);
     });
@@ -64,6 +64,9 @@ jQuery(document).ready(function() {
     jQuery('.settings-panel > input#submit').click(function() {
         onSubmitClicked(jQuery(this));
     });
+    
+    // Setup menu tabs
+    jQuery('#tabs').tabs();
 });
 
 /**
