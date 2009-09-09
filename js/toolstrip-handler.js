@@ -29,6 +29,14 @@
  */
 chrome.extension.onConnect.addListener(function(port) {
     port.onMessage.addListener(function(data) {
+        // Register the tab with the tagging page action
+        chrome.pageActions.enableForTab("open_settings",
+                                        { 
+                                            tabId: port.tab.id,
+                                            url: port.tab.url,
+                                            title: "Click to open SALR settings",
+                                            iconId: 0
+                                        });
         // Respond with the username
         port.postMessage({
             'username': localStorage.getItem('username'),
@@ -44,15 +52,8 @@ chrome.extension.onConnect.addListener(function(port) {
     });
 });
 
-/**
- * Initialize event callbacks for the page
- *
- */
-jQuery(document).ready(function() {
-    // Set click handler for the button
-    jQuery('.toolstrip-button > img').click(function() {
-        onToolbarClick(jQuery(this).parent());
-    });
+chrome.pageActions["open_settings"].addListener(function(pageActionId, reply) {
+    onToolbarClick();
 });
 
 /**
@@ -60,6 +61,8 @@ jQuery(document).ready(function() {
  *
  * @param element - Toolstrip element
  */
-function onToolbarClick(element) {
-    window.open(chrome.extension.getURL('') + 'settings.html', 'salr-settings', 'location=0,scrollbars=0,toolbar=0,resizable=0,menubar=0,status=0,width=380,height=375');
+function onToolbarClick() {
+    window.open(chrome.extension.getURL('') + 'settings.html', 
+                'salr-settings', 
+                'location=0,scrollbars=0,toolbar=0,resizable=0,menubar=0,status=0,width=380,height=375');
 }
