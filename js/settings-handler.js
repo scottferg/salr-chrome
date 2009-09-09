@@ -45,8 +45,21 @@ jQuery(document).ready(function() {
     });
   
     // Initialize color entry fields
+	//
+	// I'd really rather not do the exact same thing twice, but potentially
+	// this functionality could differ from the username field, so it's
+	// probably the better approach for the future.
     jQuery('.settings-panel > .color-preference > .color-select-input > input.color-select-text').each(function() {
         populateValues(jQuery(this));
+        // Set focus handler for the entry fields
+        jQuery(this).focus(function() {
+            onInputSelect(jQuery(this));
+        });
+        
+        // Set blur handler for the entry fields
+        jQuery(this).blur(function() {
+            onInputDeselect(jQuery(this));
+        });
     });
 
     // Initialize checkbox fields
