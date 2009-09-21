@@ -45,7 +45,9 @@ port.onMessage.addListener(function(data) {
     settings.hideAdvertisements = data.hideAdvertisements;
     settings.hideFooterLinks = data.hideFooterLinks;
     settings.hideHeaderLinks = data.hideHeaderLinks;
+    settings.displayNewPostsFirst = data.displayNewPostsFirst;
 
+    console.log(settings);
     // Update the styles now that we have
     // the settings
     updateStyling();
@@ -103,6 +105,12 @@ function updateStyling() {
     		// Remove the count from the element
     		jQuery(this).html('');
     	});
+
+        if (!newPosts && settings.displayNewPostsFirst == 'true') {
+            var currentThread = jQuery(this);
+
+            currentThread.parent().append(currentThread);
+        }
 	
     	// If the thread has new posts, display the green shade,
     	// otherwise show the blue shade
@@ -148,8 +156,19 @@ function updateStyling() {
     	newPosts = false;
     	newPostCount = 0;
     });
+    
+    // If we need to, move all unseen posts to the end of the list
+    if (settings.displayNewPostsFirst =='true') {
+        jQuery('tr.thread').each(function() {
+            if (jQuery(this).attr('class') == 'thread') {
+                var currentThread = jQuery(this);
 
-    console.log(settings);
+                currentThread.parent().append(currentThread);
+            }
+        });
+    }   
+
+    
     // Hide header/footer links
     if (settings.hideHeaderLinks == 'true') {
         jQuery('div#globalmenu').each(function() {

@@ -47,7 +47,8 @@ chrome.extension.onConnect.addListener(function(port) {
             'lightNewReplies' : localStorage.getItem('light-new-replies'),
             'hideAdvertisements' : localStorage.getItem('hide-advertisements'),
             'hideHeaderLinks' : localStorage.getItem('hide-header-links'),
-            'hideFooterLinks' : localStorage.getItem('hide-footer-links')
+            'hideFooterLinks' : localStorage.getItem('hide-footer-links'),
+            'displayNewPostsFirst' : localStorage.getItem('display-new-posts-first')
         });
     });
 });

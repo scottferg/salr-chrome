@@ -190,6 +190,7 @@ function onSubmitClicked(element) {
     // Set checkbox values
     var hideAdvertisements = jQuery('#hide-advertisements').attr('checked');
     var headerLinks = jQuery('#hide-header-links').attr('checked');
+    var displayNewPostsFirst = jQuery('#display-new-posts-first').attr('checked');
 
     // Store the preferences locally so that the page can
     // request it
@@ -203,6 +204,7 @@ function onSubmitClicked(element) {
     window.opener.localStorage.setItem('light-new-replies', lightNewRepliesField.val());
     window.opener.localStorage.setItem('hide-advertisements', hideAdvertisements);
     window.opener.localStorage.setItem('hide-header-links', headerLinks);
+    window.opener.localStorage.setItem('display-new-posts-first', displayNewPostsFirst);
 
     // Close the settings window
     window.close();
