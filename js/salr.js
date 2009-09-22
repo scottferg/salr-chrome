@@ -42,6 +42,7 @@ port.onMessage.addListener(function(data) {
     settings.darkNew = data.darkNewReplies;
     settings.username = data.username;
     settings.userQuote = data.userQuote;
+	settings.youtubeHighlight = data.youtubeHighlight;
     settings.hideAdvertisements = data.hideAdvertisements;
     settings.hideFooterLinks = data.hideFooterLinks;
     settings.hideHeaderLinks = data.hideHeaderLinks;
@@ -51,6 +52,7 @@ port.onMessage.addListener(function(data) {
     // Update the styles now that we have
     // the settings
     updateStyling();
+	inlineYoutubes();
 });
 
 // Request the username from the extension UI
@@ -195,3 +197,33 @@ function updateStyling() {
         });
     }
 }
+
+function inlineYoutubes() {
+	//sort out youtube links
+	jQuery('.postbody a[href*="youtube.com"]').each(function() {
+			jQuery(this).css("background-color", settings.youtubeHighlight).addClass("salr-video");
+	});
+	
+	jQuery(".salr-video").toggle(
+		function(){ 
+			var match =jQuery(this).attr('href').match(/^http\:\/\/((?:www|[a-z]{2})\.)?youtube\.com\/watch\?v=([-_0-9a-zA-Z]+)/); //get youtube video id
+			var videoId = match[2];
+			jQuery(this).after("<p><embed class = 'salr-player'/></p>"); //make new embed for video
+			jQuery(".salr-player").attr("id",videoId);
+			jQuery(".salr-player").attr("src","http://www.youtube.com/v/" + videoId);
+			jQuery(".salr-player").attr("width","450");
+			jQuery(".salr-player").attr("height","370");
+			jQuery(".salr-player").attr("type","application/x-shockwave-flash");
+			jQuery(".salr-player").attr("wmode","transparent");
+			return false;
+    },
+		function() {
+			// second state of toggle destroys player. should add a check for player existing before destrying it but seing as it's the second state of a toggle i'll leave it for now. 
+			jQuery(this).next().remove();
+		}
+	);
+}
+
+
+
+   

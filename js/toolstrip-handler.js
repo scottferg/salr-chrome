@@ -45,6 +45,7 @@ chrome.extension.onConnect.addListener(function(port) {
             'lightRead' : localStorage.getItem('light-read'),
             'darkNewReplies' : localStorage.getItem('dark-new-replies'),
             'lightNewReplies' : localStorage.getItem('light-new-replies'),
+			'youtubeHighlight' : localStorage.getItem('youtube-highlight'),
             'hideAdvertisements' : localStorage.getItem('hide-advertisements'),
             'hideHeaderLinks' : localStorage.getItem('hide-header-links'),
             'hideFooterLinks' : localStorage.getItem('hide-footer-links'),

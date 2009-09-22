@@ -186,7 +186,7 @@ function onSubmitClicked(element) {
     var lightReadField = jQuery('#light-read', element.parent().parent());
     var darkNewRepliesField = jQuery('#dark-new-replies', element.parent().parent());
     var lightNewRepliesField = jQuery('#light-new-replies', element.parent().parent());
-
+	var youtubeHighlightField = jQuery('#youtube-highlight', element.parent().parent());
     // Set checkbox values
     var hideAdvertisements = jQuery('#hide-advertisements').attr('checked');
     var headerLinks = jQuery('#hide-header-links').attr('checked');
@@ -204,6 +204,7 @@ function onSubmitClicked(element) {
     window.opener.localStorage.setItem('light-new-replies', lightNewRepliesField.val());
     window.opener.localStorage.setItem('hide-advertisements', hideAdvertisements);
     window.opener.localStorage.setItem('hide-header-links', headerLinks);
+	window.opener.localStorage.setItem('youtube-highlight', youtubeHighlightField.val());
     window.opener.localStorage.setItem('display-new-posts-first', displayNewPostsFirst);
 
     // Close the settings window

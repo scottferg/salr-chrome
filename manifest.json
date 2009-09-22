@@ -1,6 +1,6 @@
 {
   "name": "SALR Extension", 
-  "version": "0.1",
+  "version": "0.11",
   "description": "Highlights posts which quote the user", 
   "icons": {
 	  		  "16": "images/logo16.png",
