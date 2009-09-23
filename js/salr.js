@@ -205,6 +205,22 @@ function updateStyling() {
 			jQuery(this).hide();
 		});
 	}
+
+	modifyImages();
+}
+
+function modifyImages() {
+	if (settings.replaceLinksWithImages == 'true' || true) {
+		console.log(jQuery('.postbody a'));
+		jQuery('.postbody a').each(function() {
+				
+				var match = jQuery(this).attr('href').match('(https?://(?:[a-z\-]+\.)+[a-z]{2,6}(?:/[^/#?]+)+\.(?:jpe?g|gif|png|bmp))');
+				
+
+		console.log(match);
+	});
+
+
 }
 
 function inlineYoutubes() {
