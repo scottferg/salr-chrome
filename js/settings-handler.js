@@ -191,6 +191,7 @@ function onSubmitClicked(element) {
     var hideAdvertisements = jQuery('#hide-advertisements').attr('checked');
     var headerLinks = jQuery('#hide-header-links').attr('checked');
     var displayNewPostsFirst = jQuery('#display-new-posts-first').attr('checked');
+	var replaceImages = jQuery('#replace-images-with-links').attr('checked');
 
     // Store the preferences locally so that the page can
     // request it
@@ -206,6 +207,7 @@ function onSubmitClicked(element) {
     window.opener.localStorage.setItem('hide-header-links', headerLinks);
 	window.opener.localStorage.setItem('youtube-highlight', youtubeHighlightField.val());
     window.opener.localStorage.setItem('display-new-posts-first', displayNewPostsFirst);
+    window.opener.localStorage.setItem('replace-images-with-links', replaceImages);
 
     // Close the settings window
     window.close();

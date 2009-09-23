@@ -47,6 +47,7 @@ port.onMessage.addListener(function(data) {
     settings.hideFooterLinks = data.hideFooterLinks;
     settings.hideHeaderLinks = data.hideHeaderLinks;
     settings.displayNewPostsFirst = data.displayNewPostsFirst;
+	settings.replaceImages = data.replaceImages;
 
     console.log(settings);
     // Update the styles now that we have
@@ -196,6 +197,14 @@ function updateStyling() {
             jQuery(this).css('height', '0px');
         });
     }
+
+	if (settings.replaceImages == 'true') {
+		jQuery('.postbody img').each(function() {
+			var source = jQuery(this).attr('src');
+			jQuery(this).after("<a href='" + source + "'>" + source + "</a>");
+			jQuery(this).hide();
+		});
+	}
 }
 
 function inlineYoutubes() {
