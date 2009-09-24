@@ -19,7 +19,7 @@ jQuery(document).ready(function() {
 			},
 			onBeforeShow: function () { 
 				alert($(this).attr('id'));
-				$(this).ColorPickerSetColor(this.value); // make this work
+				$(this).ColorPickerSetColor(this.value); // make this work - update the coloured box with onChange
 			}
 		})
 		.bind('keyup', function(){
