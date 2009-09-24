@@ -66,7 +66,7 @@ jQuery(document).ready(function() {
     jQuery('div.display-preference > input').each(function() {
         populateCheckboxes(jQuery(this));
     });
-
+/*
     // Set color selectors
     jQuery('div.color-picker-box').ColorPicker({
         flat: true,
@@ -84,7 +84,7 @@ jQuery(document).ready(function() {
         }
     });
     jQuery('div.color-picker-box > div').css('position', 'absolute');
-
+*/
     jQuery('div.color-select-box').each(function() {
         var backgroundColor = jQuery(this).parent().parent().find('input.color-select-text').val();
         var that = jQuery(this).parent();

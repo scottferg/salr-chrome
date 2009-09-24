@@ -5,9 +5,30 @@
 <link rel="stylesheet" type="text/css" href="css/colorpicker.css" />
 <link rel="stylesheet" type="text/css" href="css/settings-style.css" />
 <script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/jquery-ui.js"></script>
+
 <script type="text/javascript" src="js/colorpicker.js"></script>
 <script type="text/javascript" src="js/settings-handler.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>	
+<script type="text/javascript">
+jQuery(document).ready(function() {
+	   $('.color-select-text').ColorPicker({
+			onSubmit: function(hsb, hex, rgb, el) {
+				$(el).val(hex);
+				$(el).ColorPickerHide();
+				$(el).parent().next().children().css('background-color','#'+hex); //TODO fix this monstrosity.
+			},
+			onBeforeShow: function () { 
+				alert($(this).attr('id'));
+				$(this).ColorPickerSetColor(this.value); // make this work
+			}
+		})
+		.bind('keyup', function(){
+			$(this).ColorPickerSetColor(this.value);
+		});
+
+});
+</script>
+
 <title>SALR Settings</title>
 </head>
 <body>
@@ -29,7 +50,15 @@
             <div class="settings-panel">
                 <div class='color-preference'>
                     <div class='color-select-input'>
-                        Quotations by you: <input type='text' size='7' default='#a2cd5a' class='color-select-text text-entry' style='color: #999999;' id='user-quote' />
+                        Quotations by you:<br/> <input type='text' size='7' default='#a2cd5a' class='color-select-text text-entry' style='color: #999999;' id='user-quote' />
+                    </div>
+                    <div class='color-select'>
+                        <div class='color-select-box'>a</div>
+                    </div>
+                </div>
+                <div class='color-preference'>
+                    <div class='color-select-input'>
+                        Seen threads (Dark shade):<br /> <input type='text' size='7' default='#6699cc' class='color-select-text text-entry' style='color: #999999;' id='dark-read' />
                     </div>
                     <div class='color-select'>
                         <div class='color-select-box'></div>
@@ -38,7 +67,7 @@
                 </div>
                 <div class='color-preference'>
                     <div class='color-select-input'>
-                        Seen threads (Dark shade): <input type='text' size='7' default='#6699cc' class='color-select-text text-entry' style='color: #999999;' id='dark-read' />
+                        Seen threads (Light shade):<br /> <input type='text' size='7' default='#99ccff' class='color-select-text text-entry' style='color: #999999;' id='light-read' />
                     </div>
                     <div class='color-select'>
                         <div class='color-select-box'></div>
@@ -47,7 +76,7 @@
                 </div>
                 <div class='color-preference'>
                     <div class='color-select-input'>
-                        Seen threads (Light shade): <input type='text' size='7' default='#99ccff' class='color-select-text text-entry' style='color: #999999;' id='light-read' />
+                        Thread with new replies (Dark shade):<br /> <input type='text' size='7' default='#99cc99' class='color-select-text text-entry' style='color: #999999;' id='dark-new-replies' />
                     </div>
                     <div class='color-select'>
                         <div class='color-select-box'></div>
@@ -56,16 +85,7 @@
                 </div>
                 <div class='color-preference'>
                     <div class='color-select-input'>
-                        Thread with new replies (Dark shade): <input type='text' size='7' default='#99cc99' class='color-select-text text-entry' style='color: #999999;' id='dark-new-replies' />
-                    </div>
-                    <div class='color-select'>
-                        <div class='color-select-box'></div>
-                    </div>
-                    <div class='color-picker-box'></div>
-                </div>
-                <div class='color-preference'>
-                    <div class='color-select-input'>
-                        Thread with new replies (Light shade): <input type='text' size='7' default='#ccffcc' class='color-select-text text-entry' style='color: #999999;' id='light-new-replies' />
+                        Thread with new replies (Light shade):<br/> <input type='text' size='7' default='#ccffcc' class='color-select-text text-entry' style='color: #999999;' id='light-new-replies' />
                     </div>
                     <div class='color-select'>
                         <div class='color-select-box'></div>
@@ -74,7 +94,7 @@
                 </div>
 				 <div class='color-preference'>
                     <div class='color-select-input'>
-                        Youtube link highlight: <input type='text' size='7' default='#ff00ff' class='color-select-text text-entry' style='color: #999999;' id='youtube-highlight' />
+                        Youtube link highlight:<br/> <input type='text' size='7' default='#ff00ff' class='color-select-text text-entry' style='color: #999999;' id='youtube-highlight' />
                     </div>
                     <div class='color-select'>
                         <div class='color-select-box'></div>

@@ -13,7 +13,8 @@
     {
       "js": [
         "js/jquery.js",
-        "js/salr.js"
+        "js/salr.js",
+		"js/colorpicker.js"
       ],
       "matches": [
         "http://forums.somethingawful.com/*"

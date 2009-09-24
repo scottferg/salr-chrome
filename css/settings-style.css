@@ -4,22 +4,23 @@ body {
 }
 
 div.username-field, div.color-preference {
-    width: 350px;
+    width: 400px;
     float: left;
 }
     
 div.color-select-input {
     float: left;
-    width: 294px;
+    width: 350px;
+	padding-bottom:3px;
 }
     
 div.color-select {
-    background-image: url('images/select.png');
     width: 36px;
     height: 36px;
     position: relative;
     top: -5px;
     float: left;
+	
 }
 
 div.color-select-box {
@@ -30,11 +31,7 @@ div.color-select-box {
     top: 6px;
     left: 6px;
     position: relative;
-    float: left;
-}
-
-div.color-picker-box {
-    display: none;
+    float: right;
 }
 
 div.submit-panel {
