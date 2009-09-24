@@ -206,7 +206,7 @@ function inlineYoutubes() {
 	
 	jQuery(".salr-video").toggle(
 		function(){ 
-			var match =jQuery(this).attr('href').match(/^http\:\/\/((?:www|[a-z]{2})\.)?youtube\.com\/watch\?v=([-_0-9a-zA-Z]+)/); //get youtube video id
+			var match = jQuery(this).attr('href').match(/^http\:\/\/((?:www|[a-z]{2})\.)?youtube\.com\/watch\?v=([-_0-9a-zA-Z]+)/); //get youtube video id
 			var videoId = match[2];
 			jQuery(this).after("<p><embed class = 'salr-player' /></p>"); //make new embed for video
 			jQuery(".salr-player").attr("id",videoId);
