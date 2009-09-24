@@ -49,7 +49,6 @@ port.onMessage.addListener(function(data) {
     settings.displayNewPostsFirst = data.displayNewPostsFirst;
 	settings.replaceImages = data.replaceImages;
 
-    console.log(settings);
     // Update the styles now that we have
     // the settings
     updateStyling();
@@ -213,14 +212,9 @@ function modifyImages() {
 	if (settings.replaceLinksWithImages == 'true' || true) {
 		console.log(jQuery('.postbody a'));
 		jQuery('.postbody a').each(function() {
-				
-				var match = jQuery(this).attr('href').match('(https?://(?:[a-z\-]+\.)+[a-z]{2,6}(?:/[^/#?]+)+\.(?:jpe?g|gif|png|bmp))');
-				
-
-		console.log(match);
-	});
-
-
+            var match = jQuery(this).attr('href').match('(https?://(?:[a-z\-]+\.)+[a-z]{2,6}(?:/[^/#?]+)+\.(?:jpe?g|gif|png|bmp))');
+	    });
+    }
 }
 
 function inlineYoutubes() {
@@ -229,10 +223,10 @@ function inlineYoutubes() {
 			jQuery(this).css("background-color", settings.youtubeHighlight).addClass("salr-video");
 	});
 	
-	jQuery(".salr-video").toggle(
-		function(){ 
+	jQuery(".salr-video").toggle(function(){ 
 			var match = jQuery(this).attr('href').match(/^http\:\/\/((?:www|[a-z]{2})\.)?youtube\.com\/watch\?v=([-_0-9a-zA-Z]+)/); //get youtube video id
 			var videoId = match[2];
+
 			jQuery(this).after("<p><embed class = 'salr-player' /></p>"); //make new embed for video
 			jQuery(".salr-player").attr("id",videoId);
 			jQuery(".salr-player").attr("src","http://www.youtube.com/v/" + videoId);
@@ -240,10 +234,12 @@ function inlineYoutubes() {
 			jQuery(".salr-player").attr("height","370");
 			jQuery(".salr-player").attr("type","application/x-shockwave-flash");
 			jQuery(".salr-player").attr("wmode","transparent");
+
 			return false;
-			},
+		},
 		function() {
-			// second state of toggle destroys player. should add a check for player existing before destrying it but seing as it's the second state of a toggle i'll leave it for now. 
+			// second state of toggle destroys player. should add a check for player existing before 
+            // destroying it but seing as it's the second state of a toggle i'll leave it for now. 
 			jQuery(this).next().remove();
 		}
 	);
