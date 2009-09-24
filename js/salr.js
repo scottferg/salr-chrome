@@ -196,6 +196,17 @@ function updateStyling() {
             jQuery(this).css('height', '0px');
         });
     }
+
+	// Have to match on the Alt tag because there doesn't appear
+	// to be an ID for this button
+	jQuery('ul.postbuttons > li > a > img[alt="Quote"]').each(function() {
+		var href = jQuery(this).parent();
+
+		href.attr('href', '');
+		href.click(function() {
+			displayQuickReply();
+		});
+	});
 }
 
 function inlineYoutubes() {
@@ -224,6 +235,8 @@ function inlineYoutubes() {
 	);
 }
 
-
-
-   
+function displayQuickReply() {
+    window.open(chrome.extension.getURL('') + 'quick-reply.html', 
+                'Quick Reply', 
+                'location=0,scrollbars=0,toolbar=0,resizable=0,menubar=0,status=0,width=680,height=375');
+}
