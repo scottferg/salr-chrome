@@ -13,13 +13,12 @@
 jQuery(document).ready(function() {
 	   $('.color-select-text').ColorPicker({
 			onSubmit: function(hsb, hex, rgb, el) {
-				$(el).val(hex);
+				$(el).val('#'+hex);
 				$(el).ColorPickerHide();
 				$(el).parent().next().children().css('background-color','#'+hex); //TODO fix this monstrosity.
 			},
 			onBeforeShow: function () { 
-				alert($(this).attr('id'));
-				$(this).ColorPickerSetColor(this.value); // make this work - update the coloured box with onChange
+				$(this).ColorPickerSetColor(this.value);
 			}
 		})
 		.bind('keyup', function(){
@@ -51,7 +50,7 @@ jQuery(document).ready(function() {
             <div class="settings-panel">
                 <div class='color-preference'>
                     <div class='color-select-input'>
-                        Quotations by you:<br/> <input type='text' size='7' default='#a2cd5a' class='color-select-text text-entry' style='color: #999999;' id='user-quote' />
+                        Quotations by you:<br/> <input type='text' size='7' default='#a2cd5a' value='' class='color-select-text text-entry' style='color: #999999;' id='user-quote' />
                     </div>
                     <div class='color-select'>
                         <div class='color-select-box'>a</div>

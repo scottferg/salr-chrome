@@ -113,7 +113,7 @@ jQuery(document).ready(function() {
  */
 function onInputSelect(element) {
     element.css('color', '#000000');
-    element.val('');
+    //element.val('');
 }
 
 /**
@@ -146,10 +146,11 @@ function populateValues(element) {
     if (!value) {
         // If there is no stored setting, use the default
         // value stored within the DOM
-        element.val(element.attr('default'));
+		var defaultCol = element.attr('default');
+        element.attr('value', defaultCol);
     } else {
         // Otherwise, write the stored preference
-        element.val(value);
+        element.attr('value',value);
     }
 }
 
