@@ -1,0 +1,14 @@
+SALR Extension for Chrome
+
+v0.2 - "Where did all this code come from?"
+
+- Add option for embedding inline Youtube videos (Jono Taberner)
+- Fix the jQuery colorpicker widget (Jono Taberner)
+- Display images as inline links (Bill Best)
+
+v0.1 - "Initial release"
+
+- Basic username highlighting (Scott Ferguson)
+- Basic thread highlighting (Scott Ferguson)
+- Hide/display header and footer ads (Scott Ferguson)
+- Settings panel (Scott Ferguson)
