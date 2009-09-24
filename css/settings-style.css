@@ -42,6 +42,22 @@ div.submit-panel {
     text-align: right;
 }
 
+div.settings-group {
+	padding: 10px 5px;
+	border: 1px solid;
+	border-color: #BBBBBB;
+	margin-bottom: 10px;
+}
+
+span.settings-group-title {
+
+	position: relative;
+	top: 8px;
+	left: 5px;
+	background-color: #ffffff;
+}
+
+
 input#submit {
     border: 1px solid;
     border-color: #999999;

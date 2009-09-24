@@ -47,14 +47,15 @@ port.onMessage.addListener(function(data) {
     settings.hideFooterLinks = data.hideFooterLinks;
     settings.hideHeaderLinks = data.hideHeaderLinks;
     settings.displayNewPostsFirst = data.displayNewPostsFirst;
-	settings.replaceImages = data.replaceImages;
-	settings.replaceLinksWithImages = 'true';
+	settings.replaceImagesWithLinks = data.replaceImagesWithLinks;
+	settings.replaceLinksWithImages = data.replaceLinksWithImages;
 
     console.log(settings);
     // Update the styles now that we have
     // the settings
     updateStyling();
 	inlineYoutubes();
+	modifyImages();
 });
 
 // Request the username from the extension UI
@@ -198,8 +199,6 @@ function updateStyling() {
             jQuery(this).css('height', '0px');
         });
     }
-
-	modifyImages();
 }
 
 function modifyImages() {
@@ -211,13 +210,14 @@ function modifyImages() {
 				var match = jQuery(this).attr('href').match('https?://(?:[-_0-9a-zA-Z]+\.)+[a-z]{2,6}(?:/[^/#?]+)+\.(?:jpe?g|gif|png|bmp)');
 				if(match != null) {
 					jQuery(this).after("<img src='" + match[0] + "' />");
+					console.log('Removed: ' + jQuery(this).html);
 					jQuery(this).remove();
 				}
 		});
 	}
 
 	// Replace inline Images with Links
-	if (settings.replaceImages == 'true') {
+	if (settings.replaceImagesWithLinks == 'true') {
 		jQuery('.postbody img').each(function() {
 			var source = jQuery(this).attr('src');
 			jQuery(this).after("<a href='" + source + "'>" + source + "</a>");
