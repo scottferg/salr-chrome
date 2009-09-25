@@ -67,6 +67,7 @@ jQuery(document).ready(function() {
         populateCheckboxes(jQuery(this));
     });
 
+    // Setup color picker handles on the text boxes
 	jQuery('.color-select-text').ColorPicker({
             onSubmit: function(hsb, hex, rgb, el) {
 				jQuery(el).val('#' + hex);

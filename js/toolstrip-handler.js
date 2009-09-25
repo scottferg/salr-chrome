@@ -37,6 +37,12 @@ chrome.extension.onConnect.addListener(function(port) {
                                             title: "Click to open SALR settings",
                                             iconId: 0
                                         });
+        
+        // If we don't have stored settings, set defaults
+        if (!localStorage.getItem('username')) {
+            setupDefaultPreferences();
+        }
+        
         // Respond with the username
         port.postMessage({
             'username': localStorage.getItem('username'),
@@ -69,4 +75,17 @@ function onToolbarClick() {
     window.open(chrome.extension.getURL('') + 'settings.html', 
                 'salr-settings', 
                 'location=0,scrollbars=0,toolbar=0,resizable=0,menubar=0,status=0,width=510,height=510');
+}
+
+/**
+ * Sets up default preferences for highlighting only
+ *
+ */
+function setupDefaultPreferences() {
+    localStorage.setItem('user-quote', '#a2cd5a');
+    localStorage.setItem('dark-read', '#6699cc');
+    localStorage.setItem('light-read', '#99ccff');
+    localStorage.setItem('dark-new-replies', '#99cc99');
+    localStorage.setItem('light-new-replies', '#ccffcc');
+    localStorage.setItem('youtube-highlight', '#ff00ff');
 }
