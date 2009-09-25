@@ -49,7 +49,7 @@ port.onMessage.addListener(function(data) {
     settings.displayNewPostsFirst = data.displayNewPostsFirst;
 	settings.replaceImages = data.replaceImages;
 	settings.inlineVideo = data.inlineVideo;
-
+	settings.replaceLinksWithImages = 'true';
     // Update the styles now that we have
     // the settings
     updateStyling();
@@ -200,6 +200,24 @@ function updateStyling() {
         });
     }
 
+	modifyImages();
+}
+
+function modifyImages() {
+
+	// Replace Links with Images
+	if (settings.replaceLinksWithImages == 'true') {
+		jQuery('.postbody a').each(function() {
+				
+				var match = jQuery(this).attr('href').match('https?://(?:[-_0-9a-zA-Z]+\.)+[a-z]{2,6}(?:/[^/#?]+)+\.(?:jpe?g|gif|png|bmp)');
+				if(match != null) {
+					jQuery(this).after("<img src='" + match[0] + "' />");
+					jQuery(this).remove();
+				}
+		});
+	}
+
+	// Replace inline Images with Links
 	if (settings.replaceImages == 'true') {
 		jQuery('.postbody img').each(function() {
 			var source = jQuery(this).attr('src');
@@ -208,16 +226,7 @@ function updateStyling() {
 		});
 	}
 
-	modifyImages();
-}
 
-function modifyImages() {
-	if (settings.replaceLinksWithImages == 'true' || true) {
-		console.log(jQuery('.postbody a'));
-		jQuery('.postbody a').each(function() {
-            var match = jQuery(this).attr('href').match('(https?://(?:[a-z\-]+\.)+[a-z]{2,6}(?:/[^/#?]+)+\.(?:jpe?g|gif|png|bmp))');
-	    });
-    }
 }
 
 function inlineYoutubes() {
