@@ -48,7 +48,11 @@ port.onMessage.addListener(function(data) {
     settings.hideHeaderLinks = data.hideHeaderLinks;
     settings.displayNewPostsFirst = data.displayNewPostsFirst;
 	settings.replaceImagesWithLinks = data.replaceImagesWithLinks;
+	settings.replaceImagesReadOnly = data.replaceImagesReadOnly;
 	settings.replaceLinksWithImages = data.replaceLinksWithImages;
+	settings.dontReplaceLinkNWS = data.dontReplaceLinkNWS;
+	settings.dontReplaceLinkSpoiler = data.dontReplaceLinkSpoiler;
+	settings.dontReplaceLinkRead = data.dontReplaceLinkRead;
 
     console.log(settings);
     // Update the styles now that we have
@@ -205,26 +209,51 @@ function modifyImages() {
 
 	// Replace Links with Images
 	if (settings.replaceLinksWithImages == 'true') {
-		jQuery('.postbody a').each(function() {
-				
-				var match = jQuery(this).attr('href').match(/https?\:\/\/(?:[-_0-9a-zA-Z]+\.)+[a-z]{2,6}(?:\/[^/#?]+)+\.(?:jpe?g|gif|png|bmp)/);
-				if(match != null) {
-					jQuery(this).after("<img src='" + match[0] + "' />");
-					jQuery(this).remove();
-				}
+
+		var subset = jQuery('.postbody a');
+
+		//NWS/NMS links
+		if(settings.dontReplaceLinkNWS == 'true')
+		{
+			console.log("HERE");
+			subset = subset.not(".postbody:has(img[title=':nws:']) a").not(".postbody:has(img[title=':nms:']) a");
+			console.log(subset);
+		}
+
+		//
+		if(settings.dontReplaceLinkSpoiler == 'true') {
+			subset = subset.not('.bbc-spoiler a');	
+		}
+
+		if(settings.dontReplaceLinkRead == 'true') {
+			subset = subset.not('.seen1 a').not('.seen2 a');
+		}
+
+		subset.each(function() {
+
+			var match = jQuery(this).attr('href').match(/https?\:\/\/(?:[-_0-9a-zA-Z]+\.)+[a-z]{2,6}(?:\/[^/#?]+)+\.(?:jpe?g|gif|png|bmp)/);
+			if(match != null) {
+				jQuery(this).after("<img src='" + match[0] + "' />");
+				jQuery(this).remove();
+			}
 		});
 	}
 
 	// Replace inline Images with Links
 	if (settings.replaceImagesWithLinks == 'true') {
-		jQuery('.postbody img').each(function() {
+		var subset = jQuery('.postbody img');
+		
+		if(settings.replaceImagesReadOnly == 'true') {
+			subset = subset.filter('.seen1 img, .seen2 img');
+			console.log(subset);
+		}
+
+		subset.each(function() {
 			var source = jQuery(this).attr('src');
 			jQuery(this).after("<a href='" + source + "'>" + source + "</a>");
 			jQuery(this).remove();
 		});
 	}
-
-
 }
 
 function inlineYoutubes() {
