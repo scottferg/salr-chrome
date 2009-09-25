@@ -9,24 +9,6 @@
 <script type="text/javascript" src="js/colorpicker.js"></script>
 <script type="text/javascript" src="js/settings-handler.js"></script>
 <script type="text/javascript" src="js/jquery-ui.js"></script>	
-<script type="text/javascript">
-jQuery(document).ready(function() {
-	   $('.color-select-text').ColorPicker({
-			onSubmit: function(hsb, hex, rgb, el) {
-				$(el).val('#'+hex);
-				$(el).ColorPickerHide();
-				$(el).parent().next().children().css('background-color','#'+hex); //TODO fix this monstrosity.
-			},
-			onBeforeShow: function () { 
-				$(this).ColorPickerSetColor(this.value);
-			}
-		})
-		.bind('keyup', function(){
-			$(this).ColorPickerSetColor(this.value);
-		});
-
-});
-</script>
 
 <title>SALR Settings</title>
 </head>

@@ -66,32 +66,23 @@ jQuery(document).ready(function() {
     jQuery('div.display-preference > input').each(function() {
         populateCheckboxes(jQuery(this));
     });
-/*
-    // Set color selectors
-    jQuery('div.color-picker-box').ColorPicker({
-        flat: true,
-        color: '#dddddd',
-        onShow: function(colorpicker) {
-            jQuery(colorpicker).fadeIn(500);
-        },
-        onHide: function(colorpicker) {
-            jQuery(colorpicker).fadeOut(500);
-        },
-        onSubmit: function(hsb, hex, rgb, element) {
-            // Set the box to the chosen color
-            jQuery(this).parent().find('div.color-select-box').css('background-color', '#' + hex);
-            jQuery(element).ColorPickerHide();
-        }
-    });
-    jQuery('div.color-picker-box > div').css('position', 'absolute');
-*/
+
+	jQuery('.color-select-text').ColorPicker({
+            onSubmit: function(hsb, hex, rgb, el) {
+				jQuery(el).val('#' + hex);
+				jQuery(el).ColorPickerHide();
+				jQuery(el).parent().next().children().css('background-color', '#' + hex); //TODO fix this monstrosity.
+			},
+			onBeforeShow: function () { 
+				jQuery(this).ColorPickerSetColor(this.value);
+			}
+	})
+	.bind('keyup', function() {
+		jQuery(this).ColorPickerSetColor(this.value);
+	});
+
     jQuery('div.color-select-box').each(function() {
         var backgroundColor = jQuery(this).parent().parent().find('input.color-select-text').val();
-        var that = jQuery(this).parent();
-
-        jQuery(this).click(function() {
-            jQuery('div.color-picker-box', that).ColorPickerShow();
-        });
 
         jQuery(this).css('background-color', backgroundColor);
     });
