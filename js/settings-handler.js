@@ -233,6 +233,7 @@ function onSubmitClicked(element) {
 	var dontReplaceLinkNWS = jQuery('#dont-replace-link-nws').attr('checked');
 	var dontReplaceLinkSpoiler = jQuery('#dont-replace-link-spoiler').attr('checked');
 	var dontReplaceLinkRead = jQuery('#dont-replace-link-read').attr('checked');
+	var restrictImageSize = jQuery('#restrict-image-size').attr('checked');
 
     // Store the preferences locally so that the page can
     // request it
@@ -254,7 +255,9 @@ function onSubmitClicked(element) {
     window.opener.localStorage.setItem('dont-replace-link-nws', dontReplaceLinkNWS);
 	window.opener.localStorage.setItem('dont-replace-link-spoiler', dontReplaceLinkSpoiler);
 	window.opener.localStorage.setItem('dont-replace-link-read', dontReplaceLinkRead);
+	window.opener.localStorage.setItem('restrict-image-size', restrictImageSize);
 	window.opener.localStorage.setItem('inline-video-links', replaceVideoLinks);
+
 
     
 	
