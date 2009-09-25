@@ -6,6 +6,7 @@ v0.2 - "Where did all this code come from?"
 - Fix the jQuery colorpicker widget (Jono Taberner)
 - Display images as inline links (Bill Best)
 - Display images from links (Bill Best)
+- Added update manifest (Scott Ferguson)
 
 v0.1 - "Initial release"
 
