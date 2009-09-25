@@ -53,6 +53,7 @@ port.onMessage.addListener(function(data) {
 	settings.dontReplaceLinkNWS = data.dontReplaceLinkNWS;
 	settings.dontReplaceLinkSpoiler = data.dontReplaceLinkSpoiler;
 	settings.dontReplaceLinkRead = data.dontReplaceLinkRead;
+	settings.restrictImageSize = data.restrictImageSize;
 
     console.log(settings);
     // Update the styles now that we have
@@ -253,6 +254,10 @@ function modifyImages() {
 			jQuery(this).after("<a href='" + source + "'>" + source + "</a>");
 			jQuery(this).remove();
 		});
+	}
+
+	if (settings.restrictImageSize == 'true') {
+		jQuery('.postbody img').css({'max-width':'800px'});
 	}
 }
 

@@ -55,7 +55,8 @@ chrome.extension.onConnect.addListener(function(port) {
             'replaceLinksWithImages' : localStorage.getItem('replace-links-with-images'),
             'dontReplaceLinkNWS' : localStorage.getItem('dont-replace-link-nws'),
             'dontReplaceLinkSpoiler' : localStorage.getItem('dont-replace-link-spoiler'),
-            'dontReplaceLinkRead' : localStorage.getItem('dont-replace-link-read')
+            'dontReplaceLinkRead' : localStorage.getItem('dont-replace-link-read'),
+            'restrictImageSize' : localStorage.getItem('restrict-image-size')
         });
     });
 });
