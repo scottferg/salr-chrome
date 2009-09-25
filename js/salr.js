@@ -48,11 +48,14 @@ port.onMessage.addListener(function(data) {
     settings.hideHeaderLinks = data.hideHeaderLinks;
     settings.displayNewPostsFirst = data.displayNewPostsFirst;
 	settings.replaceImages = data.replaceImages;
+	settings.inlineVideo = data.inlineVideo;
 
     // Update the styles now that we have
     // the settings
     updateStyling();
-	inlineYoutubes();
+	if (settings.inlineVideo == 'true') {
+		inlineYoutubes();
+	}
 });
 
 // Request the username from the extension UI
