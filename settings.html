@@ -108,13 +108,29 @@
 				<span class='settings-group-title'>Links-to-Images</span>
 				<div class='settings-group'>
 					<div class='display-preference'>
-						Replace Links with Images: <input id='replace-links-with-images' type='checkbox' />
+						Convert links into inline images: <input id='replace-links-with-images' type='checkbox' />
+					</div>
+					<div class='sub-options'>
+						<div class='display-preference'>
+							Don't convert if post contains a NWS/NMS warning: <input id='dont-replace-link-nws' type='checkbox' />
+						</div>
+						<div class='display-preference'>
+							Don't convert links inside spoiler tags: <input id='dont-replace-link-spoiler' type='checkbox' />
+						</div>
+						<div class='display-preference'>
+							Don't convert links in marked-as-read posts: <input id='dont-replace-link-read' type='checkbox' />
+						</div>
 					</div>
 				</div>
 				<span class='settings-group-title'>Images-to-Links</span>
 				<div class='settings-group'>
 					<div class='display-preference'>
            	        	Replace Images with links: <input id='replace-images-with-links' type='checkbox' />
+					</div>
+					<div class='sub-options'>
+						<div class='display-preference'>
+							Convert Images in Read Posts only: <input id='replace-images-read-only' type='checkbox' />
+						</div>
 					</div>
 				</div>
             </div>

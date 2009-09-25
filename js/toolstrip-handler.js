@@ -57,7 +57,11 @@ chrome.extension.onConnect.addListener(function(port) {
             'hideFooterLinks' : localStorage.getItem('hide-footer-links'),
             'displayNewPostsFirst' : localStorage.getItem('display-new-posts-first'),
             'replaceImagesWithLinks' : localStorage.getItem('replace-images-with-links'),
+            'replaceImagesReadOnly' : localStorage.getItem('replace-images-read-only'),
             'replaceLinksWithImages' : localStorage.getItem('replace-links-with-images'),
+            'dontReplaceLinkNWS' : localStorage.getItem('dont-replace-link-nws'),
+            'dontReplaceLinkSpoiler' : localStorage.getItem('dont-replace-link-spoiler'),
+            'dontReplaceLinkRead' : localStorage.getItem('dont-replace-link-read'),
         	'inlineVideo' : localStorage.getItem('inline-video-links')
 		});
     });

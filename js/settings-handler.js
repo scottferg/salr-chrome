@@ -63,7 +63,7 @@ jQuery(document).ready(function() {
     });
 
     // Initialize checkbox fields
-    jQuery('div.display-preference > input').each(function() {
+    jQuery('div.display-preference input').each(function() {
         populateCheckboxes(jQuery(this));
     });
 
@@ -92,6 +92,48 @@ jQuery(document).ready(function() {
     jQuery('.submit-panel > input#submit').click(function() {
         onSubmitClicked(jQuery(this));
     });
+
+	// once to initialize!
+
+	jQuery('div.display-preference input[type=checkbox]').each(function() {
+
+
+		var nextDiv = jQuery(this).parent('div').next('div');
+		if(nextDiv.is('.sub-options')) {
+
+			if (jQuery(this).is(':checked')) {
+				nextDiv.removeClass('disabled-options');
+       	    	nextDiv.find('input').removeAttr('disabled');
+	    	} else {
+				nextDiv.addClass('disabled-options');
+				nextDiv.find('input').attr('disabled', true);
+	    	} 
+			
+
+		}
+
+	});
+
+	//bind click (should function be separated out?)
+
+	jQuery('div.display-preference input[type=checkbox]').click( function() {
+
+
+		var nextDiv = jQuery(this).parent('div').next('div');
+		if(nextDiv.is('.sub-options')) {
+
+			if (jQuery(this).is(':checked')) {
+				nextDiv.removeClass('disabled-options');
+       	    	nextDiv.find('input').removeAttr('disabled');
+	    	} else {
+				nextDiv.addClass('disabled-options');
+				nextDiv.find('input').attr('disabled', true);
+	    	} 
+			
+
+		}
+
+	});
     
     // Setup menu tabs
     jQuery('#tabs').tabs();
@@ -186,7 +228,11 @@ function onSubmitClicked(element) {
     var displayNewPostsFirst = jQuery('#display-new-posts-first').attr('checked');
 	var replaceVideoLinks = jQuery('#inline-video-links').attr('checked');
 	var replaceImagesWithLinks = jQuery('#replace-images-with-links').attr('checked');
+	var replaceImagesReadOnly = jQuery('#replace-images-read-only').attr('checked');
 	var replaceLinksWithImages = jQuery('#replace-links-with-images').attr('checked');
+	var dontReplaceLinkNWS = jQuery('#dont-replace-link-nws').attr('checked');
+	var dontReplaceLinkSpoiler = jQuery('#dont-replace-link-spoiler').attr('checked');
+	var dontReplaceLinkRead = jQuery('#dont-replace-link-read').attr('checked');
 
     // Store the preferences locally so that the page can
     // request it
@@ -203,9 +249,16 @@ function onSubmitClicked(element) {
 	window.opener.localStorage.setItem('youtube-highlight', youtubeHighlightField.val());
     window.opener.localStorage.setItem('display-new-posts-first', displayNewPostsFirst);
     window.opener.localStorage.setItem('replace-images-with-links', replaceImagesWithLinks);
+    window.opener.localStorage.setItem('replace-images-read-only', replaceImagesReadOnly);
     window.opener.localStorage.setItem('replace-links-with-images', replaceLinksWithImages);
+    window.opener.localStorage.setItem('dont-replace-link-nws', dontReplaceLinkNWS);
+	window.opener.localStorage.setItem('dont-replace-link-spoiler', dontReplaceLinkSpoiler);
+	window.opener.localStorage.setItem('dont-replace-link-read', dontReplaceLinkRead);
 	window.opener.localStorage.setItem('inline-video-links', replaceVideoLinks);
 
-    // Close the settings window
+    
+	
+	
+	// Close the settings window
     window.close();
 }

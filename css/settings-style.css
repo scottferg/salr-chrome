@@ -54,6 +54,16 @@ span.settings-group-title {
 	background-color: #ffffff;
 }
 
+div.sub-options {
+	padding-left: 16px;
+}
+
+div.disabled-options {
+
+	background-color: #CCCCCC;
+	color: #555555;
+}
+
 
 input#submit {
     border: 1px solid;
