@@ -1,6 +1,5 @@
 - mod/op highlighing - <dt class="author op">
 - user highlighting/text <dt class="author">
 - get user on load - from forums index
-- default values without needing to open settings dialog
 - page navigator
 - quick reply box (on hold until extensions API supports popups)
