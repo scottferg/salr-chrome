@@ -100,6 +100,48 @@ jQuery(document).ready(function() {
     jQuery('.submit-panel > input#submit').click(function() {
         onSubmitClicked(jQuery(this));
     });
+
+	// once to initialize!
+
+	jQuery('div.display-preference input[type=checkbox]').each(function() {
+
+
+		var nextDiv = jQuery(this).parent('div').next('div');
+		if(nextDiv.is('.sub-options')) {
+
+			if (jQuery(this).is(':checked')) {
+				nextDiv.removeClass('disabled-options');
+       	    	nextDiv.find('input').removeAttr('disabled');
+	    	} else {
+				nextDiv.addClass('disabled-options');
+				nextDiv.find('input').attr('disabled', true);
+	    	} 
+			
+
+		}
+
+	});
+
+	//bind click (should function be separated out?)
+
+	jQuery('div.display-preference input[type=checkbox]').click( function() {
+
+
+		var nextDiv = jQuery(this).parent('div').next('div');
+		if(nextDiv.is('.sub-options')) {
+
+			if (jQuery(this).is(':checked')) {
+				nextDiv.removeClass('disabled-options');
+       	    	nextDiv.find('input').removeAttr('disabled');
+	    	} else {
+				nextDiv.addClass('disabled-options');
+				nextDiv.find('input').attr('disabled', true);
+	    	} 
+			
+
+		}
+
+	});
     
     // Setup menu tabs
     jQuery('#tabs').tabs();
