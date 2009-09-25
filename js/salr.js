@@ -207,10 +207,9 @@ function modifyImages() {
 	if (settings.replaceLinksWithImages == 'true') {
 		jQuery('.postbody a').each(function() {
 				
-				var match = jQuery(this).attr('href').match('https?://(?:[-_0-9a-zA-Z]+\.)+[a-z]{2,6}(?:/[^/#?]+)+\.(?:jpe?g|gif|png|bmp)');
+				var match = jQuery(this).attr('href').match(/https?\:\/\/(?:[-_0-9a-zA-Z]+\.)+[a-z]{2,6}(?:\/[^/#?]+)+\.(?:jpe?g|gif|png|bmp)/);
 				if(match != null) {
 					jQuery(this).after("<img src='" + match[0] + "' />");
-					console.log('Removed: ' + jQuery(this).html);
 					jQuery(this).remove();
 				}
 		});
@@ -221,7 +220,7 @@ function modifyImages() {
 		jQuery('.postbody img').each(function() {
 			var source = jQuery(this).attr('src');
 			jQuery(this).after("<a href='" + source + "'>" + source + "</a>");
-			jQuery(this).hide();
+			jQuery(this).remove();
 		});
 	}
 
