@@ -255,7 +255,7 @@ function modifyImages() {
 		
 		if(settings.dontReplaceEmoticons == 'true') {
 			subset = subset.not('img[src*=http://i.somethingawful.com/forumsystem/emoticons/]');
-			subset = subset.not('img[src*= http://fi.somethingawful.com/images/smilies/]');
+			subset = subset.not('img[src*=http://fi.somethingawful.com/images/smilies/]');
 		}
 
 		subset.each(function() {
@@ -266,7 +266,13 @@ function modifyImages() {
 	}
 
 	if (settings.restrictImageSize == 'true') {
-		jQuery('.postbody img').css({'max-width':'800px'});
+		var max_width = 800;
+		jQuery('.postbody img').each(function() {
+			if(jQuery(this).width() > max_width) {
+				jQuery(this).css({'max-width':'800px', 'border':'2px dashed red'});
+				jQuery(this).addClass('resized');
+			}
+		});
 	}
 }
 

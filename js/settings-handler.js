@@ -93,52 +93,45 @@ jQuery(document).ready(function() {
         onSubmitClicked(jQuery(this));
     });
 
-	// once to initialize!
+	// once to initialize and once to bind click
 
 	jQuery('div.display-preference input[type=checkbox]').each(function() {
-
-
-		var nextDiv = jQuery(this).parent('div').next('div');
-		if(nextDiv.is('.sub-options')) {
-
-			if (jQuery(this).is(':checked')) {
-				nextDiv.removeClass('disabled-options');
-       	    	nextDiv.find('input').removeAttr('disabled');
-	    	} else {
-				nextDiv.addClass('disabled-options');
-				nextDiv.find('input').attr('disabled', true);
-	    	} 
-			
-
-		}
-
+		onParentOptionSelect(jQuery(this));
+	}).click(function() {
+		onParentOptionSelect(jQuery(this));
 	});
-
-	//bind click (should function be separated out?)
-
-	jQuery('div.display-preference input[type=checkbox]').click( function() {
-
-
-		var nextDiv = jQuery(this).parent('div').next('div');
-		if(nextDiv.is('.sub-options')) {
-
-			if (jQuery(this).is(':checked')) {
-				nextDiv.removeClass('disabled-options');
-       	    	nextDiv.find('input').removeAttr('disabled');
-	    	} else {
-				nextDiv.addClass('disabled-options');
-				nextDiv.find('input').attr('disabled', true);
-	    	} 
-			
-
-		}
-
+	
+	jQuery('resized').toggle( function() {
+		jQuery(this).css({'max-width':'800px', 'border':'2px dashed red'});
+	}, function() {
+		jQuery(this).css({'max-width':'', 'border':''});
 	});
     
     // Setup menu tabs
     jQuery('#tabs').tabs();
 });
 
+/**
+ *
+ * Event handler for sub-options
+ *
+ */
+function onParentOptionSelect(element) {
+
+	var nextDiv = element.parent('div').next('div');
+	if(nextDiv.is('.sub-options')) {
+
+		if (element.is(':checked')) {
+			nextDiv.removeClass('disabled-options');
+   	    	nextDiv.find('input').removeAttr('disabled');
+    	} else {
+			nextDiv.addClass('disabled-options');
+			nextDiv.find('input').attr('disabled', true);
+    	} 
+	
+	}
+}
+	
 /**
  * Event handler for focusing on the input
  *
