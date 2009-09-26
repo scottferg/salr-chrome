@@ -219,6 +219,7 @@ function onSubmitClicked(element) {
     var hideAdvertisements = jQuery('#hide-advertisements').attr('checked');
     var headerLinks = jQuery('#hide-header-links').attr('checked');
     var displayNewPostsFirst = jQuery('#display-new-posts-first').attr('checked');
+	var displayConfigureSalr = jQuery('#display-configure-salr').attr('checked');
 	var replaceVideoLinks = jQuery('#inline-video-links').attr('checked');
 	var replaceImagesWithLinks = jQuery('#replace-images-with-links').attr('checked');
 	var replaceImagesReadOnly = jQuery('#replace-images-read-only').attr('checked');
@@ -243,6 +244,7 @@ function onSubmitClicked(element) {
     window.opener.localStorage.setItem('hide-header-links', headerLinks);
 	window.opener.localStorage.setItem('youtube-highlight', youtubeHighlightField.val());
     window.opener.localStorage.setItem('display-new-posts-first', displayNewPostsFirst);
+	window.opener.localStorage.setItem('display-configure-salr', displayConfigureSalr);
     window.opener.localStorage.setItem('replace-images-with-links', replaceImagesWithLinks);
     window.opener.localStorage.setItem('replace-images-read-only', replaceImagesReadOnly);
 	window.opener.localStorage.setItem('dont-replace-emoticons', dontReplaceEmoticons);

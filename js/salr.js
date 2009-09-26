@@ -47,6 +47,7 @@ port.onMessage.addListener(function(data) {
     settings.hideFooterLinks = data.hideFooterLinks;
     settings.hideHeaderLinks = data.hideHeaderLinks;
     settings.displayNewPostsFirst = data.displayNewPostsFirst;
+	settings.displayConfigureSalr = data.displayConfigureSalr;
 	settings.inlineVideo = data.inlineVideo;
 	settings.replaceImagesWithLinks = data.replaceImagesWithLinks;
 	settings.replaceImagesReadOnly = data.replaceImagesReadOnly;
@@ -72,6 +73,11 @@ port.onMessage.addListener(function(data) {
 port.postMessage({
     'message': 'GetPageSettings'
 });
+
+function openSettings() {
+	console.log("open");
+    port.postMessage({'message': 'OpenSettings'});
+}
 
 // Since we have to wait to receive the settings from the extension,
 // stash the styling logic in it's own function that we can call
@@ -171,6 +177,14 @@ function updateStyling() {
     	newPosts = false;
     	newPostCount = 0;
     });
+	
+	if(settings.displayConfigureSalr == 'true') {
+		jQuery('#navigation li.first').next('li').next('li').after(" - <a id='configure' href='#'>Configure SALR</a>");
+	}
+	
+	jQuery('#configure').click(function() {
+		openSettings();
+	});
     
     // If we need to, move all unseen posts to the end of the list
     if (settings.displayNewPostsFirst =='true') {
