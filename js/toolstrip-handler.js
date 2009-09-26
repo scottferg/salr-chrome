@@ -58,6 +58,7 @@ chrome.extension.onConnect.addListener(function(port) {
             'displayNewPostsFirst' : localStorage.getItem('display-new-posts-first'),
             'replaceImagesWithLinks' : localStorage.getItem('replace-images-with-links'),
             'replaceImagesReadOnly' : localStorage.getItem('replace-images-read-only'),
+			'dontReplaceEmoticons' : localStorage.getItem('dont-replace-emoticons'),
             'replaceLinksWithImages' : localStorage.getItem('replace-links-with-images'),
             'dontReplaceLinkNWS' : localStorage.getItem('dont-replace-link-nws'),
             'dontReplaceLinkSpoiler' : localStorage.getItem('dont-replace-link-spoiler'),

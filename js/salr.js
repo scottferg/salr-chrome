@@ -50,6 +50,7 @@ port.onMessage.addListener(function(data) {
 	settings.inlineVideo = data.inlineVideo;
 	settings.replaceImagesWithLinks = data.replaceImagesWithLinks;
 	settings.replaceImagesReadOnly = data.replaceImagesReadOnly;
+	settings.dontReplaceEmoticons = data.dontReplaceEmoticons;
 	settings.replaceLinksWithImages = data.replaceLinksWithImages;
 	settings.dontReplaceLinkNWS = data.dontReplaceLinkNWS;
 	settings.dontReplaceLinkSpoiler = data.dontReplaceLinkSpoiler;
@@ -250,7 +251,11 @@ function modifyImages() {
 		
 		if(settings.replaceImagesReadOnly == 'true') {
 			subset = subset.filter('.seen1 img, .seen2 img');
-			console.log(subset);
+		}
+		
+		if(settings.dontReplaceEmoticons == 'true') {
+			subset = subset.not('img[src*=http://i.somethingawful.com/forumsystem/emoticons/]');
+			subset = subset.not('img[src*= http://fi.somethingawful.com/images/smilies/]');
 		}
 
 		subset.each(function() {

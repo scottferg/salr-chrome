@@ -229,6 +229,7 @@ function onSubmitClicked(element) {
 	var replaceVideoLinks = jQuery('#inline-video-links').attr('checked');
 	var replaceImagesWithLinks = jQuery('#replace-images-with-links').attr('checked');
 	var replaceImagesReadOnly = jQuery('#replace-images-read-only').attr('checked');
+	var dontReplaceEmoticons = jQuery('#dont-replace-emoticons').attr('checked');
 	var replaceLinksWithImages = jQuery('#replace-links-with-images').attr('checked');
 	var dontReplaceLinkNWS = jQuery('#dont-replace-link-nws').attr('checked');
 	var dontReplaceLinkSpoiler = jQuery('#dont-replace-link-spoiler').attr('checked');
@@ -251,6 +252,7 @@ function onSubmitClicked(element) {
     window.opener.localStorage.setItem('display-new-posts-first', displayNewPostsFirst);
     window.opener.localStorage.setItem('replace-images-with-links', replaceImagesWithLinks);
     window.opener.localStorage.setItem('replace-images-read-only', replaceImagesReadOnly);
+	window.opener.localStorage.setItem('dont-replace-emoticons', dontReplaceEmoticons);
     window.opener.localStorage.setItem('replace-links-with-images', replaceLinksWithImages);
     window.opener.localStorage.setItem('dont-replace-link-nws', dontReplaceLinkNWS);
 	window.opener.localStorage.setItem('dont-replace-link-spoiler', dontReplaceLinkSpoiler);
