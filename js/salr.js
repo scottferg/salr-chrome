@@ -280,13 +280,7 @@ function modifyImages() {
 	}
 
 	if (settings.restrictImageSize == 'true') {
-		var max_width = 800;
-		jQuery('.postbody img').each(function() {
-			if(jQuery(this).width() > max_width) {
-				jQuery(this).css({'max-width':'800px', 'border':'2px dashed red'});
-				jQuery(this).addClass('resized');
-			}
-		});
+		jQuery('.postbody img').css({'max-width':'800px'});
 	}
 }
 

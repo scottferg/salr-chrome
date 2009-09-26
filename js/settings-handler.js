@@ -100,13 +100,7 @@ jQuery(document).ready(function() {
 	}).click(function() {
 		onParentOptionSelect(jQuery(this));
 	});
-	
-	jQuery('resized').toggle( function() {
-		jQuery(this).css({'max-width':'800px', 'border':'2px dashed red'});
-	}, function() {
-		jQuery(this).css({'max-width':'', 'border':''});
-	});
-    
+	    
     // Setup menu tabs
     jQuery('#tabs').tabs();
 });
