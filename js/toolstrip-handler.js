@@ -64,7 +64,7 @@ chrome.extension.onConnect.addListener(function(port) {
 				'displayConfigureSalr' : localStorage.getItem('display-configure-salr'),
 				'replaceImagesWithLinks' : localStorage.getItem('replace-images-with-links'),
 				'replaceImagesReadOnly' : localStorage.getItem('replace-images-read-only'),
-				'dontReplaceEmoticons' : localStorage.getItem('dont-replace-emoticons'),
+				//'dontReplaceEmoticons' : localStorage.getItem('dont-replace-emoticons'),
 				'replaceLinksWithImages' : localStorage.getItem('replace-links-with-images'),
 				'dontReplaceLinkNWS' : localStorage.getItem('dont-replace-link-nws'),
 				'dontReplaceLinkSpoiler' : localStorage.getItem('dont-replace-link-spoiler'),
