@@ -47,18 +47,37 @@ port.onMessage.addListener(function(data) {
     settings.hideFooterLinks = data.hideFooterLinks;
     settings.hideHeaderLinks = data.hideHeaderLinks;
     settings.displayNewPostsFirst = data.displayNewPostsFirst;
-	settings.replaceImages = data.replaceImages;
+	settings.displayConfigureSalr = data.displayConfigureSalr;
+	settings.inlineVideo = data.inlineVideo;
+	settings.replaceImagesWithLinks = data.replaceImagesWithLinks;
+	settings.replaceImagesReadOnly = data.replaceImagesReadOnly;
+	//settings.dontReplaceEmoticons = data.dontReplaceEmoticons;
+	settings.replaceLinksWithImages = data.replaceLinksWithImages;
+	settings.dontReplaceLinkNWS = data.dontReplaceLinkNWS;
+	settings.dontReplaceLinkSpoiler = data.dontReplaceLinkSpoiler;
+	settings.dontReplaceLinkRead = data.dontReplaceLinkRead;
+	settings.restrictImageSize = data.restrictImageSize;
 
     // Update the styles now that we have
     // the settings
     updateStyling();
-	inlineYoutubes();
+	
+	if (settings.inlineVideo == 'true') {
+		inlineYoutubes();
+	}
+
+	modifyImages();
 });
 
 // Request the username from the extension UI
 port.postMessage({
     'message': 'GetPageSettings'
 });
+
+function openSettings() {
+	console.log("open");
+    port.postMessage({'message': 'OpenSettings'});
+}
 
 // Since we have to wait to receive the settings from the extension,
 // stash the styling logic in it's own function that we can call
@@ -158,6 +177,14 @@ function updateStyling() {
     	newPosts = false;
     	newPostCount = 0;
     });
+	
+	if(settings.displayConfigureSalr == 'true') {
+		jQuery('#navigation li.first').next('li').next('li').after(" - <a id='configure' href='#'>Configure SALR</a>");
+	}
+	
+	jQuery('#configure').click(function() {
+		openSettings();
+	});
     
     // If we need to, move all unseen posts to the end of the list
     if (settings.displayNewPostsFirst =='true') {
@@ -196,25 +223,65 @@ function updateStyling() {
             jQuery(this).css('height', '0px');
         });
     }
-
-	if (settings.replaceImages == 'true') {
-		jQuery('.postbody img').each(function() {
-			var source = jQuery(this).attr('src');
-			jQuery(this).after("<a href='" + source + "'>" + source + "</a>");
-			jQuery(this).hide();
-		});
-	}
-
-	modifyImages();
 }
 
 function modifyImages() {
-	if (settings.replaceLinksWithImages == 'true' || true) {
-		console.log(jQuery('.postbody a'));
-		jQuery('.postbody a').each(function() {
-            var match = jQuery(this).attr('href').match('(https?://(?:[a-z\-]+\.)+[a-z]{2,6}(?:/[^/#?]+)+\.(?:jpe?g|gif|png|bmp))');
-	    });
-    }
+
+	// Replace Links with Images
+	if (settings.replaceLinksWithImages == 'true') {
+
+		var subset = jQuery('.postbody a');
+
+		//NWS/NMS links
+		if(settings.dontReplaceLinkNWS == 'true')
+		{
+			console.log("HERE");
+			subset = subset.not(".postbody:has(img[title=':nws:']) a").not(".postbody:has(img[title=':nms:']) a");
+			console.log(subset);
+		}
+
+		//
+		if(settings.dontReplaceLinkSpoiler == 'true') {
+			subset = subset.not('.bbc-spoiler a');	
+		}
+
+		if(settings.dontReplaceLinkRead == 'true') {
+			subset = subset.not('.seen1 a').not('.seen2 a');
+		}
+
+		subset.each(function() {
+
+			var match = jQuery(this).attr('href').match(/https?\:\/\/(?:[-_0-9a-zA-Z]+\.)+[a-z]{2,6}(?:\/[^/#?]+)+\.(?:jpe?g|gif|png|bmp)/);
+			if(match != null) {
+				jQuery(this).after("<img src='" + match[0] + "' />");
+				jQuery(this).remove();
+			}
+		});
+	}
+
+	// Replace inline Images with Links
+	if (settings.replaceImagesWithLinks == 'true') {
+		var subset = jQuery('.postbody img');
+		
+		if(settings.replaceImagesReadOnly == 'true') {
+			subset = subset.filter('.seen1 img, .seen2 img');
+		}
+		
+		//if(settings.dontReplaceEmoticons == 'true') {
+			subset = subset.not('img[src*=http://i.somethingawful.com/forumsystem/emoticons/]');
+			subset = subset.not('img[src*=http://fi.somethingawful.com/images/smilies/]');
+		//}
+
+		subset.each(function() {
+			var source = jQuery(this).attr('src');
+			jQuery(this).after("<a href='" + source + "'>" + source + "</a>");
+			jQuery(this).remove();
+		});
+	}
+
+	if (settings.restrictImageSize == 'true') {
+		jQuery('.postbody img').css({'max-width':'800px'});
+	}
 }
 
 function inlineYoutubes() {

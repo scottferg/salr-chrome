@@ -9,25 +9,6 @@
 <script type="text/javascript" src="js/colorpicker.js"></script>
 <script type="text/javascript" src="js/settings-handler.js"></script>
 <script type="text/javascript" src="js/jquery-ui.js"></script>	
-<script type="text/javascript">
-jQuery(document).ready(function() {
-	   $('.color-select-text').ColorPicker({
-			onSubmit: function(hsb, hex, rgb, el) {
-				$(el).val(hex);
-				$(el).ColorPickerHide();
-				$(el).parent().next().children().css('background-color','#'+hex); //TODO fix this monstrosity.
-			},
-			onBeforeShow: function () { 
-				alert($(this).attr('id'));
-				$(this).ColorPickerSetColor(this.value); // make this work - update the coloured box with onChange
-			}
-		})
-		.bind('keyup', function(){
-			$(this).ColorPickerSetColor(this.value);
-		});
-
-});
-</script>
 
 <title>SALR Settings</title>
 </head>
@@ -49,64 +30,90 @@ jQuery(document).ready(function() {
         </div>
     	<div id="tabs-2">
             <div class="settings-panel">
-                <div class='color-preference'>
-                    <div class='color-select-input'>
-                        Quotations by you:<br/> <input type='text' size='7' default='#a2cd5a' class='color-select-text text-entry' style='color: #999999;' id='user-quote' />
-                    </div>
-                    <div class='color-select'>
-                        <div class='color-select-box'>a</div>
-                    </div>
+				<span class='settings-group-title'>Quotations by you</span>
+				<div class='settings-group'>
+                	<div class='color-preference'>
+                    	<div class='color-select-input'>
+                        	<input type='text' size='7' default='#a2cd5a' value='' class='color-select-text text-entry' style='color: #999999;' id='user-quote' />
+	                    </div>
+    	                <div class='color-select'>
+        	                <div class='color-select-box'></div>
+            	        </div>
+                	</div>
+			<div style="clear: both;"></div>
                 </div>
-                <div class='color-preference'>
-                    <div class='color-select-input'>
-                        Seen threads (Dark shade):<br /> <input type='text' size='7' default='#6699cc' class='color-select-text text-entry' style='color: #999999;' id='dark-read' />
-                    </div>
-                    <div class='color-select'>
-                        <div class='color-select-box'></div>
-                    </div>
-                    <div class='color-picker-box'></div>
+				<span class='settings-group-title'>Seen threads (Dark shade)</span>
+				<div class='settings-group'>
+					<div class='color-preference'>
+                    	<div class='color-select-input'>
+                        	<input type='text' size='7' default='#6699cc' class='color-select-text text-entry' style='color: #999999;' id='dark-read' />
+	                    </div>
+    	                <div class='color-select'>
+        	                <div class='color-select-box'></div>
+            	        </div>
+                    	<div class='color-picker-box'></div>
+                	</div>
+			<div style="clear: both;"></div>
+				</div>
+				<span class='settings-group-title'>Seen threads (Light shade)</span>
+				<div class='settings-group'>
+					<div class='color-preference'>
+                    	<div class='color-select-input'>
+                        	<input type='text' size='7' default='#99ccff' class='color-select-text text-entry' style='color: #999999;' id='light-read' />
+	                    </div>
+    	                <div class='color-select'>
+        	                <div class='color-select-box'></div>
+            	        </div>
+                	    <div class='color-picker-box'></div>
+                	</div>
+			<div style="clear: both;"></div>
                 </div>
-                <div class='color-preference'>
-                    <div class='color-select-input'>
-                        Seen threads (Light shade):<br /> <input type='text' size='7' default='#99ccff' class='color-select-text text-entry' style='color: #999999;' id='light-read' />
-                    </div>
-                    <div class='color-select'>
-                        <div class='color-select-box'></div>
-                    </div>
-                    <div class='color-picker-box'></div>
-                </div>
-                <div class='color-preference'>
-                    <div class='color-select-input'>
-                        Thread with new replies (Dark shade):<br /> <input type='text' size='7' default='#99cc99' class='color-select-text text-entry' style='color: #999999;' id='dark-new-replies' />
-                    </div>
-                    <div class='color-select'>
-                        <div class='color-select-box'></div>
-                    </div>
-                    <div class='color-picker-box'></div>
-                </div>
-                <div class='color-preference'>
-                    <div class='color-select-input'>
-                        Thread with new replies (Light shade):<br/> <input type='text' size='7' default='#ccffcc' class='color-select-text text-entry' style='color: #999999;' id='light-new-replies' />
-                    </div>
-                    <div class='color-select'>
-                        <div class='color-select-box'></div>
-                    </div>
-                    <div class='color-picker-box'></div>
-                </div>
-				 <div class='color-preference'>
-                    <div class='color-select-input'>
-                        Youtube link highlight:<br/> <input type='text' size='7' default='#ff00ff' class='color-select-text text-entry' style='color: #999999;' id='youtube-highlight' />
-                    </div>
-                    <div class='color-select'>
-                        <div class='color-select-box'></div>
-                    </div>
-                    <div class='color-picker-box'></div>
-                </div>
-            </div>
-            <div style="clear: both;"></div>
+				<span class='settings-group-title'>Thread with new replies (Dark shade)</span>
+				<div class='settings-group'>
+					<div class='color-preference'>
+                    	<div class='color-select-input'>
+                        	<input type='text' size='7' default='#99cc99' class='color-select-text text-entry' style='color: #999999;' id='dark-new-replies' />
+	                    </div>
+    		            <div class='color-select'>
+            	            <div class='color-select-box'></div>
+                	    </div>
+                    	<div class='color-picker-box'></div>
+	                </div>
+			<div style="clear: both;"></div>
+    			</div>
+				<span class='settings-group-title'>Thread with new replies (Light shade)</span>
+				<div class='settings-group'>
+					<div class='color-preference'>
+                    	<div class='color-select-input'>
+                        	<input type='text' size='7' default='#ccffcc' class='color-select-text text-entry' style='color: #999999;' id='light-new-replies' />
+	                    </div>
+    	                <div class='color-select'>
+        	                <div class='color-select-box'></div>
+            	        </div>
+                	    <div class='color-picker-box'></div>
+	                </div>
+			<div style="clear: both;"></div>
+				</div>
+				<span class='settings-group-title'>Youtube link highlight</span>
+				<div class='settings-group'>
+					<div class='color-preference'>
+                    	<div class='color-select-input'>
+                        	<input type='text' size='7' default='#ff00ff' class='color-select-text text-entry' style='color: #999999;' id='youtube-highlight' />
+	                    </div>
+    	                <div class='color-select'>
+        	                <div class='color-select-box'></div>
+            	        </div>
+                	    <div class='color-picker-box'></div>
+	                </div>
+			<div style="clear: both;"></div>
+    	        </div>
+        	</div>
         </div>
     	<div id="tabs-3">
             <div class="settings-panel">
+				<div class='display-preference'>
+					Display Configure SALR in forum menu: <input id='display-configure-salr' type='checkbox' />
+				</div>
                 <div class='display-preference'>
                     Hide header/footer ads: <input id='hide-advertisements' type='checkbox' />
                 </div>
@@ -115,15 +122,64 @@ jQuery(document).ready(function() {
                 </div>
                 <div class='display-preference'>
                     Display threads with new posts first: <input id='display-new-posts-first' type='checkbox' />
-					</div>
+				</div>
+				<div class='display-preference'>
+                    Convert Youtube links to inline player: <input id='inline-video-links' type='checkbox' />
+				</div>
             </div>
             <div style="clear: both;"></div>
 		</div>
 		<div id="tabs-4">
-            <div class="settings-panel">
-				<div class='display-preference'>
-                    Replace Images with links: <input id='replace-images-with-links' type='checkbox' />
-                </div>
+			<div class="settings-panel">
+				<span class='settings-group-title'>Links-to-Images</span>
+				<div class='settings-group'>
+					<div class='display-preference'>
+						Convert links into inline images: <input id='replace-links-with-images' type='checkbox' />
+					</div>
+					<div class='sub-options'>
+						<div class='display-preference'>
+							Don't convert if post contains a NWS/NMS warning: <input id='dont-replace-link-nws' type='checkbox' />
+						</div>
+						<div class='display-preference'>
+							Don't convert links inside spoiler tags: <input id='dont-replace-link-spoiler' type='checkbox' />
+						</div>
+						<div class='display-preference'>
+							Don't convert links in marked-as-read posts: <input id='dont-replace-link-read' type='checkbox' />
+						</div>
+					</div>
+				</div>
+				<span class='settings-group-title'>Images-to-Links</span>
+				<div class='settings-group'>
+					<div class='display-preference'>
+           	        	Replace Images with links: <input id='replace-images-with-links' type='checkbox' />
+					</div>
+					<div class='sub-options'>
+						<div class='display-preference'>
+							Convert Images in Read Posts only: <input id='replace-images-read-only' type='checkbox' />
+						</div>
+						<!--
+						<div class='display-preference'>
+							Don't convert emoticon images: <input id='dont-replace-emoticons' type='checkbox' />
+						</div>
+						-->
+					</div>
+				</div>
+				<span class='settings-group-title'>Image Resizing</span>
+				<div class='settings-group'>
+					<div class='display-preference'>
+						Restrict Size of Images: <input id='restrict-image-size' type='checkbox' />
+					</div>
+					<!--
+					<div class='sub-options'>
+						<div class='display-preference'>
+							<input id='restrict-image-size-width' type='number' /> Width
+						</div>
+						<div class='display-preference'>
+							<div id='restrict-image-size-height' class='slider'></div> Height
+						</div>
+					</div>
+					-->
+				</div>
             </div>
             <div style="clear: both;"></div>
 	    </div>

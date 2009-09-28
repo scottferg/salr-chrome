@@ -11,16 +11,14 @@ div.username-field, div.color-preference {
 div.color-select-input {
     float: left;
     width: 350px;
-	padding-bottom:3px;
+	margin-top: 7px;
 }
     
 div.color-select {
     width: 36px;
     height: 36px;
     position: relative;
-    top: -5px;
     float: left;
-	
 }
 
 div.color-select-box {
@@ -38,6 +36,30 @@ div.submit-panel {
     padding-top: 4px;
     text-align: right;
 }
+
+div.settings-group {
+	padding: 10px 5px;
+	border: 1px solid;
+	border-color: #BBBBBB;
+	margin-bottom: 10px;
+}
+
+span.settings-group-title {
+
+	position: relative;
+	top: 8px;
+	left: 5px;
+	background-color: #ffffff;
+}
+
+div.sub-options {
+	padding-left: 16px;
+}
+
+div.disabled-options {
+	color: #cccccc;
+}
+
 
 input#submit {
     border: 1px solid;

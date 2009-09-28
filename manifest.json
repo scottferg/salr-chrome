@@ -1,5 +1,5 @@
 {
-  "name": "SALR Extension", 
+  "name": "Something Awful Last Read", 
   "version": "0.2",
   "description": "Highlights posts which quote the user", 
   "icons": {
@@ -30,5 +30,6 @@
         "name": "SALR Settings",
         "icons": ["images/logo16.png"]
     }
-  ]
+  ],
+  "update_url": "http://scottferg.github.com/salr-chrome/update/update_manifest.xml"
 }

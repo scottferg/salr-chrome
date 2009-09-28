@@ -49,7 +49,7 @@ jQuery(document).ready(function() {
 	// I'd really rather not do the exact same thing twice, but potentially
 	// this functionality could differ from the username field, so it's
 	// probably the better approach for the future.
-    jQuery('.settings-panel > .color-preference > .color-select-input > input.color-select-text').each(function() {
+    jQuery('div.settings-panel > div.settings-group > div.color-preference > div.color-select-input > input.color-select-text').each(function() {
         populateValues(jQuery(this));
         // Set focus handler for the entry fields
         jQuery(this).focus(function() {
@@ -63,35 +63,27 @@ jQuery(document).ready(function() {
     });
 
     // Initialize checkbox fields
-    jQuery('div.display-preference > input').each(function() {
+    jQuery('div.display-preference input').each(function() {
         populateCheckboxes(jQuery(this));
     });
-/*
-    // Set color selectors
-    jQuery('div.color-picker-box').ColorPicker({
-        flat: true,
-        color: '#dddddd',
-        onShow: function(colorpicker) {
-            jQuery(colorpicker).fadeIn(500);
-        },
-        onHide: function(colorpicker) {
-            jQuery(colorpicker).fadeOut(500);
-        },
-        onSubmit: function(hsb, hex, rgb, element) {
-            // Set the box to the chosen color
-            jQuery(this).parent().find('div.color-select-box').css('background-color', '#' + hex);
-            jQuery(element).ColorPickerHide();
-        }
-    });
-    jQuery('div.color-picker-box > div').css('position', 'absolute');
-*/
+
+    // Setup color picker handles on the text boxes
+	jQuery('.color-select-text').ColorPicker({
+            onSubmit: function(hsb, hex, rgb, el) {
+				jQuery(el).val('#' + hex);
+				jQuery(el).ColorPickerHide();
+				jQuery(el).parent().next().children().css('background-color', '#' + hex); //TODO fix this monstrosity.
+			},
+			onBeforeShow: function () { 
+				jQuery(this).ColorPickerSetColor(this.value);
+			}
+	})
+	.bind('keyup', function() {
+		jQuery(this).ColorPickerSetColor(this.value);
+	});
+
     jQuery('div.color-select-box').each(function() {
         var backgroundColor = jQuery(this).parent().parent().find('input.color-select-text').val();
-        var that = jQuery(this).parent();
-
-        jQuery(this).click(function() {
-            jQuery('div.color-picker-box', that).ColorPickerShow();
-        });
 
         jQuery(this).css('background-color', backgroundColor);
     });
@@ -100,11 +92,40 @@ jQuery(document).ready(function() {
     jQuery('.submit-panel > input#submit').click(function() {
         onSubmitClicked(jQuery(this));
     });
-    
+
+	// once to initialize and once to bind click
+
+	jQuery('div.display-preference input[type=checkbox]').each(function() {
+		onParentOptionSelect(jQuery(this));
+	}).click(function() {
+		onParentOptionSelect(jQuery(this));
+	});
+	    
     // Setup menu tabs
     jQuery('#tabs').tabs();
 });
 
+/**
+ *
+ * Event handler for sub-options
+ *
+ */
+function onParentOptionSelect(element) {
+
+	var nextDiv = element.parent('div').next('div');
+	if(nextDiv.is('.sub-options')) {
+
+		if (element.is(':checked')) {
+			nextDiv.removeClass('disabled-options');
+   	    	nextDiv.find('input').removeAttr('disabled');
+    	} else {
+			nextDiv.addClass('disabled-options');
+			nextDiv.find('input').attr('disabled', true);
+    	} 
+	
+	}
+}
+	
 /**
  * Event handler for focusing on the input
  *
@@ -113,7 +134,7 @@ jQuery(document).ready(function() {
  */
 function onInputSelect(element) {
     element.css('color', '#000000');
-    element.val('');
+    //element.val('');
 }
 
 /**
@@ -146,10 +167,11 @@ function populateValues(element) {
     if (!value) {
         // If there is no stored setting, use the default
         // value stored within the DOM
-        element.val(element.attr('default'));
+		var defaultCol = element.attr('default');
+        element.attr('value', defaultCol);
     } else {
         // Otherwise, write the stored preference
-        element.val(value);
+        element.attr('value',value);
     }
 }
 
@@ -191,7 +213,16 @@ function onSubmitClicked(element) {
     var hideAdvertisements = jQuery('#hide-advertisements').attr('checked');
     var headerLinks = jQuery('#hide-header-links').attr('checked');
     var displayNewPostsFirst = jQuery('#display-new-posts-first').attr('checked');
-	var replaceImages = jQuery('#replace-images-with-links').attr('checked');
+	var displayConfigureSalr = jQuery('#display-configure-salr').attr('checked');
+	var replaceVideoLinks = jQuery('#inline-video-links').attr('checked');
+	var replaceImagesWithLinks = jQuery('#replace-images-with-links').attr('checked');
+	var replaceImagesReadOnly = jQuery('#replace-images-read-only').attr('checked');
+	//var dontReplaceEmoticons = jQuery('#dont-replace-emoticons').attr('checked');
+	var replaceLinksWithImages = jQuery('#replace-links-with-images').attr('checked');
+	var dontReplaceLinkNWS = jQuery('#dont-replace-link-nws').attr('checked');
+	var dontReplaceLinkSpoiler = jQuery('#dont-replace-link-spoiler').attr('checked');
+	var dontReplaceLinkRead = jQuery('#dont-replace-link-read').attr('checked');
+	var restrictImageSize = jQuery('#restrict-image-size').attr('checked');
 
     // Store the preferences locally so that the page can
     // request it
@@ -207,8 +238,21 @@ function onSubmitClicked(element) {
     window.opener.localStorage.setItem('hide-header-links', headerLinks);
 	window.opener.localStorage.setItem('youtube-highlight', youtubeHighlightField.val());
     window.opener.localStorage.setItem('display-new-posts-first', displayNewPostsFirst);
-    window.opener.localStorage.setItem('replace-images-with-links', replaceImages);
+	window.opener.localStorage.setItem('display-configure-salr', displayConfigureSalr);
+    window.opener.localStorage.setItem('replace-images-with-links', replaceImagesWithLinks);
+    window.opener.localStorage.setItem('replace-images-read-only', replaceImagesReadOnly);
+	//window.opener.localStorage.setItem('dont-replace-emoticons', dontReplaceEmoticons);
+    window.opener.localStorage.setItem('replace-links-with-images', replaceLinksWithImages);
+    window.opener.localStorage.setItem('dont-replace-link-nws', dontReplaceLinkNWS);
+	window.opener.localStorage.setItem('dont-replace-link-spoiler', dontReplaceLinkSpoiler);
+	window.opener.localStorage.setItem('dont-replace-link-read', dontReplaceLinkRead);
+	window.opener.localStorage.setItem('restrict-image-size', restrictImageSize);
+	window.opener.localStorage.setItem('inline-video-links', replaceVideoLinks);
 
-    // Close the settings window
+
+    
+	
+	
+	// Close the settings window
     window.close();
 }

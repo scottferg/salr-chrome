@@ -29,29 +29,50 @@
  */
 chrome.extension.onConnect.addListener(function(port) {
     port.onMessage.addListener(function(data) {
-        // Register the tab with the tagging page action
-        chrome.pageActions.enableForTab("open_settings",
-                                        { 
-                                            tabId: port.tab.id,
-                                            url: port.tab.url,
-                                            title: "Click to open SALR settings",
-                                            iconId: 0
-                                        });
-        // Respond with the username
-        port.postMessage({
-            'username': localStorage.getItem('username'),
-            'userQuote': localStorage.getItem('user-quote'),
-            'darkRead' : localStorage.getItem('dark-read'),
-            'lightRead' : localStorage.getItem('light-read'),
-            'darkNewReplies' : localStorage.getItem('dark-new-replies'),
-            'lightNewReplies' : localStorage.getItem('light-new-replies'),
-			'youtubeHighlight' : localStorage.getItem('youtube-highlight'),
-            'hideAdvertisements' : localStorage.getItem('hide-advertisements'),
-            'hideHeaderLinks' : localStorage.getItem('hide-header-links'),
-            'hideFooterLinks' : localStorage.getItem('hide-footer-links'),
-            'displayNewPostsFirst' : localStorage.getItem('display-new-posts-first'),
-            'replaceImages' : localStorage.getItem('replace-images-with-links')
-        });
+		console.log(data);
+		if(data.message == "OpenSettings") {
+			onToolbarClick();
+		} else {
+
+			// Register the tab with the tagging page action
+			chrome.pageActions.enableForTab("open_settings",
+											{ 
+												tabId: port.tab.id,
+												url: port.tab.url,
+												title: "Click to open SALR settings",
+												iconId: 0
+											});
+			
+			// If we don't have stored settings, set defaults
+			if (!localStorage.getItem('username')) {
+				setupDefaultPreferences();
+			}
+			
+			// Respond with the username
+			port.postMessage({
+				'username': localStorage.getItem('username'),
+				'userQuote': localStorage.getItem('user-quote'),
+				'darkRead' : localStorage.getItem('dark-read'),
+				'lightRead' : localStorage.getItem('light-read'),
+				'darkNewReplies' : localStorage.getItem('dark-new-replies'),
+				'lightNewReplies' : localStorage.getItem('light-new-replies'),
+				'youtubeHighlight' : localStorage.getItem('youtube-highlight'),
+				'hideAdvertisements' : localStorage.getItem('hide-advertisements'),
+				'hideHeaderLinks' : localStorage.getItem('hide-header-links'),
+				'hideFooterLinks' : localStorage.getItem('hide-footer-links'),
+				'displayNewPostsFirst' : localStorage.getItem('display-new-posts-first'),
+				'displayConfigureSalr' : localStorage.getItem('display-configure-salr'),
+				'replaceImagesWithLinks' : localStorage.getItem('replace-images-with-links'),
+				'replaceImagesReadOnly' : localStorage.getItem('replace-images-read-only'),
+				//'dontReplaceEmoticons' : localStorage.getItem('dont-replace-emoticons'),
+				'replaceLinksWithImages' : localStorage.getItem('replace-links-with-images'),
+				'dontReplaceLinkNWS' : localStorage.getItem('dont-replace-link-nws'),
+				'dontReplaceLinkSpoiler' : localStorage.getItem('dont-replace-link-spoiler'),
+				'dontReplaceLinkRead' : localStorage.getItem('dont-replace-link-read'),
+				'restrictImageSize' : localStorage.getItem('restrict-image-size'),
+				'inlineVideo' : localStorage.getItem('inline-video-links')
+			});
+		}
     });
 });
 
@@ -68,4 +89,20 @@ function onToolbarClick() {
     window.open(chrome.extension.getURL('') + 'settings.html', 
                 'salr-settings', 
                 'location=0,scrollbars=0,toolbar=0,resizable=0,menubar=0,status=0,width=510,height=510');
+}
+
+/**
+ * Sets up default preferences for highlighting only
+ *
+ */
+function setupDefaultPreferences() {
+    localStorage.setItem('user-quote', '#a2cd5a');
+    localStorage.setItem('dark-read', '#6699cc');
+    localStorage.setItem('light-read', '#99ccff');
+    localStorage.setItem('dark-new-replies', '#99cc99');
+    localStorage.setItem('light-new-replies', '#ccffcc');
+    localStorage.setItem('youtube-highlight', '#ff00ff');
+	//image options
+	localStorage.setItem('dont-replace-link-nws', true);
+	
 }
