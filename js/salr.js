@@ -378,6 +378,11 @@ function jumpToPage(rootPageType, basePageID, page) {
     location.href = 'http://forums.somethingawful.com/' + findCurrentPage() + '?' + rootPageType + '=' + basePageID + '&pagenumber=' + page;
 }
 
+window.onresize = function() {
+    jQuery('#page-nav').css('top', (window.innerHeight - 36) + 'px');
+    jQuery('#page-nav').css('left', (window.innerWidth - 220) + 'px');
+};
+
 /**
  * Display the page navigator HTML
  *
@@ -409,9 +414,14 @@ function displayPageNavigator() {
                 '   </span>' +
                 '   <span id="last-page-buttons">' +
                 '       <img src="' + chrome.extension.getURL('images/') + 'nav-nextpage.png" id="nav-next-page" class="nav-button" />' + 
-                '       <img src="' + chrome.extension.getURL('images/') + 'nav-lastpage.png" id="nav-last-page" class="nav-button" />' +
-                '       <img src="' + chrome.extension.getURL('images/') + 'lastpost.png" class="nav-button" />' +
-                '   </span>' +
+                '       <img src="' + chrome.extension.getURL('images/') + 'nav-lastpage.png" id="nav-last-page" class="nav-button" />';
+    
+    // Display the "Jump to last post" option if this is a thread
+    if (rootPageType == 'threadid') {
+        html += '       <img src="' + chrome.extension.getURL('images/') + 'lastpost.png" class="nav-button" />';
+    }
+
+    html +=    '   </span>' +
                '</div>';
 
     // Add the navigator to the DOM
