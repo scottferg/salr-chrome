@@ -331,12 +331,18 @@ function findCurrentPage() {
  *
  */
 function findForumID() {
-    // TODO: Make sure we are looking at threadid or forumid
-    //
     // Substrings out everything after the domain, then splits on the ?,
     // defaults to the argument list (right), splits on the &, looks at the first
     // parameter in the list, and splits on the = to get the result
-    return (((window.location.href).substr(33).split('?')[1]).split('&')[0]).split('=')[1];
+    var parameterList = ((window.location.href).substr(33).split('?')[1]).split('&');
+
+    for (var parameter in parameterList) {
+        var currentParam = (parameterList[parameter]).split('=');
+
+        if (currentParam[0] == 'threadid' || currentParam[0] == 'forumid') {
+            return currentParam[1]; 
+        }
+    }
 }
 
 /**
