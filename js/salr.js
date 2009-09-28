@@ -67,7 +67,10 @@ port.onMessage.addListener(function(data) {
 	}
 
 	modifyImages();
-    displayPageNavigator();
+
+    if (findCurrentPage() == 'forumdisplay.php' || findCurrentPage() == 'showthread.php') {
+        displayPageNavigator();
+    }
 });
 
 // Request the username from the extension UI
@@ -314,25 +317,61 @@ function inlineYoutubes() {
 }
 
 /**
+ * Returns the current PHP page the user is on
+ *
+ */
+function findCurrentPage() {
+
+    return (window.location.href).substr(33).split('?')[0];
+}
+
+/**
+ * Count the total number of pages to display in page navigator
+ *
+ */
+function countPages() {
+
+    var index = (findCurrentPage() == 'forumdisplay.php') ? 5 : 3;
+
+    var result;
+
+    jQuery('.pages').each(function() {
+        var text = jQuery(this).html();
+        var firstIndex = text.indexOf('(');
+        var endIndex = text.indexOf(')');
+
+        result = text.substr(firstIndex + 1, endIndex - (firstIndex + 1));
+    });
+
+    return Number(result);
+}
+
+/**
  * Display the page navigator HTML
  *
  */
 function displayPageNavigator() {
+
+    var pageCount = countPages();
+
     var html = '<div id="page-nav"> ' + 
                 '   <span id="first-page-buttons">' + 
                 '       <img src="' + chrome.extension.getURL('images/') + 'nav-firstpage.png" />' + 
                 '       <img src="' + chrome.extension.getURL('images/') + 'nav-prevpage.png" />' +
                 '   </span>' +
                 '   <span id="page-drop-down">' +
-                '       <select id="number-drop-down" name="page-number">' +
-                '           <option value="1">1</option>' +
-                '           <option value="2">2</option>' +
-                '           <option value="3">3</option>' +
-                '       </select>' +
+                '       <select id="number-drop-down" name="page-number">';
+
+    for (var i = 1; i < (pageCount + 1); i++) {
+        html += '           <option value="' + i + '">' + i + '</option>';
+    }
+
+    html +=     '       </select>' +
                 '   </span>' +
                 '   <span id="last-page-buttons">' +
                 '       <img src="' + chrome.extension.getURL('images/') + 'nav-nextpage.png" />' + 
                 '       <img src="' + chrome.extension.getURL('images/') + 'nav-lastpage.png" />' +
+                '       <img src="' + chrome.extension.getURL('images/') + 'lastpost.png" />' +
                 '   </span>' +
                '</div>';
 
@@ -340,7 +379,7 @@ function displayPageNavigator() {
 
     // Setup page nav CSS
     jQuery('#page-nav').css('background', '#006699');
-    jQuery('#page-nav').css('width', '180px');
+    jQuery('#page-nav').css('width', '200px');
     jQuery('#page-nav').css('float', 'right');
     jQuery('#page-nav').css('position', 'fixed');
     jQuery('#page-nav').css('top', (window.innerHeight - 29) + 'px');
