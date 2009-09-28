@@ -1,5 +1,11 @@
 SALR Extension for Chrome
 
+v0.3 - "Page navigator motherfucker!"
+
+- Add page navigator (Scott Ferguson)
+- Add 'Configure SALR' link (Bill Best)
+- Styling tweaks in settings UI (Scott Ferguson)
+
 v0.2 - "Where did all this code come from?"
 
 - Add option for embedding inline Youtube videos (Jono Taberner)
