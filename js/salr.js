@@ -67,6 +67,7 @@ port.onMessage.addListener(function(data) {
 	}
 
 	modifyImages();
+    displayPageNavigator();
 });
 
 // Request the username from the extension UI
@@ -312,6 +313,36 @@ function inlineYoutubes() {
 	);
 }
 
+/**
+ * Display the page navigator HTML
+ *
+ */
+function displayPageNavigator() {
+    var html = '<div id="page-nav"> ' + 
+                '   <span id="first-page-buttons">' + 
+                '       <img src="' + chrome.extension.getURL('images/') + 'nav-firstpage.png" />' + 
+                '       <img src="' + chrome.extension.getURL('images/') + 'nav-prevpage.png" />' +
+                '   </span>' +
+                '   <span id="page-drop-down">' +
+                '       <select id="number-drop-down" name="page-number">' +
+                '           <option value="1">1</option>' +
+                '           <option value="2">2</option>' +
+                '           <option value="3">3</option>' +
+                '       </select>' +
+                '   </span>' +
+                '   <span id="last-page-buttons">' +
+                '       <img src="' + chrome.extension.getURL('images/') + 'nav-nextpage.png" />' + 
+                '       <img src="' + chrome.extension.getURL('images/') + 'nav-lastpage.png" />' +
+                '   </span>' +
+               '</div>';
 
+    jQuery('#container').append(html);
 
-   
+    // Setup page nav CSS
+    jQuery('#page-nav').css('background', '#006699');
+    jQuery('#page-nav').css('width', '180px');
+    jQuery('#page-nav').css('float', 'right');
+    jQuery('#page-nav').css('position', 'fixed');
+    jQuery('#page-nav').css('top', (window.innerHeight - 29) + 'px');
+    jQuery('#page-nav').css('left', (window.innerHeight - 124) + 'px');
+}
