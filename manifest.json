@@ -13,6 +13,7 @@
     {
       "js": [
         "js/jquery.js",
+        "js/page-navigator.js",
         "js/salr.js",
 		"js/colorpicker.js"
       ],
