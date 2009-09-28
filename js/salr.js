@@ -414,14 +414,8 @@ function displayPageNavigator() {
                 '   </span>' +
                 '   <span id="last-page-buttons">' +
                 '       <img src="' + chrome.extension.getURL('images/') + 'nav-nextpage.png" id="nav-next-page" class="nav-button" />' + 
-                '       <img src="' + chrome.extension.getURL('images/') + 'nav-lastpage.png" id="nav-last-page" class="nav-button" />';
-    
-    // Display the "Jump to last post" option if this is a thread
-    if (rootPageType == 'threadid') {
-        html += '       <img src="' + chrome.extension.getURL('images/') + 'lastpost.png" class="nav-button" />';
-    }
-
-    html +=    '   </span>' +
+                '       <img src="' + chrome.extension.getURL('images/') + 'nav-lastpage.png" id="nav-last-page" class="nav-button" />' +
+                '   </span>' +
                '</div>';
 
     // Add the navigator to the DOM
@@ -429,12 +423,13 @@ function displayPageNavigator() {
 
     // Setup page nav CSS
     jQuery('#page-nav').css('background', '#006699');
-    jQuery('#page-nav').css('width', '200px');
+    jQuery('#page-nav').css('width', '180px');
     jQuery('#page-nav').css('float', 'right');
     jQuery('#page-nav').css('position', 'fixed');
-    jQuery('#page-nav').css('top', (window.innerHeight - 36) + 'px');
+    jQuery('#page-nav').css('top', (window.innerHeight - 31) + 'px');
     jQuery('#page-nav').css('left', (window.innerWidth - 220) + 'px');
     jQuery('#page-nav').css('padding-bottom', '2px');
+    jQuery('#page-nav').css('padding-left', '4px');
 
     // Set styles for buttons and inputs
     jQuery('.nav-button').css('position', 'relative');
