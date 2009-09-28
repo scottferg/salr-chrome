@@ -331,6 +331,8 @@ function findCurrentPage() {
  *
  */
 function findForumID() {
+    // TODO: Make sure we are looking at threadid or forumid
+    //
     // Substrings out everything after the domain, then splits on the ?,
     // defaults to the argument list (right), splits on the &, looks at the first
     // parameter in the list, and splits on the = to get the result
@@ -377,8 +379,6 @@ function jumpToPage(rootPageType, basePageID, page) {
 function displayPageNavigator() {
 
     var pageCount = countPages();
-    // TODO: Determine the pagetype
-    //
     // Determines if we are on a forum or a thread
     var rootPageType = (findCurrentPage() == 'forumdisplay.php') ? 'forumid' : 'threadid';
     // Either forum ID or thread ID, depending on which we are
@@ -417,6 +417,8 @@ function displayPageNavigator() {
     jQuery('#page-nav').css('position', 'fixed');
     jQuery('#page-nav').css('top', (window.innerHeight - 29) + 'px');
     jQuery('#page-nav').css('left', (window.innerHeight - 124) + 'px');
+
+    jQuery('select#number-drop-down').val(currentPage);
 
     jQuery("select#number-drop-down").change(function () {
         jQuery("select option:selected").each(function () {
