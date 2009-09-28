@@ -384,8 +384,6 @@ function jumpToPage(rootPageType, basePageID, page) {
  */
 function displayPageNavigator() {
 
-    //TODO: Disable invalid buttons
-
     var pageCount = countPages();
     // Determines if we are on a forum or a thread
     var rootPageType = (findCurrentPage() == 'forumdisplay.php') ? 'forumid' : 'threadid';
@@ -446,19 +444,33 @@ function displayPageNavigator() {
         });
     });
 
-    jQuery('#nav-first-page').click(function() {
-        jumpToPage(rootPageType, basePageID, 1);
-    });
+    // If we are on the first page, disable the first two buttons,
+    // otherwise setup event handlers
+    if (currentPage != 1) {
+        jQuery('#nav-first-page').click(function() {
+            jumpToPage(rootPageType, basePageID, 1);
+        });
 
-    jQuery('#nav-last-page').click(function() {
-        jumpToPage(rootPageType, basePageID, pageCount);
-    });
+        jQuery('#nav-prev-page').click(function() {
+            jumpToPage(rootPageType, basePageID, currentPage - 1);
+        });
+    } else {
+        jQuery('#nav-first-page').css('opacity', '0.5');
+        jQuery('#nav-prev-page').css('opacity', '0.5');
+    }
 
-    jQuery('#nav-next-page').click(function() {
-        jumpToPage(rootPageType, basePageID, currentPage + 1);
-    });
+    // If we are on the last page, disable the last two buttons,
+    // otherwise setup event handlers
+    if (currentPage != pageCount) {
+        jQuery('#nav-last-page').click(function() {
+            jumpToPage(rootPageType, basePageID, pageCount);
+        });
 
-    jQuery('#nav-prev-page').click(function() {
-        jumpToPage(rootPageType, basePageID, currentPage - 1);
-    });
+        jQuery('#nav-next-page').click(function() {
+            jumpToPage(rootPageType, basePageID, currentPage + 1);
+        });
+    } else {
+        jQuery('#nav-last-page').css('opacity', '0.5');
+        jQuery('#nav-next-page').css('opacity', '0.5');
+    }
 }
