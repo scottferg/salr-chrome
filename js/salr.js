@@ -378,6 +378,8 @@ function jumpToPage(rootPageType, basePageID, page) {
  */
 function displayPageNavigator() {
 
+    //TODO: Disable invalid buttons
+
     var pageCount = countPages();
     // Determines if we are on a forum or a thread
     var rootPageType = (findCurrentPage() == 'forumdisplay.php') ? 'forumid' : 'threadid';
@@ -389,8 +391,8 @@ function displayPageNavigator() {
 
     var html = '<div id="page-nav"> ' + 
                 '   <span id="first-page-buttons">' + 
-                '       <img src="' + chrome.extension.getURL('images/') + 'nav-firstpage.png" id="nav-first-page" />' + 
-                '       <img src="' + chrome.extension.getURL('images/') + 'nav-prevpage.png" id="nav-prev-page" />' +
+                '       <img src="' + chrome.extension.getURL('images/') + 'nav-firstpage.png" id="nav-first-page" class="nav-button" />' + 
+                '       <img src="' + chrome.extension.getURL('images/') + 'nav-prevpage.png" id="nav-prev-page" class="nav-button" />' +
                 '   </span>' +
                 '   <span id="page-drop-down">' +
                 '       <select id="number-drop-down" name="page-number">';
@@ -402,12 +404,13 @@ function displayPageNavigator() {
     html +=     '       </select>' +
                 '   </span>' +
                 '   <span id="last-page-buttons">' +
-                '       <img src="' + chrome.extension.getURL('images/') + 'nav-nextpage.png" id="nav-next-page" />' + 
-                '       <img src="' + chrome.extension.getURL('images/') + 'nav-lastpage.png" id="nav-last-page" />' +
-                '       <img src="' + chrome.extension.getURL('images/') + 'lastpost.png" />' +
+                '       <img src="' + chrome.extension.getURL('images/') + 'nav-nextpage.png" id="nav-next-page" class="nav-button" />' + 
+                '       <img src="' + chrome.extension.getURL('images/') + 'nav-lastpage.png" id="nav-last-page" class="nav-button" />' +
+                '       <img src="' + chrome.extension.getURL('images/') + 'lastpost.png" class="nav-button" />' +
                 '   </span>' +
                '</div>';
 
+    // Add the navigator to the DOM
     jQuery('#container').append(html);
 
     // Setup page nav CSS
@@ -415,11 +418,22 @@ function displayPageNavigator() {
     jQuery('#page-nav').css('width', '200px');
     jQuery('#page-nav').css('float', 'right');
     jQuery('#page-nav').css('position', 'fixed');
-    jQuery('#page-nav').css('top', (window.innerHeight - 29) + 'px');
-    jQuery('#page-nav').css('left', (window.innerHeight - 124) + 'px');
+    jQuery('#page-nav').css('top', (window.innerHeight - 36) + 'px');
+    jQuery('#page-nav').css('left', (window.innerWidth - 220) + 'px');
+    jQuery('#page-nav').css('padding-bottom', '2px');
 
+    // Set styles for buttons and inputs
+    jQuery('.nav-button').css('position', 'relative');
+    jQuery('.nav-button').css('top', '4px');
+    jQuery('.nav-button').css('cursor', 'pointer');
+
+    jQuery('select#number-drop-down').css('position', 'relative');
+    jQuery('select#number-drop-down').css('top', '-2px');
+
+    // Pre-select the current page
     jQuery('select#number-drop-down').val(currentPage);
 
+    // Add event handlers for each button
     jQuery("select#number-drop-down").change(function () {
         jQuery("select option:selected").each(function () {
             jumpToPage(rootPageType, basePageID, jQuery(this).val());
@@ -432,5 +446,13 @@ function displayPageNavigator() {
 
     jQuery('#nav-last-page').click(function() {
         jumpToPage(rootPageType, basePageID, pageCount);
+    });
+
+    jQuery('#nav-next-page').click(function() {
+        jumpToPage(rootPageType, basePageID, currentPage + 1);
+    });
+
+    jQuery('#nav-prev-page').click(function() {
+        jumpToPage(rootPageType, basePageID, currentPage - 1);
     });
 }
