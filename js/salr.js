@@ -321,8 +321,20 @@ function inlineYoutubes() {
  *
  */
 function findCurrentPage() {
-
+    // Substrings out everything after the domain, then splits on the ?
+    // and takes the left-side of the result
     return (window.location.href).substr(33).split('?')[0];
+}
+
+/**
+ * Returns the current forum ID
+ *
+ */
+function findForumID() {
+    // Substrings out everything after the domain, then splits on the ?,
+    // defaults to the argument list (right), splits on the &, looks at the first
+    // parameter in the list, and splits on the = to get the result
+    return (((window.location.href).substr(33).split('?')[1]).split('&')[0]).split('=')[1];
 }
 
 /**
@@ -347,17 +359,38 @@ function countPages() {
 }
 
 /**
+ * Jumps the user to the specified page
+ *
+ * @param rootPageType - forumid or threadid
+ * @param basePagID - ID number associated with rootPageType
+ * @param page - Page number to jump to
+ *
+ */
+function jumpToPage(rootPageType, basePageID, page) {
+    location.href = 'http://forums.somethingawful.com/' + findCurrentPage() + '?' + rootPageType + '=' + basePageID + '&pagenumber=' + page;
+}
+
+/**
  * Display the page navigator HTML
  *
  */
 function displayPageNavigator() {
 
     var pageCount = countPages();
+    // TODO: Determine the pagetype
+    //
+    // Determines if we are on a forum or a thread
+    var rootPageType = (findCurrentPage() == 'forumdisplay.php') ? 'forumid' : 'threadid';
+    // Either forum ID or thread ID, depending on which we are
+    // currently viewing
+    var basePageID = findForumID();
+    // Current page
+    var currentPage = Number(jQuery('span.curpage').html());
 
     var html = '<div id="page-nav"> ' + 
                 '   <span id="first-page-buttons">' + 
-                '       <img src="' + chrome.extension.getURL('images/') + 'nav-firstpage.png" />' + 
-                '       <img src="' + chrome.extension.getURL('images/') + 'nav-prevpage.png" />' +
+                '       <img src="' + chrome.extension.getURL('images/') + 'nav-firstpage.png" id="nav-first-page" />' + 
+                '       <img src="' + chrome.extension.getURL('images/') + 'nav-prevpage.png" id="nav-prev-page" />' +
                 '   </span>' +
                 '   <span id="page-drop-down">' +
                 '       <select id="number-drop-down" name="page-number">';
@@ -369,8 +402,8 @@ function displayPageNavigator() {
     html +=     '       </select>' +
                 '   </span>' +
                 '   <span id="last-page-buttons">' +
-                '       <img src="' + chrome.extension.getURL('images/') + 'nav-nextpage.png" />' + 
-                '       <img src="' + chrome.extension.getURL('images/') + 'nav-lastpage.png" />' +
+                '       <img src="' + chrome.extension.getURL('images/') + 'nav-nextpage.png" id="nav-next-page" />' + 
+                '       <img src="' + chrome.extension.getURL('images/') + 'nav-lastpage.png" id="nav-last-page" />' +
                 '       <img src="' + chrome.extension.getURL('images/') + 'lastpost.png" />' +
                 '   </span>' +
                '</div>';
@@ -384,4 +417,18 @@ function displayPageNavigator() {
     jQuery('#page-nav').css('position', 'fixed');
     jQuery('#page-nav').css('top', (window.innerHeight - 29) + 'px');
     jQuery('#page-nav').css('left', (window.innerHeight - 124) + 'px');
+
+    jQuery("select#number-drop-down").change(function () {
+        jQuery("select option:selected").each(function () {
+            jumpToPage(rootPageType, basePageID, jQuery(this).val());
+        });
+    });
+
+    jQuery('#nav-first-page').click(function() {
+        jumpToPage(rootPageType, basePageID, 1);
+    });
+
+    jQuery('#nav-last-page').click(function() {
+        jumpToPage(rootPageType, basePageID, pageCount);
+    });
 }
