@@ -1,5 +1,15 @@
 SALR Extension for Chrome
 
+v0.3.2 - "Fat lady"
+
+- Dramatically reduced CRX size (Scott Ferguson)
+
+v0.3.1 - "Whoops, forgot to fix that"
+
+- Fix page navigator offset when resizing window (Scott Ferguson)
+- Add drop shadows to page navigator (Scott Ferguson)
+- Add rounded corners to page navigator (Scott Ferguson)
+
 v0.3 - "Page navigator motherfucker!"
 
 - Add page navigator (Scott Ferguson)
