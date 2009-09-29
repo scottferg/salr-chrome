@@ -86,7 +86,7 @@ function jumpToPage(rootPageType, basePageID, page) {
 }
 
 window.onresize = function() {
-    jQuery('#page-nav').css('top', (window.innerHeight - 36) + 'px');
+    jQuery('#page-nav').css('top', (window.innerHeight - 31) + 'px');
     jQuery('#page-nav').css('left', (window.innerWidth - 220) + 'px');
 };
 
@@ -139,6 +139,9 @@ function displayPageNavigator() {
     jQuery('#page-nav').css('left', (window.innerWidth - 220) + 'px');
     jQuery('#page-nav').css('padding-bottom', '2px');
     jQuery('#page-nav').css('padding-left', '4px');
+	jQuery('#page-nav').css('box-shadow', '#808080 -1px -1px 12px');
+	jQuery('#page-nav').css('border-top-left-radius', '6px 6px');
+	jQuery('#page-nav').css('border-top-right-radius', '6px 6px');
 
     // Set styles for buttons and inputs
     jQuery('.nav-button').css('position', 'relative');
