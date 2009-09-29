@@ -105,6 +105,12 @@ function displayPageNavigator() {
     // Current page
     var currentPage = Number(jQuery('span.curpage').html());
 
+    // If there is only a single page in the thread, or something
+    // goes wrong, just quit out
+    if (currentPage == 0) {
+        return;
+    }
+
     var html = '<div id="page-nav"> ' + 
                 '   <span id="first-page-buttons">' + 
                 '       <img src="' + chrome.extension.getURL('images/') + 'nav-firstpage.png" id="nav-first-page" class="nav-button" />' + 
