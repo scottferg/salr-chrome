@@ -102,7 +102,5 @@ function setupDefaultPreferences() {
     localStorage.setItem('dark-new-replies', '#99cc99');
     localStorage.setItem('light-new-replies', '#ccffcc');
     localStorage.setItem('youtube-highlight', '#ff00ff');
-	//image options
-	localStorage.setItem('dont-replace-link-nws', true);
-	
+    localStorage.setItem('display-configure-salr', 'true')	
 }
