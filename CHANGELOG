@@ -2,6 +2,7 @@ SALR Extension for Chrome
 
 v0.3.3 - "Milestones are for little girls"
 
+- Don't display navigator if thread has one page (Scott Ferguson)
 - Show 'Configure SALR' link by default (Scott Ferguson)
 - Add 'Ban History' link (Scott Ferguson)
 
