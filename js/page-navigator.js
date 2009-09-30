@@ -145,7 +145,7 @@ function displayPageNavigator() {
     jQuery('#page-nav').css('left', (window.innerWidth - 220) + 'px');
     jQuery('#page-nav').css('padding-bottom', '2px');
     jQuery('#page-nav').css('padding-left', '4px');
-	jQuery('#page-nav').css('box-shadow', '#808080 -1px -1px 12px');
+	jQuery('#page-nav').css('box-shadow', '#000000 -1px -1px 12px');
 	jQuery('#page-nav').css('border-top-left-radius', '6px 6px');
 	jQuery('#page-nav').css('border-top-right-radius', '6px 6px');
 
