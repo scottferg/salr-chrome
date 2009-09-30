@@ -2,6 +2,7 @@ SALR Extension for Chrome
 
 v0.4 - "This looks like a real extension"
 
+- Show 'Configure SALR' link by default (Scott Ferguson)
 - Add 'Ban History' link (Scott Ferguson)
 
 v0.3.2 - "Fat lady"
