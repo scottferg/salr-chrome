@@ -23,7 +23,7 @@
     	<div id="tabs-1">
             <div class="settings-panel">
                 <div class='username-field'>
-                    Username: <input type='text' size='10' default='Username' class='text-entry' id='username' style='color: #999999;' /><br />
+                    Username: <input type='text' size='10' default='Username' class='text-entry user-preference' id='username' style='color: #999999;' /><br />
                 </div>
             </div>
             <div style="clear: both;"></div>
@@ -34,7 +34,7 @@
 				<div class='settings-group'>
                 	<div class='color-preference'>
                     	<div class='color-select-input'>
-                        	<input type='text' size='7' default='#a2cd5a' value='' class='color-select-text text-entry' style='color: #999999;' id='user-quote' />
+                        	<input type='text' size='7' default='#a2cd5a' value='' class='color-select-text text-entry user-preference' style='color: #999999;' id='user-quote' />
 	                    </div>
     	                <div class='color-select'>
         	                <div class='color-select-box'></div>
@@ -49,7 +49,7 @@
 				<div class='settings-group'>
 					<div class='color-preference'>
                     	<div class='color-select-input'>
-                            Dark shade: <input type='text' size='7' default='#6699cc' class='color-select-text text-entry' style='color: #999999;' id='dark-read' />
+                            Dark shade: <input type='text' size='7' default='#6699cc' class='color-select-text text-entry user-preference' style='color: #999999;' id='dark-read' />
 	                    </div>
     	                <div class='color-select'>
         	                <div class='color-select-box'></div>
@@ -59,7 +59,7 @@
     			<div style="clear: both;"></div>
 					<div class='color-preference'>
                     	<div class='color-select-input'>
-                        	Light shade: <input type='text' size='7' default='#99ccff' class='color-select-text text-entry' style='color: #999999;' id='light-read' />
+                        	Light shade: <input type='text' size='7' default='#99ccff' class='color-select-text text-entry user-preference' style='color: #999999;' id='light-read' />
 	                    </div>
     	                <div class='color-select'>
         	                <div class='color-select-box'></div>
@@ -72,7 +72,7 @@
 				<div class='settings-group'>
 					<div class='color-preference'>
                     	<div class='color-select-input'>
-                        	Dark shade: <input type='text' size='7' default='#99cc99' class='color-select-text text-entry' style='color: #999999;' id='dark-new-replies' />
+                        	Dark shade: <input type='text' size='7' default='#99cc99' class='color-select-text text-entry user-preference' style='color: #999999;' id='dark-new-replies' />
 	                    </div>
     		            <div class='color-select'>
             	            <div class='color-select-box'></div>
@@ -82,7 +82,7 @@
 		    	    <div style="clear: both;"></div>
 					<div class='color-preference'>
                     	<div class='color-select-input'>
-                        	Light shade: <input type='text' size='7' default='#ccffcc' class='color-select-text text-entry' style='color: #999999;' id='light-new-replies' />
+                        	Light shade: <input type='text' size='7' default='#ccffcc' class='color-select-text text-entry user-preference' style='color: #999999;' id='light-new-replies' />
 	                    </div>
     	                <div class='color-select'>
         	                <div class='color-select-box'></div>
@@ -95,7 +95,7 @@
 				<div class='settings-group'>
 					<div class='color-preference'>
                     	<div class='color-select-input'>
-                        	<input type='text' size='7' default='#ff00ff' class='color-select-text text-entry' style='color: #999999;' id='youtube-highlight' />
+                        	<input type='text' size='7' default='#ff00ff' class='color-select-text text-entry user-preference' style='color: #999999;' id='youtube-highlight' />
 	                    </div>
     	                <div class='color-select'>
         	                <div class='color-select-box'></div>
@@ -109,19 +109,19 @@
     	<div id="tabs-3">
             <div class="settings-panel">
 				<div class='display-preference'>
-					Display Configure SALR in forum menu: <input id='display-configure-salr' type='checkbox' />
+					Display Configure SALR in forum menu: <input id='display-configure-salr' class='user-preference' type='checkbox' />
 				</div>
                 <div class='display-preference'>
-                    Hide header/footer ads: <input id='hide-advertisements' type='checkbox' />
+                    Hide header/footer ads: <input id='hide-advertisements' class='user-preference' type='checkbox' />
                 </div>
                 <div class='display-preference'>
-                    Hide header links: <input id='hide-header-links' type='checkbox' />
+                    Hide header links: <input id='hide-header-links' class='user-preference' type='checkbox' />
                 </div>
                 <div class='display-preference'>
-                    Display threads with new posts first: <input id='display-new-posts-first' type='checkbox' />
+                    Display threads with new posts first: <input id='display-new-posts-first' class='user-preference' type='checkbox' />
 				</div>
 				<div class='display-preference'>
-                    Convert Youtube links to inline player: <input id='inline-video-links' type='checkbox' />
+                    Convert Youtube links to inline player: <input id='inline-video-links' class='user-preference' type='checkbox' />
 				</div>
             </div>
             <div style="clear: both;"></div>
@@ -131,28 +131,28 @@
 				<span class='settings-group-title'>Links-to-Images</span>
 				<div class='settings-group'>
 					<div class='display-preference'>
-						Convert links into inline images: <input id='replace-links-with-images' type='checkbox' />
+						Convert links into inline images: <input id='replace-links-with-images' class='user-preference' type='checkbox' />
 					</div>
 					<div class='sub-options'>
 						<div class='display-preference'>
-							Don't convert if post contains a NWS/NMS warning: <input id='dont-replace-link-nws' type='checkbox' />
+							Don't convert if post contains a NWS/NMS warning: <input id='dont-replace-link-nws' class='user-preference' type='checkbox' />
 						</div>
 						<div class='display-preference'>
-							Don't convert links inside spoiler tags: <input id='dont-replace-link-spoiler' type='checkbox' />
+							Don't convert links inside spoiler tags: <input id='dont-replace-link-spoiler' class='user-preference' type='checkbox' />
 						</div>
 						<div class='display-preference'>
-							Don't convert links in marked-as-read posts: <input id='dont-replace-link-read' type='checkbox' />
+							Don't convert links in marked-as-read posts: <input id='dont-replace-link-read' class='user-preference' type='checkbox' />
 						</div>
 					</div>
 				</div>
 				<span class='settings-group-title'>Images-to-Links</span>
 				<div class='settings-group'>
 					<div class='display-preference'>
-           	        	Replace Images with links: <input id='replace-images-with-links' type='checkbox' />
+           	        	Replace Images with links: <input id='replace-images-with-links' class='user-preference' type='checkbox' />
 					</div>
 					<div class='sub-options'>
 						<div class='display-preference'>
-							Convert Images in Read Posts only: <input id='replace-images-read-only' type='checkbox' />
+							Convert Images in Read Posts only: <input id='replace-images-read-only' class='user-preference' type='checkbox' />
 						</div>
 						<!--
 						<div class='display-preference'>
@@ -164,7 +164,7 @@
 				<span class='settings-group-title'>Image Resizing</span>
 				<div class='settings-group'>
 					<div class='display-preference'>
-						Restrict Size of Images: <input id='restrict-image-size' type='checkbox' />
+						Restrict Size of Images: <input id='restrict-image-size' class='user-preference' type='checkbox' />
 					</div>
 					<!--
 					<div class='sub-options'>

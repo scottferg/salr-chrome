@@ -36,28 +36,9 @@ var settings = {};
 var port = chrome.extension.connect();
 
 port.onMessage.addListener(function(data) {
-    settings.darkRead = data.darkRead;
-    settings.lightRead = data.lightRead;
-    settings.lightNew = data.lightNewReplies;
-    settings.darkNew = data.darkNewReplies;
-    settings.username = data.username;
-    settings.userQuote = data.userQuote;
-	settings.youtubeHighlight = data.youtubeHighlight;
-    settings.hideAdvertisements = data.hideAdvertisements;
-    settings.hideFooterLinks = data.hideFooterLinks;
-    settings.hideHeaderLinks = data.hideHeaderLinks;
-    settings.displayNewPostsFirst = data.displayNewPostsFirst;
-	settings.displayConfigureSalr = data.displayConfigureSalr;
-	settings.inlineVideo = data.inlineVideo;
-	settings.replaceImagesWithLinks = data.replaceImagesWithLinks;
-	settings.replaceImagesReadOnly = data.replaceImagesReadOnly;
-	//settings.dontReplaceEmoticons = data.dontReplaceEmoticons;
-	settings.replaceLinksWithImages = data.replaceLinksWithImages;
-	settings.dontReplaceLinkNWS = data.dontReplaceLinkNWS;
-	settings.dontReplaceLinkSpoiler = data.dontReplaceLinkSpoiler;
-	settings.dontReplaceLinkRead = data.dontReplaceLinkRead;
-	settings.restrictImageSize = data.restrictImageSize;
 
+    settings = data;
+    
     // Update the styles now that we have
     // the settings
     updateStyling();
@@ -79,7 +60,6 @@ port.postMessage({
 });
 
 function openSettings() {
-	console.log("open");
     port.postMessage({'message': 'OpenSettings'});
 }
 
@@ -239,9 +219,7 @@ function modifyImages() {
 		//NWS/NMS links
 		if(settings.dontReplaceLinkNWS == 'true')
 		{
-			console.log("HERE");
 			subset = subset.not(".postbody:has(img[title=':nws:']) a").not(".postbody:has(img[title=':nms:']) a");
-			console.log(subset);
 		}
 
 		//

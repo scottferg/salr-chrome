@@ -90,7 +90,7 @@ jQuery(document).ready(function() {
  
     // Set click handler for the okay button
     jQuery('.submit-panel > input#submit').click(function() {
-        onSubmitClicked(jQuery(this));
+        onSubmitClicked();
     });
 
 	// once to initialize and once to bind click
@@ -198,60 +198,25 @@ function populateCheckboxes(element) {
 /**
  * Event handler for clicking the submit button 
  *
- * @param element - Input element
  *
  */
-function onSubmitClicked(element) {
-    var usernameField = jQuery('#username', element.parent().parent());
-    var usernameQuote = jQuery('#user-quote', element.parent().parent());
-    var darkReadField = jQuery('#dark-read', element.parent().parent());
-    var lightReadField = jQuery('#light-read', element.parent().parent());
-    var darkNewRepliesField = jQuery('#dark-new-replies', element.parent().parent());
-    var lightNewRepliesField = jQuery('#light-new-replies', element.parent().parent());
-	var youtubeHighlightField = jQuery('#youtube-highlight', element.parent().parent());
-    // Set checkbox values
-    var hideAdvertisements = jQuery('#hide-advertisements').attr('checked');
-    var headerLinks = jQuery('#hide-header-links').attr('checked');
-    var displayNewPostsFirst = jQuery('#display-new-posts-first').attr('checked');
-	var displayConfigureSalr = jQuery('#display-configure-salr').attr('checked');
-	var replaceVideoLinks = jQuery('#inline-video-links').attr('checked');
-	var replaceImagesWithLinks = jQuery('#replace-images-with-links').attr('checked');
-	var replaceImagesReadOnly = jQuery('#replace-images-read-only').attr('checked');
-	//var dontReplaceEmoticons = jQuery('#dont-replace-emoticons').attr('checked');
-	var replaceLinksWithImages = jQuery('#replace-links-with-images').attr('checked');
-	var dontReplaceLinkNWS = jQuery('#dont-replace-link-nws').attr('checked');
-	var dontReplaceLinkSpoiler = jQuery('#dont-replace-link-spoiler').attr('checked');
-	var dontReplaceLinkRead = jQuery('#dont-replace-link-read').attr('checked');
-	var restrictImageSize = jQuery('#restrict-image-size').attr('checked');
-
+function onSubmitClicked() {
     // Store the preferences locally so that the page can
     // request it
     // We use window.opener to assign it to the toolstrip localStorage, since
     // the toolstrip handles all communication with the page
-    window.opener.localStorage.setItem('username', usernameField.val());
-    window.opener.localStorage.setItem('user-quote', usernameQuote.val());
-    window.opener.localStorage.setItem('dark-read', darkReadField.val());
-    window.opener.localStorage.setItem('light-read', lightReadField.val());
-    window.opener.localStorage.setItem('dark-new-replies', darkNewRepliesField.val());
-    window.opener.localStorage.setItem('light-new-replies', lightNewRepliesField.val());
-    window.opener.localStorage.setItem('hide-advertisements', hideAdvertisements);
-    window.opener.localStorage.setItem('hide-header-links', headerLinks);
-	window.opener.localStorage.setItem('youtube-highlight', youtubeHighlightField.val());
-    window.opener.localStorage.setItem('display-new-posts-first', displayNewPostsFirst);
-	window.opener.localStorage.setItem('display-configure-salr', displayConfigureSalr);
-    window.opener.localStorage.setItem('replace-images-with-links', replaceImagesWithLinks);
-    window.opener.localStorage.setItem('replace-images-read-only', replaceImagesReadOnly);
-	//window.opener.localStorage.setItem('dont-replace-emoticons', dontReplaceEmoticons);
-    window.opener.localStorage.setItem('replace-links-with-images', replaceLinksWithImages);
-    window.opener.localStorage.setItem('dont-replace-link-nws', dontReplaceLinkNWS);
-	window.opener.localStorage.setItem('dont-replace-link-spoiler', dontReplaceLinkSpoiler);
-	window.opener.localStorage.setItem('dont-replace-link-read', dontReplaceLinkRead);
-	window.opener.localStorage.setItem('restrict-image-size', restrictImageSize);
-	window.opener.localStorage.setItem('inline-video-links', replaceVideoLinks);
+    jQuery('.user-preference').each(function() {
+        var preferenceID = jQuery(this).attr('id');
+        var value = null;
 
+        if (jQuery(this).attr('type') == 'checkbox') {
+            value = jQuery(this).attr('checked');
+        } else {
+            value = jQuery(this).val();
+        }
 
-    
-	
+        window.opener.localStorage.setItem(preferenceID, value);
+    });
 	
 	// Close the settings window
     window.close();
