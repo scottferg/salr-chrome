@@ -29,7 +29,6 @@
  */
 chrome.extension.onConnect.addListener(function(port) {
     port.onMessage.addListener(function(data) {
-		console.log(data);
 		if(data.message == "OpenSettings") {
 			onToolbarClick();
 		} else if (data.message == "ChangeSetting") {
