@@ -105,5 +105,5 @@ function setupDefaultPreferences() {
     localStorage.setItem('light-new-replies', '#ccffcc');
     localStorage.setItem('youtube-highlight', '#ff00ff');
     localStorage.setItem('display-configure-salr', 'true');
-    localStorage.setItem('highlight-friends-color', "#c8f5be");
+    localStorage.setItem('highlight-friends-color', "#f2babb");
 }
