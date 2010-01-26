@@ -29,6 +29,7 @@
     {
         "id": "open_settings",
         "name": "SALR Settings",
+        "popup": "popup.html",
         "icons": ["images/logo16.png"]
     }
   ],
