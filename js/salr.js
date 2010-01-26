@@ -127,8 +127,8 @@ function updateStyling() {
 	
     	// If the thread has new posts, display the green shade,
     	// otherwise show the blue shade
-    	var darkShade = (newPosts) ? settings.darkNew : settings.darkRead;
-    	var lightShade = (newPosts) ? settings.lightNew : settings.lightRead;
+    	var darkShade = (newPosts) ? settings.darkNewReplies : settings.darkRead;
+    	var lightShade = (newPosts) ? settings.lightNewReplies : settings.lightRead;
 
     	// Thread icon, author, view count, and last post
     	jQuery(this).children('td.icon, td.author, td.views, td.lastpost').each(function() {
