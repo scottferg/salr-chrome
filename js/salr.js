@@ -48,9 +48,17 @@ port.onMessage.addListener(function(data) {
 	if (settings.inlineVideo == 'true') {
 		inlineYoutubes();
 	}
+    
+    if (settings.highlightFriends == 'true') {
+        highlightFriendPosts();    
+    }
 
     if (findCurrentPage() == 'forumdisplay.php' || findCurrentPage() == 'showthread.php') {
         displayPageNavigator();
+    }
+    
+    if (findCurrentPage() == 'usercp.php') {
+        updateFriendsList();
     }
 });
 
@@ -310,5 +318,43 @@ function displayBanHistoryLink() {
 
     jQuery('ul.profilelinks').each(function() {
         jQuery(this).append('<li><a href="http://forums.somethingawful.com/banlist.php?userid=' + getUserID(jQuery(this)) + '">Ban History</li>');
+    });
+}
+
+/**
+ * Extract friends list from the User CP
+ */
+function updateFriendsList() {
+    var friends = new Array();
+    
+    jQuery('div#buddylist td:nth-child(2)>a').each( function() {
+        friends.push(this.title);
+    });
+    
+    port.postMessage({ 'message': 'ChangeSetting',
+                       'option' : 'friendsList', 
+                       'value'  : friends });
+}
+
+/**
+ * Highlight the posts of friends
+ */
+function highlightFriendPosts() {
+    var friends = settings.friendsList.split(','); // When arrays get stored in settings, it flattens to a ,-separated string.
+    
+    var selector = '';
+    
+    jQuery(friends).each(function() {
+        if (selector != '') {
+            selector += ', ';
+        }
+        selector += "dt.author:contains('" +  this + "')";
+    });
+
+    jQuery('table.post:has('+selector+') td').each(function () {
+        jQuery(this).css({
+            'border-collapse' : 'collapse',
+            'background-color' : settings.highlightFriendsColor
+        });
     });
 }
