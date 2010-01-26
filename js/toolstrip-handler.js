@@ -32,7 +32,9 @@ chrome.extension.onConnect.addListener(function(port) {
 		console.log(data);
 		if(data.message == "OpenSettings") {
 			onToolbarClick();
-		} else {
+		} else if (data.message == "ChangeSetting") {
+            localStorage.setItem(settingNameFromFriendlyName(data.option), data.value);
+        } else {
 
 			// Register the tab with the tagging page action
 			chrome.pageActions.enableForTab("open_settings",
@@ -73,6 +75,7 @@ chrome.extension.onConnect.addListener(function(port) {
 				'inlineVideo' : localStorage.getItem('inline-video-links'),
                 'highlightFriends' : localStorage.getItem('highlight-friends'),
                 'highlightFriendsColor' : localStorage.getItem('highlight-friends-color'),
+                'friendsList' : localStorage.getItem('friends-list')
 			});
 		}
     });
@@ -91,6 +94,38 @@ function onToolbarClick() {
     window.open(chrome.extension.getURL('') + 'settings.html', 
                 'salr-settings', 
                 'location=0,scrollbars=0,toolbar=0,resizable=0,menubar=0,status=0,width=510,height=510');
+}
+
+/**
+ * Gets the setting name, based on the friendly name provided externally.
+ */
+function settingNameFromFriendlyName(friendlyName) {
+    switch (friendlyName) {
+        case 'username': return 'username';
+        case 'userQuote': return 'user-quote';
+        case 'darkRead' : return 'dark-read';
+        case 'lightRead' : return 'light-read';
+        case 'darkNewReplies' : return 'dark-new-replies';
+        case 'lightNewReplies' : return 'light-new-replies';
+        case 'youtubeHighlight' : return 'youtube-highlight';
+        case 'hideAdvertisements' : return 'hide-advertisements';
+        case 'hideHeaderLinks' : return 'hide-header-links';
+        case 'hideFooterLinks' : return 'hide-footer-links';
+        case 'displayNewPostsFirst' : return 'display-new-posts-first';
+        case 'displayConfigureSalr' : return 'display-configure-salr';
+        case 'replaceImagesWithLinks' : return 'replace-images-with-links';
+        case 'replaceImagesReadOnly' : return 'replace-images-read-only';
+        //case 'dontReplaceEmoticons' : return 'dont-replace-emoticons';
+        case 'replaceLinksWithImages' : return 'replace-links-with-images';
+        case 'dontReplaceLinkNWS' : return 'dont-replace-link-nws';
+        case 'dontReplaceLinkSpoiler' : return 'dont-replace-link-spoiler';
+        case 'dontReplaceLinkRead' : return 'dont-replace-link-read';
+        case 'restrictImageSize' : return 'restrict-image-size';
+        case 'inlineVideo' : return 'inline-video-links';
+        case 'highlightFriends' : return 'highlight-friends';
+        case 'highlightFriendsColor' : return 'highlight-friends-color';
+        case 'friendsList' : return 'friends-list';
+    }
 }
 
 /**
