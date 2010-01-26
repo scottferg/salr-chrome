@@ -363,24 +363,23 @@ function displayBanHistoryLink() {
  */
 function updateFriendsList() {
     var friends = new Array();
-    
+
     jQuery('div#buddylist td:nth-child(2)>a').each( function() {
         friends.push(this.title);
     });
-    
+
     port.postMessage({ 'message': 'ChangeSetting',
-                       'option' : 'friendsList', 
-                       'value'  : friends });
+                       'option' : 'friendsList',
+                       'value'  : JSON.stringify(friends) });
 }
 
 /**
  * Highlight the posts of friends
  */
 function highlightFriendPosts() {
-    var friends = settings.friendsList.split(','); // When arrays get stored in settings, it flattens to a ,-separated string.
-    
+    var friends = JSON.parse(settings.friendsList);
     var selector = '';
-    
+
     jQuery(friends).each(function() {
         if (selector != '') {
             selector += ', ';
@@ -404,14 +403,14 @@ function updateForumsList() {
     jQuery('select[name="forumid"]>option').each(function() {
         if (this.text == "Please select one:")
             return;
-            
+
         forums.push({ 'name' : this.text,
                        'id'  : this.value });
     });
-    
+
     if (forums.length > 0) {
         port.postMessage({ 'message': 'ChangeSetting',
-                           'option' : 'forumsList', 
-                           'value'  : JSON.stringify(forums) });    
+                           'option' : 'forumsList',
+                           'value'  : JSON.stringify(forums) });
     }
 }
