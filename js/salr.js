@@ -55,6 +55,7 @@ port.onMessage.addListener(function(data) {
 
     if (findCurrentPage() == 'forumdisplay.php' || findCurrentPage() == 'showthread.php') {
         displayPageNavigator();
+        updateForumsList();
     }
     
     if (findCurrentPage() == 'usercp.php') {
@@ -388,4 +389,24 @@ function highlightFriendPosts() {
             'background-color' : settings.highlightFriendsColor
         });
     });
+}
+
+/**
+ * Update the list of forums.
+ */
+function updateForumsList() {
+    var forums = new Array();
+    jQuery('select[name="forumid"]>option').each(function() {
+        if (this.text == "Please select one:")
+            return;
+            
+        forums.push({ 'name' : this.text,
+                       'id'  : this.value });
+    });
+    
+    if (forums.length > 0) {
+        port.postMessage({ 'message': 'ChangeSetting',
+                           'option' : 'forumsList', 
+                           'value'  : JSON.stringify(forums) });    
+    }
 }

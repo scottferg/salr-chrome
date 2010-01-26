@@ -128,6 +128,7 @@ function settingNameFromFriendlyName(friendlyName) {
         case 'friendsList' : return 'friends-list';
         case 'inlinePostCounts' : return 'inline-post-counts';
         case 'disableCustomButtons' : return 'disable-custom-buttons';
+        case 'forumsList' : return 'forums-list';
     }
 }
 
