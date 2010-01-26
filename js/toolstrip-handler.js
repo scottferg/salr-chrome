@@ -99,8 +99,8 @@ chrome.pageActions["open_settings"].addListener(function(pageActionId, reply) {
  * @param element - Toolstrip element
  */
 function onToolbarClick() {
-    window.open(chrome.extension.getURL('') + 'settings.html', 
-                'salr-settings', 
+    window.open(chrome.extension.getURL('settings.html'),
+                'salr-settings',
                 'location=0,scrollbars=0,toolbar=0,resizable=0,menubar=0,status=0,width=510,height=510');
 }
 
