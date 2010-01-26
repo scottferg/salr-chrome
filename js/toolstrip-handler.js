@@ -70,7 +70,9 @@ chrome.extension.onConnect.addListener(function(port) {
 				'dontReplaceLinkSpoiler' : localStorage.getItem('dont-replace-link-spoiler'),
 				'dontReplaceLinkRead' : localStorage.getItem('dont-replace-link-read'),
 				'restrictImageSize' : localStorage.getItem('restrict-image-size'),
-				'inlineVideo' : localStorage.getItem('inline-video-links')
+				'inlineVideo' : localStorage.getItem('inline-video-links'),
+                'highlightFriends' : localStorage.getItem('highlight-friends'),
+                'highlightFriendsColor' : localStorage.getItem('highlight-friends-color'),
 			});
 		}
     });
@@ -102,5 +104,6 @@ function setupDefaultPreferences() {
     localStorage.setItem('dark-new-replies', '#99cc99');
     localStorage.setItem('light-new-replies', '#ccffcc');
     localStorage.setItem('youtube-highlight', '#ff00ff');
-    localStorage.setItem('display-configure-salr', 'true')	
+    localStorage.setItem('display-configure-salr', 'true');
+    localStorage.setItem('highlight-friends-color', "#c8f5be");
 }
