@@ -74,7 +74,8 @@ chrome.extension.onConnect.addListener(function(port) {
 				'inlineVideo' : localStorage.getItem('inline-video-links'),
                 'highlightFriends' : localStorage.getItem('highlight-friends'),
                 'highlightFriendsColor' : localStorage.getItem('highlight-friends-color'),
-                'friendsList' : localStorage.getItem('friends-list')
+                'friendsList' : localStorage.getItem('friends-list'),
+                'inlinePostCounts' : localStorage.getItem('inline-post-counts')
 			});
 		}
     });
@@ -124,6 +125,7 @@ function settingNameFromFriendlyName(friendlyName) {
         case 'highlightFriends' : return 'highlight-friends';
         case 'highlightFriendsColor' : return 'highlight-friends-color';
         case 'friendsList' : return 'friends-list';
+        case 'inlinePostCounts' : return 'inline-post-counts';
     }
 }
 
@@ -140,4 +142,5 @@ function setupDefaultPreferences() {
     localStorage.setItem('youtube-highlight', '#ff00ff');
     localStorage.setItem('display-configure-salr', 'true');
     localStorage.setItem('highlight-friends-color', "#f2babb");
+    localStorage.setItem('inline-post-counts', 'false');
 }

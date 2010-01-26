@@ -119,6 +119,20 @@ function updateStyling() {
     		jQuery(this).html('');
     	});
 
+        if (settings.inlinePostCounts == 'true') {
+            jQuery(this).find('div.lastseen').each(function() {
+                // Add in number of new replies
+                if (newPostCount != 0) {
+                    var currentHtml = jQuery(this).html();
+        
+                    // Strip HTML tags
+                    newPostCount = parseInt(newPostCount.replace(/(<([^>]+)>)/ig, ""));
+                    // Set the HTML value
+                    jQuery(this).html("<div style='font-size: 12px; float: left; margin-top: 4px; padding-right: 4px;'>(" + newPostCount + ")</div>" + currentHtml);
+                }
+            });
+        }
+
         if (!newPosts && settings.displayNewPostsFirst == 'true') {
             var currentThread = jQuery(this);
 
@@ -146,18 +160,20 @@ function updateStyling() {
     						 });
     	});
 
-    	// Display number of new replies for each thread
-    	jQuery(this).find('td.replies').each(function() {
-    		// Add in number of new replies
-    		if (newPostCount != 0) {
-    			var currentHtml = jQuery(this).html();
-    
-    			// Strip HTML tags
-    			newPostCount = parseInt(newPostCount.replace(/(<([^>]+)>)/ig, ""));
-    			// Set the HTML value
-    			jQuery(this).html(currentHtml + "<br /><div style='font-size: 12px;'>(" + newPostCount + ")</div>");
-    		}
-    	});
+        if (settings.inlinePostCounts == 'false') {
+            // Display number of new replies for each thread
+            jQuery(this).find('td.replies').each(function() {
+                // Add in number of new replies
+                if (newPostCount != 0) {
+                    var currentHtml = jQuery(this).html();
+        
+                    // Strip HTML tags
+                    newPostCount = parseInt(newPostCount.replace(/(<([^>]+)>)/ig, ""));
+                    // Set the HTML value
+                    jQuery(this).html(currentHtml + "<br /><div style='font-size: 12px;'>(" + newPostCount + ")</div>");
+                }
+            });
+        }
     
     	// Eliminate last-seen styling
     	jQuery(this).find('.lastseen').each(function() {
