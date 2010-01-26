@@ -89,10 +89,12 @@ function updateStyling() {
     var newPosts = false;
     var newPostCount = 0;
 
+    // TODO: The thread highlighting is a conditionalized mess
+
     // Iterate over each .thread .seen td element.  This is necessary
     // so we can track each thread's designated color (read/not read)
     jQuery('tr.thread.seen').each(function() {
-        if (settings.disableCustomButtons == 'false') {
+        if (settings.disableCustomButtons == 'false' || !settings.disableCustomButtons) {
             // Re-style the "mark unread" link
             jQuery(this).find('a.x').each(function() {
                 // Set the image styles
@@ -104,13 +106,15 @@ function updateStyling() {
                 // Remove the 'X' from the anchor tag
                 jQuery(this).html('');
             });
+        }
 
-            // Re-style the new post count link
-            jQuery(this).find('a.count').each(function() {
-                // If we find an a.count, then we have new posts
-                newPosts = true;
-                newPostCount = jQuery(this).html();
+        // Re-style the new post count link
+        jQuery(this).find('a.count').each(function() {
+            // If we find an a.count, then we have new posts
+            newPosts = true;
+            newPostCount = jQuery(this).html();
 
+            if (settings.disableCustomButtons == 'false' || !settings.disableCustomButtons) {
                 // Remove the left split border
                 jQuery(this).css("border-left", "none");
 
@@ -119,11 +123,13 @@ function updateStyling() {
                 jQuery(this).css("height", "16px");
                 jQuery(this).css("padding-right", "11px");
                 jQuery(this).css("background-image", "url('" + chrome.extension.getURL("images/") + "lastpost.png')");
-            
+
                 // Remove the count from the element
                 jQuery(this).html('');
-            });
-            
+            }
+        });
+        
+        if (settings.disableCustomButtons == 'false' || !settings.disableCustomButtons) {
             // Eliminate last-seen styling
             jQuery(this).find('.lastseen').each(function() {
                 jQuery(this).css("background", "none");
@@ -131,7 +137,8 @@ function updateStyling() {
             });
         }
 
-        if (settings.inlinePostCounts == 'true') {
+        // Don't do inline post counts if the user has custom jump buttons disabled
+        if (settings.inlinePostCounts == 'true' && settings.disableCustomButtons == 'false') {
             jQuery(this).find('div.lastseen').each(function() {
                 // Add in number of new replies
                 if (newPostCount != 0) {
