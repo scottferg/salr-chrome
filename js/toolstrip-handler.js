@@ -75,7 +75,8 @@ chrome.extension.onConnect.addListener(function(port) {
                 'highlightFriends' : localStorage.getItem('highlight-friends'),
                 'highlightFriendsColor' : localStorage.getItem('highlight-friends-color'),
                 'friendsList' : localStorage.getItem('friends-list'),
-                'inlinePostCounts' : localStorage.getItem('inline-post-counts')
+                'inlinePostCounts' : localStorage.getItem('inline-post-counts'),
+                'disableCustomButtons' : localStorage.getItem('disable-custom-buttons')
 			});
 		}
     });
@@ -126,6 +127,7 @@ function settingNameFromFriendlyName(friendlyName) {
         case 'highlightFriendsColor' : return 'highlight-friends-color';
         case 'friendsList' : return 'friends-list';
         case 'inlinePostCounts' : return 'inline-post-counts';
+        case 'disableCustomButtons' : return 'disable-custom-buttons';
     }
 }
 
@@ -143,4 +145,5 @@ function setupDefaultPreferences() {
     localStorage.setItem('display-configure-salr', 'true');
     localStorage.setItem('highlight-friends-color', "#f2babb");
     localStorage.setItem('inline-post-counts', 'false');
+    localStorage.setItem('disable-custom-buttons', 'false');
 }

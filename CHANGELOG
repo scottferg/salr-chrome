@@ -4,6 +4,7 @@ v0.4 - "Holy shit an update"
 
 - Add option to highlight friend's posts (Sebastian Paaske Tørholm)
 - Add option to display new post counts inline (Scott Ferguson)
+- Add option to disable custom jump buttons (Scott Ferguson)
 - Fix bug to show navigator over scrollbar (Scott Ferguson)
 
 v0.3.3 - "Milestones are for little girls"

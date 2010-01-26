@@ -92,36 +92,44 @@ function updateStyling() {
     // Iterate over each .thread .seen td element.  This is necessary
     // so we can track each thread's designated color (read/not read)
     jQuery('tr.thread.seen').each(function() {
-        // Re-style the "mark unread" link
-        jQuery(this).find('a.x').each(function() {
-            // Set the image styles
-		    jQuery(this).css("background", "none");
-		    jQuery(this).css("background-image", "url('" + chrome.extension.getURL("images/") + "unvisit.png')");
-		    jQuery(this).css("height", "16px");
-		    jQuery(this).css("width", "14px");
+        if (settings.disableCustomButtons == 'false') {
+            // Re-style the "mark unread" link
+            jQuery(this).find('a.x').each(function() {
+                // Set the image styles
+                jQuery(this).css("background", "none");
+                jQuery(this).css("background-image", "url('" + chrome.extension.getURL("images/") + "unvisit.png')");
+                jQuery(this).css("height", "16px");
+                jQuery(this).css("width", "14px");
 
-    		// Remove the 'X' from the anchor tag
-    		jQuery(this).html('');
-    	});
+                // Remove the 'X' from the anchor tag
+                jQuery(this).html('');
+            });
 
-    	// Re-style the new post count link
-        jQuery(this).find('a.count').each(function() {
-	    	// If we find an a.count, then we have new posts
-    		newPosts = true;
-	    	newPostCount = jQuery(this).html();
+            // Re-style the new post count link
+            jQuery(this).find('a.count').each(function() {
+                // If we find an a.count, then we have new posts
+                newPosts = true;
+                newPostCount = jQuery(this).html();
 
-		    // Remove the left split border
-    		jQuery(this).css("border-left", "none");
+                // Remove the left split border
+                jQuery(this).css("border-left", "none");
 
-    		// Resize, shift, and add in the background image
-    		jQuery(this).css("width", "7px");
-    		jQuery(this).css("height", "16px");
-    		jQuery(this).css("padding-right", "11px");
-    		jQuery(this).css("background-image", "url('" + chrome.extension.getURL("images/") + "lastpost.png')");
-		
-    		// Remove the count from the element
-    		jQuery(this).html('');
-    	});
+                // Resize, shift, and add in the background image
+                jQuery(this).css("width", "7px");
+                jQuery(this).css("height", "16px");
+                jQuery(this).css("padding-right", "11px");
+                jQuery(this).css("background-image", "url('" + chrome.extension.getURL("images/") + "lastpost.png')");
+            
+                // Remove the count from the element
+                jQuery(this).html('');
+            });
+            
+            // Eliminate last-seen styling
+            jQuery(this).find('.lastseen').each(function() {
+                jQuery(this).css("background", "none");
+                jQuery(this).css("border", "none");
+            });
+        }
 
         if (settings.inlinePostCounts == 'true') {
             jQuery(this).find('div.lastseen').each(function() {
@@ -178,12 +186,6 @@ function updateStyling() {
                 }
             });
         }
-    
-    	// Eliminate last-seen styling
-    	jQuery(this).find('.lastseen').each(function() {
-    		jQuery(this).css("background", "none");
-    		jQuery(this).css("border", "none");
-    	});
 
         // Reset post counts
     	newPosts = false;
