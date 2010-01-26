@@ -1,3 +1,4 @@
+// Fetch extension settings
 var settings = {};
 var port = chrome.extension.connect();
 
@@ -11,6 +12,9 @@ port.postMessage({
     'message': 'GetPageSettings'
 });
 
+/**
+ * Opens a link in a tab. 
+ */
 function openTab(tabUrl) {
     var button = event.button;
     if(button > 1)
@@ -21,6 +25,9 @@ function openTab(tabUrl) {
     chrome.tabs.create({ url: tabUrl, selected: selected });
 }
 
+/**
+ * Populate the menu with forums.
+ */
 function populateMenu() {
     var forums = JSON.parse(settings.forumsList);
     var newHTML = '';
