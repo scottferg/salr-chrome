@@ -75,6 +75,10 @@ function openSettings() {
 // stash the styling logic in it's own function that we can call
 // once we're ready
 function updateStyling() {
+    jQuery(window).resize(function() {
+        displayPageNavigator();
+    });
+
     // If a post has the user quoted, highlight it a pleasant green
     jQuery('.bbc-block h4').each(function() {
         if (jQuery(this).html() == settings.username + ' posted:') {
@@ -231,6 +235,8 @@ function updateStyling() {
             jQuery(this).css('height', '0px');
         });
     }
+    
+    getWidestPost();
 }
 
 function modifyImages() {
