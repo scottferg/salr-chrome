@@ -63,6 +63,11 @@ port.onMessage.addListener(function(data) {
     }
 });
 
+// Display the page action
+port.postMessage({
+    'message': 'ShowPageAction'
+});
+
 // Request the username from the extension UI
 port.postMessage({
     'message': 'GetPageSettings'

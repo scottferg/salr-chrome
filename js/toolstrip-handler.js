@@ -29,55 +29,62 @@
  */
 chrome.extension.onConnect.addListener(function(port) {
     port.onMessage.addListener(function(data) {
-		if(data.message == "OpenSettings") {
-			onToolbarClick();
-		} else if (data.message == "ChangeSetting") {
-            localStorage.setItem(settingNameFromFriendlyName(data.option), data.value);
-        } else {
-
-			// Register the tab with the tagging page action
-			chrome.pageActions.enableForTab("open_settings",
-											{ 
-												tabId: port.tab.id,
-												url: port.tab.url,
-												title: "Click to open SALR settings",
-												iconId: 0
-											});
-			
-			// If we don't have stored settings, set defaults
-			if (!localStorage.getItem('username')) {
-				setupDefaultPreferences();
-			}
-			
-			// Respond with the username
-			port.postMessage({
-				'username': localStorage.getItem('username'),
-				'userQuote': localStorage.getItem('user-quote'),
-				'darkRead' : localStorage.getItem('dark-read'),
-				'lightRead' : localStorage.getItem('light-read'),
-				'darkNewReplies' : localStorage.getItem('dark-new-replies'),
-				'lightNewReplies' : localStorage.getItem('light-new-replies'),
-				'youtubeHighlight' : localStorage.getItem('youtube-highlight'),
-				'hideAdvertisements' : localStorage.getItem('hide-advertisements'),
-				'hideHeaderLinks' : localStorage.getItem('hide-header-links'),
-				'hideFooterLinks' : localStorage.getItem('hide-footer-links'),
-				'displayNewPostsFirst' : localStorage.getItem('display-new-posts-first'),
-				'displayConfigureSalr' : localStorage.getItem('display-configure-salr'),
-				'replaceImagesWithLinks' : localStorage.getItem('replace-images-with-links'),
-				'replaceImagesReadOnly' : localStorage.getItem('replace-images-read-only'),
-				//'dontReplaceEmoticons' : localStorage.getItem('dont-replace-emoticons'),
-				'replaceLinksWithImages' : localStorage.getItem('replace-links-with-images'),
-				'dontReplaceLinkNWS' : localStorage.getItem('dont-replace-link-nws'),
-				'dontReplaceLinkSpoiler' : localStorage.getItem('dont-replace-link-spoiler'),
-				'dontReplaceLinkRead' : localStorage.getItem('dont-replace-link-read'),
-				'restrictImageSize' : localStorage.getItem('restrict-image-size'),
-				'inlineVideo' : localStorage.getItem('inline-video-links'),
-                'highlightFriends' : localStorage.getItem('highlight-friends'),
-                'highlightFriendsColor' : localStorage.getItem('highlight-friends-color'),
-                'friendsList' : localStorage.getItem('friends-list'),
-                'inlinePostCounts' : localStorage.getItem('inline-post-counts'),
-                'disableCustomButtons' : localStorage.getItem('disable-custom-buttons')
-			});
+        switch (data.message) {
+            case 'OpenSettings':
+                onToolbarClick();
+                break;
+            case 'ChangeSetting':
+                localStorage.setItem(settingNameFromFriendlyName(data.option), data.value);
+                break;
+            case 'ShowPageAction':
+                // Register the tab with the tagging page action
+                chrome.pageActions.enableForTab("open_settings",
+                                                { 
+                                                    tabId: port.tab.id,
+                                                    url: port.tab.url,
+                                                    title: "Click to open SALR settings",
+                                                    iconId: 0
+                                                });
+                break;
+            case 'GetPageSettings':
+                // If we don't have stored settings, set defaults
+                if (!localStorage.getItem('username')) {
+                    setupDefaultPreferences();
+                }
+                
+                // Respond with the username
+                port.postMessage({
+                    'username': localStorage.getItem('username'),
+                    'userQuote': localStorage.getItem('user-quote'),
+                    'darkRead' : localStorage.getItem('dark-read'),
+                    'lightRead' : localStorage.getItem('light-read'),
+                    'darkNewReplies' : localStorage.getItem('dark-new-replies'),
+                    'lightNewReplies' : localStorage.getItem('light-new-replies'),
+                    'youtubeHighlight' : localStorage.getItem('youtube-highlight'),
+                    'hideAdvertisements' : localStorage.getItem('hide-advertisements'),
+                    'hideHeaderLinks' : localStorage.getItem('hide-header-links'),
+                    'hideFooterLinks' : localStorage.getItem('hide-footer-links'),
+                    'displayNewPostsFirst' : localStorage.getItem('display-new-posts-first'),
+                    'displayConfigureSalr' : localStorage.getItem('display-configure-salr'),
+                    'replaceImagesWithLinks' : localStorage.getItem('replace-images-with-links'),
+                    'replaceImagesReadOnly' : localStorage.getItem('replace-images-read-only'),
+                    //'dontReplaceEmoticons' : localStorage.getItem('dont-replace-emoticons'),
+                    'replaceLinksWithImages' : localStorage.getItem('replace-links-with-images'),
+                    'dontReplaceLinkNWS' : localStorage.getItem('dont-replace-link-nws'),
+                    'dontReplaceLinkSpoiler' : localStorage.getItem('dont-replace-link-spoiler'),
+                    'dontReplaceLinkRead' : localStorage.getItem('dont-replace-link-read'),
+                    'restrictImageSize' : localStorage.getItem('restrict-image-size'),
+                    'inlineVideo' : localStorage.getItem('inline-video-links'),
+                    'highlightFriends' : localStorage.getItem('highlight-friends'),
+                    'highlightFriendsColor' : localStorage.getItem('highlight-friends-color'),
+                    'friendsList' : localStorage.getItem('friends-list'),
+                    'inlinePostCounts' : localStorage.getItem('inline-post-counts'),
+                    'forumsList' : localStorage.getItem('forums-list')
+                });
+                break;
+            case 'log':
+            default:
+                console.log(data);
 		}
     });
 });
