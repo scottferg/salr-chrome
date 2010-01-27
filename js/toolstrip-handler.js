@@ -79,7 +79,9 @@ chrome.extension.onConnect.addListener(function(port) {
                     'highlightFriendsColor' : localStorage.getItem('highlight-friends-color'),
                     'friendsList' : localStorage.getItem('friends-list'),
                     'inlinePostCounts' : localStorage.getItem('inline-post-counts'),
-                    'forumsList' : localStorage.getItem('forums-list')
+                    'forumsList' : localStorage.getItem('forums-list'),
+                    'highlightOP' : localStorage.getItem('highlight-original-poster'),
+                    'highlightOPColor' : localStorage.getItem('highlight-original-poster-color')
                 });
                 break;
             case 'log':
@@ -132,6 +134,8 @@ function settingNameFromFriendlyName(friendlyName) {
         case 'inlinePostCounts' : return 'inline-post-counts';
         case 'disableCustomButtons' : return 'disable-custom-buttons';
         case 'forumsList' : return 'forums-list';
+        case 'highlightOP' : return 'highlight-original-poster';
+        case 'highlightOPColor' : return 'highlight-original-poster-color';
     }
 }
 
@@ -150,4 +154,5 @@ function setupDefaultPreferences() {
     localStorage.setItem('highlight-friends-color', "#f2babb");
     localStorage.setItem('inline-post-counts', 'false');
     localStorage.setItem('disable-custom-buttons', 'false');
+    localStorage.setItem('highlight-original-poster-color', '#fff2aa');
 }

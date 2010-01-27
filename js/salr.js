@@ -52,6 +52,10 @@ port.onMessage.addListener(function(data) {
     if (settings.highlightFriends == 'true') {
         highlightFriendPosts();    
     }
+    
+    if (settings.highlightOP == 'true') {
+        highlightOPPosts();    
+    }
 
     if (findCurrentPage() == 'forumdisplay.php' || findCurrentPage() == 'showthread.php') {
         displayPageNavigator();
@@ -390,6 +394,18 @@ function highlightFriendPosts() {
         jQuery(this).css({
             'border-collapse' : 'collapse',
             'background-color' : settings.highlightFriendsColor
+        });
+    });
+}
+
+/**
+ * Highlight the posts by the OP
+ */
+function highlightOPPosts() {
+    jQuery('table.post:has(dt.author.op) td').each(function () {
+        jQuery(this).css({
+            'border-collapse' : 'collapse',
+            'background-color' : settings.highlightOPColor
         });
     });
 }
