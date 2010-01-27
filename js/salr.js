@@ -56,6 +56,7 @@ port.onMessage.addListener(function(data) {
     if (findCurrentPage() == 'forumdisplay.php' || findCurrentPage() == 'showthread.php') {
         displayPageNavigator();
         updateForumsList();
+        console.log(settings.forumsList);
     }
     
     if (findCurrentPage() == 'usercp.php') {
@@ -250,8 +251,6 @@ function updateStyling() {
             jQuery(this).css('height', '0px');
         });
     }
-    
-    getWidestPost();
 }
 
 function modifyImages() {

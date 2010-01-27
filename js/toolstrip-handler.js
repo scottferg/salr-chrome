@@ -38,11 +38,11 @@ chrome.extension.onConnect.addListener(function(port) {
                 break;
             case 'ShowPageAction':
                 // Register the tab with the tagging page action
-                chrome.pageActions.enableForTab("open_settings",
+                chrome.pageActions.enableForTab("forums_jump_list",
                                                 { 
                                                     tabId: port.tab.id,
                                                     url: port.tab.url,
-                                                    title: "Click to open SALR settings",
+                                                    title: "Click to open forum jump list",
                                                     iconId: 0
                                                 });
                 break;
@@ -87,10 +87,6 @@ chrome.extension.onConnect.addListener(function(port) {
                 console.log(data);
 		}
     });
-});
-
-chrome.pageActions["open_settings"].addListener(function(pageActionId, reply) {
-    onToolbarClick();
 });
 
 /**

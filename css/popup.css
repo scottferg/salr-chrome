@@ -3,6 +3,14 @@ body {
     font-size: 10pt;
     overflow-x: hidden;
     margin: 0px;
+	font-family: Arial, Helvetica, sans-serif;
+    padding: 4px;
+}
+
+a {
+    text-decoration: none;
+    margin-bottom: 2px;
+    color: #333333;
 }
 
 #forums-list {
@@ -11,39 +19,20 @@ body {
     overflow-x: hidden;
 }
 
-.link {
-    margin-bottom: 2px;
-}
-
-.link0 {
+.header-link {
     background-color: #069;
-    color: #FFF;
     min-width: 100%;
     padding: 2px;
     text-align: center;
     margin-bottom: 5px;
+    width: 100px;
 }
 
-.link1 {
-    padding-left: 10px;
+.header-link a {
+    color: #fff;
 }
 
-.link2 {
-    padding-left: 20px;
-}
-
-.link3 {
-    padding-left: 30px;
-}
-
-.link4 {
-    padding-left: 40px;
-}
-
-.link5 {
-    padding-left: 50px;
-}
-
-a {
-    text-decoration: none;
+.forum-link {
+    padding-top: 2px;
+    padding-bottom: 2px;
 }

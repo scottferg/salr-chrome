@@ -32,25 +32,36 @@ function populateMenu() {
     var forums = JSON.parse(settings.forumsList);
     var newHTML = '';
     var numSeps = 0;
+    var color = '#ffffff';
     
     jQuery(forums).each( function() {
         var splitUp = this.name.match(/^(-*)(.*)/);
         
-        var lines = splitUp[1].length;
+        var indent = splitUp[1].length;
         var title = splitUp[2];
         
-        if (lines > 10) { // Separator
+        if (indent > 10) { // Separator
             if (numSeps > 0) {
                 newHTML += '<hr/>';
             }
             numSeps ++;
-        } else if (lines == 0) {
-            newHTML += '<div class="link0">';
-            newHTML += '<a onclick="javascript:openTab(\'http://forums.somethingawful.com/forumdisplay.php?forumid=' + this.id + '\')" href="javascript:" class="link link'+ lines +'">' + title + '</a><br/>';
+        } else if (indent == 0) {
+            newHTML += '<div class="header-link">';
+            newHTML += '<a onclick="javascript:openTab(\'http://forums.somethingawful.com/forumdisplay.php?forumid=' + this.id + '\')" href="javascript:" class="link link'+ indent +'">' + title + '</a><br/>';
             newHTML += '</div>';
         
         } else {
-            newHTML += '<a onclick="javascript:openTab(\'http://forums.somethingawful.com/forumdisplay.php?forumid=' + this.id + '\')" href="javascript:" class="link link'+ lines +'">' + title + '</a><br/>';
+            // Dynamically set the 10's digit for padding here, since we can have any number
+            // of indentations
+            newHTML += '<div class="forum-link" style="padding-left: ' + indent + '0px; background: ' + color + ';">';
+            newHTML += '<a onclick="javascript:openTab(\'http://forums.somethingawful.com/forumdisplay.php?forumid=' + this.id + '\')" href="javascript:">' + title + '</a><br/>';
+            newHTML += '</div>';
+        }
+
+        if (color == '#ffffff') {
+            color = '#eeeeee';
+        } else {
+            color = '#ffffff';
         }
     });
     
