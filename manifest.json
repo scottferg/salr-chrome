@@ -9,6 +9,7 @@
 			  "128": "images/logo128.png"
 		   },
   "background_page": "salr-chrome.html",
+  "options_page":"settings.html",
   "content_scripts": [
     {
       "js": [

@@ -162,7 +162,7 @@ function onInputDeselect(element) {
  *
  */
 function populateValues(element) {
-    var value = window.opener.localStorage.getItem(element.attr('id'));
+    var value = localStorage.getItem(element.attr('id'));
 
     if (!value) {
         // If there is no stored setting, use the default
@@ -182,7 +182,7 @@ function populateValues(element) {
  *
  */
 function populateCheckboxes(element) {
-    var value = window.opener.localStorage.getItem(element.attr('id'));
+    var value = localStorage.getItem(element.attr('id'));
 
     // Make sure we're getting passed a checkbox
     if (element.attr('type') != 'checkbox')
@@ -201,7 +201,8 @@ function populateCheckboxes(element) {
  *
  */
 function onSubmitClicked() {
-    // Store the preferences locally so that the page can
+
+	// Store the preferences locally so that the page can
     // request it
     // We use window.opener to assign it to the toolstrip localStorage, since
     // the toolstrip handles all communication with the page
@@ -215,9 +216,10 @@ function onSubmitClicked() {
             value = jQuery(this).val();
         }
 
-        window.opener.localStorage.setItem(preferenceID, value);
+        localStorage.setItem(preferenceID, value);
     });
 	
 	// Close the settings window
+	
     window.close();
 }

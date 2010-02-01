@@ -97,9 +97,14 @@ chrome.extension.onConnect.addListener(function(port) {
  * @param element - Toolstrip element
  */
 function onToolbarClick() {
-    window.open(chrome.extension.getURL('settings.html'),
-                'salr-settings',
-                'location=0,scrollbars=0,toolbar=0,resizable=0,menubar=0,status=0,width=510,height=510');
+	//chrome.tabs.getSelected(null,
+	//		function(tab) {
+   // 			chrome.tabs.create({url:chrome.extension.getURL('settings.html'), index:tab.index+1});
+
+	//			console.log(tab);
+	//			});
+	//
+	chrome.tabs.create({url:chrome.extension.getURL('settings.html')});
 }
 
 /**
