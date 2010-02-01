@@ -1,5 +1,11 @@
 SALR Extension for Chrome
 
+v0.4.6 - "Whoops, buggy"
+
+- Enable OP post highlighting (Sebastian Paaske Tørholm)
+- Use Chrome options API for settings menu (Bill Best)
+- Fix missing option parameter for custom buttons (Scott Ferguson)
+
 v0.4.5 - "Fine, here's the jump list"
 
 - Add forums jump list (Sebastian Paaske Tørholm, Scott Ferguson)
