@@ -60,7 +60,6 @@ port.onMessage.addListener(function(data) {
     if (findCurrentPage() == 'forumdisplay.php' || findCurrentPage() == 'showthread.php') {
         displayPageNavigator();
         updateForumsList();
-        console.log(settings.forumsList);
     }
     
     if (findCurrentPage() == 'usercp.php') {
@@ -149,7 +148,7 @@ function updateStyling() {
         }
 
         // Don't do inline post counts if the user has custom jump buttons disabled
-        if (settings.inlinePostCounts == 'true' && settings.disableCustomButtons == 'false') {
+        if (settings.inlinePostCounts == 'true' && (settings.disableCustomButtons == 'false' || !settings.disableCustomButtons)) {
             jQuery(this).find('div.lastseen').each(function() {
                 // Add in number of new replies
                 if (newPostCount != 0) {

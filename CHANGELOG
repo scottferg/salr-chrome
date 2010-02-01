@@ -1,5 +1,10 @@
 SALR Extension for Chrome
 
+v0.4.5 - "Fine, here's the jump list"
+
+- Add forums jump list (Sebastian Paaske Tørholm, Scott Ferguson)
+- Fix possible error when using inline post counts (Scott Ferguson)
+
 v0.4.1 - "CM mod"
 
 - Fix default setting for custom jump buttons (Scott Ferguson)
