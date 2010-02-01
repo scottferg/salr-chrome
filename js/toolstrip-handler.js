@@ -81,7 +81,8 @@ chrome.extension.onConnect.addListener(function(port) {
                     'inlinePostCounts' : localStorage.getItem('inline-post-counts'),
                     'forumsList' : localStorage.getItem('forums-list'),
                     'highlightOP' : localStorage.getItem('highlight-original-poster'),
-                    'highlightOPColor' : localStorage.getItem('highlight-original-poster-color')
+                    'highlightOPColor' : localStorage.getItem('highlight-original-poster-color'),
+                    'disableCustomButtons' : localStorage.getItem('disable-custom-buttons')
                 });
                 break;
             case 'log':
