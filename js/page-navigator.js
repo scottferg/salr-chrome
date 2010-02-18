@@ -85,11 +85,6 @@ function jumpToPage(rootPageType, basePageID, page) {
     location.href = 'http://forums.somethingawful.com/' + findCurrentPage() + '?' + rootPageType + '=' + basePageID + '&pagenumber=' + page;
 }
 
-window.onresize = function() {
-    jQuery('#page-nav').css('top', (window.innerHeight - 31) + 'px');
-    jQuery('#page-nav').css('left', (window.innerWidth - 220) + 'px');
-};
-
 /**
  * Display the page navigator HTML
  *
@@ -104,7 +99,6 @@ function displayPageNavigator() {
     var basePageID = findForumID();
     // Current page
     var currentPage = Number(jQuery('span.curpage').html());
-    var offsetNavigator = ((getBrowserWidth() - 29) < getWidestPost());
 
     // If there is only a single page in the thread, or something
     // goes wrong, just quit out
@@ -142,14 +136,8 @@ function displayPageNavigator() {
     jQuery('#page-nav').css('width', navigatorWidth + 'px');
     jQuery('#page-nav').css('float', 'right');
     jQuery('#page-nav').css('position', 'fixed');
-
-    if (offsetNavigator) {
-        jQuery('#page-nav').css('top', (window.innerHeight - 49) + 'px');
-    } else {
-        jQuery('#page-nav').css('top', (window.innerHeight - 31) + 'px');
-    }
-    
-    jQuery('#page-nav').css('left', (window.innerWidth - 220) + 'px');
+    jQuery('#page-nav').css('bottom', '0px');
+    jQuery('#page-nav').css('right', '10px');
     jQuery('#page-nav').css('padding-bottom', '2px');
     jQuery('#page-nav').css('padding-left', '4px');
 	jQuery('#page-nav').css('-webkit-box-shadow', '#000000 -1px -1px 12px');
@@ -204,26 +192,4 @@ function displayPageNavigator() {
         jQuery('#nav-last-page').css('opacity', '0.5');
         jQuery('#nav-next-page').css('opacity', '0.5');
     }
-}
-
-/**
- * Find the widest thread post
- */
-function getWidestPost() {
-    var maxWidth = 0;
-
-    jQuery('table.post').each(function() {
-        if (jQuery(this).width() > maxWidth) {
-            maxWidth = jQuery(this).width();
-        }
-    });
-
-    return maxWidth;
-}
-
-/**
- * Return the width of the browser
- */
-function getBrowserWidth() {
-    return window.innerWidth != null ? window.innerWidth: document.body != null ? document.body.clientWidth:null;
 }
