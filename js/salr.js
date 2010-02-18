@@ -49,10 +49,6 @@ port.onMessage.addListener(function(data) {
 		inlineYoutubes();
 	}
     
-    if (settings.highlightFriends == 'true') {
-        highlightFriendPosts();    
-    }
-    
     if (settings.highlightOP == 'true') {
         highlightOPPosts();    
     }
@@ -60,6 +56,10 @@ port.onMessage.addListener(function(data) {
     if (findCurrentPage() == 'forumdisplay.php' || findCurrentPage() == 'showthread.php') {
         displayPageNavigator();
         updateForumsList();
+        
+        if (settings.highlightFriends == 'true') {
+            highlightFriendPosts();    
+        }
     }
     
     if (findCurrentPage() == 'usercp.php') {
