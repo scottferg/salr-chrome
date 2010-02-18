@@ -132,26 +132,25 @@ function displayPageNavigator() {
     var navigatorWidth = (pageCount > 100) ? 187 : 180;
 
     // Setup page nav CSS
-    jQuery('#page-nav').css('background', '#006699');
-    jQuery('#page-nav').css('width', navigatorWidth + 'px');
-    jQuery('#page-nav').css('float', 'right');
-    jQuery('#page-nav').css('position', 'fixed');
-    jQuery('#page-nav').css('bottom', '0px');
-    jQuery('#page-nav').css('right', '10px');
-    jQuery('#page-nav').css('padding-bottom', '2px');
-    jQuery('#page-nav').css('padding-left', '4px');
-	jQuery('#page-nav').css('-webkit-box-shadow', '#000000 -1px -1px 12px');
-	jQuery('#page-nav').css('box-shadow', '#000000 -1px -1px 12px');
-	jQuery('#page-nav').css('border-top-left-radius', '6px 6px');
-	jQuery('#page-nav').css('border-top-right-radius', '6px 6px');
+    jQuery('#page-nav').css({'background': '#006699',
+                             'width': navigatorWidth + 'px',
+                             'float': 'right',
+                             'position': 'fixed',
+                             'bottom': '0px',
+                             'right': '10px',
+                             'padding-bottom': '2px',
+                             'padding-left': '4px',
+	                         '-webkit-box-shadow': '#000000 -1px -1px 12px',
+	                         'box-shadow': '#000000 -1px -1px 12px',
+	                         'border-top-left-radius': '6px 6px',
+	                         'border-top-right-radius': '6px 6px'});
 
     // Set styles for buttons and inputs
-    jQuery('.nav-button').css('position', 'relative');
-    jQuery('.nav-button').css('top', '4px');
-    jQuery('.nav-button').css('cursor', 'pointer');
+    jQuery('.nav-button').css({'position': 'relative',
+                               'top': '4px',
+                               'cursor': 'pointer'});
 
-    jQuery('select#number-drop-down').css('position', 'relative');
-    jQuery('select#number-drop-down').css('top', '-2px');
+    jQuery('select#number-drop-down').css({'position': 'relative', 'top': '-2px'});
 
     // Pre-select the current page
     jQuery('select#number-drop-down').val(currentPage);
