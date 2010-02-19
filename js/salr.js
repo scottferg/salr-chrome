@@ -63,6 +63,7 @@ port.onMessage.addListener(function(data) {
     }
     
     if (findCurrentPage() == 'usercp.php') {
+        updateUsernameFromCP();
         updateFriendsList();
     }
 });
@@ -422,5 +423,18 @@ function updateForumsList() {
         port.postMessage({ 'message': 'ChangeSetting',
                            'option' : 'forumsList',
                            'value'  : JSON.stringify(forums) });
+    }
+}
+
+/**
+ * Fetches the username of the current user from the user CP
+ */
+function updateUsernameFromCP() {
+    var titleText = jQuery('title').text();
+    var username = titleText.match(/- User Control Panel For (.+)/)[1];
+    if (settings.username != username) {
+        port.postMessage({ 'message' : 'ChangeSetting',
+                           'option'  : 'username',
+                           'value'   : username });
     }
 }
