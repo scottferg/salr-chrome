@@ -48,10 +48,6 @@ port.onMessage.addListener(function(data) {
 	if (settings.inlineVideo == 'true') {
 		inlineYoutubes();
 	}
-    
-    if (settings.highlightOP == 'true') {
-        highlightOPPosts();    
-    }
 
     if (findCurrentPage() == 'forumdisplay.php' || findCurrentPage() == 'showthread.php') {
         displayPageNavigator();
@@ -59,6 +55,10 @@ port.onMessage.addListener(function(data) {
         
         if (settings.highlightFriends == 'true') {
             highlightFriendPosts();    
+        }
+    
+        if (settings.highlightOP == 'true') {
+            highlightOPPosts();    
         }
     }
     
