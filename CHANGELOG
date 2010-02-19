@@ -1,5 +1,10 @@
 SALR Extension for Chrome
 
+v0.4.7 - "Cruise Control"
+
+- Fix navigator bug when resizing window (Sebastian Paaske Tørholm) 
+- Code cleanup and optimizations (Sebastian Paaske Tørholm)
+
 v0.4.6 - "Whoops, buggy"
 
 - Enable OP post highlighting (Sebastian Paaske Tørholm)
