@@ -48,10 +48,6 @@ port.onMessage.addListener(function(data) {
 	if (settings.inlineVideo == 'true') {
 		inlineYoutubes();
 	}
-    
-    if (settings.highlightOP == 'true') {
-        highlightOPPosts();    
-    }
 
     if (findCurrentPage() == 'forumdisplay.php' || findCurrentPage() == 'showthread.php') {
         displayPageNavigator();
@@ -60,9 +56,18 @@ port.onMessage.addListener(function(data) {
         if (settings.highlightFriends == 'true') {
             highlightFriendPosts();    
         }
+    
+        if (settings.highlightOP == 'true') {
+            highlightOPPosts();    
+        }
+
+        if (settings.highlightSelf == 'true') {
+            highlightOwnPosts();
+        }
     }
     
     if (findCurrentPage() == 'usercp.php') {
+        updateUsernameFromCP();
         updateFriendsList();
     }
 });
@@ -406,6 +411,18 @@ function highlightOPPosts() {
 }
 
 /**
+ * Highlight the posts by one self
+ */
+function highlightOwnPosts() {
+    jQuery("table.post:has(dt.author:contains('"+settings.username+"')) td").each(function () {
+        jQuery(this).css({
+            'border-collapse' : 'collapse',
+            'background-color' : settings.highlightSelfColor
+        });
+    });
+}
+
+/**
  * Update the list of forums.
  */
 function updateForumsList() {
@@ -422,5 +439,18 @@ function updateForumsList() {
         port.postMessage({ 'message': 'ChangeSetting',
                            'option' : 'forumsList',
                            'value'  : JSON.stringify(forums) });
+    }
+}
+
+/**
+ * Fetches the username of the current user from the user CP
+ */
+function updateUsernameFromCP() {
+    var titleText = jQuery('title').text();
+    var username = titleText.match(/- User Control Panel For (.+)/)[1];
+    if (settings.username != username) {
+        port.postMessage({ 'message' : 'ChangeSetting',
+                           'option'  : 'username',
+                           'value'   : username });
     }
 }
