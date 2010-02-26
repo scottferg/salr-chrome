@@ -79,6 +79,9 @@ chrome.extension.onConnect.addListener(function(port) {
                     'highlightFriendsColor' : localStorage.getItem('highlight-friends-color'),
                     'highlightSelf' : localStorage.getItem('highlight-self'),
                     'highlightSelfColor' : localStorage.getItem('highlight-self-color'),
+                    'highlightModAdmin' : localStorage.getItem('highlight-moderator-admin'),
+                    'highlightModeratorColor' : localStorage.getItem('highlight-moderator-color'),
+                    'highlightAdminColor' : localStorage.getItem('highlight-admin-color'),
                     'friendsList' : localStorage.getItem('friends-list'),
                     'inlinePostCounts' : localStorage.getItem('inline-post-counts'),
                     'forumsList' : localStorage.getItem('forums-list'),
@@ -140,6 +143,9 @@ function settingNameFromFriendlyName(friendlyName) {
         case 'highlightFriendsColor' : return 'highlight-friends-color';
         case 'highlightSelf' : return 'highlight-self';
         case 'highlightSelfColor' : return 'highlight-self-color';
+        case 'highlightModAdmin' : return 'highlight-moderator-admin';
+        case 'highlightModeratorColor' : return 'highlight-moderator-color';
+        case 'highlightAdminColor' : return 'highlight-admin-color';
         case 'friendsList' : return 'friends-list';
         case 'inlinePostCounts' : return 'inline-post-counts';
         case 'disableCustomButtons' : return 'disable-custom-buttons';
@@ -163,6 +169,8 @@ function setupDefaultPreferences() {
     localStorage.setItem('display-configure-salr', 'true');
     localStorage.setItem('highlight-friends-color', "#f2babb");
     localStorage.setItem('highlight-self-color', "#f2babb");
+    localStorage.setItem('highlight-admin-color', "#ff7256");
+    localStorage.setItem('highlight-moderator-color', "#b4eeb4");
     localStorage.setItem('inline-post-counts', 'false');
     localStorage.setItem('disable-custom-buttons', 'false');
     localStorage.setItem('highlight-original-poster-color', '#fff2aa');

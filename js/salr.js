@@ -64,6 +64,10 @@ port.onMessage.addListener(function(data) {
         if (settings.highlightSelf == 'true') {
             highlightOwnPosts();
         }
+
+        if (settings.highlightModAdmin == 'true') {
+            highlightModAdminPosts();
+        }
     }
     
     if (findCurrentPage() == 'usercp.php') {
@@ -418,6 +422,24 @@ function highlightOwnPosts() {
         jQuery(this).css({
             'border-collapse' : 'collapse',
             'background-color' : settings.highlightSelfColor
+        });
+    });
+}
+
+/**
+ * Highlight the posts by one self
+ */
+function highlightModAdminPosts() {
+    jQuery('table.post:has(dt.author:has(img[title="Moderator"])) td').each(function () {
+        jQuery(this).css({
+            'border-collapse' : 'collapse',
+            'background-color' : settings.highlightModeratorColor
+        });
+    });
+    jQuery('table.post:has(dt.author:has(img[title="Admin"])) td').each(function () {
+        jQuery(this).css({
+            'border-collapse' : 'collapse',
+            'background-color' : settings.highlightAdminColor
         });
     });
 }

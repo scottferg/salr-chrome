@@ -1,6 +1,3 @@
 - Config SALR link enabled by default (for OSX bug)
 - On/off for thread highlighting
-- mod/op highlighing - <dt class="author op">
-- user highlighting/text <dt class="author">
-- get user on load - from forums index
 - quick reply box (on hold until extensions API supports popups)
