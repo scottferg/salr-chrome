@@ -4,6 +4,8 @@ v0.4.7 - "Cruise Control"
 
 - Fix navigator bug when resizing window (Sebastian Paaske Tørholm) 
 - Code cleanup and optimizations (Sebastian Paaske Tørholm)
+- Highlight posts by friends (Sebastian Paaske Tørholm)
+- Highlight posts by moderators/administrators (Sebastian Paaske Tørholm)
 
 v0.4.6 - "Whoops, buggy"
 
