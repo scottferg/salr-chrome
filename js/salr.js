@@ -76,6 +76,7 @@ port.onMessage.addListener(function(data) {
     if (findCurrentPage() == 'usercp.php') {
         updateUsernameFromCP();
         updateFriendsList();
+        renderOpenUpdatedThreadsButton();
     }
 });
 
@@ -365,6 +366,37 @@ function displayBanHistoryLink() {
 
     jQuery('ul.profilelinks').each(function() {
         jQuery(this).append('<li><a href="http://forums.somethingawful.com/banlist.php?userid=' + getUserID(jQuery(this)) + '">Ban History</li>');
+    });
+}
+
+/**
+ * Open all of your tracked and updated threads in a new tab
+ *
+ */
+function renderOpenUpdatedThreadsButton() {
+    jQuery('th.title:first').each( function() {
+        var headerHTML = jQuery(this).html();
+        var updatedHTML = headerHTML + '<div id="open-updated-threads"' +
+                                       '     style="float:right; ' +
+                                       '            cursor:pointer; ' +
+                                       '            text-decoration: underline;">' +
+                                       'Open updated threads</div>';
+
+        jQuery(this).html(updatedHTML);
+
+        // Open all updated threads in tabs
+        jQuery('#open-updated-threads').click( function() {
+            var updatedThreads = document.evaluate('.//*[@class="count"]', 
+                                                   document, 
+                                                   null, 
+                                                   XPathResult.ANY_TYPE, 
+                                                   null);
+
+            while (thread = updatedThreads.iterateNext()) {
+                port.postMessage({ 'message': 'OpenTab',
+                                   'url'  : thread.href });
+            }
+        });
     });
 }
 

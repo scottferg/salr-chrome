@@ -36,6 +36,9 @@ chrome.extension.onConnect.addListener(function(port) {
             case 'ChangeSetting':
                 localStorage.setItem(settingNameFromFriendlyName(data.option), data.value);
                 break;
+            case 'OpenTab':
+                openNewTab(data.url);
+                break;
             case 'ShowPageAction':
                 // Register the tab with the tagging page action
                 chrome.pageActions.enableForTab("forums_jump_list",
@@ -105,6 +108,15 @@ chrome.extension.onConnect.addListener(function(port) {
  */
 function onToolbarClick() {
 	chrome.tabs.create({url:chrome.extension.getURL('settings.html')});
+}
+
+/**
+ * Opens a new tab with the specified URL
+ *
+ *
+ */
+function openNewTab(aUrl) {
+    chrome.tabs.create({url: aUrl});
 }
 
 /**
