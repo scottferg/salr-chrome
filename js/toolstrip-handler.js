@@ -104,13 +104,6 @@ chrome.extension.onConnect.addListener(function(port) {
  * @param element - Toolstrip element
  */
 function onToolbarClick() {
-	//chrome.tabs.getSelected(null,
-	//		function(tab) {
-   // 			chrome.tabs.create({url:chrome.extension.getURL('settings.html'), index:tab.index+1});
-
-	//			console.log(tab);
-	//			});
-	//
 	chrome.tabs.create({url:chrome.extension.getURL('settings.html')});
 }
 
