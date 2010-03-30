@@ -386,16 +386,10 @@ function renderOpenUpdatedThreadsButton() {
 
         // Open all updated threads in tabs
         jQuery('#open-updated-threads').click( function() {
-            var updatedThreads = document.evaluate('.//*[@class="count"]', 
-                                                   document, 
-                                                   null, 
-                                                   XPathResult.ANY_TYPE, 
-                                                   null);
-
-            while (thread = updatedThreads.iterateNext()) {
+            jQuery('a.count').each( function() {
                 port.postMessage({ 'message': 'OpenTab',
-                                   'url'  : thread.href });
-            }
+                                   'url'  : jQuery(this).attr('href') });
+            });
         });
     });
 }

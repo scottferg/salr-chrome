@@ -1,9 +1,10 @@
 SALR Extension for Chrome
 
-v0.4.7.1 - "I'm drunk"
+v0.4.8 - "I'm drunk"
 
 - Allow enabling/disabling of page navigator (Scott Ferguson)
 - Experimental fix for page navigator drop-shadow ghosting (Scott Ferguson)
+- Add feature to open all updated threads (Scott Ferguson)
 
 v0.4.7 - "Cruise Control"
 
