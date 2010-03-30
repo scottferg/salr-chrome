@@ -50,7 +50,10 @@ port.onMessage.addListener(function(data) {
 	}
 
     if (findCurrentPage() == 'forumdisplay.php' || findCurrentPage() == 'showthread.php') {
-        displayPageNavigator();
+        if (settings.displayPageNavigator == 'true') {
+            displayPageNavigator();
+        }
+
         updateForumsList();
         
         if (settings.highlightFriends == 'true') {
