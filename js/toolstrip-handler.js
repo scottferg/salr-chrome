@@ -91,6 +91,9 @@ chrome.extension.onConnect.addListener(function(port) {
                     'highlightOP' : localStorage.getItem('highlight-original-poster'),
                     'highlightOPColor' : localStorage.getItem('highlight-original-poster-color'),
                     'disableCustomButtons' : localStorage.getItem('disable-custom-buttons'),
+
+                    'enableUserNotes' : localStorage.getItem('user-notes-enabled'),
+                    'userNotes' : localStorage.getItem('user-notes'),
                     'displayPageNavigator' : localStorage.getItem('display-page-navigator')
                 });
                 break;
@@ -158,6 +161,8 @@ function settingNameFromFriendlyName(friendlyName) {
         case 'forumsList' : return 'forums-list';
         case 'highlightOP' : return 'highlight-original-poster';
         case 'highlightOPColor' : return 'highlight-original-poster-color';
+        case 'enableUserNotes' : return 'user-notes-enabled';
+        case 'userNotes' : return 'user-notes';
         case 'displayPageNavigator' : return 'display-page-navigator';
     }
 }
@@ -182,4 +187,5 @@ function setupDefaultPreferences() {
     localStorage.setItem('disable-custom-buttons', 'false');
     localStorage.setItem('highlight-original-poster-color', '#fff2aa');
     localStorage.setItem('display-page-navigator', 'true');
+    localStorage.setItem('user-notes-enabled', 'true');
 }

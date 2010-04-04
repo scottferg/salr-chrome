@@ -71,6 +71,10 @@ port.onMessage.addListener(function(data) {
             highlightModAdminPosts();
         }
 
+        if (settings.enableUserNotes == 'true') {
+            displayUserNotes();
+        }
+
         displayBanHistoryLink();
     }
     
@@ -511,4 +515,38 @@ function updateUsernameFromCP() {
                            'option'  : 'username',
                            'value'   : username });
     }
+}
+
+/**
+ * Displays notes under usernames.
+ */
+function displayUserNotes() {
+    var notes;
+    if (settings.userNotes == null) {
+        notes = { "50339" : {'text' : 'SALR Committer', 'color' : '#9933FF'},    // Sebbe
+                  "115838" : {'text' : 'SALR Committer', 'color' : '#9933FF'}}; // Ferg
+        port.postMessage({ 'message': 'ChangeSetting',
+                           'option' : 'userNotes',
+                           'value'  : JSON.stringify(notes) });
+    } else {
+        notes = JSON.parse(settings.userNotes);
+    }
+
+    jQuery('table.post').each(function () {
+        var userid = jQuery(this).find('ul.profilelinks a')[0].href.match(/\d+$/)[0];
+        if (notes[userid] != null) {
+            jQuery('dl.userinfo > dt.author', this).after(
+                '<dd style="font-weight: bold; color: ' + notes[userid].color + '">' + notes[userid].text + '</dd>'
+            );
+        }
+
+        /* // TODO: Configuration thing ("popup-bubble"?) for it; to be inserted in the click handler below.
+        var editLink = jQuery('<li><a href="javascript:;">Edit Note</a></li>');
+        jQuery('a', editLink).click(function() {
+            alert('Some manner of configuration thing here.');
+        });
+        // append a space to create a new text node which fixes spacing problems you'll get otherwise
+        jQuery('ul.profilelinks', this).append(editLink).append(' '); 
+        */
+    });
 }
