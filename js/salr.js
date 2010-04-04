@@ -366,7 +366,7 @@ function displayBanHistoryLink() {
     };
 
     jQuery('ul.profilelinks').each(function() {
-        jQuery(this).append('<li><a href="http://forums.somethingawful.com/banlist.php?userid=' + getUserID(jQuery(this)) + '">Ban History</li>');
+        jQuery(this).append('<li><a href="http://forums.somethingawful.com/banlist.php?userid=' + getUserID(jQuery(this)) + '">Ban History</a></li>');
     });
 }
 
