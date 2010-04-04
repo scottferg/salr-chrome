@@ -42,7 +42,6 @@ port.onMessage.addListener(function(data) {
     // Update the styles now that we have
     // the settings
     updateStyling();
-    displayBanHistoryLink();
 	modifyImages();
 	
 	if (settings.inlineVideo == 'true') {
@@ -71,6 +70,8 @@ port.onMessage.addListener(function(data) {
         if (settings.highlightModAdmin == 'true') {
             highlightModAdminPosts();
         }
+
+        displayBanHistoryLink();
     }
     
     if (findCurrentPage() == 'usercp.php') {
