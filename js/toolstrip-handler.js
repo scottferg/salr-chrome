@@ -95,6 +95,7 @@ chrome.extension.onConnect.addListener(function(port) {
                     'enableUserNotes' : localStorage.getItem('user-notes-enabled'),
                     'userNotes' : localStorage.getItem('user-notes'),
                     'boxQuotes' : localStorage.getItem('box-quotes'),
+                    'highlightOwnQuotes' : localStorage.getItem('highlight-own-quotes'),
                     'displayPageNavigator' : localStorage.getItem('display-page-navigator')
                 });
                 break;
@@ -165,6 +166,7 @@ function settingNameFromFriendlyName(friendlyName) {
         case 'enableUserNotes' : return 'user-notes-enabled';
         case 'userNotes' : return 'user-notes';
         case 'boxQuotes' : return 'box-quotes';
+        case 'highlightOwnQuotes' : return 'highlight-own-quotes';
         case 'displayPageNavigator' : return 'display-page-navigator';
     }
 }

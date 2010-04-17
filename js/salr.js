@@ -79,6 +79,10 @@ port.onMessage.addListener(function(data) {
             boxQuotes();
         }
 
+        if (settings.highlightOwnQuotes = 'true') {
+            highlightOwnQuotes();
+        }
+
         displayBanHistoryLink();
     }
     
@@ -107,13 +111,6 @@ function openSettings() {
 // stash the styling logic in it's own function that we can call
 // once we're ready
 function updateStyling() {
-    // If a post has the user quoted, highlight it a pleasant green
-    jQuery('.bbc-block h4').each(function() {
-        if (jQuery(this).html() == settings.username + ' posted:') {
-            jQuery(this).parent().css("background-color", settings.userQuote);
-        }
-    });
-
     var newPosts = false;
     var newPostCount = 0;
 
@@ -576,4 +573,16 @@ function boxQuotes() {
     jQuery('.bbc-block blockquote').css({
         'padding': '7px 7px 7px 7px'
     });
+}
+
+/**
+ * Highlight the quotes of the user themselves.
+ */
+function highlightOwnQuotes() {
+    jQuery('.bbc-block h4').each(function() {
+        if (jQuery(this).html() == settings.username + ' posted:') {
+            jQuery(this).parent().css("background-color", settings.userQuote);
+        }
+    });
+
 }
