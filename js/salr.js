@@ -75,6 +75,10 @@ port.onMessage.addListener(function(data) {
             displayUserNotes();
         }
 
+        if (settings.boxQuotes == 'true') {
+            boxQuotes();
+        }
+
         displayBanHistoryLink();
     }
     
@@ -548,5 +552,28 @@ function displayUserNotes() {
         // append a space to create a new text node which fixes spacing problems you'll get otherwise
         jQuery('ul.profilelinks', this).append(editLink).append(' '); 
         */
+    });
+}
+
+/**
+ * Add boxes around blockquotes
+ */
+function boxQuotes() {
+    // CSS taken from http://forums.somethingawful.com/showthread.php?threadid=3208437&userid=0&perpage=40&pagenumber=3#post371892272
+    jQuery('.bbc-block').css({
+        'background-color': 'white',
+        'border': '1px solid black',
+        'padding': '0px'
+    });
+
+    jQuery('.bbc-block h4').css({
+        'border': 'none',
+        'border-bottom': '1px solid black',
+        'font-style': 'normal',
+        'padding': '3px'
+    });
+
+    jQuery('.bbc-block blockquote').css({
+        'padding': '7px 7px 7px 7px'
     });
 }

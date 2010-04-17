@@ -94,6 +94,7 @@ chrome.extension.onConnect.addListener(function(port) {
 
                     'enableUserNotes' : localStorage.getItem('user-notes-enabled'),
                     'userNotes' : localStorage.getItem('user-notes'),
+                    'boxQuotes' : localStorage.getItem('box-quotes'),
                     'displayPageNavigator' : localStorage.getItem('display-page-navigator')
                 });
                 break;
@@ -163,6 +164,7 @@ function settingNameFromFriendlyName(friendlyName) {
         case 'highlightOPColor' : return 'highlight-original-poster-color';
         case 'enableUserNotes' : return 'user-notes-enabled';
         case 'userNotes' : return 'user-notes';
+        case 'boxQuotes' : return 'box-quotes';
         case 'displayPageNavigator' : return 'display-page-navigator';
     }
 }
