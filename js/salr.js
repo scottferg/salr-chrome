@@ -533,22 +533,51 @@ function displayUserNotes() {
         notes = JSON.parse(settings.userNotes);
     }
 
+    jQuery('body').append("<div id='salr-usernotes-config' title='Set note' style='display: none'>"+
+        "<fieldset>"+
+            "<p><label for='salr-usernotes-text'><strong>Note:</strong></label><br/><input type='text' id='salr-usernotes-text'/></p>"+
+            "<p><label for='salr-usernotes-color'><strong>Color:</strong></label><br/><input type='text' id='salr-usernotes-color'/></p>"+
+        "</fieldset>"+
+    "</div>");
+    
     jQuery('table.post').each(function () {
         var userid = jQuery(this).find('ul.profilelinks a')[0].href.match(/\d+$/)[0];
-        if (notes[userid] != null) {
+        var hasNote = notes[userid] != null;
+        
+        if (hasNote) {
             jQuery('dl.userinfo > dt.author', this).after(
                 '<dd style="font-weight: bold; color: ' + notes[userid].color + '">' + notes[userid].text + '</dd>'
             );
         }
 
-        /* // TODO: Configuration thing ("popup-bubble"?) for it; to be inserted in the click handler below.
         var editLink = jQuery('<li><a href="javascript:;">Edit Note</a></li>');
         jQuery('a', editLink).click(function() {
-            alert('Some manner of configuration thing here.');
+            jQuery('#salr-usernotes-config').dialog({
+                open: function(event, ui) {
+                    jQuery('#salr-usernotes-text').val(hasNote ? notes[userid].text : '');
+                    jQuery('#salr-usernotes-color').val(hasNote ? notes[userid].color : '#FF0000');
+                },
+                buttons: {
+                    "OK" : function () {
+                        notes[userid] = {'text' : jQuery('#salr-usernotes-text').val(), 
+                                         'color' : jQuery('#salr-usernotes-color').val()};
+                        port.postMessage({ 'message': 'ChangeSetting',
+                                           'option' : 'userNotes',
+                                           'value'  : JSON.stringify(notes) });
+                        jQuery(this).dialog('destroy');
+                    },
+                    "Delete" : function () {
+                        delete notes[userid];
+                        port.postMessage({ 'message': 'ChangeSetting',
+                                           'option' : 'userNotes',
+                                           'value'  : JSON.stringify(notes) });
+                        jQuery(this).dialog('destroy');                    
+                    },
+                    "Cancel" : function () { jQuery(this).dialog('destroy'); } }
+            });
         });
         // append a space to create a new text node which fixes spacing problems you'll get otherwise
         jQuery('ul.profilelinks', this).append(editLink).append(' '); 
-        */
     });
 }
 

@@ -14,9 +14,13 @@
     {
       "js": [
         "js/jquery.js",
+        "js/jquery-ui.js",
         "js/page-navigator.js",
         "js/salr.js",
 		"js/colorpicker.js"
+      ],
+      "css" : [
+        "css/jquery-ui/jquery-ui.custom.css"
       ],
       "matches": [
         "http://forums.somethingawful.com/*"
