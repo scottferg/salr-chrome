@@ -34,7 +34,7 @@ chrome.extension.onConnect.addListener(function(port) {
                 onToolbarClick();
                 break;
             case 'ChangeSetting':
-                localStorage.setItem(settingNameFromFriendlyName(data.option), data.value);
+                localStorage.setItem(data.option, data.value);
                 break;
             case 'OpenTab':
                 openNewTab(data.url);
@@ -54,50 +54,15 @@ chrome.extension.onConnect.addListener(function(port) {
                 if (!localStorage.getItem('username')) {
                     setupDefaultPreferences();
                 }
+
+                var response = {};
+
+                for ( var index in localStorage ) {
+                    response[index] = localStorage.getItem(index);
+                }
                 
                 // Respond with the username
-                port.postMessage({
-                    'username': localStorage.getItem('username'),
-                    'userQuote': localStorage.getItem('user-quote'),
-                    'darkRead' : localStorage.getItem('dark-read'),
-                    'lightRead' : localStorage.getItem('light-read'),
-                    'darkNewReplies' : localStorage.getItem('dark-new-replies'),
-                    'lightNewReplies' : localStorage.getItem('light-new-replies'),
-                    'youtubeHighlight' : localStorage.getItem('youtube-highlight'),
-                    'hideAdvertisements' : localStorage.getItem('hide-advertisements'),
-                    'hideHeaderLinks' : localStorage.getItem('hide-header-links'),
-                    'hideFooterLinks' : localStorage.getItem('hide-footer-links'),
-                    'displayNewPostsFirst' : localStorage.getItem('display-new-posts-first'),
-                    'displayConfigureSalr' : localStorage.getItem('display-configure-salr'),
-                    'replaceImagesWithLinks' : localStorage.getItem('replace-images-with-links'),
-                    'replaceImagesReadOnly' : localStorage.getItem('replace-images-read-only'),
-                    //'dontReplaceEmoticons' : localStorage.getItem('dont-replace-emoticons'),
-                    'replaceLinksWithImages' : localStorage.getItem('replace-links-with-images'),
-                    'dontReplaceLinkNWS' : localStorage.getItem('dont-replace-link-nws'),
-                    'dontReplaceLinkSpoiler' : localStorage.getItem('dont-replace-link-spoiler'),
-                    'dontReplaceLinkRead' : localStorage.getItem('dont-replace-link-read'),
-                    'restrictImageSize' : localStorage.getItem('restrict-image-size'),
-                    'inlineVideo' : localStorage.getItem('inline-video-links'),
-                    'highlightFriends' : localStorage.getItem('highlight-friends'),
-                    'highlightFriendsColor' : localStorage.getItem('highlight-friends-color'),
-                    'highlightSelf' : localStorage.getItem('highlight-self'),
-                    'highlightSelfColor' : localStorage.getItem('highlight-self-color'),
-                    'highlightModAdmin' : localStorage.getItem('highlight-moderator-admin'),
-                    'highlightModeratorColor' : localStorage.getItem('highlight-moderator-color'),
-                    'highlightAdminColor' : localStorage.getItem('highlight-admin-color'),
-                    'friendsList' : localStorage.getItem('friends-list'),
-                    'inlinePostCounts' : localStorage.getItem('inline-post-counts'),
-                    'forumsList' : localStorage.getItem('forums-list'),
-                    'highlightOP' : localStorage.getItem('highlight-original-poster'),
-                    'highlightOPColor' : localStorage.getItem('highlight-original-poster-color'),
-                    'disableCustomButtons' : localStorage.getItem('disable-custom-buttons'),
-
-                    'enableUserNotes' : localStorage.getItem('user-notes-enabled'),
-                    'userNotes' : localStorage.getItem('user-notes'),
-                    'boxQuotes' : localStorage.getItem('box-quotes'),
-                    'highlightOwnQuotes' : localStorage.getItem('highlight-own-quotes'),
-                    'displayPageNavigator' : localStorage.getItem('display-page-navigator')
-                });
+                port.postMessage(response);
                 break;
             case 'log':
             default:
@@ -125,71 +90,24 @@ function openNewTab(aUrl) {
 }
 
 /**
- * Gets the setting name, based on the friendly name provided externally.
- */
-function settingNameFromFriendlyName(friendlyName) {
-    switch (friendlyName) {
-        case 'username': return 'username';
-        case 'userQuote': return 'user-quote';
-        case 'darkRead' : return 'dark-read';
-        case 'lightRead' : return 'light-read';
-        case 'darkNewReplies' : return 'dark-new-replies';
-        case 'lightNewReplies' : return 'light-new-replies';
-        case 'youtubeHighlight' : return 'youtube-highlight';
-        case 'hideAdvertisements' : return 'hide-advertisements';
-        case 'hideHeaderLinks' : return 'hide-header-links';
-        case 'hideFooterLinks' : return 'hide-footer-links';
-        case 'displayNewPostsFirst' : return 'display-new-posts-first';
-        case 'displayConfigureSalr' : return 'display-configure-salr';
-        case 'replaceImagesWithLinks' : return 'replace-images-with-links';
-        case 'replaceImagesReadOnly' : return 'replace-images-read-only';
-        //case 'dontReplaceEmoticons' : return 'dont-replace-emoticons';
-        case 'replaceLinksWithImages' : return 'replace-links-with-images';
-        case 'dontReplaceLinkNWS' : return 'dont-replace-link-nws';
-        case 'dontReplaceLinkSpoiler' : return 'dont-replace-link-spoiler';
-        case 'dontReplaceLinkRead' : return 'dont-replace-link-read';
-        case 'restrictImageSize' : return 'restrict-image-size';
-        case 'inlineVideo' : return 'inline-video-links';
-        case 'highlightFriends' : return 'highlight-friends';
-        case 'highlightFriendsColor' : return 'highlight-friends-color';
-        case 'highlightSelf' : return 'highlight-self';
-        case 'highlightSelfColor' : return 'highlight-self-color';
-        case 'highlightModAdmin' : return 'highlight-moderator-admin';
-        case 'highlightModeratorColor' : return 'highlight-moderator-color';
-        case 'highlightAdminColor' : return 'highlight-admin-color';
-        case 'friendsList' : return 'friends-list';
-        case 'inlinePostCounts' : return 'inline-post-counts';
-        case 'disableCustomButtons' : return 'disable-custom-buttons';
-        case 'forumsList' : return 'forums-list';
-        case 'highlightOP' : return 'highlight-original-poster';
-        case 'highlightOPColor' : return 'highlight-original-poster-color';
-        case 'enableUserNotes' : return 'user-notes-enabled';
-        case 'userNotes' : return 'user-notes';
-        case 'boxQuotes' : return 'box-quotes';
-        case 'highlightOwnQuotes' : return 'highlight-own-quotes';
-        case 'displayPageNavigator' : return 'display-page-navigator';
-    }
-}
-
-/**
  * Sets up default preferences for highlighting only
  *
  */
 function setupDefaultPreferences() {
-    localStorage.setItem('user-quote', '#a2cd5a');
-    localStorage.setItem('dark-read', '#6699cc');
-    localStorage.setItem('light-read', '#99ccff');
-    localStorage.setItem('dark-new-replies', '#99cc99');
-    localStorage.setItem('light-new-replies', '#ccffcc');
-    localStorage.setItem('youtube-highlight', '#ff00ff');
-    localStorage.setItem('display-configure-salr', 'true');
-    localStorage.setItem('highlight-friends-color', "#f2babb");
-    localStorage.setItem('highlight-self-color', "#f2babb");
-    localStorage.setItem('highlight-admin-color', "#ff7256");
-    localStorage.setItem('highlight-moderator-color', "#b4eeb4");
-    localStorage.setItem('inline-post-counts', 'false');
-    localStorage.setItem('disable-custom-buttons', 'false');
-    localStorage.setItem('highlight-original-poster-color', '#fff2aa');
-    localStorage.setItem('display-page-navigator', 'true');
-    localStorage.setItem('user-notes-enabled', 'true');
+    localStorage.setItem('userQuote', '#a2cd5a');
+    localStorage.setItem('darkRead', '#6699cc');
+    localStorage.setItem('lightRead', '#99ccff');
+    localStorage.setItem('darkNewReplies', '#99cc99');
+    localStorage.setItem('lightNewReplies', '#ccffcc');
+    localStorage.setItem('youtubeHighlight', '#ff00ff');
+    localStorage.setItem('displayConfigureSalr', 'true');
+    localStorage.setItem('highlightFriendsColor', "#f2babb");
+    localStorage.setItem('highlightSelfColor', "#f2babb");
+    localStorage.setItem('highlightAdminColor', "#ff7256");
+    localStorage.setItem('highlightModeratorColor', "#b4eeb4");
+    localStorage.setItem('inlinePostCounts', 'false');
+    localStorage.setItem('disableCustomButtons', 'false');
+    localStorage.setItem('highlightOPColor', '#fff2aa');
+    localStorage.setItem('displayPageNavigator', 'true');
+    localStorage.setItem('userNotesEnabled', 'true');
 }

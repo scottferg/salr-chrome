@@ -33,11 +33,11 @@
 				<span class='settings-group-title'>Quotations by you</span>
 				<div class='settings-group'>
 					<div class='display-preference'>
-                        Enable highlighting quotes of you: <input id='highlight-own-quotes' class='user-preference' type='checkbox' />
+                        Enable highlighting quotes of you: <input id='highlightOwnQuotes' class='user-preference' type='checkbox' />
                     </div>
                 	<div class='color-preference'>
                     	<div class='color-select-input'>
-                        	<input type='text' size='7' default='#a2cd5a' value='' class='color-select-text text-entry user-preference' style='color: #999999;' id='user-quote' />
+                        	<input type='text' size='7' default='#a2cd5a' value='' class='color-select-text text-entry user-preference' style='color: #999999;' id='userQuote' />
 	                    </div>
     	                <div class='color-select'>
         	                <div class='color-select-box'></div>
@@ -52,7 +52,7 @@
 				<div class='settings-group'>
 					<div class='color-preference'>
                     	<div class='color-select-input'>
-                            Dark shade: <input type='text' size='7' default='#6699cc' class='color-select-text text-entry user-preference' style='color: #999999;' id='dark-read' />
+                            Dark shade: <input type='text' size='7' default='#6699cc' class='color-select-text text-entry user-preference' style='color: #999999;' id='darkRead' />
 	                    </div>
     	                <div class='color-select'>
         	                <div class='color-select-box'></div>
@@ -62,7 +62,7 @@
     			<div style="clear: both;"></div>
 					<div class='color-preference'>
                     	<div class='color-select-input'>
-                        	Light shade: <input type='text' size='7' default='#99ccff' class='color-select-text text-entry user-preference' style='color: #999999;' id='light-read' />
+                        	Light shade: <input type='text' size='7' default='#99ccff' class='color-select-text text-entry user-preference' style='color: #999999;' id='lightRead' />
 	                    </div>
     	                <div class='color-select'>
         	                <div class='color-select-box'></div>
@@ -75,7 +75,7 @@
 				<div class='settings-group'>
 					<div class='color-preference'>
                     	<div class='color-select-input'>
-                        	Dark shade: <input type='text' size='7' default='#99cc99' class='color-select-text text-entry user-preference' style='color: #999999;' id='dark-new-replies' />
+                        	Dark shade: <input type='text' size='7' default='#99cc99' class='color-select-text text-entry user-preference' style='color: #999999;' id='darkNewReplies' />
 	                    </div>
     		            <div class='color-select'>
             	            <div class='color-select-box'></div>
@@ -85,7 +85,7 @@
 		    	    <div style="clear: both;"></div>
 					<div class='color-preference'>
                     	<div class='color-select-input'>
-                        	Light shade: <input type='text' size='7' default='#ccffcc' class='color-select-text text-entry user-preference' style='color: #999999;' id='light-new-replies' />
+                        	Light shade: <input type='text' size='7' default='#ccffcc' class='color-select-text text-entry user-preference' style='color: #999999;' id='lightNewReplies' />
 	                    </div>
     	                <div class='color-select'>
         	                <div class='color-select-box'></div>
@@ -97,11 +97,11 @@
                 <span class='settings-group-title'>Posts by you</span>
 				<div class='settings-group'>
                     <div class='display-preference'>
-                        Enable own post highlighting: <input id='highlight-self' class='user-preference' type='checkbox' />
+                        Enable own post highlighting: <input id='highlightSelf' class='user-preference' type='checkbox' />
                     </div>
 					<div class='color-preference'>
                     	<div class='color-select-input'>
-                        	<input type='text' size='7' default='#f2babb' class='color-select-text text-entry user-preference' style='color: #999999;' id='highlight-self-color' />
+                        	<input type='text' size='7' default='#f2babb' class='color-select-text text-entry user-preference' style='color: #999999;' id='highlightSelfColor' />
 	                    </div>
     		            <div class='color-select'>
             	            <div class='color-select-box'></div>
@@ -114,11 +114,11 @@
                 <span class='settings-group-title'>Posts by friends</span>
 				<div class='settings-group'>
                     <div class='display-preference'>
-                        Enable friend post highlighting: <input id='highlight-friends' class='user-preference' type='checkbox' />
+                        Enable friend post highlighting: <input id='highlightFriends' class='user-preference' type='checkbox' />
                     </div>
 					<div class='color-preference'>
                     	<div class='color-select-input'>
-                        	<input type='text' size='7' default='#f2babb' class='color-select-text text-entry user-preference' style='color: #999999;' id='highlight-friends-color' />
+                        	<input type='text' size='7' default='#f2babb' class='color-select-text text-entry user-preference' style='color: #999999;' id='highlightFriendsColor' />
 	                    </div>
     		            <div class='color-select'>
             	            <div class='color-select-box'></div>
@@ -131,11 +131,11 @@
                 <span class='settings-group-title'>Posts by OP</span>
 				<div class='settings-group'>
                     <div class='display-preference'>
-                        Enable OP post highlighting: <input id='highlight-original-poster' class='user-preference' type='checkbox' />
+                        Enable OP post highlighting: <input id='highlightOP' class='user-preference' type='checkbox' />
                     </div>
 					<div class='color-preference'>
                     	<div class='color-select-input'>
-                        	<input type='text' size='7' default='#fff2aa' class='color-select-text text-entry user-preference' style='color: #999999;' id='highlight-original-poster-color' />
+                        	<input type='text' size='7' default='#fff2aa' class='color-select-text text-entry user-preference' style='color: #999999;' id='highlightOPcolor' />
 	                    </div>
     		            <div class='color-select'>
             	            <div class='color-select-box'></div>
@@ -148,11 +148,11 @@
                 <span class='settings-group-title'>Posts by moderators / administrators</span>
 				<div class='settings-group'>
                     <div class='display-preference'>
-                        Enable moderator/administrator post highlighting: <input id='highlight-moderator-admin' class='user-preference' type='checkbox' />
+                        Enable moderator/administrator post highlighting: <input id='highlightModAdmin' class='user-preference' type='checkbox' />
                     </div>
 					<div class='color-preference'>
                     	<div class='color-select-input'>
-                        	<input type='text' size='7' default='#b4eeb4' class='color-select-text text-entry user-preference' style='color: #999999;' id='highlight-moderator-color' />
+                        	<input type='text' size='7' default='#b4eeb4' class='color-select-text text-entry user-preference' style='color: #999999;' id='highlightModeratorColor' />
 	                    </div>
     		            <div class='color-select'>
             	            <div class='color-select-box'></div>
@@ -162,7 +162,7 @@
     			    <div style="clear: both;"></div>
 					<div class='color-preference'>
                     	<div class='color-select-input'>
-                        	<input type='text' size='7' default='#ff7256' class='color-select-text text-entry user-preference' style='color: #999999;' id='highlight-admin-color' />
+                        	<input type='text' size='7' default='#ff7256' class='color-select-text text-entry user-preference' style='color: #999999;' id='highlightAdminColor' />
 	                    </div>
     		            <div class='color-select'>
             	            <div class='color-select-box'></div>
@@ -176,7 +176,7 @@
 				<div class='settings-group'>
 					<div class='color-preference'>
                     	<div class='color-select-input'>
-                        	<input type='text' size='7' default='#ff00ff' class='color-select-text text-entry user-preference' style='color: #999999;' id='youtube-highlight' />
+                        	<input type='text' size='7' default='#ff00ff' class='color-select-text text-entry user-preference' style='color: #999999;' id='youtubeHighlight' />
 	                    </div>
     	                <div class='color-select'>
         	                <div class='color-select-box'></div>
@@ -190,37 +190,37 @@
     	<div id="tabs-3">
             <div class="settings-panel">
 				<div class='display-preference'>
-					Display Configure SALR in forum menu: <input id='display-configure-salr' class='user-preference' type='checkbox' />
+					Display Configure SALR in forum menu: <input id='displayConfigureSalr' class='user-preference' type='checkbox' />
 				</div>
 				<div class='display-preference'>
-					Don't use SALR jump buttons: <input id='disable-custom-buttons' class='user-preference' type='checkbox' />
+					Don't use SALR jump buttons: <input id='disableCustomButtons' class='user-preference' type='checkbox' />
 				</div>
                 <div class='display-preference'>
-                    Hide header/footer ads: <input id='hide-advertisements' class='user-preference' type='checkbox' />
+                    Hide header/footer ads: <input id='hideAdvertisements' class='user-preference' type='checkbox' />
                 </div>
                 <div class='display-preference'>
-                    Hide header links: <input id='hide-header-links' class='user-preference' type='checkbox' />
+                    Hide header links: <input id='hideHeaderLinks' class='user-preference' type='checkbox' />
                 </div>
                 <div class='display-preference'>
-                    Display threads with new posts first: <input id='display-new-posts-first' class='user-preference' type='checkbox' />
+                    Display threads with new posts first: <input id='displayNewPostsFirst' class='user-preference' type='checkbox' />
 				</div>
 				<div class='display-preference'>
-                    Convert Youtube links to inline player: <input id='inline-video-links' class='user-preference' type='checkbox' />
+                    Convert Youtube links to inline player: <input id='inlineVideo' class='user-preference' type='checkbox' />
 				</div>
 				<div class='display-preference'>
-                    Display new post counts inline: <input id='inline-post-counts' class='user-preference' type='checkbox' />
+                    Display new post counts inline: <input id='inlinePostCounts' class='user-preference' type='checkbox' />
                     <div style="padding-left: 10px; padding-top: 2px; padding-bottom: 2px">
                         NOTE: This will not work if you have the SALR thread jumping buttons disabled
                     </div>
 				</div>
 				<div class='display-preference'>
-                    Display page navigator: <input id='display-page-navigator' class='user-preference' type='checkbox' />
+                    Display page navigator: <input id='displayPageNavigator' class='user-preference' type='checkbox' />
 				</div>
 				<div class='display-preference'>
-                    Enable user notes: <input id='user-notes-enabled' class='user-preference' type='checkbox' />
+                    Enable user notes: <input id='userNotesEnabled' class='user-preference' type='checkbox' />
 				</div>
 				<div class='display-preference'>
-                    Display quotes in boxes: <input id='box-quotes' class='user-preference' type='checkbox' />
+                    Display quotes in boxes: <input id='boxQuotes' class='user-preference' type='checkbox' />
 				</div>
             </div>
             <div style="clear: both;"></div>
@@ -230,28 +230,28 @@
 				<span class='settings-group-title'>Links-to-Images</span>
 				<div class='settings-group'>
 					<div class='display-preference'>
-						Convert links into inline images: <input id='replace-links-with-images' class='user-preference' type='checkbox' />
+						Convert links into inline images: <input id='replaceLinksWithImages' class='user-preference' type='checkbox' />
 					</div>
 					<div class='sub-options'>
 						<div class='display-preference'>
-							Don't convert if post contains a NWS/NMS warning: <input id='dont-replace-link-nws' class='user-preference' type='checkbox' />
+							Don't convert if post contains a NWS/NMS warning: <input id='dontReplaceLinkNWS' class='user-preference' type='checkbox' />
 						</div>
 						<div class='display-preference'>
-							Don't convert links inside spoiler tags: <input id='dont-replace-link-spoiler' class='user-preference' type='checkbox' />
+							Don't convert links inside spoiler tags: <input id='dontReplaceLinkSpoiler' class='user-preference' type='checkbox' />
 						</div>
 						<div class='display-preference'>
-							Don't convert links in marked-as-read posts: <input id='dont-replace-link-read' class='user-preference' type='checkbox' />
+							Don't convert links in marked-as-read posts: <input id='dontReplaceLinkRead' class='user-preference' type='checkbox' />
 						</div>
 					</div>
 				</div>
 				<span class='settings-group-title'>Images-to-Links</span>
 				<div class='settings-group'>
 					<div class='display-preference'>
-           	        	Replace Images with links: <input id='replace-images-with-links' class='user-preference' type='checkbox' />
+           	        	Replace Images with links: <input id='replaceImagesWithLinks' class='user-preference' type='checkbox' />
 					</div>
 					<div class='sub-options'>
 						<div class='display-preference'>
-							Convert Images in Read Posts only: <input id='replace-images-read-only' class='user-preference' type='checkbox' />
+							Convert Images in Read Posts only: <input id='replaceImagesReadOnly' class='user-preference' type='checkbox' />
 						</div>
 						<!--
 						<div class='display-preference'>
@@ -263,7 +263,7 @@
 				<span class='settings-group-title'>Image Resizing</span>
 				<div class='settings-group'>
 					<div class='display-preference'>
-						Restrict Size of Images: <input id='restrict-image-size' class='user-preference' type='checkbox' />
+						Restrict Size of Images: <input id='restrictImageSize' class='user-preference' type='checkbox' />
 					</div>
 					<!--
 					<div class='sub-options'>

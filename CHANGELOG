@@ -1,5 +1,12 @@
 SALR Extension for Chrome
 
+v0.5 - "<Insert name here>"
+
+- Cleanup how the ban history link is shown (Sebastian Paaske Tørholm)
+- Add user notes (Sebastian Paaske Tørholm)
+- Add custom boxing of quotes (Sebastian Paaske Tørholm)
+- Make personal quote highlighting optional (Sebastian Paaske Tørholm)
+
 v0.4.8 - "I'm drunk"
 
 - Allow enabling/disabling of page navigator (Scott Ferguson)
