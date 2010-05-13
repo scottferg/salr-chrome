@@ -6,6 +6,8 @@ v0.5 - "<Insert name here>"
 - Add user notes (Sebastian Paaske Tørholm)
 - Add custom boxing of quotes (Sebastian Paaske Tørholm)
 - Make personal quote highlighting optional (Sebastian Paaske Tørholm)
+- Allow highlighting of mod/admin usernames (Scott Ferguson)
+- Cleanup new settings API (Scott Ferguson)
 
 v0.4.8 - "I'm drunk"
 

@@ -471,18 +471,28 @@ function highlightOwnPosts() {
  * Highlight the posts by one self
  */
 function highlightModAdminPosts() {
-    jQuery('table.post:has(dt.author:has(img[title="Moderator"])) td').each(function () {
-        jQuery(this).css({
-            'border-collapse' : 'collapse',
-            'background-color' : settings.highlightModeratorColor
+    if (!settings.highlightModAdminUsername) {
+        jQuery('table.post:has(dt.author:has(img[title="Moderator"])) td').each(function () {
+            jQuery(this).css({
+                'border-collapse' : 'collapse',
+                'background-color' : settings.highlightModeratorColor
+            });
         });
-    });
-    jQuery('table.post:has(dt.author:has(img[title="Admin"])) td').each(function () {
-        jQuery(this).css({
-            'border-collapse' : 'collapse',
-            'background-color' : settings.highlightAdminColor
+        jQuery('table.post:has(dt.author:has(img[title="Admin"])) td').each(function () {
+            jQuery(this).css({
+                'border-collapse' : 'collapse',
+                'background-color' : settings.highlightAdminColor
+            });
         });
-    });
+    } else {
+        jQuery('dt.author > img[title="Moderator"]').each(function() {
+            jQuery(this).parent().css('color', settings.highlightModeratorColor);
+        });
+
+        jQuery('dt.author > img[title="Admin"]').each(function() {
+            jQuery(this).parent().css('color', settings.highlightAdminColor);
+        });
+    }
 }
 
 /**
