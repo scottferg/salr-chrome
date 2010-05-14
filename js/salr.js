@@ -260,13 +260,11 @@ function updateStyling() {
     // Hide the advertisements
     if (settings.hideAdvertisements == 'true') {
         jQuery('div.oma_pal').each(function() {
-            jQuery(this).html('');
-            jQuery(this).css('height', '0px');
+            jQuery(this).remove();
         });
 
         jQuery('div#ad_banner_user').each(function() {
-            jQuery(this).html('');
-            jQuery(this).css('height', '0px');
+            jQuery(this).remove();
         });
     }
 }
