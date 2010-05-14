@@ -428,6 +428,10 @@ function highlightFriendPosts() {
     var friends = JSON.parse(settings.friendsList);
     var selector = '';
 
+    if (friends == 0) {
+        return;
+    }
+
     jQuery(friends).each(function() {
         if (selector != '') {
             selector += ', ';
