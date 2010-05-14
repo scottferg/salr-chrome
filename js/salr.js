@@ -471,7 +471,8 @@ function highlightOwnPosts() {
  * Highlight the posts by one self
  */
 function highlightModAdminPosts() {
-    if (!settings.highlightModAdminUsername) {
+    console.log(settings);
+    if (settings.highlightModAdminUsername != "true") {
         jQuery('table.post:has(dt.author:has(img[title="Moderator"])) td').each(function () {
             jQuery(this).css({
                 'border-collapse' : 'collapse',
