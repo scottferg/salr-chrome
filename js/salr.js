@@ -534,8 +534,10 @@ function updateUsernameFromCP() {
 function displayUserNotes() {
     var notes;
     if (settings.userNotes == null) {
-        notes = { "50339" : {'text' : 'SALR Committer', 'color' : '#9933FF'},    // Sebbe
-                  "115838" : {'text' : 'SALR Committer', 'color' : '#9933FF'}}; // Ferg
+        notes = { "50339" : {'text' : 'SALR Developer', 'color' : '#9933FF'},   // Sebbe
+                  "3882420" : {'text' : 'SALR Developer', 'color' : '#9933FF'}, // Onoj
+                  "156041" : {'text' : 'SALR Developer', 'color' : '#9933FF'},  // wmbest2
+                  "115838" : {'text' : 'SALR Developer', 'color' : '#9933FF'}}; // Ferg
         port.postMessage({ 'message': 'ChangeSetting',
                            'option' : 'userNotes',
                            'value'  : JSON.stringify(notes) });
