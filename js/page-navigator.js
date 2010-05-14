@@ -90,7 +90,10 @@ function jumpToPage(rootPageType, basePageID, page) {
  *
  */
 function displayPageNavigator() {
-
+    // store the fact we've shown it in #container, since it's the parent of the element I guess
+    if (jQuery('#container').data('shownPageNav'))
+        return true;
+    jQuery('#container').data('shownPageNav', true);
     var pageCount = countPages();
     // Determines if we are on a forum or a thread
     var rootPageType = (findCurrentPage() == 'forumdisplay.php') ? 'forumid' : 'threadid';
