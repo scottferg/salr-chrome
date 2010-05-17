@@ -1,5 +1,9 @@
 SALR Extension for Chrome
 
+v0.5.2 - "Fatty"
+
+- Fix typo in settings name for OP highlighting color (Scott Ferguson)
+
 v0.5.2 - "Hotty"
 
 - Fix crash when friend highlighting is enabled for a user with no friends
