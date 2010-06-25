@@ -95,11 +95,13 @@ port.onMessage.addListener(function(data) {
         updateFriendsList();
         renderOpenUpdatedThreadsButton();
     }
-});
 
-// Display the page action
-port.postMessage({
-    'message': 'ShowPageAction'
+    if (settings.displayOmnibarIcon == 'true') {
+        // Display the page action
+        port.postMessage({
+            'message': 'ShowPageAction'
+        });
+    }
 });
 
 // Request the username from the extension UI

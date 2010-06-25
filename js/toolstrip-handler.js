@@ -24,6 +24,20 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
+ * External message event listener
+ *
+ */
+chrome.extension.onConnectExternal.addListener(function(port) {
+    port.onMessage.addListener(function(data) {
+        switch (data.message) {
+            case 'GetForumsJumpList':
+                // TODO: Response overkill here
+                port.postMessage(getPageSettings());
+        }
+    });
+});
+
+/**
  * Message event listener so that we can talk to the content-script
  *
  */
@@ -48,21 +62,11 @@ chrome.extension.onConnect.addListener(function(port) {
                                                     title: "Click to open forum jump list",
                                                     iconId: 0
                                                 });
+
                 break;
             case 'GetPageSettings':
-                // If we don't have stored settings, set defaults
-                if (!localStorage.getItem('username')) {
-                    setupDefaultPreferences();
-                }
-
-                var response = {};
-
-                for ( var index in localStorage ) {
-                    response[index] = localStorage.getItem(index);
-                }
-                
                 // Respond with the username
-                port.postMessage(response);
+                port.postMessage(getPageSettings());
                 break;
             case 'log':
             default:
@@ -111,3 +115,22 @@ function setupDefaultPreferences() {
     localStorage.setItem('displayPageNavigator', 'true');
     localStorage.setItem('userNotesEnabled', 'true');
 }
+
+/**
+ * Returns page settings to local and remote message requests
+ *
+ */
+function getPageSettings() {
+    // If we don't have stored settings, set defaults
+    if (!localStorage.getItem('username')) {
+        setupDefaultPreferences();
+    }
+
+    var response = {};
+
+    for ( var index in localStorage ) {
+        response[index] = localStorage.getItem(index);
+    }
+
+    return response;
+} 
