@@ -24,7 +24,8 @@
       ],
       "matches": [
         "http://forums.somethingawful.com/*"
-      ]
+      ],
+      "run_at": "document_end"
     }
   ], 
   "permissions": [
