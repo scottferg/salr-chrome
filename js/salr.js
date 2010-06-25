@@ -79,7 +79,11 @@ port.onMessage.addListener(function(data) {
             boxQuotes();
         }
 
-        if (settings.highlightOwnQuotes = 'true') {
+        if (settings.highlightOwnUsername == 'true') {
+            highlightOwnUsername();
+        }
+
+        if (settings.highlightOwnQuotes == 'true') {
             highlightOwnQuotes();
         }
 
@@ -113,8 +117,6 @@ function openSettings() {
 function updateStyling() {
     var newPosts = false;
     var newPostCount = 0;
-
-    // TODO: The thread highlighting is a conditionalized mess
 
     // Iterate over each .thread .seen td element.  This is necessary
     // so we can track each thread's designated color (read/not read)
@@ -473,7 +475,6 @@ function highlightOwnPosts() {
  * Highlight the posts by one self
  */
 function highlightModAdminPosts() {
-    console.log(settings);
     if (settings.highlightModAdminUsername != "true") {
         jQuery('table.post:has(dt.author:has(img[title="Moderator"])) td').each(function () {
             jQuery(this).css({
@@ -620,13 +621,25 @@ function boxQuotes() {
 }
 
 /**
+ * Highlight the user's username in posts
+ */
+function highlightOwnUsername() {
+    jQuery('td.postbody').each(function() {
+        jQuery(this).html(jQuery(this).html().replace(settings.username, '<span class="usernameHighlight" style="font-weight: bold; color: ' + settings.usernameHighlight + ';">' + settings.username + '</span>'));
+    });
+}
+
+/**
  * Highlight the quotes of the user themselves.
  */
 function highlightOwnQuotes() {
-    jQuery('.bbc-block h4').each(function() {
-        if (jQuery(this).html() == settings.username + ' posted:') {
-            jQuery(this).parent().css("background-color", settings.userQuote);
-        }
-    });
+    jQuery('.bbc-block h4:contains(' + settings.username + ')').each(function() {
+        jQuery(this).parent().css("background-color", settings.userQuote);
 
+        // Replace the styling from username highlighting
+        var that = jQuery(this);
+        jQuery('.usernameHighlight', that).each(function() {
+            jQuery(this).css('color', '#555');
+        });
+    });
 }
