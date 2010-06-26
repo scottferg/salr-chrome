@@ -50,7 +50,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '           Quick Reply' + 
                 '       </div>' +
                 '       <div id="post-input-field">' +
-                '<textarea name="message" style="width: 520px;" rows="15" size="10" id="post-message">' +
+                '<textarea name="message" style="width: 550px;" rows="18" size="10" id="post-message">' +
                 '</textarea>' +
                 '       </div>' +
                 '       <input type="submit" class="bginput" name="submit" value="Submit Reply">' + 
@@ -144,8 +144,6 @@ QuickReplyBox.prototype.parseSmilies = function(quote_string) {
     } else if (quote_string in this.smilies) {
         result = quote_string;
     }
-
-    console.log(result);
 
     return result;
 };

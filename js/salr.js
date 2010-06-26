@@ -691,4 +691,12 @@ function bindQuickReply() {
             quickReply.show();
         });
     });
+    
+    jQuery('a > img[alt="Reply"]').each(function() {
+        jQuery(this).parent().attr('href', 'javascript:void();');
+
+        jQuery(this).parent().click(function() {
+            quickReply.show();
+        });
+    });
 }
