@@ -24,6 +24,7 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 var settings = {};
+var quickReply = {};
 
 /**
  * Event listener for when a user enters their username within
@@ -88,6 +89,8 @@ port.onMessage.addListener(function(data) {
         }
 
         displayBanHistoryLink();
+        quickReply = new QuickReplyBox();
+
         bindQuickReply();
     }
     
@@ -666,69 +669,6 @@ function findThreadID() {
     }
 }
 
-function displayQuickReply(username, quote) {
-    username = username || false;
-    quote = quote || false;
-
-    var quote_string = '';
-
-    if (username && quote) {
-        quote_string = '[quote="' + username + '"]\n' + jQuery.trim(quote) + '\n[/quote]';
-    }
-
-    // window.open("chrome-extension://lbeflkohppahphcnpjfgffckhcmgelfo/quick-reply.html", "Quick Reply","menubar=no,width=720,height=425,toolbar=no");
-    var html = '<div id="quick-reply"> ' + 
-                '   <form enctype="multipart/form-data" action="newreply.php" name="vbform" method="POST" onsubmit="return validate(this)">' +
-                '       <input type="hidden" name="action" value="postreply">' + 
-                '       <input type="hidden" name="threadid" value="' + findThreadID() + '">' + 
-                '       <input type="hidden" name="formkey" value="37ef682d135b13b5e76d357a8e9e8cc2">' + 
-                '       <input type="hidden" name="form_cookie" value="postreply">' + 
-                '       <input type="hidden" name="parseurl" value="yes">' + 
-                '       <input type="hidden" name="bookmark" value="yes">' + 
-                '       <div id="title-bar">' + 
-                '           Quick Reply' + 
-                '       </div>' +
-                '       <div id="post-input-field">' +
-                '<textarea name="message" style="width: 520px;" rows="15" size="10" id="post-message">' +
-                '</textarea>' +
-                '       </div>' +
-                '       <input type="submit" class="bginput" name="submit" value="Submit Reply">' + 
-                '       <input type="submit" class="bginput" name="preview" value="Preview Reply">' + 
-                '       <a id="dismiss-quick-reply">Dismiss</a>' +
-                '   </form>' +
-               '</div>';
-
-    // Only append it if we haven't already
-    if (jQuery('#quick-reply').length == 0) {
-        jQuery('body').append(html);
-    }
-
-    var current_message = jQuery('#post-message').html();
-    jQuery('#post-message').html(current_message + quote_string);
-
-    jQuery('#dismiss-quick-reply').click(hideQuickReply);
-
-    jQuery('#quick-reply').css({
-        'width': '560px',
-        'display': 'block',
-        'float': 'left',
-        'position': 'fixed',
-        'left': '25%',
-        'bottom': '0px',
-        'margin': '0 auto',
-        'padding': '20px',
-        'border': 'solid 1px #999',
-        'background': '-webkit-gradient(linear, left top, left bottom, from(rgb(255,255,255)), to(rgb(230,230,230)))',
-        '-webkit-box-shadow': '-1px -1px 12px rgba(0,0,0,0.25)',
-        '-webkit-border-top-left-radius': '6px',
-        '-webkit-border-top-right-radius': '6px',
-    });
-}
-
-function hideQuickReply() {
-    jQuery('#quick-reply').hide();
-}
-
 /**
  * Binds quick-reply box to reply/quote buttons
  *
@@ -743,14 +683,17 @@ function bindQuickReply() {
         // Query for the username
         var username = jQuery('tr > td.userinfo > dl > dt.author', parentTable).html();
         // Query for the quote
-        var quote = jQuery('tr > td.postbody', parentTable).html();
+        var quote = jQuery('tr > td.postbody', parentTable).clone();
 
-        // Remove all quotes from the message
-        console.log(jQuery(quote));
+        // Remove any quote blocks within the quote
+        jQuery('div.bbc-block', quote).each(function() {
+            jQuery(this).remove();
+        });
         
         // Bind the quick reply box to the button
         jQuery(this).parent().click(function() {
-            displayQuickReply(username, jQuery.trim(jQuery(quote).text()));
+            quickReply.appendQuote(username, jQuery.trim(jQuery(quote).text()));
+            quickReply.show();
         });
     });
 }
