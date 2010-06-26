@@ -89,9 +89,11 @@ port.onMessage.addListener(function(data) {
         }
 
         displayBanHistoryLink();
-        quickReply = new QuickReplyBox();
 
-        bindQuickReply();
+        if (settings.enableQuickReply == 'true') {
+            quickReply = new QuickReplyBox();
+            bindQuickReply();
+        }
     }
     
     if (findCurrentPage() == 'usercp.php') {
