@@ -1,5 +1,8 @@
 SALR Extension for Chrome
 
+v0.6.1 - "Program it bitches"
+- Add experimental quick reply box
+
 v0.6 - "Now we're cooking with gas"
 - Add option to highlight usernames within posts (Scott Ferguson)
 - Tweak manifest for when to run the content script (Scott Ferguson)
