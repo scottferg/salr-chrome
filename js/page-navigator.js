@@ -144,9 +144,6 @@ function displayPageNavigator() {
                              'padding-bottom': '2px',
                              'padding-left': '4px',
 	                         '-webkit-box-shadow': '#000000 -1px -1px 12px',
-    //                       Let's try removing this, to see if the shadow ghosting bug
-    //                       goes away.
-    //                       'box-shadow': '#000000 -1px -1px 12px',
 	                         'border-top-left-radius': '6px 6px',
 	                         'border-top-right-radius': '6px 6px'});
 
