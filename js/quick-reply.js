@@ -25,6 +25,14 @@
 
 function QuickReplyBox() {
     this.create();
+
+    this.smilies = {
+        ':(': '',
+        ':)': '',
+        ':D': '',
+        ';)': '',
+        ';-*': '',
+    };
 }
 
 QuickReplyBox.prototype.create = function(username, quote) {
@@ -80,7 +88,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
 QuickReplyBox.prototype.appendQuote = function(username, quote) {
 
     username = username || false;
-    quote = quote || false;
+    quote = this.parseQuote(quote) || false;
 
     var quote_string = '';
 
@@ -103,4 +111,41 @@ QuickReplyBox.prototype.show = function() {
 
 QuickReplyBox.prototype.hide = function() {
     jQuery('#quick-reply').hide();
+};
+
+QuickReplyBox.prototype.parseQuote = function(quote_string) {
+    var result = quote_string;
+    var that = this;
+
+    // Remove any quote blocks within the quote
+    jQuery('div.bbc-block', result).each(function() {
+        jQuery(this).remove();
+    });
+
+    jQuery('img', result).each(function() {
+        var emoticon = that.parseSmilies(jQuery(this).attr('title'));
+
+        if (emoticon) {
+            jQuery(this).replaceWith(emoticon);
+        }
+    });
+
+    // TODO: Need additional parsers
+
+    return result.text();
+};
+
+QuickReplyBox.prototype.parseSmilies = function(quote_string) {
+    var result = false;
+    var end_index = quote_string.length - 1;
+
+    if (quote_string[0] == ':' && quote_string[end_index] == ':') {
+        result = quote_string;
+    } else if (quote_string in this.smilies) {
+        result = quote_string;
+    }
+
+    console.log(result);
+
+    return result;
 };

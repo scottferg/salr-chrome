@@ -685,14 +685,9 @@ function bindQuickReply() {
         // Query for the quote
         var quote = jQuery('tr > td.postbody', parentTable).clone();
 
-        // Remove any quote blocks within the quote
-        jQuery('div.bbc-block', quote).each(function() {
-            jQuery(this).remove();
-        });
-        
         // Bind the quick reply box to the button
         jQuery(this).parent().click(function() {
-            quickReply.appendQuote(username, jQuery.trim(jQuery(quote).text()));
+            quickReply.appendQuote(username, quote);
             quickReply.show();
         });
     });
