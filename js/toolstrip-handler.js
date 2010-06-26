@@ -33,6 +33,13 @@ chrome.extension.onConnectExternal.addListener(function(port) {
             case 'GetForumsJumpList':
                 // TODO: Response overkill here
                 port.postMessage(getPageSettings());
+                break;
+            case 'GetSALRSettings':
+                port.postMessage(getPageSettings());
+                break;
+            case 'ChangeSALRSetting':
+                localStorage.setItem(data.option, data.value);
+                break;
         }
     });
 });
