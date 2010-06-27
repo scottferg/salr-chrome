@@ -69,8 +69,8 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '          </input>' + 
                 '       </div>' +
                 '       <div id="submit-buttons">' +
-                '           <input type="submit" class="bginput" name="submit" value="Submit Reply">' + 
                 '           <input type="submit" class="bginput" name="preview" value="Preview Reply">' + 
+                '           <input type="submit" class="bginput" name="submit" value="Submit Reply">' + 
                 '       </div>' +
                 '   </form>' +
                '</div>';
