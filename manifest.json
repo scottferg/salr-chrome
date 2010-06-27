@@ -22,7 +22,8 @@
 		"js/colorpicker.js"
       ],
       "css" : [
-        "css/jquery-ui/jquery-ui.custom.css"
+        "css/jquery-ui/jquery-ui.custom.css",
+        "css/quick-reply.css"
       ],
       "matches": [
         "http://forums.somethingawful.com/*"

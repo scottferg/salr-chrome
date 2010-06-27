@@ -1,0 +1,23 @@
+a {
+    cursor: pointer;
+}
+
+div.modal {
+    width: 560px;
+    display: block;
+    float: left;
+    position: fixed;
+    left: 25%;
+    bottom: 0px;
+    margin: 0 auto;
+    padding: 20px;
+    border: solid 1px #999;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(255,255,255)), to(rgb(230,230,230)));
+    -webkit-box-shadow: -1px -1px 12px rgba(0,0,0,0.25);
+    -webkit-border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;
+}
+
+div.modal.show {
+    -webkit-transform: translateY(0px);
+}

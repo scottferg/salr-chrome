@@ -66,21 +66,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
 
     jQuery('#dismiss-quick-reply').click(this.hide);
 
-    jQuery('#quick-reply').css({
-        'width': '560px',
-        'display': 'block',
-        'float': 'left',
-        'position': 'fixed',
-        'left': '25%',
-        'bottom': '0px',
-        'margin': '0 auto',
-        'padding': '20px',
-        'border': 'solid 1px #999',
-        'background': '-webkit-gradient(linear, left top, left bottom, from(rgb(255,255,255)), to(rgb(230,230,230)))',
-        '-webkit-box-shadow': '-1px -1px 12px rgba(0,0,0,0.25)',
-        '-webkit-border-top-left-radius': '6px',
-        '-webkit-border-top-right-radius': '6px',
-    });
+    jQuery('div#quick-reply').addClass('modal');
 
     this.hide();
 };
