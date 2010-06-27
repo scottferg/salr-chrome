@@ -44,18 +44,34 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '       <input type="hidden" name="threadid" value="' + findThreadID() + '">' + 
                 '       <input type="hidden" name="formkey" value="37ef682d135b13b5e76d357a8e9e8cc2">' + 
                 '       <input type="hidden" name="form_cookie" value="postreply">' + 
-                '       <input type="hidden" name="parseurl" value="yes">' + 
-                '       <input type="hidden" name="bookmark" value="yes">' + 
                 '       <div id="title-bar">' + 
                 '           Quick Reply' + 
                 '       </div>' +
+                '       <div id="dismiss-button">' + 
+                '          <a id="dismiss-quick-reply">Dismiss</a>' +
+                '       </div>' +
                 '       <div id="post-input-field">' +
-                '<textarea name="message" style="width: 550px;" rows="18" size="10" id="post-message">' +
+                '<textarea name="message" rows="18" size="10" id="post-message">' +
                 '</textarea>' +
                 '       </div>' +
-                '       <input type="submit" class="bginput" name="submit" value="Submit Reply">' + 
-                '       <input type="submit" class="bginput" name="preview" value="Preview Reply">' + 
-                '       <a id="dismiss-quick-reply">Dismiss</a>' +
+                '       <div id="post-options">' +
+                '           <input type="checkbox" name="parseurl" value="yes" checked>' +
+                '              <span class="post-options">Automatically parse URLs</span>' +
+                '           </input>' + 
+                '           <input type="checkbox" name="bookmark" value="yes" checked>' + 
+                '              <span class="post-options">Bookmark thread</span>' +
+                '           </input>' + 
+                '           <input type="checkbox" name="disablesmilies" value="yes">' + 
+                '               <span class="post-options">Disable smilies</span>' +
+                '           </input>' + 
+                '           <input type="checkbox" name="signature" value="yes">' + 
+                '               <span class="post-options">Show signature</span>' +
+                '          </input>' + 
+                '       </div>' +
+                '       <div id="submit-buttons">' +
+                '           <input type="submit" class="bginput" name="submit" value="Submit Reply">' + 
+                '           <input type="submit" class="bginput" name="preview" value="Preview Reply">' + 
+                '       </div>' +
                 '   </form>' +
                '</div>';
 
@@ -85,7 +101,7 @@ QuickReplyBox.prototype.appendQuote = function(username, quote) {
             quote_string += '\n\n';
         }
 
-        quote_string += '[quote="' + username + '"]\n' + jQuery.trim(quote) + '\n[/quote]';
+        quote_string += '[quote="' + username + '"]\n' + jQuery.trim(quote) + '\n[/quote]\n\n';
 
         jQuery('#post-message').html(current_message + quote_string);
     }

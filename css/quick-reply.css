@@ -2,8 +2,36 @@ a {
     cursor: pointer;
 }
 
+div#title-bar {
+    font-weight: bold;
+    font-size: 12pt;
+    padding-bottom: 20px;
+}
+
+div#dismiss-button {
+    float: left;
+    position: absolute;
+    left: 564px;
+    top: 20px;
+}
+
+div#post-options {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+span.post-options {
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+div#submit-buttons {
+    padding-top: 6px;
+    text-align: right;
+}
+
 div.modal {
-    width: 560px;
+    width: 600px;
     display: block;
     float: left;
     position: fixed;
@@ -20,4 +48,8 @@ div.modal {
 
 div.modal.show {
     -webkit-transform: translateY(0px);
+}
+
+textarea#post-message {
+    width: 590px;
 }
