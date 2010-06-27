@@ -1,24 +1,79 @@
 body {
 	font-family: arial, sans;
-    font-size: 8pt;
+    font-size: 10pt;
+}
+
+label {
+    display: block;
+    padding-left: 15px;
+    text-indent: -15px;
+}
+input[type="checkbox"] {
+    width: 13px;
+    height: 13px;
+    padding: 0;
+    margin:0;
+    vertical-align: bottom;
+    position: relative;
+    top: -1px;
+    *overflow: hidden;
+}
+
+span#title {
+    padding-left: 10px;
+    font-size: 16pt;
+    font-weight: bold;
+    position: relative;
+    top: -43px;
+}
+
+div.preference-title {
+    border-top: 1px solid #b5c7de;
+    background: #ebeff9;
+    padding: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+div.settings-panel {
+    margin-top: 10px;
+    margin-left: 16px;
+}
+
+div.settings-group {
+    padding: 6px;
+}
+
+span.settings-group-title {
+    font-weight: bold;
+}
+
+div.display-preference {
+    padding: 1px;
+}
+
+div.sub-options {
+	padding-left: 16px;
 }
 
 div.username-field, div.color-preference {
     width: 400px;
     float: left;
+    margin-left: 16px;
 }
     
 div.color-select-input {
     float: left;
     width: 350px;
-	margin-top: 7px;
+	margin-top: 2px;
 }
     
 div.color-select {
-    width: 36px;
-    height: 36px;
+    height: 28px;
     position: relative;
     float: left;
+    top: -4px;
 }
 
 div.color-select-box {
@@ -37,29 +92,9 @@ div.submit-panel {
     text-align: right;
 }
 
-div.settings-group {
-	padding: 10px 5px;
-	border: 1px solid;
-	border-color: #BBBBBB;
-	margin-bottom: 10px;
-}
-
-span.settings-group-title {
-
-	position: relative;
-	top: 8px;
-	left: 5px;
-	background-color: #ffffff;
-}
-
-div.sub-options {
-	padding-left: 16px;
-}
-
 div.disabled-options {
 	color: #cccccc;
 }
-
 
 input#submit {
     border: 1px solid;

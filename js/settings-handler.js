@@ -29,7 +29,7 @@
  */
 jQuery(document).ready(function() {
     // Initialize text entry fields
-    jQuery('.settings-panel > .username-field > input.text-entry').each(function() {
+    jQuery('.username-field > input.text-entry').each(function() {
         // Pre-populate settings field
         populateValues(jQuery(this));
 
