@@ -68,7 +68,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '       </div>' +
                 '   </form>' +
                '</div>';
-
+               
     // Only append it if we haven't already
     if (jQuery('#quick-reply').length == 0) {
         jQuery('body').append(html);
@@ -76,10 +76,17 @@ QuickReplyBox.prototype.create = function(username, quote) {
 
     jQuery('#dismiss-quick-reply').click(this.hide);
     
-    jQuery('#toggle-view').click(this.toggleView);
-
     jQuery('div#quick-reply').addClass('modal');
 
+    var rollMin = "20px";
+    var rollMax = jQuery(".modal").first().css("height");
+    
+    var that = this;
+    
+    jQuery('#toggle-view').click(function() {
+        that.toggleView(rollMin, rollMax);
+    });
+    
     jQuery('#quick-reply').hide();
 };
 
@@ -150,14 +157,14 @@ QuickReplyBox.prototype.parseSmilies = function(quote_string) {
     return result;
 };
 
-QuickReplyBox.prototype.toggleView = function() {
+QuickReplyBox.prototype.toggleView = function(min, max) {
     var divClass = jQuery(".modal").first();
     var linkId = jQuery("a#toggle-view").first();
-    if( (divClass).css("height") == "425px" ) {
-        (divClass).css("height", "20px");
+    if( (divClass).css("height") == max ) {
+        (divClass).animate( { height: min } );
         (linkId).text("Rollup");
     } else {
-        (divClass).css("height", "425px");
+        (divClass).animate( { height: max } );
         (linkId).text("Rolldown");
     }
 };
