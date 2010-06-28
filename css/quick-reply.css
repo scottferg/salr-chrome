@@ -8,11 +8,13 @@ div#title-bar {
     padding-bottom: 20px;
 }
 
-div#dismiss-button {
+div#view-buttons {
     float: left;
+    text-align: right;
     position: absolute;
     left: 564px;
     top: 20px;
+    padding-right: 40px;
 }
 
 div#post-options {
@@ -32,6 +34,7 @@ div#submit-buttons {
 
 div.modal {
     width: 600px;
+    height: 425px;
     display: block;
     float: left;
     position: fixed;

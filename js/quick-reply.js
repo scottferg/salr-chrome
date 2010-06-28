@@ -40,7 +40,8 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '       <div id="title-bar">' + 
                 '           Quick Reply' + 
                 '       </div>' +
-                '       <div id="dismiss-button">' + 
+                '       <div id="view-buttons">' + 
+                '          <a id="toggle-view">Rolldown</a>' +
                 '          <a id="dismiss-quick-reply">Dismiss</a>' +
                 '       </div>' +
                 '       <div id="post-input-field">' +
@@ -74,10 +75,12 @@ QuickReplyBox.prototype.create = function(username, quote) {
     }
 
     jQuery('#dismiss-quick-reply').click(this.hide);
+    
+    jQuery('#toggle-view').click(this.toggleView);
 
     jQuery('div#quick-reply').addClass('modal');
 
-    this.hide();
+    jQuery('#quick-reply').hide();
 };
 
 QuickReplyBox.prototype.appendQuote = function(username, quote) {
@@ -97,11 +100,11 @@ QuickReplyBox.prototype.appendQuote = function(username, quote) {
 };
 
 QuickReplyBox.prototype.show = function() {
-    jQuery('#quick-reply').show();
+    jQuery('#quick-reply').show("slow");
 };
 
 QuickReplyBox.prototype.hide = function() {
-    jQuery('#quick-reply').hide();
+    jQuery('#quick-reply').hide("slow");
 };
 
 QuickReplyBox.prototype.parseQuote = function(quote_string) {
@@ -145,4 +148,16 @@ QuickReplyBox.prototype.parseSmilies = function(quote_string) {
     }
 
     return result;
+};
+
+QuickReplyBox.prototype.toggleView = function() {
+    var divClass = jQuery(".modal").first();
+    var linkId = jQuery("a#toggle-view").first();
+    if( (divClass).css("height") == "425px" ) {
+        (divClass).css("height", "20px");
+        (linkId).text("Rollup");
+    } else {
+        (divClass).css("height", "425px");
+        (linkId).text("Rolldown");
+    }
 };
