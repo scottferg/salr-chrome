@@ -23,16 +23,9 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-function QuickReplyBox() {
+function QuickReplyBox(forum_post_key) {
+    this.forum_post_key = forum_post_key;
     this.create();
-
-    this.smilies = {
-        ':(': '',
-        ':)': '',
-        ':D': '',
-        ';)': '',
-        ';-*': '',
-    };
 }
 
 QuickReplyBox.prototype.create = function(username, quote) {
@@ -42,7 +35,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '   <form enctype="multipart/form-data" action="newreply.php" name="vbform" method="POST" onsubmit="return validate(this)">' +
                 '       <input type="hidden" name="action" value="postreply">' + 
                 '       <input type="hidden" name="threadid" value="' + findThreadID() + '">' + 
-                '       <input type="hidden" name="formkey" value="37ef682d135b13b5e76d357a8e9e8cc2">' + 
+                '       <input type="hidden" name="formkey" value="' + this.forum_post_key + '">' + 
                 '       <input type="hidden" name="form_cookie" value="postreply">' + 
                 '       <div id="title-bar">' + 
                 '           Quick Reply' + 
@@ -137,9 +130,17 @@ QuickReplyBox.prototype.parseSmilies = function(quote_string) {
     var result = false;
     var end_index = quote_string.length - 1;
 
+    var smilies = {
+        ':(': '',
+        ':)': '',
+        ':D': '',
+        ';)': '',
+        ';-*': '',
+    };
+
     if (quote_string[0] == ':' && quote_string[end_index] == ':') {
         result = quote_string;
-    } else if (quote_string in this.smilies) {
+    } else if (quote_string in smilies) {
         result = quote_string;
     }
 

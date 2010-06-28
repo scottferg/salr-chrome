@@ -44,64 +44,76 @@ port.onMessage.addListener(function(data) {
     // the settings
     updateStyling();
 	modifyImages();
-	
-	if (settings.inlineVideo == 'true') {
-		inlineYoutubes();
-	}
 
-    if (findCurrentPage() == 'forumdisplay.php' || findCurrentPage() == 'showthread.php') {
-        if (settings.displayPageNavigator == 'true') {
-            displayPageNavigator();
-        }
+    switch (findCurrentPage()) {
+        case 'forumdisplay.php':
+        case 'showthread.php':
+            if (settings.inlineVideo == 'true') {
+                inlineYoutubes();
+            }
 
-        updateForumsList();
+            if (settings.displayPageNavigator == 'true') {
+                displayPageNavigator();
+            }
+
+            updateForumsList();
+            
+            if (settings.highlightFriends == 'true') {
+                highlightFriendPosts();    
+            }
         
-        if (settings.highlightFriends == 'true') {
-            highlightFriendPosts();    
-        }
-    
-        if (settings.highlightOP == 'true') {
-            highlightOPPosts();    
-        }
+            if (settings.highlightOP == 'true') {
+                highlightOPPosts();    
+            }
 
-        if (settings.highlightSelf == 'true') {
-            highlightOwnPosts();
-        }
+            if (settings.highlightSelf == 'true') {
+                highlightOwnPosts();
+            }
 
-        if (settings.highlightModAdmin == 'true') {
-            highlightModAdminPosts();
-        }
+            if (settings.highlightModAdmin == 'true') {
+                highlightModAdminPosts();
+            }
 
-        if (settings.enableUserNotes == 'true') {
-            displayUserNotes();
-        }
+            if (settings.enableUserNotes == 'true') {
+                displayUserNotes();
+            }
 
-        if (settings.boxQuotes == 'true') {
-            boxQuotes();
-        }
+            if (settings.boxQuotes == 'true') {
+                boxQuotes();
+            }
 
-        if (settings.highlightOwnUsername == 'true') {
-            highlightOwnUsername();
-        }
+            if (settings.highlightOwnUsername == 'true') {
+                highlightOwnUsername();
+            }
 
-        if (settings.highlightOwnQuotes == 'true') {
-            highlightOwnQuotes();
-        }
+            if (settings.highlightOwnQuotes == 'true') {
+                highlightOwnQuotes();
+            }
 
-        displayBanHistoryLink();
+            displayBanHistoryLink();
 
-        if (settings.enableQuickReply == 'true') {
-            quickReply = new QuickReplyBox();
-            bindQuickReply();
-        }
+            if (settings.enableQuickReply == 'true') {
+                if (settings.forumPostKey) {
+                    quickReply = new QuickReplyBox(settings.forumPostKey);
+                    bindQuickReply();
+                }
+            }
+
+            break;
+        case 'newreply.php':
+            if (!settings.forumPostKey) {
+                findFormKey();
+            }
+
+            break;
+        case 'usercp.php':
+            updateUsernameFromCP();
+            updateFriendsList();
+            renderOpenUpdatedThreadsButton();
+
+            break;
     }
-    
-    if (findCurrentPage() == 'usercp.php') {
-        updateUsernameFromCP();
-        updateFriendsList();
-        renderOpenUpdatedThreadsButton();
-    }
-
+	
     if (settings.displayOmnibarIcon == 'true') {
         // Display the page action
         port.postMessage({
@@ -700,5 +712,13 @@ function bindQuickReply() {
         jQuery(this).parent().click(function() {
             quickReply.show();
         });
+    });
+}
+
+function findFormKey() {
+    jQuery('input[name="formkey"]').each(function() {
+        port.postMessage({ 'message': 'ChangeSetting',
+                           'option' : 'forumPostKey',
+                           'value'  : jQuery(this).attr('value') });
     });
 }
