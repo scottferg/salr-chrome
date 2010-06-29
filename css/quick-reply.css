@@ -33,6 +33,7 @@ div#submit-buttons {
 }
 
 div.modal {
+    z-index: 150;
     width: 600px;
     height: 390px;
     display: block;
@@ -51,6 +52,22 @@ div.modal {
 
 div.modal.show {
     -webkit-transform: translateY(0px);
+}
+
+div#side-bar {
+    width: 100px;
+    height: 250px;
+    display: none;
+    float: right;
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    padding: 20px;
+    border: solid 1px #999;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(255,255,255)), to(rgb(230,230,230)));
+    -webkit-box-shadow: -1px -1px 12px rgba(0,0,0,0.25);
+    -webkit-border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;
 }
 
 textarea#post-message {

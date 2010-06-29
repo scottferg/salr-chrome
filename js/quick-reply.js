@@ -31,7 +31,9 @@ function QuickReplyBox(forum_post_key) {
 QuickReplyBox.prototype.create = function(username, quote) {
 
     // window.open("chrome-extension://lbeflkohppahphcnpjfgffckhcmgelfo/quick-reply.html", "Quick Reply","menubar=no,width=720,height=425,toolbar=no");
-    var html = '<div id="quick-reply"> ' + 
+    var html = '   <div id="side-bar">' +
+                '   </div>' +
+                '<div id="quick-reply"> ' + 
                 '   <form enctype="multipart/form-data" action="newreply.php" name="vbform" method="POST" onsubmit="return validate(this)">' +
                 '       <input type="hidden" name="action" value="postreply">' + 
                 '       <input type="hidden" name="threadid" value="' + findThreadID() + '">' + 
@@ -43,6 +45,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '       <div id="view-buttons">' + 
                 '          <a id="toggle-view"><img id="quick-reply-rollbutton" class="quick-reply-image" src="' + chrome.extension.getURL("images/") + "quick-reply-rolldown.gif" + '"></a>' +
                 '          <a id="dismiss-quick-reply"><img class="quick-reply-image" src="' + chrome.extension.getURL("images/") + "quick-reply-close.gif" + '"></a>' +
+                '          <a id="side-bar-button">Sidebar</a>' +
                 '       </div>' +
                 '       <div id="post-input-field">' +
                 '<textarea name="message" rows="18" size="10" id="post-message">' +
@@ -87,6 +90,8 @@ QuickReplyBox.prototype.create = function(username, quote) {
     jQuery('#toggle-view').click(function() {
         that.toggleView(rollMin, rollMax);
     });
+
+    jQuery('#side-bar-button').click(that.toggleSidebar);
     
     jQuery('#quick-reply').hide();
 };
@@ -112,6 +117,7 @@ QuickReplyBox.prototype.show = function() {
 };
 
 QuickReplyBox.prototype.hide = function() {
+    jQuery('#side-bar').first().hide();
     jQuery('#quick-reply').hide("slow");
 };
 
@@ -164,10 +170,27 @@ QuickReplyBox.prototype.toggleView = function(min, max) {
     var imgId = jQuery("img#quick-reply-rollbutton").first();
 
     if( (divClass).css("height") == max ) {
+        jQuery('#side-bar').first().hide();
         (divClass).animate( { height: min } );
         (imgId).attr("src", chrome.extension.getURL("images/") + "quick-reply-rollup.gif");
     } else {
-        (divClass).animate( { height: max } );
+        (divClass).animate( { height: max }, 500, function() {
+                // Only display the sidebar after the box is shown
+                jQuery('#side-bar').first().show();
+        });
         (imgId).attr("src", chrome.extension.getURL("images/") + "quick-reply-rolldown.gif");
+    }
+};
+
+QuickReplyBox.prototype.toggleSidebar = function() {
+    divClass = jQuery("#side-bar").first();
+
+    var min = '20px';
+    var max = '400px';
+
+    if( (divClass).css("width") == max ) {
+        (divClass).animate( { width: min } );
+    } else {
+        (divClass).animate( { width: max } );
     }
 };
