@@ -124,6 +124,7 @@ QuickReplyBox.prototype.show = function() {
 
 QuickReplyBox.prototype.hide = function() {
     jQuery('#quick-reply').hide("slow");
+    jQuery('#post-message').val('');
     quickReplyState.expanded = false;
 };
 
