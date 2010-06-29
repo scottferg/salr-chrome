@@ -55,10 +55,10 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '          <a id="dismiss-quick-reply"><img class="quick-reply-image" src="' + chrome.extension.getURL("images/") + "quick-reply-close.gif" + '"></a>' +
                 '       </div>' +
                 '       <div id="smiley-menu" class="sidebar-menu">' +
-                '           <img src="' + chrome.extension.getURL("images/") + "quick-reply-smiley.gif" + '">' +
+                '           <img src="' + chrome.extension.getURL("images/") + "quick-reply-smiley.gif" + '" />' +
                 '       </div>' +
                 '       <div id="tag-menu" class="sidebar-menu">' +
-                '           <img src="' + chrome.extension.getURL("images/") + "quick-reply-tags.gif" + '">' +
+                '           <img src="' + chrome.extension.getURL("images/") + "quick-reply-tags.gif" + '" />' +
                 '       </div>' +
                 '       <div id="post-input-field">' +
                 '<textarea name="message" rows="18" size="10" id="post-message">' +
@@ -199,21 +199,18 @@ QuickReplyBox.prototype.toggleView = function() {
             jQuery('#side-bar').first().hide();
             (divClass).animate( { height: min } );
             (imgId).attr("src", chrome.extension.getURL("images/") + "quick-reply-rollup.gif");
+            quickReplyState.expanded = false;
         };
 
-        // TODO: This all needs heavy refactoring. There's no need for min/max to be
-        // passed into these functions as is
-        //
         // If the sidebar is open when we're trying to rolldown the box, animate
         // the sidebar as we tuck it away
-        if( jQuery('#side-bar').first().css("width") == '400px' ) {
+        if(quickReplyState.sidebar_visible) {
             jQuery('#side-bar').animate( { width: min }, 500, function() {
                 hideBox();
             });
         } else {
             hideBox();
         }
-        quickReplyState.expanded = false;
     } else {
         (divClass).animate( { height: max }, 500, function() {
                 // Only display the sidebar after the box is shown
