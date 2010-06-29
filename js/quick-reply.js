@@ -52,7 +52,8 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '           <input type="checkbox" name="parseurl" value="yes" checked>' +
                 '              <span class="post-options">Automatically parse URLs</span>' +
                 '           </input>' + 
-                '           <input type="checkbox" name="bookmark" value="yes" checked>' + 
+                // TODO: Make the "bookmark threads" default an option
+                '           <input type="checkbox" name="bookmark" value="yes">' + 
                 '              <span class="post-options">Bookmark thread</span>' +
                 '           </input>' + 
                 '           <input type="checkbox" name="disablesmilies" value="yes">' + 
