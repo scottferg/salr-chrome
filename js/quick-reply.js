@@ -23,6 +23,7 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+// Tracks the visibility state of the box
 var quickReplyState = {
     expanded: false,
     visible: false,
@@ -100,7 +101,9 @@ QuickReplyBox.prototype.appendQuote = function(username, quote) {
     var quote_string = '';
 
     if (username && quote) {
-        var current_message = jQuery('#post-message').html();
+        var current_message = jQuery('#post-message').val() + "\n\n";
+
+        console.log(current_message);
 
         quote_string += '[quote="' + username + '"]\n' + jQuery.trim(quote) + '\n[/quote]\n\n';
 
