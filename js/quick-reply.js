@@ -39,8 +39,8 @@ function QuickReplyBox(forum_post_key) {
 QuickReplyBox.prototype.create = function(username, quote) {
 
     // window.open("chrome-extension://lbeflkohppahphcnpjfgffckhcmgelfo/quick-reply.html", "Quick Reply","menubar=no,width=720,height=425,toolbar=no");
-    var html = '   <div id="side-bar">' +
-                '   </div>' +
+    var html = '<div id="side-bar">' +
+                '</div>' +
                 '<div id="quick-reply"> ' + 
                 '   <form enctype="multipart/form-data" action="newreply.php" name="vbform" method="POST" onsubmit="return validate(this)">' +
                 '       <input type="hidden" name="action" value="postreply">' + 
@@ -53,7 +53,12 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '       <div id="view-buttons">' + 
                 '          <a id="toggle-view"><img id="quick-reply-rollbutton" class="quick-reply-image" src="' + chrome.extension.getURL("images/") + "quick-reply-rolldown.gif" + '"></a>' +
                 '          <a id="dismiss-quick-reply"><img class="quick-reply-image" src="' + chrome.extension.getURL("images/") + "quick-reply-close.gif" + '"></a>' +
-                '          <a id="side-bar-button">Sidebar</a>' +
+                '       </div>' +
+                '       <div id="smiley-menu" class="sidebar-menu">' +
+                '           <img src="' + chrome.extension.getURL("images/") + "quick-reply-smiley.gif" + '">' +
+                '       </div>' +
+                '       <div id="tag-menu" class="sidebar-menu">' +
+                '           <img src="' + chrome.extension.getURL("images/") + "quick-reply-tags.gif" + '">' +
                 '       </div>' +
                 '       <div id="post-input-field">' +
                 '<textarea name="message" rows="18" size="10" id="post-message">' +
@@ -99,7 +104,14 @@ QuickReplyBox.prototype.create = function(username, quote) {
         }
     });
 
-    jQuery('#side-bar-button').click(that.toggleSidebar);
+    var that = this;
+
+    jQuery('.sidebar-menu').each(function() {
+        jQuery(this).click(function() {
+            that.toggleSidebar(jQuery(this));
+        });
+    });
+    // jQuery('#side-bar-button').click(this.toggleSidebar);
     
     jQuery('#quick-reply').hide();
 };
@@ -113,8 +125,6 @@ QuickReplyBox.prototype.appendQuote = function(username, quote) {
 
     if (username && quote) {
         var current_message = jQuery('#post-message').val() + "\n\n";
-
-        console.log(current_message);
 
         quote_string += '[quote="' + username + '"]\n' + jQuery.trim(quote) + '\n[/quote]\n\n';
 
@@ -214,15 +224,40 @@ QuickReplyBox.prototype.toggleView = function() {
     }
 };
 
-QuickReplyBox.prototype.toggleSidebar = function() {
+QuickReplyBox.prototype.toggleSidebar = function(element) {
     divClass = jQuery("#side-bar").first();
 
     var min = '20px';
-    var max = '400px';
+    var max = '525px';
+    var clicked_menu = null;
 
-    if( (divClass).css("width") == max ) {
+    switch (element.attr('id')) {
+        case 'smiley-menu':
+            clicked_menu = 'smiley';
+            break;
+        case 'tag-menu':
+            clicked_menu = 'tag';
+            break;
+    }
+
+    // If there is a sidebar open, and the button clicked is the same
+    // one that is open, then close it
+
+    // If there is a sidebar open, and the button clicked is different,
+    // close what is open, then reopen the correct one
+
+    // If no sidebar is open, open it
+    if ((quickReplyState.sidebar_visible) && (quickReplyState.sidebar_visible == clicked_menu)) {
         (divClass).animate( { width: min } );
+        quickReplyState.sidebar_visible = false;
+    } else if ((quickReplyState.sidebar_visible) && (quickReplyState.sidebar_visible != clicked_menu)) {
+        (divClass).animate( { width: min }, 500, function() {
+            (divClass).animate( { width: max } );
+            quickReplyState.sidebar_visible = clicked_menu;
+        });
     } else {
         (divClass).animate( { width: max } );
+        quickReplyState.sidebar_visible = clicked_menu;
     }
+
 };

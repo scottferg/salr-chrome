@@ -42,10 +42,10 @@ div.modal {
     height: 390px;
     display: block;
     float: left;
-    position: fixed;
-    left: 25%;
+    position: absolute;
+    left: 50%;
+    margin-left: -300px;
     bottom: 0px;
-    margin: 0 auto;
     padding: 20px;
     border: solid 1px #999;
     background: -webkit-gradient(linear, left top, left bottom, from(rgb(255,255,255)), to(rgb(230,230,230)));
@@ -63,9 +63,10 @@ div#side-bar {
     height: 250px;
     display: none;
     float: right;
-    position: fixed;
+    position: absolute;
     bottom: 80px;
     left: 50%;
+    margin-left: -50px;
     padding: 20px;
     border: solid 1px #999;
     background: -webkit-gradient(linear, left top, left bottom, from(rgb(255,255,255)), to(rgb(230,230,230)));
@@ -90,4 +91,20 @@ div#view-buttons {
 
 img.quick-reply-image {
   border-width: 0px;
+}
+
+div#smiley-menu {
+    float: right;
+    position: absolute;
+    top: 75px;
+    left: 620px;
+    cursor: pointer;
+}
+
+div#tag-menu {
+    float: right;
+    position: absolute;
+    top: 100px;
+    left: 620px;
+    cursor: pointer;
 }
