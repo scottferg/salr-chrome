@@ -90,6 +90,12 @@ QuickReplyBox.prototype.create = function(username, quote) {
     jQuery('#title-bar').click(this.toggleView);
     jQuery('#toggle-view').click(this.toggleView);
     
+    jQuery(document).keypress(function(event) {
+        if (event.keyCode == '114') {
+            jQuery('#quick-reply').show();
+        }
+    });
+
     jQuery('#quick-reply').hide();
 };
 
