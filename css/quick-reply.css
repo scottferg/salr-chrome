@@ -56,3 +56,17 @@ div.modal.show {
 textarea#post-message {
     width: 590px;
 }
+
+div#view-buttons {
+    float: left;
+    text-align: right;
+    position: absolute;
+    left: 577px;
+    top: 20px;
+    padding-right: 10px;
+    width: 40px;
+}
+
+img.quick-reply-image {
+  border-width: 0px;
+}

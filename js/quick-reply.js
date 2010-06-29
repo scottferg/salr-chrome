@@ -41,8 +41,8 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '           Quick Reply' + 
                 '       </div>' +
                 '       <div id="view-buttons">' + 
-                '          <a id="toggle-view">Rolldown</a>' +
-                '          <a id="dismiss-quick-reply">Dismiss</a>' +
+                '          <a id="toggle-view"><img id="quick-reply-rollbutton" class="quick-reply-image" src="' + chrome.extension.getURL("images/") + "quick-reply-rolldown.gif" + '"></a>' +
+                '          <a id="dismiss-quick-reply"><img class="quick-reply-image" src="' + chrome.extension.getURL("images/") + "quick-reply-close.gif" + '"></a>' +
                 '       </div>' +
                 '       <div id="post-input-field">' +
                 '<textarea name="message" rows="18" size="10" id="post-message">' +
@@ -78,7 +78,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
     
     jQuery('div#quick-reply').addClass('modal');
 
-    var rollMin = "20px";
+    var rollMin = "18px";
     var rollMax = jQuery(".modal").first().css("height");
     
     var that = this;
@@ -158,13 +158,15 @@ QuickReplyBox.prototype.parseSmilies = function(quote_string) {
 };
 
 QuickReplyBox.prototype.toggleView = function(min, max) {
-    var divClass = jQuery(".modal").first();
-    var linkId = jQuery("a#toggle-view").first();
+    divClass = jQuery(".modal").first();
+
+    var imgId = jQuery("img#quick-reply-rollbutton").first();
+
     if( (divClass).css("height") == max ) {
         (divClass).animate( { height: min } );
-        (linkId).text("Rollup");
+        (imgId).attr("src", chrome.extension.getURL("images/") + "quick-reply-rollup.gif");
     } else {
         (divClass).animate( { height: max } );
-        (linkId).text("Rolldown");
+        (imgId).attr("src", chrome.extension.getURL("images/") + "quick-reply-rolldown.gif");
     }
 };
