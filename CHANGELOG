@@ -1,5 +1,15 @@
 SALR Extension for Chrome
 
+v0.6.5 - "Features ahoy"
+- Add animations to quick reply box (Richard Hodgson)
+- Create custom window control buttons for quick reply box (Richard Hodgson)
+- A little HTML5 love for the settings page (Scott Ferguson)
+- Don't bookmark a thread by default in the quick reply box (Scott Ferguson)
+- Track quick reply visibility state in a more sane manner (Scott Ferguson)
+- Don't erase a message draft when adding additional quotes (Scott Ferguson)
+- Bind 'R' key to quick reply box (Scott Ferguson)
+- Clear the message draft if the box is closed (Scott Ferguson)
+
 v0.6.1 - "Program it bitches"
 - Add experimental quick reply box
 
