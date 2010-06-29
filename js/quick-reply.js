@@ -25,6 +25,8 @@
 
 function QuickReplyBox(forum_post_key) {
     this.forum_post_key = forum_post_key;
+    this.sidebar_open = false;
+    this.quickreply_open = false;
     this.create();
 }
 
@@ -170,9 +172,25 @@ QuickReplyBox.prototype.toggleView = function(min, max) {
     var imgId = jQuery("img#quick-reply-rollbutton").first();
 
     if( (divClass).css("height") == max ) {
-        jQuery('#side-bar').first().hide();
-        (divClass).animate( { height: min } );
-        (imgId).attr("src", chrome.extension.getURL("images/") + "quick-reply-rollup.gif");
+        var hideBox = function() {
+            jQuery('#side-bar').first().hide();
+            (divClass).animate( { height: min } );
+            (imgId).attr("src", chrome.extension.getURL("images/") + "quick-reply-rollup.gif");
+        };
+
+        // TODO: This all needs heavy refactoring. There's no need for min/max to be
+        // passed into these functions as is
+        //
+        // If the sidebar is open when we're trying to rolldown the box, animate
+        // the sidebar as we tuck it away
+        if( jQuery('#side-bar').first().css("width") == '400px' ) {
+            jQuery('#side-bar').animate( { width: min }, 500, function() {
+                hideBox();
+            });
+        } else {
+            hideBox();
+        }
+        
     } else {
         (divClass).animate( { height: max }, 500, function() {
                 // Only display the sidebar after the box is shown
