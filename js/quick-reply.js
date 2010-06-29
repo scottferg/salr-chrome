@@ -23,8 +23,15 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+var quickReplyState = {
+    expanded: false,
+    visible: false,
+    sidebar_visible: false
+};
+
 function QuickReplyBox(forum_post_key) {
     this.forum_post_key = forum_post_key;
+
     this.create();
 }
 
@@ -79,14 +86,8 @@ QuickReplyBox.prototype.create = function(username, quote) {
     
     jQuery('div#quick-reply').addClass('modal');
 
-    var rollMin = "18px";
-    var rollMax = jQuery(".modal").first().css("height");
-    
-    var that = this;
-    
-    jQuery('#toggle-view').click(function() {
-        that.toggleView(rollMin, rollMax);
-    });
+    jQuery('#title-bar').click(this.toggleView);
+    jQuery('#toggle-view').click(this.toggleView);
     
     jQuery('#quick-reply').hide();
 };
@@ -109,10 +110,12 @@ QuickReplyBox.prototype.appendQuote = function(username, quote) {
 
 QuickReplyBox.prototype.show = function() {
     jQuery('#quick-reply').show("slow");
+    quickReplyState.expanded = true;
 };
 
 QuickReplyBox.prototype.hide = function() {
     jQuery('#quick-reply').hide("slow");
+    quickReplyState.expanded = false;
 };
 
 QuickReplyBox.prototype.parseQuote = function(quote_string) {
@@ -158,16 +161,20 @@ QuickReplyBox.prototype.parseSmilies = function(quote_string) {
     return result;
 };
 
-QuickReplyBox.prototype.toggleView = function(min, max) {
-    divClass = jQuery(".modal").first();
+QuickReplyBox.prototype.toggleView = function() {
 
+    var divClass = jQuery(".modal").first();
+    var min = '18px';
+    var max = '390px';
     var imgId = jQuery("img#quick-reply-rollbutton").first();
 
-    if( (divClass).css("height") == max ) {
+    if(quickReplyState.expanded) {
         (divClass).animate( { height: min } );
         (imgId).attr("src", chrome.extension.getURL("images/") + "quick-reply-rollup.gif");
+        quickReplyState.expanded = false;
     } else {
         (divClass).animate( { height: max } );
         (imgId).attr("src", chrome.extension.getURL("images/") + "quick-reply-rolldown.gif");
+        quickReplyState.expanded = true;
     }
 };

@@ -8,6 +8,10 @@ div#title-bar {
     padding-bottom: 20px;
 }
 
+div#title-bar:hover {
+    cursor: pointer;
+}
+
 div#view-buttons {
     float: left;
     text-align: right;
