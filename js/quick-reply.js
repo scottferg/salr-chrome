@@ -65,6 +65,9 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '       <div id="tag-menu" class="sidebar-menu">' +
                 '           <img src="' + chrome.extension.getURL("images/") + "quick-reply-tags.gif" + '" />' +
                 '       </div>' +
+                '       <div id="waffle-images-menu" class="sidebar-menu">' +
+                '           <img src="' + chrome.extension.getURL("images/") + "quick-reply-tags.gif" + '" />' +
+                '       </div>' +
                 '       <div id="post-input-field">' +
                 '<textarea name="message" rows="18" size="10" id="post-message">' +
                 '</textarea>' +
@@ -264,17 +267,17 @@ QuickReplyBox.prototype.toggleSidebar = function(element) {
 
     var min = '20px';
     var max = '525px';
-    var clicked_menu = null;
     var populate_method = null;
 
     switch (element.attr('id')) {
         case 'smiley-menu':
-            clicked_menu = 'smiley';
             populate_method = this.setEmoteSidebar;
             break;
         case 'tag-menu':
-            clicked_menu = 'tag';
             populate_method = this.setBBCodeSidebar;
+            break;
+        case 'waffle-images-menu':
+            populate_method = this.setWaffleImagesSidebar;
             break;
     }
 
@@ -285,19 +288,19 @@ QuickReplyBox.prototype.toggleSidebar = function(element) {
     // close what is open, then reopen the correct one
 
     // If no sidebar is open, open it
-    if ((quickReplyState.sidebar_visible) && (quickReplyState.sidebar_visible == clicked_menu)) {
+    if ((quickReplyState.sidebar_visible) && (quickReplyState.sidebar_visible == element.attr('id'))) {
         side_bar.animate( { left: '-=200px' } );
         quickReplyState.sidebar_visible = false;
-    } else if ((quickReplyState.sidebar_visible) && (quickReplyState.sidebar_visible != clicked_menu)) {
+    } else if ((quickReplyState.sidebar_visible) && (quickReplyState.sidebar_visible != element.attr('id'))) {
         side_bar.animate( { left: '-=200px' }, 500, function() {
             populate_method();
             side_bar.animate( { left: '+=200px' } );
-            quickReplyState.sidebar_visible = clicked_menu;
+            quickReplyState.sidebar_visible = element.attr('id');
         });
     } else {
         populate_method();
         side_bar.animate( { left: '+=200px' } );
-        quickReplyState.sidebar_visible = clicked_menu;
+        quickReplyState.sidebar_visible = element.attr('id');
     }
 
 };
@@ -357,5 +360,42 @@ QuickReplyBox.prototype.setBBCodeSidebar = function() {
 
     jQuery('#sidebar-list').html(html);
 
+    this.sidebar_html = html;
+};
+
+QuickReplyBox.prototype.setWaffleImagesSidebar = function() {
+    html = '<div id="dropzone">' +
+           '</div>';
+
+    jQuery('#sidebar-list').html(html);
+    
+    jQuery('#dropzone').filedrop({
+        url: 'http://waffleimages.com/upload',
+        paramname: 'file',
+        data: {
+        },
+        dragOver: function() {
+            console.log('Over!');
+            jQuery('#dropzone').css({
+                'border': '4px solid #006600',
+                'width': '160px',
+                'background': '#009900'
+            });
+        },
+        dragLeave: function() {
+            console.log('Out!');
+            jQuery('#dropzone').css({});
+        },
+        drop: function() {
+            console.log('Dropped!');
+        },
+        uploadStarted: function(i, file, len) {
+            console.log('Upload started');
+        },
+        uploadFinished: function(i, file, len) {
+            console.log('Upload finished');
+        },
+    });
+    
     this.sidebar_html = html;
 };

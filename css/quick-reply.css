@@ -110,20 +110,23 @@ img.quick-reply-image {
   border-width: 0px;
 }
 
-div#smiley-menu {
+div.sidebar-menu {
     float: right;
     position: absolute;
-    top: 75px;
     left: 620px;
     cursor: pointer;
 }
 
+div#smiley-menu {
+    top: 75px;
+}
+
 div#tag-menu {
-    float: right;
-    position: absolute;
     top: 100px;
-    left: 620px;
-    cursor: pointer;
+}
+
+div#waffle-images-menu {
+    top: 125px;
 }
 
 div#sidebar-list {
@@ -151,4 +154,9 @@ div.sidebar-menu-item {
 div.sidebar-menu-item:hover {
     background: #ccc;
     cursor: pointer;
+}
+
+div#dropzone {
+    width: 168px;
+    height: 240px;
 }
