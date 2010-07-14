@@ -1,5 +1,9 @@
 SALR Extension for Chrome
 
+v0.7.0 - "Hardcore Quick Reply"
+- Add sidebar options for quick reply (Scott Ferguson)
+- Fix breaklines when quoting in quick reply (Scott Ferguson)
+
 v0.6.5 - "Features ahoy"
 - Add animations to quick reply box (Richard Hodgson)
 - Create custom window control buttons for quick reply box (Richard Hodgson)
