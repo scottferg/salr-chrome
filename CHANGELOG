@@ -1,5 +1,8 @@
 SALR Extension for Chrome
 
+v0.7.0.1 - "Hotfix"
+- Fix alignment of quick reply sidebar when resizing window (Scott Ferguson)
+
 v0.7.0 - "Hardcore Quick Reply"
 - Add sidebar options for quick reply (Scott Ferguson)
 - Fix breaklines when quoting in quick reply (Scott Ferguson)

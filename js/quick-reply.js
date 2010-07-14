@@ -109,7 +109,18 @@ QuickReplyBox.prototype.create = function(username, quote) {
         }
     });
 
-    var quick_reply_position = jQuery('#quick-reply').offset().left
+    jQuery(window).resize(function() {
+        var quick_reply_position = jQuery('#quick-reply').offset().left;
+        var offset = 350;
+
+        if (quickReplyState.sidebar_visible) {
+            offset += 200;
+        }
+
+        jQuery('#side-bar').css('left', (quick_reply_position + offset) + 'px');
+    });
+
+    var quick_reply_position = jQuery('#quick-reply').offset().left;
 
     jQuery('#side-bar').css('left', (quick_reply_position + 350) + 'px');
 
