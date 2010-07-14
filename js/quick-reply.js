@@ -43,8 +43,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
 
     // window.open("chrome-extension://lbeflkohppahphcnpjfgffckhcmgelfo/quick-reply.html", "Quick Reply","menubar=no,width=720,height=425,toolbar=no");
     var html = '<div id="side-bar">' +
-                '   <div id="smiley-list">' +
-                '       <img class="loading-spinner" src="' + chrome.extension.getURL("images/") + 'loading-spinner.gif" />' +
+                '   <div id="sidebar-list">' +
                 '   </div>' +
                 '</div>' +
                 '<div id="quick-reply"> ' + 
@@ -122,9 +121,12 @@ QuickReplyBox.prototype.create = function(username, quote) {
         });
     });
 
-    jQuery('div.emote').live('click', function() {
-        that.appendText(jQuery('div.emote-code', this).first().html());
+    jQuery('div.sidebar-menu-item').live('click', function() {
+        that.appendText(jQuery('div.menu-item-code', this).first().html());
     });
+
+    this.sidebar_html = '<img class="loading-spinner" src="' + chrome.extension.getURL("images/") + 'loading-spinner.gif" />';
+    this.emotes = null;
     
     jQuery('#side-bar').hide();
     jQuery('#quick-reply').hide();
@@ -145,7 +147,7 @@ QuickReplyBox.prototype.hide = function() {
 QuickReplyBox.prototype.appendText = function(text) {
     var current_message = jQuery('#post-message').val();
 
-    jQuery('#post-message').html(current_message + ' ' + text);
+    jQuery('#post-message').html(current_message + text);
 };
 
 QuickReplyBox.prototype.appendQuote = function(username, quote) {
@@ -252,13 +254,16 @@ QuickReplyBox.prototype.toggleSidebar = function(element) {
     var min = '20px';
     var max = '525px';
     var clicked_menu = null;
+    var populate_method = null;
 
     switch (element.attr('id')) {
         case 'smiley-menu':
             clicked_menu = 'smiley';
+            populate_method = this.setEmoteSidebar;
             break;
         case 'tag-menu':
             clicked_menu = 'tag';
+            populate_method = this.setBBCodeSidebar;
             break;
     }
 
@@ -274,10 +279,12 @@ QuickReplyBox.prototype.toggleSidebar = function(element) {
         quickReplyState.sidebar_visible = false;
     } else if ((quickReplyState.sidebar_visible) && (quickReplyState.sidebar_visible != clicked_menu)) {
         side_bar.animate( { left: '-=200px' }, 500, function() {
+            populate_method();
             side_bar.animate( { left: '+=200px' } );
             quickReplyState.sidebar_visible = clicked_menu;
         });
     } else {
+        populate_method();
         side_bar.animate( { left: '+=200px' } );
         quickReplyState.sidebar_visible = clicked_menu;
     }
@@ -285,14 +292,59 @@ QuickReplyBox.prototype.toggleSidebar = function(element) {
 };
 
 QuickReplyBox.prototype.notify = function(emotes) {
+    this.emotes = emotes;
+
+    this.setEmoteSidebar();
+};
+
+QuickReplyBox.prototype.setEmoteSidebar = function() {
     var html = '';
 
-    for (var emote in emotes) { 
-        html += '<div class="emote">' +
+    for (var emote in this.emotes) { 
+        html += '<div class="sidebar-menu-item">' +
                 '   <div><img src="' + emotes[emote].image + '" /></div>' +
-                '   <div class="emote-code">' + emotes[emote].emote + '</div>' +
+                '   <div class="menu-item-code">' + emotes[emote].emote + '</div>' +
                 '</div>';
     }
 
-    jQuery('#smiley-list').html(html);
+    jQuery('#sidebar-list').html(html);
+
+    this.sidebar_html = html;
+};
+
+QuickReplyBox.prototype.setBBCodeSidebar = function() {
+    var html = '';
+
+    var bbcodes = new Array();
+
+    bbcodes['url'] = 'url';
+    bbcodes['email'] = 'email';
+    bbcodes['img'] = 'img';
+    bbcodes['timg'] = 'timg';
+    bbcodes['video'] = 'video';
+    bbcodes['b'] = 'b';
+    bbcodes['s'] = 's';
+    bbcodes['u'] = 'u';
+    bbcodes['i'] = 'i';
+    bbcodes['spoiler'] = 'spoiler';
+    bbcodes['fixed'] = 'fixed';
+    bbcodes['super'] = 'super';
+    bbcodes['sub'] = 'sub';
+    bbcodes['size'] = 'size';
+    bbcodes['color'] = 'color';
+    bbcodes['quote'] = 'quote';
+    bbcodes['pre'] = 'pre';
+    bbcodes['code'] = 'code';
+    bbcodes['php'] = 'php';
+    bbcodes['list'] = 'list';
+
+    for (var code in bbcodes) { 
+        html += '<div class="sidebar-menu-item">' +
+                '   <div class="menu-item-code">[' + code + '][/' + code + ']</div>' +
+                '</div>';
+    }
+
+    jQuery('#sidebar-list').html(html);
+
+    this.sidebar_html = html;
 };

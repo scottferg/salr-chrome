@@ -126,7 +126,7 @@ div#tag-menu {
     cursor: pointer;
 }
 
-div#smiley-list {
+div#sidebar-list {
     border: solid 1px #999;
     position: relative;
     margin-left: 85px;
@@ -141,14 +141,14 @@ img.loading-spinner {
     top: 75px;
 }
 
-div.emote {
+div.sidebar-menu-item {
     padding-top: 5px;
     padding-bottom: 5px;
     position: relative;
     text-align: center;
 }
 
-div.emote:hover {
+div.sidebar-menu-item:hover {
     background: #ccc;
     cursor: pointer;
 }
