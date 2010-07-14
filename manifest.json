@@ -16,6 +16,7 @@
         "js/jquery.js",
         "js/jquery-ui.js",
         "js/jquery.transform.min.js",
+        "js/quick-reply-emote-parser.js",
         "js/quick-reply.js",
         "js/page-navigator.js",
         "js/salr.js",

@@ -38,8 +38,14 @@ function QuickReplyBox(forum_post_key) {
 
 QuickReplyBox.prototype.create = function(username, quote) {
 
+    // Begin fetching and parsing the emotes as soon as we create the quick-reply
+    var emote_parser = new EmoteParser(this);
+
     // window.open("chrome-extension://lbeflkohppahphcnpjfgffckhcmgelfo/quick-reply.html", "Quick Reply","menubar=no,width=720,height=425,toolbar=no");
     var html = '<div id="side-bar">' +
+                '   <div id="smiley-list">' +
+                '       <img class="loading-spinner" src="' + chrome.extension.getURL("images/") + 'loading-spinner.gif" />' +
+                '   </div>' +
                 '</div>' +
                 '<div id="quick-reply"> ' + 
                 '   <form enctype="multipart/form-data" action="newreply.php" name="vbform" method="POST" onsubmit="return validate(this)">' +
@@ -104,6 +110,10 @@ QuickReplyBox.prototype.create = function(username, quote) {
         }
     });
 
+    var quick_reply_position = jQuery('#quick-reply').offset().left
+
+    jQuery('#side-bar').css('left', (quick_reply_position + 350) + 'px');
+
     var that = this;
 
     jQuery('.sidebar-menu').each(function() {
@@ -111,25 +121,13 @@ QuickReplyBox.prototype.create = function(username, quote) {
             that.toggleSidebar(jQuery(this));
         });
     });
-    // jQuery('#side-bar-button').click(this.toggleSidebar);
+
+    jQuery('div.emote').live('click', function() {
+        that.appendText(jQuery('div.emote-code', this).first().html());
+    });
     
+    jQuery('#side-bar').hide();
     jQuery('#quick-reply').hide();
-};
-
-QuickReplyBox.prototype.appendQuote = function(username, quote) {
-
-    username = username || false;
-    quote = this.parseQuote(quote) || false;
-
-    var quote_string = '';
-
-    if (username && quote) {
-        var current_message = jQuery('#post-message').val() + "\n\n";
-
-        quote_string += '[quote="' + username + '"]\n' + jQuery.trim(quote) + '\n[/quote]\n\n';
-
-        jQuery('#post-message').html(current_message + quote_string);
-    }
 };
 
 QuickReplyBox.prototype.show = function() {
@@ -142,6 +140,28 @@ QuickReplyBox.prototype.hide = function() {
     jQuery('#quick-reply').hide("slow");
     jQuery('#post-message').val('');
     quickReplyState.expanded = false;
+};
+
+QuickReplyBox.prototype.appendText = function(text) {
+    var current_message = jQuery('#post-message').val();
+
+    jQuery('#post-message').html(current_message + ' ' + text);
+};
+
+QuickReplyBox.prototype.appendQuote = function(username, quote) {
+
+    username = username || false;
+    quote = this.parseQuote(quote) || false;
+
+    var quote_string = '';
+
+    if (username && quote) {
+        var current_message = jQuery('#post-message').val();
+
+        quote_string += '[quote="' + username + '"]\n' + jQuery.trim(quote) + '\n[/quote]\n\n';
+
+        jQuery('#post-message').html(current_message + quote_string);
+    }
 };
 
 QuickReplyBox.prototype.parseQuote = function(quote_string) {
@@ -189,7 +209,7 @@ QuickReplyBox.prototype.parseSmilies = function(quote_string) {
 
 QuickReplyBox.prototype.toggleView = function() {
 
-    var divClass = jQuery(".modal").first();
+    var quick_reply_box = jQuery(".modal").first();
     var min = '18px';
     var max = '390px';
     var imgId = jQuery("img#quick-reply-rollbutton").first();
@@ -197,7 +217,7 @@ QuickReplyBox.prototype.toggleView = function() {
     if(quickReplyState.expanded) {
         var hideBox = function() {
             jQuery('#side-bar').first().hide();
-            (divClass).animate( { height: min } );
+            quick_reply_box.animate( { height: min } );
             (imgId).attr("src", chrome.extension.getURL("images/") + "quick-reply-rollup.gif");
             quickReplyState.expanded = false;
         };
@@ -205,14 +225,15 @@ QuickReplyBox.prototype.toggleView = function() {
         // If the sidebar is open when we're trying to rolldown the box, animate
         // the sidebar as we tuck it away
         if(quickReplyState.sidebar_visible) {
-            jQuery('#side-bar').animate( { width: min }, 500, function() {
+            jQuery('#side-bar').animate( { left: '-=200px' }, 500, function() {
+                quickReplyState.sidebar_visible = null;
                 hideBox();
             });
         } else {
             hideBox();
         }
     } else {
-        (divClass).animate( { height: max }, 500, function() {
+        quick_reply_box.animate( { height: max }, 500, function() {
                 // Only display the sidebar after the box is shown
                 jQuery('#side-bar').first().show();
         });
@@ -222,7 +243,11 @@ QuickReplyBox.prototype.toggleView = function() {
 };
 
 QuickReplyBox.prototype.toggleSidebar = function(element) {
-    divClass = jQuery("#side-bar").first();
+    side_bar = jQuery("#side-bar").first();
+
+    if(!side_bar.is(':visible')) {
+        side_bar.css('display', 'block');
+    }
 
     var min = '20px';
     var max = '525px';
@@ -245,16 +270,29 @@ QuickReplyBox.prototype.toggleSidebar = function(element) {
 
     // If no sidebar is open, open it
     if ((quickReplyState.sidebar_visible) && (quickReplyState.sidebar_visible == clicked_menu)) {
-        (divClass).animate( { width: min } );
+        side_bar.animate( { left: '-=200px' } );
         quickReplyState.sidebar_visible = false;
     } else if ((quickReplyState.sidebar_visible) && (quickReplyState.sidebar_visible != clicked_menu)) {
-        (divClass).animate( { width: min }, 500, function() {
-            (divClass).animate( { width: max } );
+        side_bar.animate( { left: '-=200px' }, 500, function() {
+            side_bar.animate( { left: '+=200px' } );
             quickReplyState.sidebar_visible = clicked_menu;
         });
     } else {
-        (divClass).animate( { width: max } );
+        side_bar.animate( { left: '+=200px' } );
         quickReplyState.sidebar_visible = clicked_menu;
     }
 
+};
+
+QuickReplyBox.prototype.notify = function(emotes) {
+    var html = '';
+
+    for (var emote in emotes) { 
+        html += '<div class="emote">' +
+                '   <div><img src="' + emotes[emote].image + '" /></div>' +
+                '   <div class="emote-code">' + emotes[emote].emote + '</div>' +
+                '</div>';
+    }
+
+    jQuery('#smiley-list').html(html);
 };

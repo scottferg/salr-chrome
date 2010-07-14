@@ -42,9 +42,9 @@ div.modal {
     display: block;
     float: left;
     position: fixed;
-    left: 25%;
+    left: 50%;
+    margin-left: -300px;
     bottom: 0px;
-    margin: 0 auto;
     padding: 20px;
     border: solid 1px #999;
     background: -webkit-gradient(linear, left top, left bottom, from(rgb(255,255,255)), to(rgb(230,230,230)));
@@ -78,14 +78,12 @@ div.modal.show {
 }
 
 div#side-bar {
-    width: 100px;
+    width: 250px;
     height: 250px;
-    display: none;
+    display: block;
     float: right;
     position: fixed;
     bottom: 80px;
-    left: 50%;
-    margin-left: -50px;
     padding: 20px;
     border: solid 1px #999;
     background: -webkit-gradient(linear, left top, left bottom, from(rgb(255,255,255)), to(rgb(230,230,230)));
@@ -125,5 +123,32 @@ div#tag-menu {
     position: absolute;
     top: 100px;
     left: 620px;
+    cursor: pointer;
+}
+
+div#smiley-list {
+    border: solid 1px #999;
+    position: relative;
+    margin-left: 85px;
+    width: 168px;
+    height: 250px;
+    overflow: auto;
+}
+
+img.loading-spinner {
+    position: relative;
+    left: 35px;
+    top: 75px;
+}
+
+div.emote {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    position: relative;
+    text-align: center;
+}
+
+div.emote:hover {
+    background: #ccc;
     cursor: pointer;
 }
