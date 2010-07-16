@@ -65,9 +65,11 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '       <div id="tag-menu" class="sidebar-menu">' +
                 '           <img src="' + chrome.extension.getURL("images/") + "quick-reply-tags.gif" + '" />' +
                 '       </div>' +
+                /*************** Waffle Images Sidebar ***********************
                 '       <div id="waffle-images-menu" class="sidebar-menu">' +
                 '           <img src="' + chrome.extension.getURL("images/") + "quick-reply-tags.gif" + '" />' +
                 '       </div>' +
+                *************************************************************/
                 '       <div id="post-input-field">' +
                 '<textarea name="message" rows="18" size="10" id="post-message">' +
                 '</textarea>' +
