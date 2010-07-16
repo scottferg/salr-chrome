@@ -53,26 +53,6 @@ div.modal {
     -webkit-border-top-right-radius: 6px;
 }
 
-/***************CENTERS QUICK REPLY ON SCREEN BUT CAUSES ISSUES WHEN MINIMIZING**************************
-div.modal {
-    z-index: 150;
-    width: 600px;
-    height: 390px;
-    display: block;
-    float: left;
-    position: absolute;
-    left: 50%;
-    margin-left: -300px;
-    bottom: 0px;
-    padding: 20px;
-    border: solid 1px #999;
-    background: -webkit-gradient(linear, left top, left bottom, from(rgb(255,255,255)), to(rgb(230,230,230)));
-    -webkit-box-shadow: -1px -1px 12px rgba(0,0,0,0.25);
-    -webkit-border-top-left-radius: 6px;
-    -webkit-border-top-right-radius: 6px;
-}
-*******************************************************************************************************/
-
 div.modal.show {
     -webkit-transform: translateY(0px);
 }
@@ -157,6 +137,13 @@ div.sidebar-menu-item:hover {
 }
 
 div#dropzone {
-    width: 168px;
-    height: 240px;
+    position: relative;
+}
+div#dropzone input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
 }

@@ -64,7 +64,7 @@
 		opts.drop(e);
 		upload(e.dataTransfer.files);
 		e.preventDefault();
-		return 'LALALALA';
+		return false;
 	}
 	
 	function getBuilder(filename, filedata, boundary) {
