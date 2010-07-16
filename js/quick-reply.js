@@ -189,6 +189,11 @@ QuickReplyBox.prototype.parseQuote = function(quote_string) {
         jQuery(this).remove();
     });
 
+    // Remove any "Edited by" messages
+    jQuery('p.editedby', result).each(function() {
+        jQuery(this).remove();
+    });
+
     jQuery('img', result).each(function() {
         var emoticon = that.parseSmilies(jQuery(this).attr('title'));
 
@@ -197,9 +202,7 @@ QuickReplyBox.prototype.parseQuote = function(quote_string) {
         }
     });
 
-    // TODO: Need additional parsers
-
-    return result.text();
+    return this.escapeHtml(result.text());
 };
 
 QuickReplyBox.prototype.parseSmilies = function(quote_string) {
@@ -222,6 +225,14 @@ QuickReplyBox.prototype.parseSmilies = function(quote_string) {
 
     return result;
 };
+
+QuickReplyBox.prototype.escapeHtml = function(html) {
+    return html.
+        replace(/&/gmi, '&amp;').
+        replace(/"/gmi, '&quot;').
+        replace(/>/gmi, '&gt;').
+        replace(/</gmi, '&lt;')
+}
 
 QuickReplyBox.prototype.toggleView = function() {
 
@@ -365,37 +376,70 @@ QuickReplyBox.prototype.setBBCodeSidebar = function() {
 
 QuickReplyBox.prototype.setWaffleImagesSidebar = function() {
     html = '<div id="dropzone">' +
+           '    <h1>Drop files here</h1>' +
+           '    <p>To add them as attachments</p>' +
+           '    <input type="file" multiple="true" id="filesUpload" />' +
            '</div>';
 
     jQuery('#sidebar-list').html(html);
-    
-    jQuery('#dropzone').filedrop({
-        url: 'http://waffleimages.com/upload',
-        paramname: 'file',
-        data: {
-        },
-        dragOver: function() {
-            console.log('Over!');
-            jQuery('#dropzone').css({
-                'border': '4px solid #006600',
-                'width': '160px',
-                'background': '#009900'
-            });
-        },
-        dragLeave: function() {
-            console.log('Out!');
-            jQuery('#dropzone').css({});
-        },
-        drop: function() {
-            console.log('Dropped!');
-        },
-        uploadStarted: function(i, file, len) {
-            console.log('Upload started');
-        },
-        uploadFinished: function(i, file, len) {
-            console.log('Upload finished');
-        },
-    });
+
+    var dropzone = document.getElementById('dropzone');
+
+    handleDrag = function(evt) {
+        console.log('Over!!'); 
+    };
+     
+    handleDrop = function (evt) {
+        var files = evt.target.files;
+        dropzone.style.display = "none";
+        var files = evt.target.files;
+
+        for(var i = 0, len = files.length; i < len; i++) {
+            // iterate over file(s) and process them for uploading
+            if(files[i].fileSize < 1048576) {
+                // Check for duplicate files and skip iteration if so. Safari bug.
+                // Use xhr to send files to server async both Chrome and Safari support xhr2 upload and progress events
+                processXHR(files[i], i);
+            } else {
+                alert("Please don't kill my server by uploading large files, anything below 1mb will work");
+            }
+
+        }
+    };   
+
+    processXHR = function (file, index) {
+				var xhr = new XMLHttpRequest(),
+					fileUpload = xhr.upload;
+
+                console.log(file);
+				
+				fileUpload.addEventListener("progress", function(event) {
+					if (event.lengthComputable) {
+						var percentage = Math.round((event.loaded * 100) / event.total);
+					}
+				}, false);
+				
+				fileUpload.addEventListener("load", function(event) {
+                    console.log(event);
+				}, false);
+				
+				fileUpload.addEventListener("error", function(evt) {
+					console.log("error: " + evt.code);
+				}, false);
+
+				xhr.open("POST", "http://waffleimages.com/upload");
+				xhr.setRequestHeader("If-Modified-Since", "Mon, 26 Jul 1997 05:00:00 GMT");
+				xhr.setRequestHeader("Cache-Control", "no-cache");
+				xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+				xhr.setRequestHeader("X-File-Name", file.fileName);
+				xhr.setRequestHeader("X-File-Size", file.fileSize);
+				xhr.setRequestHeader("Content-Type", "multipart/form-data");
+				xhr.send(file);
+			};
+
+    dropzone.addEventListener("change", handleDrop, false);
+    dropzone.addEventListener("dragenter", handleDrag, false);
+    dropzone.addEventListener("dragend", handleDrag, false);
     
     this.sidebar_html = html;
 };
