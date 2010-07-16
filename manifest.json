@@ -17,6 +17,7 @@
         "js/jquery-ui.js",
         "js/jquery.transform.min.js",
         "js/jquery.filedrop.js",
+        "js/jquery.fieldselection.js",
         "js/quick-reply-emote-parser.js",
         "js/quick-reply.js",
         "js/page-navigator.js",

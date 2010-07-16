@@ -33,6 +33,29 @@ var quickReplyState = {
 function QuickReplyBox(forum_post_key) {
     this.forum_post_key = forum_post_key;
 
+    this.bbcodes = new Array();
+
+    this.bbcodes['url'] = 'url';
+    this.bbcodes['email'] = 'email';
+    this.bbcodes['img'] = 'img';
+    this.bbcodes['timg'] = 'timg';
+    this.bbcodes['video'] = 'video';
+    this.bbcodes['b'] = 'b';
+    this.bbcodes['s'] = 's';
+    this.bbcodes['u'] = 'u';
+    this.bbcodes['i'] = 'i';
+    this.bbcodes['spoiler'] = 'spoiler';
+    this.bbcodes['fixed'] = 'fixed';
+    this.bbcodes['super'] = 'super';
+    this.bbcodes['sub'] = 'sub';
+    this.bbcodes['size'] = 'size';
+    this.bbcodes['color'] = 'color';
+    this.bbcodes['quote'] = 'quote';
+    this.bbcodes['pre'] = 'pre';
+    this.bbcodes['code'] = 'code';
+    this.bbcodes['php'] = 'php';
+    this.bbcodes['list'] = 'list';
+
     this.create();
 }
 
@@ -138,7 +161,24 @@ QuickReplyBox.prototype.create = function(username, quote) {
     });
 
     jQuery('div.sidebar-menu-item').live('click', function() {
-        that.appendText(jQuery('div.menu-item-code', this).first().html());
+        var selected_item = jQuery('div.menu-item-code', this).first().html();
+
+        if (jQuery(this).is('.bbcode')) {
+            var text_area = jQuery('textarea#post-message');
+            var selection = text_area.getSelection();
+
+            if (selection.text) {
+                var replacement_text = '[' + that.bbcodes[selected_item] + ']' + selection.text + '[/' + that.bbcodes[selected_item] + ']';
+        
+                text_area.replaceSelection(replacement_text, true);
+            } else {
+                var replacement_text = '[' + that.bbcodes[selected_item] + '][/' + that.bbcodes[selected_item] + ']';
+
+                that.appendText(replacement_text);
+            }
+        } else {
+            that.appendText(selected_item);
+        }
     });
 
     this.sidebar_html = '<img class="loading-spinner" src="' + chrome.extension.getURL("images/") + 'loading-spinner.gif" />';
@@ -306,12 +346,12 @@ QuickReplyBox.prototype.toggleSidebar = function(element) {
         quickReplyState.sidebar_visible = false;
     } else if ((quickReplyState.sidebar_visible) && (quickReplyState.sidebar_visible != element.attr('id'))) {
         side_bar.animate( { left: '-=200px' }, 500, function() {
-            populate_method();
+            populate_method.call(this);
             side_bar.animate( { left: '+=200px' } );
             quickReplyState.sidebar_visible = element.attr('id');
         });
     } else {
-        populate_method();
+        populate_method.call(this);
         side_bar.animate( { left: '+=200px' } );
         quickReplyState.sidebar_visible = element.attr('id');
     }
@@ -328,7 +368,7 @@ QuickReplyBox.prototype.setEmoteSidebar = function() {
     var html = '';
 
     for (var emote in this.emotes) { 
-        html += '<div class="sidebar-menu-item">' +
+        html += '<div class="sidebar-menu-item emote">' +
                 '   <div><img src="' + emotes[emote].image + '" /></div>' +
                 '   <div class="menu-item-code">' + emotes[emote].emote + '</div>' +
                 '</div>';
@@ -342,32 +382,9 @@ QuickReplyBox.prototype.setEmoteSidebar = function() {
 QuickReplyBox.prototype.setBBCodeSidebar = function() {
     var html = '';
 
-    var bbcodes = new Array();
-
-    bbcodes['url'] = 'url';
-    bbcodes['email'] = 'email';
-    bbcodes['img'] = 'img';
-    bbcodes['timg'] = 'timg';
-    bbcodes['video'] = 'video';
-    bbcodes['b'] = 'b';
-    bbcodes['s'] = 's';
-    bbcodes['u'] = 'u';
-    bbcodes['i'] = 'i';
-    bbcodes['spoiler'] = 'spoiler';
-    bbcodes['fixed'] = 'fixed';
-    bbcodes['super'] = 'super';
-    bbcodes['sub'] = 'sub';
-    bbcodes['size'] = 'size';
-    bbcodes['color'] = 'color';
-    bbcodes['quote'] = 'quote';
-    bbcodes['pre'] = 'pre';
-    bbcodes['code'] = 'code';
-    bbcodes['php'] = 'php';
-    bbcodes['list'] = 'list';
-
-    for (var code in bbcodes) { 
-        html += '<div class="sidebar-menu-item">' +
-                '   <div class="menu-item-code">[' + code + '][/' + code + ']</div>' +
+    for (var code in this.bbcodes) { 
+        html += '<div class="sidebar-menu-item bbcode">' +
+                '   <div class="menu-item-code">' + code + '</div>' +
                 '</div>';
     }
 
