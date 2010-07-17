@@ -115,7 +115,10 @@ port.onMessage.addListener(function(data) {
             break;
     }
 
-    mouseGesturesController = new MouseGesturesController();
+    if (settings.enableMouseGestures == 'true') {
+        mouseGesturesController = new MouseGesturesController();
+    }
+
     hotKeyManager = new HotKeyManager();
 
     if (settings.displayOmnibarIcon == 'true') {

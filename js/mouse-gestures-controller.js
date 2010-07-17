@@ -33,14 +33,21 @@ function MouseGesturesController() {
 
     this.rootPageType = null;
     this.basePageID = null;
+    this.currentPageName = findCurrentPage();
 
     // Page navigation functions are provided globally
     // in page-navigator.js
     //
     // TODO: Catch this on user control panel as well
-    if (window.location.href != 'http://forums.somethingawful.com/') {
-        this.rootPageType = (findCurrentPage() == 'forumdisplay.php') ? 'forumid' : 'threadid';
-        this.basePageID = findForumID();
+    switch(this.currentPageName) {
+        case 'forumdisplay.php':
+        case 'showthread.php':
+            this.rootPageType = (this.currentPageName == 'forumdisplay.php') ? 'forumid' : 'threadid';
+            this.basePageID = findForumID();
+        case 'usercp.php':
+            break;
+        default:
+            break;
     }
     // Current page
     this.currentPage = Number(jQuery('span.curpage').html());
@@ -89,7 +96,7 @@ function MouseGesturesController() {
 
             // Clear the rectangle and draw the stroke
             context.clearRect(0, 0, 77, 77);
-            context.lineWidth = '4';
+            context.lineWidth = '6';
 
             context.strokeStyle = "rgba(0, 0, 0, .5)";
             context.beginPath();
@@ -126,18 +133,18 @@ function MouseGesturesController() {
 MouseGesturesController.prototype.buildOverlay = function() {
     html = '<div id="gesture-overlay">' +
            '    <div id="gesture-top">' +
-           '        <img src="' + chrome.extension.getURL("images/") + 'gesturenav-top.png">' +
+           '        <img id="top-image" src="' + chrome.extension.getURL("images/") + 'gesturenav-top.png">' +
            '    </div>' +
            '    <div id="gesture-left">' +
-           '        <img src="' + chrome.extension.getURL("images/") + 'gesturenav-left.png">' +
+           '        <img id="left-image" src="' + chrome.extension.getURL("images/") + 'gesturenav-left.png">' +
            '    </div>' +
            '    <canvas id="gesture-indicator" width="77" height="77">' +
            '    </canvas>' +
            '    <div id="gesture-right">' +
-           '        <img src="' + chrome.extension.getURL("images/") + 'gesturenav-right.png">' +
+           '        <img id="right-image" src="' + chrome.extension.getURL("images/") + 'gesturenav-right.png">' +
            '    </div>' +
            '    <div id="gesture-bottom">' +
-           '        <img src="' + chrome.extension.getURL("images/") + 'gesturenav-bottom.png">' +
+           '        <img id="bottom-image" src="' + chrome.extension.getURL("images/") + 'gesturenav-bottom.png">' +
            '    </div>' +
            '</div>';
 
@@ -166,6 +173,11 @@ MouseGesturesController.prototype.setPageSpecificCSS = function() {
         this.disableGesture('right');
     }
 
+    if (this.currentPageName == 'usercp.php') {
+        this.disableGesture('left');
+        this.disableGesture('right');
+    }
+
     if (this.currentPage == 1) {
         this.disableGesture('left');
     }
@@ -176,36 +188,31 @@ MouseGesturesController.prototype.setPageSpecificCSS = function() {
 };
 
 MouseGesturesController.prototype.updateButtonStyles = function(x_coord, y_coord) {
-    var button = null;
     var gesture_top = jQuery('div#gesture-top');
     var gesture_bottom = jQuery('div#gesture-bottom');
     var gesture_left = jQuery('div#gesture-left');
     var gesture_right = jQuery('div#gesture-right');
+    
+    jQuery('img#top-image', gesture_top).first().attr('src', chrome.extension.getURL("images/") + 'gesturenav-top.png');
+    jQuery('img#bottom-image', gesture_bottom).first().attr('src', chrome.extension.getURL("images/") + 'gesturenav-bottom.png');
+    jQuery('img#left-image', gesture_left).first().attr('src', chrome.extension.getURL("images/") + 'gesturenav-left.png');
+    jQuery('img#right-image', gesture_right).first().attr('src', chrome.extension.getURL("images/") + 'gesturenav-right.png');
 
     switch (this.determineLocation(x_coord, y_coord)) {
         case 'top':
-            button = gesture_top;
+            jQuery('img#top-image', gesture_top).first().attr('src', chrome.extension.getURL("images/") + 'gesturenav-top-press.png');
             break;
         case 'bottom':
-            button = gesture_bottom;
+            jQuery('img#bottom-image', gesture_bottom).first().attr('src', chrome.extension.getURL("images/") + 'gesturenav-bottom-press.png');
             break;
         case 'left':
-            button = gesture_left;
+            jQuery('img#left-image', gesture_left).first().attr('src', chrome.extension.getURL("images/") + 'gesturenav-left-press.png');
             break;
         case 'right':
-            button = gesture_right;
+            jQuery('img#right-image', gesture_right).first().attr('src', chrome.extension.getURL("images/") + 'gesturenav-right-press.png');
             break;
         default:
             break;
-    }
-    
-    gesture_top.css('opacity', '1.0');
-    gesture_bottom.css('opacity', '1.0');
-    gesture_left.css('opacity', '1.0');
-    gesture_right.css('opacity', '1.0');
-
-    if (button) {
-        button.css('opacity', '0.5');
     }
 };
 
@@ -268,7 +275,18 @@ MouseGesturesController.prototype.topAction = function() {
     // If page is forumdisplay.php, goto forums.somethingawful.com
     // If page is forums.somethingawful.com, do nothing
     if (this.is_enabled(this.topAction)) {
-        console.log('Top!!!');
+        if (this.currentPageName == 'showthread.php' 
+            || this.currentPageName == 'usercp.php'
+            || this.currentPageName == 'forumdisplay.php') 
+        {
+            var href = jQuery('span.mainbodytextlarge a').slice(-2, -1).attr('href');
+
+            if (href == '/' || href === undefined) {
+                href = '';
+            }
+
+            location.href = 'http://forums.somethingawful.com/' + href;
+        }
     }
 };
 
