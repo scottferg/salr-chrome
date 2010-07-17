@@ -119,7 +119,9 @@ port.onMessage.addListener(function(data) {
         mouseGesturesController = new MouseGesturesController();
     }
 
-    hotKeyManager = new HotKeyManager();
+    if (settings.enableKeyboardShortcuts == 'true') {
+        hotKeyManager = new HotKeyManager();
+    }
 
     if (settings.displayOmnibarIcon == 'true') {
         // Display the page action
