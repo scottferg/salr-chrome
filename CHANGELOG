@@ -1,5 +1,11 @@
 SALR Extension for Chrome
 
+v0.8.0 - "Home stretch"
+- Add mouse gestures (Scott Ferguson)
+- Add keyboard shortcuts (Scott Ferguson)
+- Fix possible form value issue in quick reply (Scott Ferguson)
+- Add drop shadows to quick reply text (Scott Ferguson)
+
 v0.7.1 - "Fix ahoy"
 - Apply BBcodes to highlighted text (Scott Ferguson)
 - Add more qote parsers (Scott Ferguson)
