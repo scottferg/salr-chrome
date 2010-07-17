@@ -19,6 +19,7 @@
         "js/jquery.filedrop.js",
         "js/jquery.rightclick.js",
         "js/jquery.fieldselection.js",
+        "js/hotkey-manager.js",
         "js/mouse-gestures-controller.js",
         "js/quick-reply-emote-parser.js",
         "js/quick-reply.js",

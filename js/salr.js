@@ -116,6 +116,7 @@ port.onMessage.addListener(function(data) {
     }
 
     mouseGesturesController = new MouseGesturesController();
+    hotKeyManager = new HotKeyManager();
 
     if (settings.displayOmnibarIcon == 'true') {
         // Display the page action
@@ -691,15 +692,6 @@ function findThreadID() {
  *
  */
 function bindQuickReply() {
-    
-    // Bind hotkey for 'R'
-    // TODO: Maintain all hotkeys in one area
-    jQuery(document).keypress(function(event) {
-        if (event.keyCode == '114') {
-            that.show();
-        }
-    });
-
     jQuery('a > img[alt="Quote"]').each(function() {
         jQuery(this).parent().attr('href', 'javascript:void();');
 
@@ -713,14 +705,15 @@ function bindQuickReply() {
         // Bind the quick reply box to the button
         jQuery(this).parent().click(function() {
             quickReply.appendQuote(username, quote);
+            quickReply.show();
 
-            console.log(quickReply.isExpanded());
-
+            /***********TODO: FIX THIS*********
             if (!quickReply.isExpanded()) {
                 quickReply.toggleView();
             } else {
                 quickReply.show();
             }
+            **********************************/
         });
     });
     
