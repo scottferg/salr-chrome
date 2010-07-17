@@ -17,7 +17,9 @@
         "js/jquery-ui.js",
         "js/jquery.transform.min.js",
         "js/jquery.filedrop.js",
+        "js/jquery.rightclick.js",
         "js/jquery.fieldselection.js",
+        "js/mouse-gestures-controller.js",
         "js/quick-reply-emote-parser.js",
         "js/quick-reply.js",
         "js/page-navigator.js",
@@ -26,6 +28,7 @@
       ],
       "css" : [
         "css/jquery-ui/jquery-ui.custom.css",
+        "css/mouse-gestures.css",
         "css/quick-reply.css"
       ],
       "matches": [

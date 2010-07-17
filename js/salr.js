@@ -25,6 +25,7 @@
 
 var settings = {};
 var quickReply = {};
+var mouseGesturesController = {};
 
 /**
  * Event listener for when a user enters their username within
@@ -113,7 +114,9 @@ port.onMessage.addListener(function(data) {
 
             break;
     }
-	
+
+    mouseGesturesController = new MouseGesturesController();
+
     if (settings.displayOmnibarIcon == 'true') {
         // Display the page action
         port.postMessage({

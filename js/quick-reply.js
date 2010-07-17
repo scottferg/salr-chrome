@@ -321,6 +321,7 @@ QuickReplyBox.prototype.toggleSidebar = function(element) {
     var min = '20px';
     var max = '525px';
     var populate_method = null;
+    var that = this;
 
     switch (element.attr('id')) {
         case 'smiley-menu':
@@ -346,7 +347,7 @@ QuickReplyBox.prototype.toggleSidebar = function(element) {
         quickReplyState.sidebar_visible = false;
     } else if ((quickReplyState.sidebar_visible) && (quickReplyState.sidebar_visible != element.attr('id'))) {
         side_bar.animate( { left: '-=200px' }, 500, function() {
-            populate_method.call(this);
+            populate_method.call(that);
             side_bar.animate( { left: '+=200px' } );
             quickReplyState.sidebar_visible = element.attr('id');
         });

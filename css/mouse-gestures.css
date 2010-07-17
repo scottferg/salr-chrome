@@ -1,0 +1,15 @@
+div#gesture-overlay {
+    float: left;
+    position: absolute;
+    width: 231px;
+}
+
+div#gesture-top, div#gesture-bottom {
+    position: relative;
+    left: 50%;
+    margin-left: -38px;
+}
+
+div#gesture-right {
+    float: right;
+}
