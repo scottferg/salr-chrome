@@ -76,7 +76,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '       <input type="hidden" name="action" value="postreply">' + 
                 '       <input type="hidden" name="threadid" value="' + findThreadID() + '">' + 
                 '       <input type="hidden" name="formkey" value="' + this.forum_post_key + '">' + 
-                '       <input type="hidden" name="form_cookie" value="postreply">' + 
+                // '       <input type="hidden" name="form_cookie" value="postreply">' + 
                 '       <div id="title-bar">' + 
                 '           Quick Reply' + 
                 '       </div>' +
@@ -467,4 +467,8 @@ QuickReplyBox.prototype.setWaffleImagesSidebar = function() {
 
 QuickReplyBox.prototype.isExpanded = function() {
     return this.quickReplyState.expanded;
+};
+
+QuickReplyBox.prototype.isVisible = function() {
+    return this.quickReplyState.visible;
 };
