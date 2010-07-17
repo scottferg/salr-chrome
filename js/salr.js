@@ -691,6 +691,14 @@ function findThreadID() {
  *
  */
 function bindQuickReply() {
+    
+    // Bind hotkey for 'R'
+    // TODO: Maintain all hotkeys in one area
+    jQuery(document).keypress(function(event) {
+        if (event.keyCode == '114') {
+            that.show();
+        }
+    });
 
     jQuery('a > img[alt="Quote"]').each(function() {
         jQuery(this).parent().attr('href', 'javascript:void();');
