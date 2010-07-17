@@ -3,6 +3,8 @@ a {
 }
 
 div#title-bar {
+    color: #222;
+    text-shadow: 1px 1px 1px #999;
     font-weight: bold;
     font-size: 12pt;
     padding-bottom: 20px;
@@ -27,6 +29,8 @@ div#post-options {
 }
 
 span.post-options {
+    color: #222;
+    text-shadow: 1px 1px 1px #999;
     font-weight: bold;
     font-size: 0.8em;
 }
