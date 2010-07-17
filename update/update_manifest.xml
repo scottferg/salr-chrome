@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <gupdate xmlns='http://www.google.com/update2/response' protocol='2.0'>
     <app appid='kgcmghhihjdhihlkbdajpapnccalekja'>
-        <updatecheck codebase='http://scottferg.github.com/salr-chrome/download/SALR-extension.crx' version='0.8.2' />
+        <updatecheck codebase='http://scottferg.github.com/salr-chrome/download/SALR-extension.crx' version='0.8.1' />
     </app>
 </gupdate>
