@@ -138,12 +138,6 @@ QuickReplyBox.prototype.create = function(username, quote) {
     jQuery('#toggle-view').click(function() {
         that.toggleView();
     });
-    
-    jQuery(document).keypress(function(event) {
-        if (event.keyCode == '114') {
-            jQuery('#quick-reply').show();
-        }
-    });
 
     jQuery(window).resize(function() {
         var quick_reply_position = jQuery('#quick-reply').offset().left;
@@ -195,8 +189,8 @@ QuickReplyBox.prototype.create = function(username, quote) {
 };
 
 QuickReplyBox.prototype.show = function() {
-    jQuery('#quick-reply').show("slow");
     this.quickReplyState.expanded = true;
+    jQuery('#quick-reply').show("slow");
 };
 
 QuickReplyBox.prototype.hide = function() {
@@ -356,7 +350,7 @@ QuickReplyBox.prototype.toggleSidebar = function(element) {
         side_bar.animate( { left: '-=200px' }, 500, function() {
             populate_method.call(that);
             side_bar.animate( { left: '+=200px' } );
-            this.quickReplyState.sidebar_visible = element.attr('id');
+            that.quickReplyState.sidebar_visible = element.attr('id');
         });
     } else {
         populate_method.call(this);
