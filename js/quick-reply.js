@@ -24,14 +24,15 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // Tracks the visibility state of the box
-var quickReplyState = {
-    expanded: false,
-    visible: false,
-    sidebar_visible: false
-};
 
 function QuickReplyBox(forum_post_key) {
     this.forum_post_key = forum_post_key;
+
+    this.quickReplyState = {
+        expanded: false,
+        visible: false,
+        sidebar_visible: false
+    };
 
     this.bbcodes = new Array();
 
@@ -61,6 +62,7 @@ function QuickReplyBox(forum_post_key) {
 
 QuickReplyBox.prototype.create = function(username, quote) {
 
+    var that = this;
     // Begin fetching and parsing the emotes as soon as we create the quick-reply
     var emote_parser = new EmoteParser(this);
 
@@ -124,12 +126,18 @@ QuickReplyBox.prototype.create = function(username, quote) {
         jQuery('body').append(html);
     }
 
-    jQuery('#dismiss-quick-reply').click(this.hide);
+    jQuery('#dismiss-quick-reply').click(function() {
+        that.hide();
+    });
     
     jQuery('div#quick-reply').addClass('modal');
 
-    jQuery('#title-bar').click(this.toggleView);
-    jQuery('#toggle-view').click(this.toggleView);
+    jQuery('#title-bar').click(function() {
+        that.toggleView();
+    });
+    jQuery('#toggle-view').click(function() {
+        that.toggleView();
+    });
     
     jQuery(document).keypress(function(event) {
         if (event.keyCode == '114') {
@@ -141,7 +149,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
         var quick_reply_position = jQuery('#quick-reply').offset().left;
         var offset = 350;
 
-        if (quickReplyState.sidebar_visible) {
+        if (that.quickReplyState.sidebar_visible) {
             offset += 200;
         }
 
@@ -151,8 +159,6 @@ QuickReplyBox.prototype.create = function(username, quote) {
     var quick_reply_position = jQuery('#quick-reply').offset().left;
 
     jQuery('#side-bar').css('left', (quick_reply_position + 350) + 'px');
-
-    var that = this;
 
     jQuery('.sidebar-menu').each(function() {
         jQuery(this).click(function() {
@@ -190,14 +196,14 @@ QuickReplyBox.prototype.create = function(username, quote) {
 
 QuickReplyBox.prototype.show = function() {
     jQuery('#quick-reply').show("slow");
-    quickReplyState.expanded = true;
+    this.quickReplyState.expanded = true;
 };
 
 QuickReplyBox.prototype.hide = function() {
     jQuery('#side-bar').first().hide();
     jQuery('#quick-reply').hide("slow");
     jQuery('#post-message').val('');
-    quickReplyState.expanded = false;
+    this.quickReplyState.expanded = false;
 };
 
 QuickReplyBox.prototype.appendText = function(text) {
@@ -278,24 +284,25 @@ QuickReplyBox.prototype.escapeHtml = function(html) {
 
 QuickReplyBox.prototype.toggleView = function() {
 
+    var that = this;
     var quick_reply_box = jQuery(".modal").first();
     var min = '18px';
     var max = '390px';
     var imgId = jQuery("img#quick-reply-rollbutton").first();
 
-    if(quickReplyState.expanded) {
+    if(this.quickReplyState.expanded) {
         var hideBox = function() {
             jQuery('#side-bar').first().hide();
             quick_reply_box.animate( { height: min } );
             (imgId).attr("src", chrome.extension.getURL("images/") + "quick-reply-rollup.gif");
-            quickReplyState.expanded = false;
+            that.quickReplyState.expanded = false;
         };
 
         // If the sidebar is open when we're trying to rolldown the box, animate
         // the sidebar as we tuck it away
-        if(quickReplyState.sidebar_visible) {
+        if(this.quickReplyState.sidebar_visible) {
             jQuery('#side-bar').animate( { left: '-=200px' }, 500, function() {
-                quickReplyState.sidebar_visible = null;
+                that.quickReplyState.sidebar_visible = null;
                 hideBox();
             });
         } else {
@@ -307,7 +314,7 @@ QuickReplyBox.prototype.toggleView = function() {
                 jQuery('#side-bar').first().show();
         });
         (imgId).attr("src", chrome.extension.getURL("images/") + "quick-reply-rolldown.gif");
-        quickReplyState.expanded = true;
+        this.quickReplyState.expanded = true;
     }
 };
 
@@ -342,19 +349,19 @@ QuickReplyBox.prototype.toggleSidebar = function(element) {
     // close what is open, then reopen the correct one
 
     // If no sidebar is open, open it
-    if ((quickReplyState.sidebar_visible) && (quickReplyState.sidebar_visible == element.attr('id'))) {
+    if ((this.quickReplyState.sidebar_visible) && (this.quickReplyState.sidebar_visible == element.attr('id'))) {
         side_bar.animate( { left: '-=200px' } );
-        quickReplyState.sidebar_visible = false;
-    } else if ((quickReplyState.sidebar_visible) && (quickReplyState.sidebar_visible != element.attr('id'))) {
+        this.quickReplyState.sidebar_visible = false;
+    } else if ((this.quickReplyState.sidebar_visible) && (this.quickReplyState.sidebar_visible != element.attr('id'))) {
         side_bar.animate( { left: '-=200px' }, 500, function() {
             populate_method.call(that);
             side_bar.animate( { left: '+=200px' } );
-            quickReplyState.sidebar_visible = element.attr('id');
+            this.quickReplyState.sidebar_visible = element.attr('id');
         });
     } else {
         populate_method.call(this);
         side_bar.animate( { left: '+=200px' } );
-        quickReplyState.sidebar_visible = element.attr('id');
+        this.quickReplyState.sidebar_visible = element.attr('id');
     }
 
 };
@@ -462,4 +469,8 @@ QuickReplyBox.prototype.setWaffleImagesSidebar = function() {
     dropzone.addEventListener("dragend", handleDrag, false);
     
     this.sidebar_html = html;
+};
+
+QuickReplyBox.prototype.isExpanded = function() {
+    return this.quickReplyState.expanded;
 };

@@ -705,7 +705,14 @@ function bindQuickReply() {
         // Bind the quick reply box to the button
         jQuery(this).parent().click(function() {
             quickReply.appendQuote(username, quote);
-            quickReply.show();
+
+            console.log(quickReply.isExpanded());
+
+            if (!quickReply.isExpanded()) {
+                quickReply.toggleView();
+            } else {
+                quickReply.show();
+            }
         });
     });
     
