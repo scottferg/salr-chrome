@@ -13,3 +13,12 @@ div#gesture-top, div#gesture-bottom {
 div#gesture-right {
     float: right;
 }
+
+div#gesture-left {
+    float: left;
+}
+
+canvas#gesture-indicator {
+    position: relative;
+    float: left;
+}
