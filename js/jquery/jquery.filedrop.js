@@ -160,7 +160,7 @@
 					return false;
 				}
 		    	
-				reader.addEventListener("loadend", send, false);
+				reader.onloadend = send;
 				reader.readAsBinaryString(files[i]);
 			} catch(err) {
                 console.log(err);

@@ -76,7 +76,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '       <input type="hidden" name="action" value="postreply">' + 
                 '       <input type="hidden" name="threadid" value="' + findThreadID() + '">' + 
                 '       <input type="hidden" name="formkey" value="' + this.forum_post_key + '">' + 
-                // '       <input type="hidden" name="form_cookie" value="postreply">' + 
+                '       <input type="hidden" name="form_cookie" value="postreply">' + 
                 '       <div id="title-bar">' + 
                 '           Quick Reply' + 
                 '       </div>' +
@@ -90,9 +90,9 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '       <div id="tag-menu" class="sidebar-menu">' +
                 '           <img src="' + chrome.extension.getURL("images/") + "quick-reply-tags.gif" + '" />' +
                 '       </div>' +
-                /*************** Waffle Images Sidebar ***********************
+                /************************WAFFLE IMAGES************************
                 '       <div id="waffle-images-menu" class="sidebar-menu">' +
-                '           <img src="' + chrome.extension.getURL("images/") + "quick-reply-tags.gif" + '" />' +
+                '           <img src="' + chrome.extension.getURL("images/") + "quick-reply-waffle.gif" + '" />' +
                 '       </div>' +
                 *************************************************************/
                 '       <div id="post-input-field">' +
@@ -404,65 +404,67 @@ QuickReplyBox.prototype.setWaffleImagesSidebar = function() {
 
     jQuery('#sidebar-list').html(html);
 
-    var dropzone = document.getElementById('dropzone');
-
-    handleDrag = function(evt) {
-        console.log('Over!!'); 
-    };
-     
-    handleDrop = function (evt) {
-        var files = evt.target.files;
-        dropzone.style.display = "none";
-        var files = evt.target.files;
-
-        for(var i = 0, len = files.length; i < len; i++) {
-            // iterate over file(s) and process them for uploading
-            if(files[i].fileSize < 1048576) {
-                // Check for duplicate files and skip iteration if so. Safari bug.
-                // Use xhr to send files to server async both Chrome and Safari support xhr2 upload and progress events
-                processXHR(files[i], i);
-            } else {
-                alert("Please don't kill my server by uploading large files, anything below 1mb will work");
-            }
-
-        }
-    };   
-
-    processXHR = function (file, index) {
-				var xhr = new XMLHttpRequest(),
-					fileUpload = xhr.upload;
-
-                console.log(file);
-				
-				fileUpload.addEventListener("progress", function(event) {
-					if (event.lengthComputable) {
-						var percentage = Math.round((event.loaded * 100) / event.total);
-					}
-				}, false);
-				
-				fileUpload.addEventListener("load", function(event) {
-                    console.log(event);
-				}, false);
-				
-				fileUpload.addEventListener("error", function(evt) {
-					console.log("error: " + evt.code);
-				}, false);
-
-				xhr.open("POST", "http://waffleimages.com/upload");
-				xhr.setRequestHeader("If-Modified-Since", "Mon, 26 Jul 1997 05:00:00 GMT");
-				xhr.setRequestHeader("Cache-Control", "no-cache");
-				xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-				xhr.setRequestHeader("X-File-Name", file.fileName);
-				xhr.setRequestHeader("X-File-Size", file.fileSize);
-				xhr.setRequestHeader("Content-Type", "multipart/form-data");
-				xhr.send(file);
-			};
-
-    dropzone.addEventListener("change", handleDrop, false);
-    dropzone.addEventListener("dragenter", handleDrag, false);
-    dropzone.addEventListener("dragend", handleDrag, false);
-    
     this.sidebar_html = html;
+
+    $('div#dropzone').filedrop({
+        url: 'http://waffleimages.com/upload',              // upload handler, handles each file separately
+        paramname: 'file',          // POST parameter name used on serverside to reference file
+        data: { 
+            mode: 'file',           // send POST variables
+            tg_format: 'xml',
+        },
+        error: function(err, file) {
+            switch(err) {
+                case 'BrowserNotSupported':
+                    alert('browser does not support html5 drag and drop')
+                    break;
+                case 'TooManyFiles':
+                    // user uploaded more than 'maxfiles'
+                    break;
+                case 'FileTooLarge':
+                    // program encountered a file whose size is greater than 'maxfilesize'
+                    // FileTooLarge also has access to the file which was too large
+                    // use file.name to reference the filename of the culprit file
+                    break;
+                default:
+                    break;
+            }
+        },
+        maxfiles: 25,
+        maxfilesize: 20,    // max file size in MBs
+        dragOver: function() {
+            // user dragging files over #dropzone
+        },
+        dragLeave: function() {
+            // user dragging files out of #dropzone
+        },
+        docOver: function() {
+            // user dragging files anywhere inside the browser document window
+        },
+        docLeave: function() {
+            // user dragging files out of the browser document window
+        },
+        drop: function() {
+            // user drops file
+        },
+        uploadStarted: function(i, file, len){
+            // a file began uploading
+            // i = index => 0, 1, 2, 3, 4 etc
+            // file is the actual file of the index
+            // len = total files user dropped
+        },
+        uploadFinished: function(i, file, response, time) {
+            // response is the data you got back from server in JSON format.
+            console.log(response);
+        },
+        progressUpdated: function(i, file, progress) {
+            // this function is used for large files and updates intermittently
+            // progress is the integer value of file being uploaded percentage to completion
+        },
+        speedUpdated: function(i, file, speed) {
+            // speed in kb/s
+        }
+    });
 };
 
 QuickReplyBox.prototype.isExpanded = function() {

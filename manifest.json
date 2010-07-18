@@ -8,24 +8,24 @@
 			  "48": "images/logo48.png",
 			  "128": "images/logo128.png"
 		   },
-  "background_page": "salr-chrome.html",
+  "background_page": "background.html",
   "options_page":"settings.html",
   "content_scripts": [
     {
       "js": [
-        "js/jquery.js",
-        "js/jquery-ui.js",
-        "js/jquery.transform.min.js",
-        "js/jquery.filedrop.js",
-        "js/jquery.rightclick.js",
-        "js/jquery.fieldselection.js",
+        "js/jquery/jquery.js",
+        "js/jquery/jquery-ui.js",
+        "js/jquery/jquery.transform.min.js",
+        "js/jquery/jquery.filedrop.js",
+        "js/jquery/jquery.rightclick.js",
+        "js/jquery/jquery.fieldselection.js",
         "js/hotkey-manager.js",
         "js/mouse-gestures-controller.js",
         "js/quick-reply-emote-parser.js",
         "js/quick-reply.js",
         "js/page-navigator.js",
         "js/salr.js",
-		"js/colorpicker.js"
+		"js/jquery/colorpicker.js"
       ],
       "css" : [
         "css/jquery-ui/jquery-ui.custom.css",
@@ -39,7 +39,8 @@
     }
   ], 
   "permissions": [
-        "tabs"
+        "tabs",
+        "http://waffleimages.com/upload"
   ],
   "page_actions": [
     {
