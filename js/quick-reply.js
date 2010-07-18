@@ -244,6 +244,7 @@ QuickReplyBox.prototype.appendQuote = function(username, quote) {
     }
 };
 
+/********Add all quote parsers here*************/
 QuickReplyBox.prototype.parseQuote = function(quote_string) {
     var result = quote_string;
     var that = this;
@@ -263,6 +264,20 @@ QuickReplyBox.prototype.parseQuote = function(quote_string) {
 
         if (emoticon) {
             jQuery(this).replaceWith(emoticon);
+        } else {
+            var image_path = jQuery(this).attr('src');
+            jQuery(this).replaceWith('[timg]' + image_path + '[/timg]');
+        }
+    });
+
+    jQuery('a', result).each(function() {
+        var label = jQuery(this).html();
+        var url = jQuery(this).attr('href');
+
+        if (label == '') {
+            jQuery(this).replaceWith('[url]' + url + '[/url]');
+        } else {
+            jQuery(this).replaceWith('[url=' + url + ']' + label + '[/url]');
         }
     });
 
