@@ -230,6 +230,9 @@ QuickReplyBox.prototype.appendText = function(text) {
 
 QuickReplyBox.prototype.appendQuote = function(username, quote) {
 
+    console.log(username);
+    console.log(quote);
+
     username = username || false;
     quote = this.parseQuote(quote) || false;
 
