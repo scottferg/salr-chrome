@@ -119,7 +119,7 @@ function MouseGesturesController() {
                 removeOverlay(event.pageX, event.pageY);
             });
             
-            jQuery('div#gesture-overlay').noContext();
+            // jQuery('div#gesture-overlay').noContext();
 
             jQuery('div#gesture-overlay').mousemove(drawIndicator);
         });
