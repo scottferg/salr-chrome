@@ -25,6 +25,9 @@
 
 // Tracks the visibility state of the box
 
+// http://forums.somethingawful.com/newreply.php?action=newreply&postid=379818033
+// http://forums.somethingawful.com/newreply.php?s=&action=newreply&threadid=3208437
+
 function QuickReplyBox(forum_post_key) {
     this.forum_post_key = forum_post_key;
 
@@ -76,7 +79,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '       <input type="hidden" name="action" value="postreply">' + 
                 '       <input type="hidden" name="threadid" value="' + findThreadID() + '">' + 
                 '       <input type="hidden" name="formkey" value="' + this.forum_post_key + '">' + 
-                '       <input type="hidden" name="form_cookie" value="postreply">' + 
+                '       <input type="hidden" name="form_cookie" value="formcookie">' + 
                 '       <div id="title-bar">' + 
                 '           Quick Reply' + 
                 '       </div>' +
@@ -184,6 +187,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
     this.sidebar_html = '<img class="loading-spinner" src="' + chrome.extension.getURL("images/") + 'loading-spinner.gif" />';
     this.emotes = null;
     
+    this.fetchFormCookie(findThreadID());
     jQuery('#side-bar').hide();
     jQuery('#quick-reply').hide();
 };
@@ -198,6 +202,23 @@ QuickReplyBox.prototype.hide = function() {
     jQuery('#quick-reply').hide("slow");
     jQuery('#post-message').val('');
     this.quickReplyState.expanded = false;
+};
+
+QuickReplyBox.prototype.fetchFormCookie = function(threadid) {
+    var that = this;
+
+    var parseFormCookie = function(html) {
+        return jQuery('input[name="form_cookie"]', html).val();
+    };
+
+    jQuery.get('http://forums.somethingawful.com/newreply.php',
+               {
+                   action: 'newreply',
+                   threadid: threadid
+               },
+               function(response) {
+                   that.notifyReplyReady(parseFormCookie(response));
+               });
 };
 
 QuickReplyBox.prototype.appendText = function(text) {
@@ -364,6 +385,10 @@ QuickReplyBox.prototype.notify = function(emotes) {
     this.emotes = emotes;
 
     this.setEmoteSidebar();
+};
+
+QuickReplyBox.prototype.notifyReplyReady = function(form_cookie) {
+    jQuery('input[name="form_cookie"]').attr('value', form_cookie);
 };
 
 QuickReplyBox.prototype.setEmoteSidebar = function() {
