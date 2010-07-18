@@ -35,7 +35,7 @@ function HotKeyManager() {
      R - Quick Reply current thread
     *******************/
     this.bindHotKeys();
-    this.current_post = -1;
+    this.current_post = this.findFirstUnreadPost();
 
     this.thread_post_size = jQuery('div#thread > table.post').size();
 }
@@ -94,6 +94,23 @@ HotKeyManager.prototype.bindHotKeys = function() {
             }
         }
     });
+};
+
+HotKeyManager.prototype.findFirstUnreadPost = function() {
+    var index = 0;
+    var count = 0;
+
+    jQuery('div#thread > table.post').each(function() {
+        var post = jQuery('tr', this);
+
+        if (post.hasClass('seen1') || post.hasClass('seen2')) {
+            index = count;
+        }
+
+        count++;
+    });
+
+    return index;
 };
 
 HotKeyManager.prototype.nextPage = function() {
