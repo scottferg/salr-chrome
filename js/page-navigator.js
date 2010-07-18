@@ -23,89 +23,30 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-/**
- * Returns the current PHP page the user is on
- *
- */
-function findCurrentPage() {
-    // Substrings out everything after the domain, then splits on the ?
-    // and takes the left-side of the result
-    return (window.location.href).substr(33).split('?')[0];
-}
+function PageNavigator() {
+    this.pageCount = countPages();
+    // Determines if we are on a forum or a thread
+    this.rootPageType = (findCurrentPage() == 'forumdisplay.php') ? 'forumid' : 'threadid';
+    // Either forum ID or thread ID, depending on which we are
+    // currently viewing
+    this.basePageID = findForumID();
+    // Current page
+    this.currentPage = Number(jQuery('span.curpage').html());
 
-/**
- * Returns the current forum ID
- *
- */
-function findForumID() {
-    // Substrings out everything after the domain, then splits on the ?,
-    // defaults to the argument list (right), splits on the &, looks at the first
-    // parameter in the list, and splits on the = to get the result
-    var parameterList = ((window.location.href).substr(33).split('?')[1]).split('&');
+    this.writeNavigatorHtml();
+    this.selectPage(this.currentPage);
+    this.bindButtonEvents();
+};
 
-    for (var parameter in parameterList) {
-        var currentParam = (parameterList[parameter]).split('=');
-
-        if (currentParam[0] == 'threadid' || currentParam[0] == 'forumid') {
-            return currentParam[1]; 
-        }
-    }
-}
-
-/**
- * Count the total number of pages to display in page navigator
- *
- */
-function countPages() {
-
-    var index = (findCurrentPage() == 'forumdisplay.php') ? 5 : 3;
-
-    var result;
-
-    jQuery('.pages').each(function() {
-        var text = jQuery(this).html();
-        var firstIndex = text.indexOf('(');
-        var endIndex = text.indexOf(')');
-
-        result = text.substr(firstIndex + 1, endIndex - (firstIndex + 1));
-    });
-
-    return Number(result);
-}
-
-/**
- * Jumps the user to the specified page
- *
- * @param rootPageType - forumid or threadid
- * @param basePagID - ID number associated with rootPageType
- * @param page - Page number to jump to
- *
- */
-function jumpToPage(rootPageType, basePageID, page) {
-    location.href = 'http://forums.somethingawful.com/' + findCurrentPage() + '?' + rootPageType + '=' + basePageID + '&pagenumber=' + page;
-}
-
-/**
- * Display the page navigator HTML
- *
- */
-function displayPageNavigator() {
+PageNavigator.prototype.writeNavigatorHtml = function() {
     // store the fact we've shown it in #container, since it's the parent of the element I guess
     if (jQuery('#container').data('shownPageNav'))
         return true;
     jQuery('#container').data('shownPageNav', true);
-    var pageCount = countPages();
-    // Determines if we are on a forum or a thread
-    var rootPageType = (findCurrentPage() == 'forumdisplay.php') ? 'forumid' : 'threadid';
-    // Either forum ID or thread ID, depending on which we are
-    // currently viewing
-    var basePageID = findForumID();
-    // Current page
-    var currentPage = Number(jQuery('span.curpage').html());
 
     // If there is only a single page in the thread, or something
     // goes wrong, just quit out
-    if (currentPage == 0) {
+    if (this.currentPage == 0) {
         return;
     }
 
@@ -117,7 +58,7 @@ function displayPageNavigator() {
                 '   <span id="page-drop-down">' +
                 '       <select id="number-drop-down" name="page-number">';
 
-    for (var i = 1; i < (pageCount + 1); i++) {
+    for (var i = 1; i < (this.pageCount + 1); i++) {
         html += '           <option value="' + i + '">' + i + '</option>';
     }
 
@@ -132,7 +73,7 @@ function displayPageNavigator() {
     // Add the navigator to the DOM
     jQuery('#container').append(html);
 
-    var navigatorWidth = (pageCount > 100) ? 187 : 180;
+    var navigatorWidth = (this.pageCount > 100) ? 187 : 180;
 
     // Setup page nav CSS
     jQuery('#page-nav').css({'background': '#006699',
@@ -153,26 +94,32 @@ function displayPageNavigator() {
                                'cursor': 'pointer'});
 
     jQuery('select#number-drop-down').css({'position': 'relative', 'top': '-2px'});
+};
 
+PageNavigator.prototype.selectPage = function(page_number) {
     // Pre-select the current page
-    jQuery('select#number-drop-down').val(currentPage);
+    jQuery('select#number-drop-down').val(page_number);
+};
+
+PageNavigator.prototype.bindButtonEvents = function() {
+    var that = this;
 
     // Add event handlers for each button
     jQuery("select#number-drop-down").change(function () {
         jQuery("select option:selected").each(function () {
-            jumpToPage(rootPageType, basePageID, jQuery(this).val());
+            jumpToPage(that.rootPageType, that.basePageID, jQuery(this).val());
         });
     });
 
     // If we are on the first page, disable the first two buttons,
     // otherwise setup event handlers
-    if (currentPage != 1) {
+    if (this.currentPage != 1) {
         jQuery('#nav-first-page').click(function() {
-            jumpToPage(rootPageType, basePageID, 1);
+            jumpToPage(that.rootPageType, that.basePageID, 1);
         });
 
         jQuery('#nav-prev-page').click(function() {
-            jumpToPage(rootPageType, basePageID, currentPage - 1);
+            jumpToPage(that.rootPageType, that.basePageID, that.currentPage - 1);
         });
     } else {
         jQuery('#nav-first-page').css('opacity', '0.5');
@@ -181,16 +128,16 @@ function displayPageNavigator() {
 
     // If we are on the last page, disable the last two buttons,
     // otherwise setup event handlers
-    if (currentPage != pageCount) {
+    if (this.currentPage != this.pageCount) {
         jQuery('#nav-last-page').click(function() {
-            jumpToPage(rootPageType, basePageID, pageCount);
+            jumpToPage(that.rootPageType, that.basePageID, that.pageCount);
         });
 
         jQuery('#nav-next-page').click(function() {
-            jumpToPage(rootPageType, basePageID, currentPage + 1);
+            jumpToPage(that.rootPageType, that.basePageID, that.currentPage + 1);
         });
     } else {
         jQuery('#nav-last-page').css('opacity', '0.5');
         jQuery('#nav-next-page').css('opacity', '0.5');
     }
-}
+};

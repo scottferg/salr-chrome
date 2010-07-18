@@ -24,6 +24,7 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 var settings = {};
+var pageNavigator = {};
 var quickReply = {};
 var mouseGesturesController = {};
 
@@ -54,7 +55,7 @@ port.onMessage.addListener(function(data) {
             }
 
             if (settings.displayPageNavigator == 'true') {
-                displayPageNavigator();
+                pageNavigator = new PageNavigator();
             }
 
             updateForumsList();
