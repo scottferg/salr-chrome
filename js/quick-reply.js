@@ -37,6 +37,7 @@ function QuickReplyBox(forum_post_key) {
         sidebar_visible: false
     };
 
+    // TODO: Pull these from the extension, cache them there
     this.bbcodes = new Array();
 
     this.bbcodes['url'] = 'url';
@@ -396,8 +397,8 @@ QuickReplyBox.prototype.setEmoteSidebar = function() {
 
     for (var emote in this.emotes) { 
         html += '<div class="sidebar-menu-item emote">' +
-                '   <div><img src="' + emotes[emote].image + '" /></div>' +
-                '   <div class="menu-item-code">' + emotes[emote].emote + '</div>' +
+                '   <div><img src="' + this.emotes[emote].image + '" /></div>' +
+                '   <div class="menu-item-code">' + this.emotes[emote].emote + '</div>' +
                 '</div>';
     }
 

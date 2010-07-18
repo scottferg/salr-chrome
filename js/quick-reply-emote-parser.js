@@ -22,11 +22,11 @@
 // ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-var emotes = new Array();
 
 function EmoteParser(observer) {
     this.emote_url = "http://forums.somethingawful.com/misc.php"
     this.observer = observer;
+    this.emotes = new Array();
 
     this.construct()
 }
@@ -50,14 +50,14 @@ EmoteParser.prototype.parseResponse = function(response) {
         var image = jQuery('img', this).first().attr('src');
         var title = 'emote-' + index;
 
-        emotes[title] = {'emote': emote, 'image': image};    
+        that.emotes[title] = {'emote': emote, 'image': image};    
 
         index++;
     });
 
-    this.observer.notify(emotes);
+    this.observer.notify(this.emotes);
 };
 
 EmoteParser.prototype.getEmotes = function() {
-    return emotes;
+    return this.emotes;
 };
