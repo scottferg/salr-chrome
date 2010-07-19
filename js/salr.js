@@ -103,6 +103,8 @@ port.onMessage.addListener(function(data) {
                 }
             }
 
+            renderWhoPostedInThreadLink();
+
             break;
         case 'newreply.php':
             if (!settings.forumPostKey) {
@@ -425,6 +427,27 @@ function displayBanHistoryLink() {
 
     jQuery('ul.profilelinks').each(function() {
         jQuery(this).append('<li><a href="http://forums.somethingawful.com/banlist.php?userid=' + getUserID(jQuery(this)) + '">Ban History</a></li>');
+    });
+}
+
+/**
+ * Open the list of who posted in a thread
+ *
+ */
+function renderWhoPostedInThreadLink() {
+    jQuery('div.threadbar.top').each( function() {
+        var headerHTML = jQuery(this).html();
+        var updatedHTML = '<div id="open-who-posted"' +
+                          '     style="float:left; ' +
+                          '            cursor:pointer; ' +
+                          '            text-decoration: underline;">' +
+                          'Who Posted</div>'+headerHTML;
+        jQuery(this).html(updatedHTML);
+
+        jQuery('#open-who-posted').click( function() {
+            port.postMessage({ 'message': 'OpenTab',
+                               'url'  : 'http://forums.somethingawful.com/misc.php?action=whoposted&threadid='+findThreadID() });
+        });
     });
 }
 
