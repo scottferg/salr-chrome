@@ -468,7 +468,7 @@ function renderOpenUpdatedThreadsButton() {
 
         // Open all updated threads in tabs
         jQuery('#open-updated-threads').click( function() {
-            var updatedThreads = document.evaluate('.//*[@class="count"]', 
+            var updatedThreads = document.evaluate('.//*[contains(@class,"count")]', 
                                                    document, 
                                                    null, 
                                                    XPathResult.ANY_TYPE, 
