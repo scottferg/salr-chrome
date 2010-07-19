@@ -116,6 +116,10 @@ port.onMessage.addListener(function(data) {
             renderOpenUpdatedThreadsButton();
 
             break;
+        case 'bookmarkthreads.php':
+            renderOpenUpdatedThreadsButton();
+
+            break;
     }
 
     if (settings.enableMouseGestures == 'true') {
