@@ -94,6 +94,8 @@ port.onMessage.addListener(function(data) {
 
             displayBanHistoryLink();
 
+            displaySinglePostLink();
+
             if (settings.enableQuickReply == 'true') {
                 if (settings.forumPostKey) {
                     quickReply = new QuickReplyBox(settings.forumPostKey);
@@ -384,6 +386,23 @@ function inlineYoutubes() {
 			jQuery(this).next().remove();
 		}
 	);
+}
+
+/**
+ * Display Single Post View link under a users post
+ *
+ *
+ */
+function displaySinglePostLink() {
+/* http://forums.somethingawful.com/showthread.php?action=showpost&postid=379816844&forumid=219 */
+
+    var getPostID = function(element) {
+        return jQuery('a[href^=#post]', element).attr('href').split('#post')[1];
+    };
+
+    jQuery('td.postdate').each( function() {
+        jQuery('a[href^=#post]', this).before('<a href="http://forums.somethingawful.com/showthread.php?action=showpost&postid='+getPostID(jQuery(this))+'">1</a> ');
+    });
 }
 
 /**
