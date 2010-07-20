@@ -48,6 +48,13 @@ port.onMessage.addListener(function(data) {
 	modifyImages();
 
     switch (findCurrentPage()) {
+        case '':
+        case 'index.php':
+            if (settings.highlightModAdmin == 'true') {
+                skimModerators();
+            }
+
+            break;
         case 'forumdisplay.php':
         case 'showthread.php':
             if (settings.inlineVideo == 'true') {
@@ -73,6 +80,7 @@ port.onMessage.addListener(function(data) {
             }
 
             if (settings.highlightModAdmin == 'true') {
+                skimModerators();
                 highlightModAdminPosts();
             }
 
@@ -116,10 +124,16 @@ port.onMessage.addListener(function(data) {
             updateUsernameFromCP();
             updateFriendsList();
             renderOpenUpdatedThreadsButton();
+            if (settings.highlightModAdmin == 'true') {
+                highlightModAdminPosts();
+            }
 
             break;
         case 'bookmarkthreads.php':
             renderOpenUpdatedThreadsButton();
+            if (settings.highlightModAdmin == 'true') {
+                highlightModAdminPosts();
+            }
 
             break;
     }
@@ -366,6 +380,65 @@ function modifyImages() {
 	}
 }
 
+function skimModerators() {
+    var modList;
+    var modupdate = false;
+    if (settings.modList == null) {
+        // Seed administrators. Is there a list for them?
+        modList = { "12831" : {'username' :  'elpintogrande', 'mod' : 'A'},
+                    "16393" : {'username' :  'Fistgrrl', 'mod' : 'A'},
+                    "17553" : {'username' :  'Livestock', 'mod' : 'A'},
+                    "22720" : {'username' :  'Ozma', 'mod' : 'A'},
+                    "23684" : {'username' :  'mons all madden', 'mod' : 'A'},
+                    "24587" : {'username' :  'hoodrow trillson', 'mod' : 'A'},
+                    "27691" : {'username' :  'Lowtax', 'mod' : 'A'},
+                    "51697" : {'username' :  'angerbotSD', 'mod' : 'A'},
+                    "62392" : {'username' :  'Tiny Fistpump', 'mod' : 'A'},
+                    "114975" : {'username' : 'SA Support Robot', 'mod' : 'A'},
+                    "137488" : {'username' : 'Garbage Day', 'mod' : 'A'},
+                    "147983" : {'username' : 'Peatpot', 'mod' : 'A'},
+                    "158420" : {'username' : 'Badvertising', 'mod' : 'A'},
+                   };
+        modupdate = true;
+    } else {
+        modList = JSON.parse(settings.modList);
+    }
+
+    // TODO: How can you tell if a mod has been demodded?
+
+    // Moderator list on forumdisplay.php
+    jQuery('div#mods > b > a').each(function() {
+        var userid = jQuery(this).attr('href').split('userid=')[1];
+        var username = jQuery(this).html();
+        if (modList[userid] == null) {
+            modList[userid] = {'username' : username, 'mod' : 'M'};
+            modupdate = true;
+        } else if (modList[userid].username != username) {
+            modList[userid].username = username;
+            modupdate = true;
+        }
+    });
+
+    // Moderator lists on index.php
+    jQuery('td.moderators > a').each(function() {
+        var userid = jQuery(this).attr('href').split('userid=')[1];
+        var username = jQuery(this).html();
+        if (modList[userid] == null) {
+            modList[userid] = {'username' : username, 'mod' : 'M'};
+            modupdate = true;
+        } else if (modList[userid].username != username) {
+            modList[userid].username = username;
+            modupdate = true;
+        }
+    });
+
+    if (modupdate) {
+        port.postMessage({ 'message': 'ChangeSetting',
+                           'option' : 'modList',
+                           'value'  : JSON.stringify(modList) });
+    }
+}
+
 function inlineYoutubes() {
 	//sort out youtube links
 	jQuery('.postbody a[href*="youtube.com"]').each(function() {
@@ -551,6 +624,49 @@ function highlightOwnPosts() {
  * Highlight the posts by one self
  */
 function highlightModAdminPosts() {
+    if (settings.modList != null) {
+        var modList = JSON.parse(settings.modList);
+
+        // Highlight mods and admin thread OPs on forumdisplay.php
+        jQuery('td.author > a').each(function() {
+            var userid = jQuery(this).attr('href').split('userid=')[1];
+            if (modList[userid] != null) {
+                var color;
+                switch (modList[userid].mod) {
+                    case 'M':
+                        color = settings.highlightModeratorColor;
+                        break;
+                    case 'A':
+                        color = settings.highlightAdminColor;;
+                        break;
+                }
+                jQuery(this).css('color', color);
+                jQuery(this).css('font-weight', 'bold');
+            }
+        });
+
+        // Highlight mod and admin last posters on forumdisplay.php
+        jQuery('td.lastpost > a.author').each(function() {
+            var username = jQuery(this).html();
+            // No userid in this column so we have to loop
+            for(userid in modList) {
+                if (username == modList[userid].username) {
+                    var color;
+                    switch (modList[userid].mod) {
+                        case 'M':
+                            color = settings.highlightModeratorColor;
+                            break;
+                        case 'A':
+                            color = settings.highlightAdminColor;;
+                            break;
+                    }
+                    jQuery(this).css('color', color);
+                    jQuery(this).css('font-weight', 'bold');
+                }
+            }
+        });
+    }
+
     if (settings.highlightModAdminUsername != "true") {
         jQuery('table.post:has(dt.author:has(img[title="Moderator"])) td').each(function () {
             jQuery(this).css({
