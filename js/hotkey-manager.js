@@ -100,6 +100,11 @@ HotKeyManager.prototype.findFirstUnreadPost = function() {
     var index = 0;
     var count = 0;
 
+    var anchor_post = window.location.href.split('#pti')[1];
+    if (!isNaN(anchor_post)) {
+        return anchor_post-1;
+    }
+
     // Check if the user has the "Show an icon next to each post indicating if
     // it has been seen or not" option enabled for the forums
     var use_setseen = (jQuery('td.postdate > a[href*=action=setseen]').length > 0);
