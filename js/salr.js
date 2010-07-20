@@ -473,8 +473,6 @@ function inlineYoutubes() {
  *
  */
 function displaySinglePostLink() {
-/* http://forums.somethingawful.com/showthread.php?action=showpost&postid=379816844&forumid=219 */
-
     var getPostID = function(element) {
         return jQuery('a[href^=#post]', element).attr('href').split('#post')[1];
     };
@@ -621,7 +619,7 @@ function highlightOwnPosts() {
 }
 
 /**
- * Highlight the posts by one self
+ * Highlight the posts by moderators and admins
  */
 function highlightModAdminPosts() {
     if (settings.modList != null) {
@@ -637,7 +635,7 @@ function highlightModAdminPosts() {
                         color = settings.highlightModeratorColor;
                         break;
                     case 'A':
-                        color = settings.highlightAdminColor;;
+                        color = settings.highlightAdminColor;
                         break;
                 }
                 jQuery(this).css('color', color);
@@ -657,11 +655,12 @@ function highlightModAdminPosts() {
                             color = settings.highlightModeratorColor;
                             break;
                         case 'A':
-                            color = settings.highlightAdminColor;;
+                            color = settings.highlightAdminColor;
                             break;
                     }
                     jQuery(this).css('color', color);
                     jQuery(this).css('font-weight', 'bold');
+                    break;
                 }
             }
         });
