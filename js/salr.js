@@ -118,6 +118,10 @@ port.onMessage.addListener(function(data) {
             if (!settings.forumPostKey) {
                 findFormKey();
             }
+            
+            if (settings.qneProtection == 'true') {
+                quoteNotEditProtection();
+            }
 
             break;
         case 'usercp.php':
@@ -899,4 +903,19 @@ function findFormKey() {
                            'option' : 'forumPostKey',
                            'value'  : jQuery(this).attr('value') });
     });
+}
+
+/**
+ *  Displays a warning if the last poster in the thread was the current user, or
+ *  the post contains a quote of the current user.
+ **/
+function quoteNotEditProtection() {
+    if(settings.username){
+        if(jQuery("textarea[name='message']:contains('quote=\"" + settings.username + "\"')").length > 0 ||
+            jQuery('table.post:first tr > td.userinfo > dl > dt.author:contains("' + settings.username + '")').length > 0)
+        {
+            jQuery("#main_full").after("<div class='qne_warn'><h4>Warning! Possible Quote/Edit mixup.</h4></div>");
+        }
+    }
+    
 }
