@@ -51,6 +51,8 @@ function MouseGesturesController() {
     }
     // Current page
     this.currentPage = Number(jQuery('span.curpage').html());
+    if (this.currentPage <= 0)
+        this.currentPage = 1;
 
     jQuery('div#container').each(function() {
         var removeOverlay = function(x, y) {
