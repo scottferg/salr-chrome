@@ -76,6 +76,14 @@ HotKeyManager.prototype.bindHotKeys = function() {
                     // Re-anchor thread
                     that.anchorThread();
                     break;
+                case 49: /* 1 */
+                    // Jump to first post on the page
+                    that.firstPost();
+                    break;
+                case 48: /* 0 */
+                    // Jump to last post on the page
+                    that.lastPost();
+                    break;
                 case 113:
                     // Quick quote current post
                     that.quoteCurrentPost();
@@ -179,6 +187,46 @@ HotKeyManager.prototype.previousPost = function() {
     var current_post = post.eq(this.current_post);
     previous_post.css('border', '1px solid #c1c1c1');
     current_post.css('border', '2px dashed #aaa');
+
+    jQuery(window).scrollTop(current_post.offset().top);
+};
+
+HotKeyManager.prototype.firstPost = function() {
+    if (!findCurrentPage() == 'showthread.php') {
+        return;
+    }
+
+    var post = jQuery('div#thread > table.post');
+    var current_post = post.eq(this.current_post);
+
+    if (this.current_post > 0) {
+        var previous_post = post.eq(this.current_post);
+        previous_post.css('border', '1px solid #c1c1c1');
+
+        this.current_post=0;
+        current_post = post.eq(this.current_post);
+        current_post.css('border', '2px dashed #aaa');
+    }
+
+    jQuery(window).scrollTop(current_post.offset().top);
+};
+
+HotKeyManager.prototype.lastPost = function() {
+    if (!findCurrentPage() == 'showthread.php') {
+        return;
+    }
+
+    var post = jQuery('div#thread > table.post');
+    var current_post = post.eq(this.current_post);
+
+    if (this.current_post < this.thread_post_size-1) {
+        var previous_post = post.eq(this.current_post);
+        previous_post.css('border', '1px solid #c1c1c1');
+
+        this.current_post=this.thread_post_size-1;
+        current_post = post.eq(this.current_post);
+        current_post.css('border', '2px dashed #aaa');
+    }
 
     jQuery(window).scrollTop(current_post.offset().top);
 };
