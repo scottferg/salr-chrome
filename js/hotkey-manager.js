@@ -35,9 +35,9 @@ function HotKeyManager() {
      R - Quick Reply current thread
     *******************/
     this.bindHotKeys();
-    this.current_post = this.findFirstUnreadPost();
 
     this.thread_post_size = jQuery('div#thread > table.post').size();
+    this.current_post = this.findFirstUnreadPost();
 }
 
 HotKeyManager.prototype.bindHotKeys = function() {
@@ -108,15 +108,32 @@ HotKeyManager.prototype.findFirstUnreadPost = function() {
     var index = 0;
     var count = 0;
 
+    // Check if the user has the "Show an icon next to each post indicating if
+    // it has been seen or not" option enabled for the forums
+    var use_setseen = (jQuery('td.postdate > a[href*=action=setseen]').length > 0);
+
     jQuery('div#thread > table.post').each(function() {
-        var post = jQuery('tr', this);
+        if (use_setseen) {
+            // User has setseen icons enabled
+            var posticon_img = jQuery('img[src*=posticon]', this);
 
-        if (post.hasClass('seen1') || post.hasClass('seen2')) {
-            index = count;
+            count++;
+            if (posticon_img.attr('src') == 'http://fi.somethingawful.com/style/posticon-seen.gif') {
+                index = count;
+            }
+        } else {
+            // User has read post coloring enabled
+            var post = jQuery('tr', this);
+
+            count++;
+            if (post.hasClass('seen1') || post.hasClass('seen2')) {
+                index = count;
+            }
         }
-
-        count++;
     });
+
+    if (index == this.thread_post_size) // All posts read
+        return index-1;
 
     return index;
 };
@@ -239,6 +256,7 @@ HotKeyManager.prototype.anchorThread = function() {
     }
 
     var post = jQuery('div#thread > table.post').eq(this.current_post);
+    post.css('border', '2px dashed #aaa');
 
     jQuery(window).scrollTop(post.offset().top);
 };
