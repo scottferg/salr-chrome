@@ -31,7 +31,8 @@
       "css" : [
         "css/jquery-ui/jquery-ui.custom.css",
         "css/mouse-gestures.css",
-        "css/quick-reply.css"
+        "css/quick-reply.css",
+        "css/salr.css"
       ],
       "matches": [
         "http://forums.somethingawful.com/*"
