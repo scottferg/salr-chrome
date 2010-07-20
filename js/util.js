@@ -64,13 +64,12 @@ function countPages() {
 
     jQuery('.pages').each(function() {
         var text = jQuery(this).html();
-        if (text == '') {
-            result = 1;
-        } else {
-            var firstIndex = text.indexOf('(');
-            var endIndex = text.indexOf(')');
+        var firstIndex = text.indexOf('(');
+        var endIndex = text.indexOf(')');
 
-            result = text.substr(firstIndex + 1, endIndex - (firstIndex + 1));
+        result = text.substr(firstIndex + 1, endIndex - (firstIndex + 1));
+        if (result=='' || isNaN(result)) {
+            result = 1;
         }
     });
 
