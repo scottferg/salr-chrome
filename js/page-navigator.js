@@ -50,7 +50,7 @@ PageNavigator.prototype.writeNavigatorHtml = function() {
         return;
     }
 
-    var html = '<div id="page-nav"> ' + 
+    var html = '<nav id="page-nav"> ' + 
                 '   <span id="first-page-buttons">' + 
                 '       <img src="' + chrome.extension.getURL('images/') + 'nav-firstpage.png" id="nav-first-page" class="nav-button" />' + 
                 '       <img src="' + chrome.extension.getURL('images/') + 'nav-prevpage.png" id="nav-prev-page" class="nav-button" />' +
@@ -68,7 +68,7 @@ PageNavigator.prototype.writeNavigatorHtml = function() {
                 '       <img src="' + chrome.extension.getURL('images/') + 'nav-nextpage.png" id="nav-next-page" class="nav-button" />' + 
                 '       <img src="' + chrome.extension.getURL('images/') + 'nav-lastpage.png" id="nav-last-page" class="nav-button" />' +
                 '   </span>' +
-               '</div>';
+               '</nav>';
 
     // Add the navigator to the DOM
     jQuery('#container').append(html);
@@ -76,7 +76,7 @@ PageNavigator.prototype.writeNavigatorHtml = function() {
     var navigatorWidth = (this.pageCount > 100) ? 187 : 180;
 
     // Setup page nav CSS
-    jQuery('#page-nav').css({'width': navigatorWidth + 'px'});
+    jQuery('nav#page-nav').css({'width': navigatorWidth + 'px'});
 };
 
 PageNavigator.prototype.selectPage = function(page_number) {
@@ -123,4 +123,12 @@ PageNavigator.prototype.bindButtonEvents = function() {
         jQuery('#nav-last-page').css('opacity', '0.5');
         jQuery('#nav-next-page').css('opacity', '0.5');
     }
+};
+
+PageNavigator.prototype.display = function() {
+    jQuery('nav#page-nav').addClass('displayed');
+};
+
+PageNavigator.prototype.hide = function() {
+    jQuery('nav#page-nav').removeClass('displayed');
 };

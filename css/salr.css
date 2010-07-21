@@ -15,17 +15,22 @@ div.qne_warn h4 {
     background: url('http://fi.somethingawful.com/images/warning.gif') no-repeat left; 
 }
 
-div#page-nav {
+nav#page-nav {
     background: #006699;
     float: right;
     position: fixed;
-    bottom: 0px;
+    bottom: -50px;
     right: 10px;
     padding-bottom: 2px;
     padding-left: 4px;
-    -webkit-box-shadow: #000000 -1px -1px 12px;
     border-top-left-radius: 6px 6px;
     border-top-right-radius: 6px 6px;
+    -webkit-box-shadow: #000000 0px 0px 12px;
+    -webkit-transition: -webkit-transform 0.25s ease-out;
+}
+
+nav.displayed {
+    -webkit-transform: translateY(-50px);
 }
 
 img.nav-button {
