@@ -117,7 +117,7 @@ HotKeyManager.prototype.findFirstUnreadPost = function() {
     // Get postid from anchor in URL
     anchor_post = window.location.href.split('#post')[1];
     if (!isNaN(anchor_post)) {
-        var pti = jQuery('table#post'+anchor_post+' tr:first').attr('id').split(
+        var pti = jQuery('table#post'+anchor_post+' tr:first').attr('id').split('pti')[1];
         if (!isNaN(pti))
             return pti-1;
     }
