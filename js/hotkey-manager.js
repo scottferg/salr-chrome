@@ -108,18 +108,9 @@ HotKeyManager.prototype.findFirstUnreadPost = function() {
     var index = 0;
     var count = 0;
 
-    // Get post number on page from anchor in URL
     var anchor_post = window.location.href.split('#pti')[1];
     if (!isNaN(anchor_post)) {
         return anchor_post-1;
-    }
-
-    // Get postid from anchor in URL
-    anchor_post = window.location.href.split('#post')[1];
-    if (!isNaN(anchor_post)) {
-        var pti = jQuery('table#post'+anchor_post+' tr:first').attr('id').split(
-        if (!isNaN(pti))
-            return pti-1;
     }
 
     // Check if the user has the "Show an icon next to each post indicating if
