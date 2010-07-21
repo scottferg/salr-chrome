@@ -150,8 +150,8 @@ HotKeyManager.prototype.nextPost = function() {
     var post = jQuery('div#thread > table.post');
     var previous_post = post.eq(this.current_post - 1);
     var current_post = post.eq(this.current_post);
-    previous_post.css('border', '1px solid #c1c1c1');
-    current_post.css('border', '2px dashed #aaa');
+    previous_post.removeClass('selected-post');
+    current_post.addClass('selected-post');
 
     jQuery(window).scrollTop(current_post.offset().top);
 };
@@ -168,8 +168,8 @@ HotKeyManager.prototype.previousPost = function() {
     var post = jQuery('div#thread > table.post');
     var previous_post = post.eq(this.current_post + 1);
     var current_post = post.eq(this.current_post);
-    previous_post.css('border', '1px solid #c1c1c1');
-    current_post.css('border', '2px dashed #aaa');
+    previous_post.removeClass('selected-post');
+    current_post.addClass('selected-post');
 
     jQuery(window).scrollTop(current_post.offset().top);
 };
@@ -184,11 +184,12 @@ HotKeyManager.prototype.firstPost = function() {
 
     if (this.current_post > 0) {
         var previous_post = post.eq(this.current_post);
-        previous_post.css('border', '1px solid #c1c1c1');
 
         this.current_post=0;
         current_post = post.eq(this.current_post);
-        current_post.css('border', '2px dashed #aaa');
+
+        previous_post.removeClass('selected-post');
+        current_post.addClass('selected-post');
     }
 
     jQuery(window).scrollTop(current_post.offset().top);
@@ -204,11 +205,12 @@ HotKeyManager.prototype.lastPost = function() {
 
     if (this.current_post < this.thread_post_size-1) {
         var previous_post = post.eq(this.current_post);
-        previous_post.css('border', '1px solid #c1c1c1');
 
         this.current_post=this.thread_post_size-1;
         current_post = post.eq(this.current_post);
-        current_post.css('border', '2px dashed #aaa');
+
+        previous_post.removeClass('selected-post');
+        current_post.addClass('selected-post');
     }
 
     jQuery(window).scrollTop(current_post.offset().top);
@@ -222,7 +224,7 @@ HotKeyManager.prototype.anchorThread = function() {
     }
 
     var post = jQuery('div#thread > table.post').eq(this.current_post);
-    post.css('border', '2px dashed #aaa');
+    post.addClass('selected-post');
 
     jQuery(window).scrollTop(post.offset().top);
 };

@@ -43,3 +43,7 @@ select#number-drop-down {
     position: relative;
     top: -2px;
 }
+
+table.selected-post {
+    -webkit-box-shadow: orange 0px 0px 15px;
+}
