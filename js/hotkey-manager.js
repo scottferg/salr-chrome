@@ -143,10 +143,6 @@ HotKeyManager.prototype.nextPost = function() {
         return;
     }
 
-    if (this.current_post < (this.thread_post_size - 1)) {
-        this.current_post++;
-    }
-
     var post = jQuery('div#thread > table.post');
     var previous_post = post.eq(this.current_post - 1);
     var current_post = post.eq(this.current_post);
@@ -154,6 +150,10 @@ HotKeyManager.prototype.nextPost = function() {
     current_post.addClass('selected-post');
 
     jQuery(window).scrollTop(current_post.offset().top);
+
+    if (this.current_post < (this.thread_post_size - 1)) {
+        this.current_post++;
+    }
 };
 
 HotKeyManager.prototype.previousPost = function() {
