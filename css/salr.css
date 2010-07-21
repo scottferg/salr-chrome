@@ -25,7 +25,7 @@ nav#page-nav {
     padding-left: 4px;
     border-top-left-radius: 6px 6px;
     border-top-right-radius: 6px 6px;
-    -webkit-box-shadow: #000000 -1px -1px 12px;
+    -webkit-box-shadow: #000000 0px 0px 12px;
     -webkit-transition: -webkit-transform 0.25s ease-out;
 }
 
