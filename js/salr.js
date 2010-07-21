@@ -142,6 +142,8 @@ port.onMessage.addListener(function(data) {
             break;
     }
 
+    pageNavigator.display();
+
     if (settings.enableMouseGestures == 'true') {
         mouseGesturesController = new MouseGesturesController();
     }
