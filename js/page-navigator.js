@@ -76,24 +76,7 @@ PageNavigator.prototype.writeNavigatorHtml = function() {
     var navigatorWidth = (this.pageCount > 100) ? 187 : 180;
 
     // Setup page nav CSS
-    jQuery('#page-nav').css({'background': '#006699',
-                             'width': navigatorWidth + 'px',
-                             'float': 'right',
-                             'position': 'fixed',
-                             'bottom': '0px',
-                             'right': '10px',
-                             'padding-bottom': '2px',
-                             'padding-left': '4px',
-	                         '-webkit-box-shadow': '#000000 -1px -1px 12px',
-	                         'border-top-left-radius': '6px 6px',
-	                         'border-top-right-radius': '6px 6px'});
-
-    // Set styles for buttons and inputs
-    jQuery('.nav-button').css({'position': 'relative',
-                               'top': '4px',
-                               'cursor': 'pointer'});
-
-    jQuery('select#number-drop-down').css({'position': 'relative', 'top': '-2px'});
+    jQuery('#page-nav').css({'width': navigatorWidth + 'px'});
 };
 
 PageNavigator.prototype.selectPage = function(page_number) {
