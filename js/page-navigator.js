@@ -74,7 +74,7 @@ PageNavigator.prototype.writeNavigatorHtml = function() {
     // Add the navigator to the DOM
     jQuery('#container').append(html);
 
-    var navigatorWidth = (this.pageCount > 100) ? 211 : 204;
+    var navigatorWidth = (this.pageCount > 100) ? 219 : 212;
 
     // Setup page nav CSS
     jQuery('nav#page-nav').css({'width': navigatorWidth + 'px'});
