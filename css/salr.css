@@ -1,3 +1,40 @@
-div.qne_warn { padding:0.5em; color:#333; margin:1em 0; border:1px blue solid; }
-div.qne_warn { background:#de94d6; }
-div.qne_warn h4 { margin:0; padding-left:16px; background:url('http://fi.somethingawful.com/images/warning.gif') no-repeat left; }
+div.qne_warn { 
+    padding: 0.5em; 
+    color: #333; 
+    margin: 1em 0; 
+    border: 1px blue solid; 
+}
+
+div.qne_warn { 
+    background: #de94d6; 
+}
+
+div.qne_warn h4 { 
+    margin: 0; 
+    padding-left: 16px; 
+    background: url('http://fi.somethingawful.com/images/warning.gif') no-repeat left; 
+}
+
+div#page-nav {
+    background: #006699;
+    float: right;
+    position: fixed;
+    bottom: 0px;
+    right: 10px;
+    padding-bottom: 2px;
+    padding-left: 4px;
+    -webkit-box-shadow: #000000 -1px -1px 12px;
+    border-top-left-radius: 6px 6px;
+    border-top-right-radius: 6px 6px;
+}
+
+img.nav-button {
+    position: relative;
+    top: 4px;
+    cursor: pointer;
+}
+
+select#number-drop-down {
+    position: relative;
+    top: -2px;
+}
