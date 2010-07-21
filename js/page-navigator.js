@@ -67,13 +67,14 @@ PageNavigator.prototype.writeNavigatorHtml = function() {
                 '   <span id="last-page-buttons">' +
                 '       <img src="' + chrome.extension.getURL('images/') + 'nav-nextpage.png" id="nav-next-page" class="nav-button" />' + 
                 '       <img src="' + chrome.extension.getURL('images/') + 'nav-lastpage.png" id="nav-last-page" class="nav-button" />' +
+                '       <img src="' + chrome.extension.getURL('images/') + 'lastpost.png" id="nav-last-post" class="nav-button" />' +
                 '   </span>' +
                '</nav>';
 
     // Add the navigator to the DOM
     jQuery('#container').append(html);
 
-    var navigatorWidth = (this.pageCount > 100) ? 187 : 180;
+    var navigatorWidth = (this.pageCount > 100) ? 211 : 204;
 
     // Setup page nav CSS
     jQuery('nav#page-nav').css({'width': navigatorWidth + 'px'});
@@ -123,6 +124,12 @@ PageNavigator.prototype.bindButtonEvents = function() {
         jQuery('#nav-last-page').css('opacity', '0.5');
         jQuery('#nav-next-page').css('opacity', '0.5');
     }
+
+    jQuery('#nav-last-post').click(function() {
+        var post = jQuery('div#thread > table.post').eq(findFirstUnreadPost());
+
+        jQuery(window).scrollTop(post.offset().top);
+    });
 };
 
 PageNavigator.prototype.display = function() {
