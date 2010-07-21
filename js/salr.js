@@ -24,8 +24,8 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 var settings = {};
-var pageNavigator = {};
-var quickReply = {};
+var pageNavigator = null;
+var quickReply = null;
 var mouseGesturesController = {};
 
 /**
@@ -142,7 +142,9 @@ port.onMessage.addListener(function(data) {
             break;
     }
 
-    pageNavigator.display();
+    if (pageNavigator) {
+        pageNavigator.display();
+    }
 
     if (settings.enableMouseGestures == 'true') {
         mouseGesturesController = new MouseGesturesController();

@@ -200,7 +200,9 @@ QuickReplyBox.prototype.show = function() {
 
 QuickReplyBox.prototype.hide = function() {
     jQuery('#side-bar').first().hide();
-    pageNavigator.display();
+    if (pageNavigator) {
+        pageNavigator.display();
+    }
     jQuery('#quick-reply').hide("slow");
     jQuery('#post-message').val('');
     this.quickReplyState.expanded = false;
@@ -230,9 +232,6 @@ QuickReplyBox.prototype.appendText = function(text) {
 };
 
 QuickReplyBox.prototype.appendQuote = function(username, quote) {
-
-    console.log(username);
-    console.log(quote);
 
     username = username || false;
     quote = this.parseQuote(quote) || false;
@@ -338,7 +337,9 @@ QuickReplyBox.prototype.toggleView = function() {
         if(this.quickReplyState.sidebar_visible) {
             jQuery('#side-bar').animate( { left: '-=200px' }, 500, function() {
                 that.quickReplyState.sidebar_visible = null;
-                pageNavigator.display();
+                if (pageNavigator) {
+                    pageNavigator.display();
+                }
                 hideBox();
             });
         } else {
@@ -387,7 +388,9 @@ QuickReplyBox.prototype.toggleSidebar = function(element) {
     // If no sidebar is open, open it
     if ((this.quickReplyState.sidebar_visible) && (this.quickReplyState.sidebar_visible == element.attr('id'))) {
         side_bar.animate( { left: '-=200px' } );
-        pageNavigator.display();
+        if (pageNavigator) {
+            pageNavigator.display();
+        }
         this.quickReplyState.sidebar_visible = false;
     } else if ((this.quickReplyState.sidebar_visible) && (this.quickReplyState.sidebar_visible != element.attr('id'))) {
         side_bar.animate( { left: '-=200px' }, 500, function() {
@@ -398,7 +401,9 @@ QuickReplyBox.prototype.toggleSidebar = function(element) {
     } else {
         populate_method.call(this);
         side_bar.animate( { left: '+=200px' } );
-        pageNavigator.hide();
+        if (pageNavigator) {
+            pageNavigator.hide();
+        }
         this.quickReplyState.sidebar_visible = element.attr('id');
     }
 
