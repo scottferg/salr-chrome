@@ -543,16 +543,17 @@ function renderOpenUpdatedThreadsButton() {
 
         // Open all updated threads in tabs
         jQuery('#open-updated-threads').click( function() {
-            var updatedThreads = document.evaluate('.//*[contains(@class,"count")]', 
-                                                   document, 
-                                                   null, 
-                                                   XPathResult.ANY_TYPE, 
-                                                   null);
-
-            while (thread = updatedThreads.iterateNext()) {
-                port.postMessage({ 'message': 'OpenTab',
-                                   'url'  : thread.href });
-            }
+            jQuery('tr.thread').each( function() {
+                var img_split = jQuery('td.star > img', this).attr('src').split('/');
+                var img_name = img_split[img_split.length-1];
+                if (settings.ignore_bookmark_star != img_name) {
+                    if (jQuery('a[class*=count]', this).length > 0) {
+                        var href = jQuery('a[class*=count]', this).attr('href');
+                        port.postMessage({ 'message': 'OpenTab',
+                                           'url'  : 'http://forums.somethingawful.com'+href });
+                    }
+                }
+            });
         });
     });
 }

@@ -67,6 +67,11 @@ jQuery(document).ready(function() {
         populateCheckboxes(jQuery(this));
     });
 
+    // Initialize drop down menus
+    jQuery('div.display-preference select').each(function() {
+        populateDropDownMenus(jQuery(this));
+    });
+
     // Setup color picker handles on the text boxes
 	jQuery('.color-select-text').ColorPicker({
             onSubmit: function(hsb, hex, rgb, el) {
@@ -193,6 +198,23 @@ function populateCheckboxes(element) {
     if (value == 'true') {
         element.attr('checked', true);
     }
+}
+
+/**
+ * Populates any drop down menus with their stored value
+ *
+ * @param element - Input (select) element
+ *
+ */
+function populateDropDownMenus(element) {
+    var value = localStorage.getItem(element.attr('id'));
+
+    // Make sure we're getting passed a checkbox
+    if (element.attr('type') != 'select-one')
+        return;
+
+    // Set the selected value to the one from LocalStorage
+    element.val(value);
 }
 
 /**
