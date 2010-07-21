@@ -869,7 +869,7 @@ function findThreadID() {
  */
 function bindQuickReply() {
     jQuery('a > img[alt="Quote"]').each(function() {
-        jQuery(this).parent().attr('href', 'javascript:void();');
+        jQuery(this).parent().attr('href', 'javascript:;');
 
         var parentTable = jQuery(this).parent().parent().parent().parent().parent().parent().parent();
 
