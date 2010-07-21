@@ -37,7 +37,7 @@ function HotKeyManager() {
     this.bindHotKeys();
 
     this.thread_post_size = jQuery('div#thread > table.post').size();
-    this.current_post = this.findFirstUnreadPost();
+    this.current_post = findFirstUnreadPost();
 }
 
 HotKeyManager.prototype.bindHotKeys = function() {
@@ -102,54 +102,6 @@ HotKeyManager.prototype.bindHotKeys = function() {
             }
         }
     });
-};
-
-HotKeyManager.prototype.findFirstUnreadPost = function() {
-    var index = 0;
-    var count = 0;
-
-    // Get post number on page from anchor in URL
-    var anchor_post = window.location.href.split('#pti')[1];
-    if (!isNaN(anchor_post)) {
-        return anchor_post-1;
-    }
-
-    // Get postid from anchor in URL
-    anchor_post = window.location.href.split('#post')[1];
-    if (!isNaN(anchor_post)) {
-        var pti = jQuery('table#post'+anchor_post+' tr:first').attr('id').split('pti')[1];
-        if (!isNaN(pti))
-            return pti-1;
-    }
-
-    // Check if the user has the "Show an icon next to each post indicating if
-    // it has been seen or not" option enabled for the forums
-    var use_setseen = (jQuery('td.postdate > a[href*=action=setseen]').length > 0);
-
-    jQuery('div#thread > table.post').each(function() {
-        if (use_setseen) {
-            // User has setseen icons enabled
-            var posticon_img = jQuery('img[src*=posticon]', this);
-
-            count++;
-            if (posticon_img.attr('src') == 'http://fi.somethingawful.com/style/posticon-seen.gif') {
-                index = count;
-            }
-        } else {
-            // User has read post coloring enabled
-            var post = jQuery('tr', this);
-
-            count++;
-            if (post.hasClass('seen1') || post.hasClass('seen2')) {
-                index = count;
-            }
-        }
-    });
-
-    if (index == this.thread_post_size) // All posts read
-        return index-1;
-
-    return index;
 };
 
 HotKeyManager.prototype.nextPage = function() {
