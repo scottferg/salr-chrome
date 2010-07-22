@@ -33,10 +33,9 @@ nav.displayed {
     -webkit-transform: translateY(-50px);
 }
 
-img.nav-button {
+a.nav-button {
     position: relative;
     top: 4px;
-    cursor: pointer;
 }
 
 select#number-drop-down {

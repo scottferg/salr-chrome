@@ -294,13 +294,13 @@ MouseGesturesController.prototype.topAction = function() {
 
 MouseGesturesController.prototype.rightAction = function() {
     if (this.is_enabled(this.rightAction)) {
-        jumpToPage(this.rootPageType, this.basePageID, this.currentPage + 1);
+        jumpToPage(buildUrl(this.rootPageType, this.basePageID, this.currentPage + 1));
     }
 };
 
 MouseGesturesController.prototype.leftAction = function() {
     if (this.is_enabled(this.leftAction)) {
-        jumpToPage(this.rootPageType, this.basePageID, this.currentPage - 1);
+        jumpToPage(buildUrl(this.rootPageType, this.basePageID, this.currentPage - 1));
     }
 };
 
