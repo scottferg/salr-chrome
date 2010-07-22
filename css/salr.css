@@ -29,6 +29,12 @@ nav#page-nav {
     -webkit-transition: -webkit-transform 0.25s ease-out;
 }
 
+div#nav-body {
+    position: relative;
+    left: 50%;
+    margin-left: -104px;
+}
+
 nav.displayed {
     -webkit-transform: translateY(-50px);
 }

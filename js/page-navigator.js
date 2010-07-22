@@ -51,6 +51,7 @@ PageNavigator.prototype.writeNavigatorHtml = function() {
     }
 
     var html = '<nav id="page-nav"> ' + 
+                '   <div id="nav-body">' +
                 '   <span id="first-page-buttons">' + 
                 '       <a class="nav-button" id="nav-first-page" href="#">' +
                 '           <img src="' + chrome.extension.getURL('images/') + 'nav-firstpage.png" />' + 
@@ -79,6 +80,7 @@ PageNavigator.prototype.writeNavigatorHtml = function() {
                 '          <img src="' + chrome.extension.getURL('images/') + 'lastpost.png" />' +
                 '       </a>' + 
                 '   </span>' +
+                '   </div>' +
                '</nav>';
 
     // Add the navigator to the DOM
