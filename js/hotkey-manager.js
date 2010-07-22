@@ -116,7 +116,7 @@ HotKeyManager.prototype.nextPage = function() {
             if (this.currentPage <= 0)
                 this.currentPage = 1;
             if (this.currentPage < this.pageCount)
-                jumpToPage(this.rootPageType, this.basePageID, this.currentPage + 1);
+                jumpToPage(buildUrl(this.rootPageType, this.basePageID, this.currentPage + 1));
             break;
     }
 };
@@ -133,7 +133,7 @@ HotKeyManager.prototype.previousPage = function() {
             if (this.currentPage <= 0)
                 this.currentPage = 1;
             if (this.currentPage > 1)
-                jumpToPage(this.rootPageType, this.basePageID, this.currentPage - 1);
+                jumpToPage(buildUrl(this.rootPageType, this.basePageID, this.currentPage - 1));
             break;
     }
 };

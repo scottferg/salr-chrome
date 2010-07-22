@@ -76,6 +76,10 @@ function countPages() {
     return Number(result);
 }
 
+function buildUrl(rootPageType, basePageID, page) {
+    return 'http://forums.somethingawful.com/' + findCurrentPage() + '?' + rootPageType + '=' + basePageID + '&pagenumber=' + page;
+}
+
 /**
  * Jumps the user to the specified page
  *
@@ -84,8 +88,8 @@ function countPages() {
  * @param page - Page number to jump to
  *
  */
-function jumpToPage(rootPageType, basePageID, page) {
-    location.href = 'http://forums.somethingawful.com/' + findCurrentPage() + '?' + rootPageType + '=' + basePageID + '&pagenumber=' + page;
+function jumpToPage(url) {
+    location.href = url;
 }
 
 function findFirstUnreadPost() {
