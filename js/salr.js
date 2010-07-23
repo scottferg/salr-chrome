@@ -110,6 +110,8 @@ port.onMessage.addListener(function(data) {
                     bindQuickReply();
                 }
             }
+            
+            threadNotes();
 
             renderWhoPostedInThreadLink();
 
@@ -923,4 +925,74 @@ function quoteNotEditProtection() {
         }
     }
     
+}
+
+function threadNotes() {
+    if(jQuery("#container").data('showThreadNotes'))
+    	return true;
+    jQuery('#container').data('showThreadNotes', true);
+    
+    var notes;
+    console.log(settings.threadNotes);
+    if(settings.threadNotes == null)
+    {
+       	notes = new Object();
+       	port.postMessage({
+			'message': 'ChangeSetting',
+			'option': 'threadNotes',
+			'value': JSON.stringify(notes)
+		});
+    }
+    else {
+    	notes = JSON.parse(settings.threadNotes);
+    }
+    var basePageID = findForumID();
+    var hasNote = notes[String(basePageID)] != null;
+    
+    var notesHTML = '<nav id="threadnotes"> ' +
+                    '   <div id="threadnotes-body">' +
+                    '       <span><a id="threadnotes-show">Show thread notes</a></span>' +
+                    '   </div>' +
+                    '</nav>';
+    jQuery("#container").append(notesHTML);
+    jQuery("#threadnotes").addClass('displayed');
+    jQuery("#threadnotes-show").css({
+        'background': 'url("' + chrome.extension.getURL('images/') + 'note.png") no-repeat left center'
+    });
+    
+    jQuery('body').append("<div id='salr-threadnotes-config' title='Thread notes' style='display:none'>"+
+    	"<fieldset>"+
+    		"<p><label for='salr-threadnotes-text'><strong>Notes:</strong></label><br /><textarea id='salr-threadnotes-text' rows='5' cols='10'></textarea></p>"+
+    	"</fieldset>"+
+    "</div>");
+    
+    jQuery("#threadnotes-show").click(function(){
+    	jQuery('#salr-threadnotes-config').dialog({
+    		open: function(event, ui){
+    			jQuery('#salr-threadnotes-text').val(hasNote ? notes[basePageID] : '');
+    		},
+    		buttons: {
+    			"Save" : function() {
+    				notes[String(basePageID)] = jQuery('#salr-threadnotes-text').val();
+    				port.postMessage({ 'message': 'ChangeSetting',
+                                       'option' : 'threadNotes',
+                                       'value'  : JSON.stringify(notes) });
+    				
+    				jQuery(this).dialog('destroy');
+
+    				hasNote = true;
+ 				},
+    			"Delete": function() { 
+    				delete notes[String(basePageID)];
+    				port.postMessage({ 'message': 'ChangeSetting',
+                                       'option' : 'threadNotes',
+                                       'value'  : JSON.stringify(notes) });
+    				hasNote = false;
+
+    				jQuery(this).dialog('destroy');
+    			},
+    			"Cancel" : function() { jQuery(this).dialog('destroy');}
+    		}
+    	});
+    });
 }
