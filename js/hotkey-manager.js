@@ -85,6 +85,9 @@ HotKeyManager.prototype.bindHotKeys = function() {
                     // Jump to last post on the page
                     that.lastPost();
                     break;
+                case 115: /* s */
+                    that.toggleSignatures();
+                    break;
                 case 113:
                     // Quick quote current post
                     that.quoteCurrentPost();
@@ -234,6 +237,15 @@ HotKeyManager.prototype.anchorThread = function() {
     post.addClass('selected-post');
 
     jQuery(window).scrollTop(post.offset().top);
+};
+
+HotKeyManager.prototype.toggleSignatures = function() {
+    jQuery('p.signature').each(function() {
+        if (jQuery(this).css('display') == 'none')
+            jQuery(this).css('display','');
+        else
+            jQuery(this).css('display','none');
+    });
 };
 
 HotKeyManager.prototype.quoteCurrentPost = function() {

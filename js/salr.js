@@ -103,6 +103,8 @@ port.onMessage.addListener(function(data) {
             displayBanHistoryLink();
 
             displaySinglePostLink();
+            
+            hideSignatures();
 
             if (settings.enableQuickReply == 'true') {
                 if (settings.forumPostKey) {
@@ -923,4 +925,13 @@ function quoteNotEditProtection() {
         }
     }
     
+}
+
+/**
+ *  Hide signatures
+ **/
+function hideSignatures() {
+    jQuery('p.signature').each(function() {
+        jQuery(this).css('display','none');
+    });
 }
