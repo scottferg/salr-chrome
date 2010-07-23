@@ -111,7 +111,9 @@ port.onMessage.addListener(function(data) {
                 }
             }
             
-            threadNotes();
+            if (settings.enableThreadNotes == 'true') {
+                threadNotes();
+            }
 
             renderWhoPostedInThreadLink();
 
@@ -927,7 +929,19 @@ function quoteNotEditProtection() {
     
 }
 
+/**
+ *
+ *  Thread notes
+ *
+ *  Displys a widget for editing thread-specific notes.
+ *
+ *  @author Scott Lyons (Captain Capacitor)
+ **/
 function threadNotes() {
+    //  Only valid on thread pages
+    if(findCurrentPage() == 'forumdisplay.php')
+        return;
+        
     if(jQuery("#container").data('showThreadNotes'))
     	return true;
     jQuery('#container').data('showThreadNotes', true);
