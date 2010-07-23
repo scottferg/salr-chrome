@@ -25,3 +25,8 @@ div#threadnotes-body a {
     padding-left: 20px;
     margin-left: 3px;
 }
+
+#salr-threadnotes-text {
+    width: 150px;
+    height: 100px;
+}

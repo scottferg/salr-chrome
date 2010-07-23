@@ -35,6 +35,10 @@ function HotKeyManager() {
      R - Quick Reply current thread
     *******************/
     this.bindHotKeys();
+    
+    jQuery(document).data("enableSALRHotkeys", true);
+    jQuery(document).bind("enableSALRHotkeys", this.enableHotKeys);
+    jQuery(document).bind("disableSALRHotkeys", this.disableHotKeys);
 
     this.thread_post_size = jQuery('div#thread > table.post').size();
     this.current_post = findFirstUnreadPost();
@@ -45,14 +49,17 @@ HotKeyManager.prototype.bindHotKeys = function() {
 
     jQuery(document).keypress(function(event) {
         var quick_reply_block = false;
+        
+        if(!jQuery(document).data("enableSALRHotkeys"))
+            return;
 
-        if (findCurrentPage() == 'showthread.php') {
+        /*if (findCurrentPage() == 'showthread.php') {
             if (quickReply.isExpanded() || quickReply.isVisible()) {
                 quick_reply_block = true;
             }
         }
 
-        if (!quick_reply_block) {
+        if (!quick_reply_block) {*/
             switch(event.keyCode) {
                 case 110:
                     // Next post
@@ -100,8 +107,16 @@ HotKeyManager.prototype.bindHotKeys = function() {
                     that.hideQuickReply();
                     break;
             }
-        }
+        //}
     });
+};
+
+HotKeyManager.prototype.enableHotKeys = function() {
+    jQuery(document).data("enableSALRHotkeys", true);
+};
+
+HotKeyManager.prototype.disableHotKeys = function() {
+    jQuery(document).data("enableSALRHotkeys", false);
 };
 
 HotKeyManager.prototype.nextPage = function() {
@@ -120,6 +135,8 @@ HotKeyManager.prototype.nextPage = function() {
             break;
     }
 };
+
+
 
 HotKeyManager.prototype.previousPage = function() {
     this.pageCount = countPages();

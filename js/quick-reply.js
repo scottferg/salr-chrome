@@ -195,6 +195,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
 
 QuickReplyBox.prototype.show = function() {
     this.quickReplyState.expanded = true;
+    jQuery(document).trigger('disableSALRHotkeys');
     jQuery('#quick-reply').show("slow");
 };
 
@@ -203,6 +204,7 @@ QuickReplyBox.prototype.hide = function() {
     if (pageNavigator) {
         pageNavigator.display();
     }
+    jQuery(document).trigger('enableSALRHotkeys');
     jQuery('#quick-reply').hide("slow");
     jQuery('#post-message').val('');
     this.quickReplyState.expanded = false;
