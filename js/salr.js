@@ -960,9 +960,7 @@ function threadNotes() {
     });
     
     jQuery('body').append("<div id='salr-threadnotes-config' title='Thread notes' style='display:none'>"+
-    	"<fieldset>"+
-    		"<p><textarea id='salr-threadnotes-text' rows='5' cols='20'></textarea></p>"+
-    	"</fieldset>"+
+    	"<textarea id='salr-threadnotes-text' rows='5' cols='20' style='width: 274px;'></textarea>"+
     "</div>");
     
     jQuery("#threadnotes-show").click(function(){
