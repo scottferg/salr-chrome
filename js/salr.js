@@ -933,7 +933,6 @@ function threadNotes() {
     jQuery('#container').data('showThreadNotes', true);
     
     var notes;
-    console.log(settings.threadNotes);
     if(settings.threadNotes == null)
     {
        	notes = new Object();
@@ -962,13 +961,14 @@ function threadNotes() {
     
     jQuery('body').append("<div id='salr-threadnotes-config' title='Thread notes' style='display:none'>"+
     	"<fieldset>"+
-    		"<p><label for='salr-threadnotes-text'><strong>Notes:</strong></label><br /><textarea id='salr-threadnotes-text' rows='5' cols='10'></textarea></p>"+
+    		"<p><textarea id='salr-threadnotes-text' rows='5' cols='20'></textarea></p>"+
     	"</fieldset>"+
     "</div>");
     
     jQuery("#threadnotes-show").click(function(){
     	jQuery('#salr-threadnotes-config').dialog({
     		open: function(event, ui){
+    		    jQuery(document).trigger('disableSALRHotkeys');
     			jQuery('#salr-threadnotes-text').val(hasNote ? notes[basePageID] : '');
     		},
     		buttons: {
@@ -979,7 +979,7 @@ function threadNotes() {
                                        'value'  : JSON.stringify(notes) });
     				
     				jQuery(this).dialog('destroy');
-
+                    jQuery(document).trigger('enableSALRHotkeys');
     				hasNote = true;
  				},
     			"Delete": function() { 
@@ -988,10 +988,13 @@ function threadNotes() {
                                        'option' : 'threadNotes',
                                        'value'  : JSON.stringify(notes) });
     				hasNote = false;
-
+                    jQuery(document).trigger('enableSALRHotkeys');
     				jQuery(this).dialog('destroy');
     			},
-    			"Cancel" : function() { jQuery(this).dialog('destroy');}
+    			"Cancel" : function() { 
+    			    jQuery(this).dialog('destroy');
+    			    jQuery(document).trigger('enableSALRHotkeys');
+    			}
     		}
     	});
     });
