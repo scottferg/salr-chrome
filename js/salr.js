@@ -950,7 +950,7 @@ function threadNotes() {
     
     var notesHTML = '<nav id="threadnotes"> ' +
                     '   <div id="threadnotes-body">' +
-                    '       <span><a id="threadnotes-show">Show thread notes</a></span>' +
+                    '       <span><a id="threadnotes-show" style="color: #fff; text-shadow: #222 0px 1px 0px;">Show thread notes</a></span>' +
                     '   </div>' +
                     '</nav>';
     jQuery("#container").append(notesHTML);
