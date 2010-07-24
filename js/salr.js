@@ -792,7 +792,7 @@ function displayUserNotes() {
             });
         });
         // append a space to create a new text node which fixes spacing problems you'll get otherwise
-        jQuery('ul.profilelinks', this).append(editLink).append(' '); 
+        jQuery('ul.profilelinks', this).append(' ').append(editLink).append(' '); 
     });
 }
 
