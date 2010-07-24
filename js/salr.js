@@ -100,8 +100,6 @@ port.onMessage.addListener(function(data) {
                 highlightOwnQuotes();
             }
 
-            displayBanHistoryLink();
-
             displaySinglePostLink();
             
             hideSignatures();
@@ -493,25 +491,6 @@ function displaySinglePostLink() {
 
     jQuery('td.postdate').each( function() {
         jQuery('a[href^=#post]', this).before('<a href="http://forums.somethingawful.com/showthread.php?action=showpost&postid='+getPostID(jQuery(this))+'">1</a> ');
-    });
-}
-
-/**
- * Display Ban History link under a users post
- *
- *
- */
-function displayBanHistoryLink() {
-    
-    var getUserID = function(element) {
-        var queryString = jQuery('li:first > a', element).attr('href');
-
-        // Holy hardcore string manipulation, Batman!
-        return (queryString.split('&')[1]).split('=')[1];
-    };
-
-    jQuery('ul.profilelinks').each(function() {
-        jQuery(this).append('<li><a href="http://forums.somethingawful.com/banlist.php?userid=' + getUserID(jQuery(this)) + '">Ban History</a></li>');
     });
 }
 
