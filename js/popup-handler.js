@@ -114,7 +114,6 @@ function populateMenuHelper(forum, color, stuck) {
     var title = splitUp[2];
 
     // Add sticky controls to popup window
-    var sticky_ind='O';
     if (forum.sticky == true)
         subHTML += '<div style="float:left;cursor:pointer;overflow-x: hidden;"><img src="../images/sticky_on.gif" onClick="javascript:toggleSticky('+forum.id+')" id="sticky-'+forum.id+'" /></div>';
     else
