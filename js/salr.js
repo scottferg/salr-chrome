@@ -708,12 +708,26 @@ function highlightModAdminPosts() {
  */
 function updateForumsList() {
     var forums = new Array();
+
+    var stickyList = new Array();
+    if (settings.forumsList != null) {
+        var oldForums = JSON.parse(settings.forumsList);
+        for(i in oldForums) {
+            stickyList[oldForums[i].id] = oldForums[i].sticky;
+        }
+    }
+
     jQuery('select[name="forumid"]>option').each(function() {
         if (this.text == "Please select one:")
             return;
 
+        var sticky = false;
+        if (stickyList[this.value] == true)
+            sticky = true;
+
         forums.push({ 'name' : this.text,
-                       'id'  : this.value });
+                       'id'  : this.value,
+                       'sticky'  : sticky });
     });
 
     if (forums.length > 0) {
