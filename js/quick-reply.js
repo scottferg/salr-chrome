@@ -107,8 +107,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '           <input type="checkbox" name="parseurl" value="yes" checked>' +
                 '              <span class="post-options">Automatically parse URLs</span>' +
                 '           </input>' + 
-                // TODO: Make the "bookmark threads" default an option
-                '           <input type="checkbox" name="bookmark" value="yes">' + 
+                '           <input type="checkbox" id="quickReplyBookmark" name="bookmark" value="yes">' + 
                 '              <span class="post-options">Bookmark thread</span>' +
                 '           </input>' + 
                 '           <input type="checkbox" name="disablesmilies" value="yes">' + 
@@ -128,6 +127,10 @@ QuickReplyBox.prototype.create = function(username, quote) {
     // Only append it if we haven't already
     if (jQuery('#quick-reply').length == 0) {
         jQuery('body').append(html);
+    }
+
+    if (settings.quickReplyBookmark == 'true') {
+        jQuery('input#quickReplyBookmark').attr('checked', true);
     }
 
     jQuery('#dismiss-quick-reply').click(function() {
