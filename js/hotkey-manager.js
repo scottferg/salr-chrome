@@ -38,6 +38,7 @@ function HotKeyManager() {
 
     this.thread_post_size = jQuery('div#thread > table.post').size();
     this.current_post = findFirstUnreadPost();
+    this.first_keypress = true;
 }
 
 HotKeyManager.prototype.bindHotKeys = function() {
@@ -143,7 +144,9 @@ HotKeyManager.prototype.nextPost = function() {
         return;
     }
 
-    if (this.current_post < (this.thread_post_size - 1)) {
+    if (this.first_keypress) {
+        this.first_keypress = false;
+    } else if (this.current_post < (this.thread_post_size - 1)) {
         this.current_post++;
     }
 
@@ -161,6 +164,7 @@ HotKeyManager.prototype.previousPost = function() {
         return;
     }
 
+    this.first_keypress = false;
     if (this.current_post > 0) {
         this.current_post--;
     }
@@ -179,6 +183,7 @@ HotKeyManager.prototype.firstPost = function() {
         return;
     }
 
+    this.first_keypress = false;
     var post = jQuery('div#thread > table.post');
     var current_post = post.eq(this.current_post);
 
@@ -200,6 +205,7 @@ HotKeyManager.prototype.lastPost = function() {
         return;
     }
 
+    this.first_keypress = false;
     var post = jQuery('div#thread > table.post');
     var current_post = post.eq(this.current_post);
 
@@ -223,6 +229,7 @@ HotKeyManager.prototype.anchorThread = function() {
         return;
     }
 
+    this.first_keypress = false;
     var post = jQuery('div#thread > table.post').eq(this.current_post);
     post.addClass('selected-post');
 
