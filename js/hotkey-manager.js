@@ -93,7 +93,7 @@ HotKeyManager.prototype.bindHotKeys = function() {
                     that.lastPost();
                     break;
                 case 115: /* s */
-                    that.toggleSignatures();
+                    //that.toggleSignatures();
                     break;
                 case 113:
                     // Quick quote current post

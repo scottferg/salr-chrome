@@ -102,7 +102,7 @@ port.onMessage.addListener(function(data) {
 
             displaySinglePostLink();
             
-            hideSignatures();
+            //hideSignatures();
 
             if (settings.enableQuickReply == 'true') {
                 if (settings.forumPostKey) {
