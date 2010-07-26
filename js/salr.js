@@ -388,7 +388,33 @@ function modifyImages() {
 	}
 
 	if (settings.restrictImageSize == 'true') {
-		jQuery('.postbody img').css({'max-width':'800px'});
+		jQuery('.postbody img').each(function() {
+            var width = jQuery(this).width();
+            var height = jQuery(this).height();
+
+            console.log('Width: ' + width);
+            console.log('Height: ' + height);
+
+            jQuery(this).click(function() {
+                console.log('Clicked!');
+                console.log('Width: ' + jQuery(this).width());
+
+                if (jQuery(this).width() == '800') {
+                    jQuery(this).css({
+                        'max-width': width + 'px',
+                    });
+                } else {
+                    jQuery(this).css({'max-width': '800px'});
+                }
+            });
+
+            if (jQuery(this).width() > '800') {
+                jQuery(this).css({
+                    'max-width': '800px',
+                    'border': '1px dashed gray'
+                });
+            }
+        });
 	}
 }
 
