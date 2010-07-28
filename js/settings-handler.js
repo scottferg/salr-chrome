@@ -29,7 +29,7 @@
  */
 jQuery(document).ready(function() {
     // Initialize text entry fields
-    jQuery('.username-field > input.text-entry').each(function() {
+    jQuery('input.text-entry').each(function() {
         // Pre-populate settings field
         populateValues(jQuery(this));
 
@@ -42,34 +42,28 @@ jQuery(document).ready(function() {
         jQuery(this).blur(function() {
             onInputDeselect(jQuery(this));
         });
-    });
-  
-    // Initialize color entry fields
-	//
-	// I'd really rather not do the exact same thing twice, but potentially
-	// this functionality could differ from the username field, so it's
-	// probably the better approach for the future.
-    jQuery('section.settings-panel > div.settings-group > div.color-preference > div.color-select-input > input.color-select-text').each(function() {
-        populateValues(jQuery(this));
-        // Set focus handler for the entry fields
-        jQuery(this).focus(function() {
-            onInputSelect(jQuery(this));
-        });
-        
-        // Set blur handler for the entry fields
-        jQuery(this).blur(function() {
-            onInputDeselect(jQuery(this));
+
+        jQuery(this).change(function() {
+            localStorage.setItem(jQuery(this).attr('id'), jQuery(this).val());
         });
     });
 
     // Initialize checkbox fields
     jQuery('div.display-preference input').each(function() {
         populateCheckboxes(jQuery(this));
+
+        jQuery(this).click(function() {
+            localStorage.setItem(jQuery(this).attr('id'), jQuery(this).attr('checked'));
+        });
     });
 
     // Initialize drop down menus
     jQuery('div.display-preference select').each(function() {
         populateDropDownMenus(jQuery(this));
+
+        jQuery(this).change(function() {
+            localStorage.setItem(jQuery(this).attr('id'), jQuery(this).val());
+        });
     });
 
     // Setup color picker handles on the text boxes
