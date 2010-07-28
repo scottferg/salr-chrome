@@ -148,6 +148,12 @@ port.onMessage.addListener(function(data) {
             }
 
             break;
+        case 'misc.php':
+            if (window.location.href.indexOf('action=whoposted') >= 0) {
+                highlightModAdminPosts();
+            }
+
+        break;
     }
 
     if (pageNavigator) {
@@ -640,13 +646,53 @@ function highlightOwnPosts() {
  * Highlight the posts by moderators and admins
  */
 function highlightModAdminPosts() {
-    if (settings.modList != null) {
-        var modList = JSON.parse(settings.modList);
+    switch (findCurrentPage()) {
+        case 'forumdisplay.php':
+            highlightModAdminForumDisplay();
+            break;
+        case 'showthread.php':
+            highlightModAdminShowThread();
+            break;
+        case 'misc.php':
+            highlightModAdminWhoPosted();
+            break;
+    }
+}
 
-        // Highlight mods and admin thread OPs on forumdisplay.php
-        jQuery('td.author > a').each(function() {
-            var userid = jQuery(this).attr('href').split('userid=')[1];
-            if (modList[userid] != null) {
+/**
+ * Highlight the posts by moderators and admins
+ * on the forum display page
+ */
+function highlightModAdminForumDisplay() {
+    if (settings.modList == null)
+        return;
+
+    var modList = JSON.parse(settings.modList);
+
+    // Highlight mods and admin thread OPs on forumdisplay.php
+    jQuery('td.author > a').each(function() {
+        var userid = jQuery(this).attr('href').split('userid=')[1];
+        if (modList[userid] != null) {
+            var color;
+            switch (modList[userid].mod) {
+                case 'M':
+                    color = settings.highlightModeratorColor;
+                    break;
+                case 'A':
+                    color = settings.highlightAdminColor;
+                    break;
+            }
+            jQuery(this).css('color', color);
+            jQuery(this).css('font-weight', 'bold');
+        }
+    });
+
+    // Highlight mod and admin last posters on forumdisplay.php
+    jQuery('td.lastpost > a.author').each(function() {
+        var username = jQuery(this).html();
+        // No userid in this column so we have to loop
+        for(userid in modList) {
+            if (username == modList[userid].username) {
                 var color;
                 switch (modList[userid].mod) {
                     case 'M':
@@ -658,32 +704,17 @@ function highlightModAdminPosts() {
                 }
                 jQuery(this).css('color', color);
                 jQuery(this).css('font-weight', 'bold');
+                break;
             }
-        });
+        }
+    });
+}
 
-        // Highlight mod and admin last posters on forumdisplay.php
-        jQuery('td.lastpost > a.author').each(function() {
-            var username = jQuery(this).html();
-            // No userid in this column so we have to loop
-            for(userid in modList) {
-                if (username == modList[userid].username) {
-                    var color;
-                    switch (modList[userid].mod) {
-                        case 'M':
-                            color = settings.highlightModeratorColor;
-                            break;
-                        case 'A':
-                            color = settings.highlightAdminColor;
-                            break;
-                    }
-                    jQuery(this).css('color', color);
-                    jQuery(this).css('font-weight', 'bold');
-                    break;
-                }
-            }
-        });
-    }
-
+/**
+ * Highlight the posts by moderators and admins
+ * on the thread display page
+ */
+function highlightModAdminShowThread() {
     if (settings.highlightModAdminUsername != "true") {
         jQuery('table.post:has(dt.author:has(img[title="Moderator"])) td').each(function () {
             jQuery(this).css({
@@ -706,6 +737,34 @@ function highlightModAdminPosts() {
             jQuery(this).parent().css('color', settings.highlightAdminColor);
         });
     }
+}
+
+/**
+ * Highlight the posts by moderators and admins
+ * on the who posted page
+ */
+function highlightModAdminWhoPosted() {
+    if (settings.modList == null)
+        return;
+
+    var modList = JSON.parse(settings.modList);
+
+    jQuery('a[href*=member.php]').each(function() {
+        var userid = jQuery(this).attr('href').split('userid=')[1];
+        if (modList[userid] != null) {
+            var color;
+            switch (modList[userid].mod) {
+                case 'M':
+                    color = settings.highlightModeratorColor;
+                    break;
+                case 'A':
+                    color = settings.highlightAdminColor;
+                    break;
+            }
+            jQuery(this).css('color', color);
+            jQuery(this).css('font-weight', 'bold');
+        }
+    });
 }
 
 /**
