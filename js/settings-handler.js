@@ -105,9 +105,6 @@ jQuery(document).ready(function() {
 	}).click(function() {
 		onParentOptionSelect(jQuery(this));
 	});
-	    
-    // Setup menu tabs
-    jQuery('#tabs').tabs();
 });
 
 /**
@@ -212,9 +209,11 @@ function populateDropDownMenus(element) {
     // Make sure we're getting passed a checkbox
     if (element.attr('type') != 'select-one')
         return;
+    if (value == null)
+        value = '';
 
     // Set the selected value to the one from LocalStorage
-    element.val(value);
+    jQuery('option[value="' + value + '"]', element).first().attr('selected', 'selected');
 }
 
 /**
