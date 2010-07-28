@@ -59,7 +59,6 @@ function findForumID() {
 function findRealForumID() {
     var crumb = jQuery('div.breadcrumbs:first a[href*=forumid]:last');
     var forumid = crumb.attr('href').split('forumid=')[1];
-    alert(forumid);
     return forumid;
 }
 
