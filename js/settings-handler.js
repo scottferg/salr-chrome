@@ -87,7 +87,13 @@ jQuery(document).ready(function() {
 
     // Initialize drop down menus
     jQuery('div.display-preference select').each(function() {
+        var that = this;
+
         populateDropDownMenus(jQuery(this));
+
+        jQuery(this).change(function() {
+            localStorage.setItem(jQuery(that).attr('id'), jQuery(that).val());
+        });
     });
 
     // Setup color picker handles on the text boxes
