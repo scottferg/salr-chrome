@@ -53,6 +53,17 @@ function findForumID() {
 }
 
 /**
+ * Gets the current forum ID even when inside a thread
+ *
+ */
+function findRealForumID() {
+    var crumb = jQuery('div.breadcrumbs:first a[href*=forumid]:last');
+    var forumid = crumb.attr('href').split('forumid=')[1];
+    alert(forumid);
+    return forumid;
+}
+
+/**
  * Count the total number of pages to display in page navigator
  *
  */
