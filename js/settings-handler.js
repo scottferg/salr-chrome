@@ -64,7 +64,13 @@ jQuery(document).ready(function() {
 
     // Initialize checkbox fields
     jQuery('div.display-preference input').each(function() {
+        var that = this;
+
         populateCheckboxes(jQuery(this));
+
+        jQuery(this).click(function() {
+            localStorage.setItem(jQuery(that).attr('id'), jQuery(that).attr('checked'));
+        });
     });
 
     // Initialize drop down menus
