@@ -648,6 +648,8 @@ function highlightOwnPosts() {
 function highlightModAdminPosts() {
     switch (findCurrentPage()) {
         case 'forumdisplay.php':
+        case 'usercp.php':
+        case 'bookmarkthreads.php':
             highlightModAdminForumDisplay();
             break;
         case 'showthread.php':
