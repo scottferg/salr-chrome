@@ -30,8 +30,6 @@
 jQuery(document).ready(function() {
     // Initialize text entry fields
     jQuery('input.text-entry').each(function() {
-        var that = this;
-
         // Pre-populate settings field
         populateValues(jQuery(this));
 
@@ -46,29 +44,25 @@ jQuery(document).ready(function() {
         });
 
         jQuery(this).change(function() {
-            localStorage.setItem(jQuery(that).attr('id'), jQuery(that).val());
+            localStorage.setItem(jQuery(this).attr('id'), jQuery(this).val());
         });
     });
 
     // Initialize checkbox fields
     jQuery('div.display-preference input').each(function() {
-        var that = this;
-
         populateCheckboxes(jQuery(this));
 
         jQuery(this).click(function() {
-            localStorage.setItem(jQuery(that).attr('id'), jQuery(that).attr('checked'));
+            localStorage.setItem(jQuery(this).attr('id'), jQuery(this).attr('checked'));
         });
     });
 
     // Initialize drop down menus
     jQuery('div.display-preference select').each(function() {
-        var that = this;
-
         populateDropDownMenus(jQuery(this));
 
         jQuery(this).change(function() {
-            localStorage.setItem(jQuery(that).attr('id'), jQuery(that).val());
+            localStorage.setItem(jQuery(this).attr('id'), jQuery(this).val());
         });
     });
 
