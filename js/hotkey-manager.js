@@ -160,7 +160,7 @@ HotKeyManager.prototype.previousPage = function() {
 };
 
 HotKeyManager.prototype.nextPost = function() {
-    if (!findCurrentPage() == 'showthread.php') {
+    if (findCurrentPage() != 'showthread.php') {
         return;
     }
 
@@ -180,7 +180,7 @@ HotKeyManager.prototype.nextPost = function() {
 };
 
 HotKeyManager.prototype.previousPost = function() {
-    if (!findCurrentPage() == 'showthread.php') {
+    if (findCurrentPage() != 'showthread.php') {
         return;
     }
 
@@ -199,7 +199,7 @@ HotKeyManager.prototype.previousPost = function() {
 };
 
 HotKeyManager.prototype.firstPost = function() {
-    if (!findCurrentPage() == 'showthread.php') {
+    if (findCurrentPage() != 'showthread.php') {
         return;
     }
 
@@ -221,7 +221,7 @@ HotKeyManager.prototype.firstPost = function() {
 };
 
 HotKeyManager.prototype.lastPost = function() {
-    if (!findCurrentPage() == 'showthread.php') {
+    if (findCurrentPage() != 'showthread.php') {
         return;
     }
 
@@ -243,7 +243,7 @@ HotKeyManager.prototype.lastPost = function() {
 };
 
 HotKeyManager.prototype.anchorThread = function() {
-    if (!findCurrentPage() == 'showthread.php') {
+    if (findCurrentPage() != 'showthread.php') {
         return;
     } else if (this.current_post == -1) {
         return;
