@@ -238,3 +238,24 @@ function onSubmitClicked() {
 	
     window.close();
 }
+
+/**
+ * Dump the localStorage entries to a new window.
+ *
+ */
+function configWindow() {
+    win = window.open('background.html','config');
+    win.document.writeln('<html><body><h1>SALR Configuration</h1>');
+    win.document.writeln('<table border="1">');
+    win.document.writeln('<tr><th>Key</th><th>Value</th></tr>');
+    for (var key in localStorage) {
+        if (key == 'forumsList')
+            continue;
+        if (key == 'modList')
+            continue;
+        win.document.write('<tr><td>'+key+'</td>');
+        win.document.writeln('<td>'+localStorage[key]+'</td></tr>');
+    }
+    win.document.writeln('</table></body></html>');
+    win.document.close();
+}
