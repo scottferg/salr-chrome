@@ -115,6 +115,10 @@ port.onMessage.addListener(function(data) {
                 threadNotes();
             }
 
+            if (settings.searchThreadHide != 'true') {
+                addSearchThreadForm();
+            }
+
             renderWhoPostedInThreadLink();
 
             break;
@@ -529,20 +533,12 @@ function displaySinglePostLink() {
  *
  */
 function renderWhoPostedInThreadLink() {
-    jQuery('div.threadbar.top').each( function() {
-        var headerHTML = jQuery(this).html();
-        var updatedHTML = '<div id="open-who-posted"' +
-                          '     style="float:left; ' +
-                          '            cursor:pointer; ' +
-                          '            text-decoration: underline;">' +
-                          'Who Posted</div>'+headerHTML;
-        jQuery(this).html(updatedHTML);
+    var threadbar = jQuery('div.threadbar.top');
 
-        jQuery('#open-who-posted').click( function() {
-            port.postMessage({ 'message': 'OpenTab',
-                               'url'  : 'http://forums.somethingawful.com/misc.php?action=whoposted&threadid='+findThreadID() });
-        });
-    });
+    var threadid = findThreadID();
+    var href = 'http://forums.somethingawful.com/misc.php?action=whoposted&threadid='+threadid;
+    var linkHTML = '<div style="float:left;"><a href="'+href+'">Who Posted</a></div>';
+    threadbar.prepend(linkHTML);
 }
 
 /**
@@ -1098,5 +1094,60 @@ function threadNotes() {
     			}
     		}
     	});
+    });
+}
+
+/**
+ *
+ *  Add search bar to threads
+ *
+ **/
+function addSearchThreadForm() {
+    //  Only valid on thread pages
+    if(findCurrentPage() != 'showthread.php')
+        return;
+
+    var forumid = findRealForumID();
+    var threadid = findThreadID();
+    searchHTML = '<form id="salrSearchForm" '+
+            'action="http://forums.somethingawful.com/f/search/submit" '+
+            'method="post" class="threadsearch">'+
+           '<div style="margin-left: 100px">'+
+           '<input type="hidden" name="forumids" value="'+forumid+'">'+
+           '<input type="hidden" name="groupmode" value="0">'+
+           '<input type="hidden" name="opt_search_posts" value="on">'+
+           '<input type="hidden" name="opt_search_titles" value="on">'+
+           '<input type="hidden" name="perpage" value="20">'+
+           '<input type="hidden" name="search_mode" value="ext">'+
+           '<input type="hidden" name="show_post_previews" value="1">'+
+           '<input type="hidden" name="sortmode" value="1">'+
+           '<input type="hidden" name="uf_posts" value="on">'+
+           '<input type="hidden" name="userid_filters" value="">'+
+           '<input type="hidden" name="username_filter" value="type a username">'+
+           '<input id="salrSearch" name="keywords" size="25" style="">'+
+           '<input type="submit" value="Search thread">'+
+           '</div>'+
+           '</form>';
+
+    var threadbar = jQuery('div.threadbar.top');
+    threadbar.prepend(searchHTML);
+
+    jQuery('input#salrSearch').keypress( function(evt) {
+        // Press Enter, Submit Form
+        if (evt.keyCode == 13) {
+            jQuery('form#salrSearchForm').submit();
+            return false;
+        }
+        // Prevent hotkeys from receiving keypress
+        evt.stopPropagation();
+    });
+
+    jQuery('form#salrSearchForm').submit( function() {
+        var keywords = jQuery('input#salrSearch');
+        // Don't submit a blank search
+        if (keywords.val().trim() == '')
+            return false;
+        // Append threadid to search string
+        keywords.val(keywords.val()+' threadid:'+threadid);
     });
 }
