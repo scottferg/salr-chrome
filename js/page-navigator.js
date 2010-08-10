@@ -76,7 +76,7 @@ PageNavigator.prototype.writeNavigatorHtml = function() {
                 '       <a class="nav-button" id="nav-last-page" href="#">' +
                 '           <img src="' + chrome.extension.getURL('images/') + 'nav-lastpage.png" />' +
                 '       </a>' + 
-                '       <a class="nav-button" id="nav-last-post" href="#">' +
+                '       <a class="nav-button" id="nav-last-post" >' +
                 '          <img src="' + chrome.extension.getURL('images/') + 'lastpost.png" />' +
                 '       </a>' + 
                 '   </span>' +
