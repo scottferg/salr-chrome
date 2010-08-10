@@ -47,6 +47,12 @@ port.onMessage.addListener(function(data) {
     updateStyling();
 	modifyImages();
 
+	
+jQuery.expr[":"].econtains = function(obj, index, meta, stack){
+return (obj.textContent || obj.innerText || $(obj).text() || "").toLowerCase() == meta[3].toLowerCase();
+}
+
+
     switch (findCurrentPage()) {
         case '':
         case 'index.php':
@@ -591,6 +597,7 @@ function updateFriendsList() {
 /**
  * Highlight the posts of friends
  */
+
 function highlightFriendPosts() {
     var friends = JSON.parse(settings.friendsList);
     var selector = '';
@@ -603,7 +610,7 @@ function highlightFriendPosts() {
         if (selector != '') {
             selector += ', ';
         }
-        selector += "dt.author:contains('" +  this + "')";
+        selector += "dt.author:econtains('" +  this + "')";
     });
 
     jQuery('table.post:has('+selector+') td').each(function () {
@@ -630,7 +637,7 @@ function highlightOPPosts() {
  * Highlight the posts by one self
  */
 function highlightOwnPosts() {
-    jQuery("table.post:has(dt.author:contains('"+settings.username+"')) td").each(function () {
+    jQuery("table.post:has(dt.author:econtains('"+settings.username+"')) td").each(function () {
         jQuery(this).css({
             'border-collapse' : 'collapse',
             'background-color' : settings.highlightSelfColor
