@@ -105,7 +105,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '       </div>' +
                 '       <div id="post-options">' +
                 '           <input type="checkbox" name="parseurl" value="yes" checked>' +
-                '              <span class="post-options">Automatically parse URLs</span>' +
+                '              <span class="post-options">Parse URLs</span>' +
                 '           </input>' + 
                 '           <input type="checkbox" id="quickReplyBookmark" name="bookmark" value="yes">' + 
                 '              <span class="post-options">Bookmark thread</span>' +
