@@ -1097,6 +1097,7 @@ function addSearchThreadForm() {
     if (!threadbar.length)
         return;
 
+    threadbar.css('overflow','hidden');
     var forumid = findRealForumID();
     var threadid = findThreadID();
     searchHTML = '<form id="salrSearchForm" '+
