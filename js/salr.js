@@ -540,6 +540,8 @@ function displaySinglePostLink() {
  */
 function renderWhoPostedInThreadLink() {
     var threadbar = jQuery('div.threadbar.top');
+    if (!threadbar.length)
+        return;
 
     var threadid = findThreadID();
     var href = 'http://forums.somethingawful.com/misc.php?action=whoposted&threadid='+threadid;
@@ -1114,6 +1116,10 @@ function addSearchThreadForm() {
     if(findCurrentPage() != 'showthread.php')
         return;
 
+    var threadbar = jQuery('div.threadbar.top');
+    if (!threadbar.length)
+        return;
+
     var forumid = findRealForumID();
     var threadid = findThreadID();
     searchHTML = '<form id="salrSearchForm" '+
@@ -1136,7 +1142,6 @@ function addSearchThreadForm() {
            '</div>'+
            '</form>';
 
-    var threadbar = jQuery('div.threadbar.top');
     threadbar.prepend(searchHTML);
 
     jQuery('input#salrSearch').keypress( function(evt) {
