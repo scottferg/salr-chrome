@@ -266,6 +266,9 @@ function updateStyling() {
                 jQuery(this).css("border", "none");
             });
 
+        } else {
+            if (jQuery('a.count', thread).length)
+                newPosts = true;
         }
 
         // If thread coloring enabled in forum preferences
