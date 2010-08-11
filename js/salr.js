@@ -199,33 +199,22 @@ function openSettings() {
 // stash the styling logic in it's own function that we can call
 // once we're ready
 function updateStyling() {
-    var newPosts = false;
-    var newPostCount = 0;
 
-    // Iterate over each .thread .seen td element.  This is necessary
-    // so we can track each thread's designated color (read/not read)
-    jQuery('tr.thread.seen').each(function() {
-        if (settings.disableCustomButtons == 'false' || !settings.disableCustomButtons) {
-            // Re-style the "mark unread" link
-            jQuery(this).find('a.x').each(function() {
-                // Set the image styles
-                jQuery(this).css("background", "none");
-                jQuery(this).css("background-image", "url('" + chrome.extension.getURL("images/") + "unvisit.png')");
-                jQuery(this).css("height", "16px");
-                jQuery(this).css("width", "14px");
 
-                // Remove the 'X' from the anchor tag
+    jQuery('tr.thread').each(function() {
+        var thread = jQuery(this);
+        var newPosts = false;
+        if (settings.disableCustomButtons != 'true') {
+
+            // Re-style the new post count link
+            jQuery('a.count', thread).each(function() {
+
+                newPosts = true;
+                var newPostCount = jQuery(this).html();
+
+                // Remove the count from the element
                 jQuery(this).html('');
-            });
-        }
 
-        // Re-style the new post count link
-        jQuery(this).find('a.count').each(function() {
-            // If we find an a.count, then we have new posts
-            newPosts = true;
-            newPostCount = jQuery(this).html();
-
-            if (settings.disableCustomButtons == 'false' || !settings.disableCustomButtons) {
                 // Remove the left split border
                 jQuery(this).css("border-left", "none");
 
@@ -235,80 +224,79 @@ function updateStyling() {
                 jQuery(this).css("padding-right", "11px");
                 jQuery(this).css("background-image", "url('" + chrome.extension.getURL("images/") + "lastpost.png')");
 
-                // Remove the count from the element
+                if (settings.inlinePostCounts == 'true') {
+                    jQuery('div.lastseen', thread).each(function() {
+                        // Add in number of new replies
+                        var currentHtml = jQuery(this).html();
+            
+                        // Strip HTML tags
+                        newPostCount = parseInt(newPostCount.replace(/(<([^>]+)>)/ig, ""));
+                        // Set the HTML value
+                        jQuery(this).html("<div style='font-size: 12px; float: left; margin-top: 4px; padding-right: 4px;'>(" + newPostCount + ")</div>" + currentHtml);
+                    });
+                } else {
+                    // Display number of new replies for each thread
+                    jQuery('td.replies', thread).each(function() {
+                        // Add in number of new replies
+                        var currentHtml = jQuery(this).html();
+            
+                        // Strip HTML tags
+                        newPostCount = parseInt(newPostCount.replace(/(<([^>]+)>)/ig, ""));
+                        // Set the HTML value
+                        jQuery(this).html(currentHtml + "<br /><div style='font-size: 12px;'>(" + newPostCount + ")</div>");
+                    });
+                }
+            });
+
+            // Re-style the "mark unread" link
+            jQuery('a.x', thread).each(function() {
+                // Set the image styles
+                jQuery(this).css("background", "none");
+                jQuery(this).css("background-image", "url('" + chrome.extension.getURL("images/") + "unvisit.png')");
+                jQuery(this).css("height", "16px");
+                jQuery(this).css("width", "14px");
+
+                // Remove the 'X' from the anchor tag
                 jQuery(this).html('');
-            }
-        });
-        
-        if (settings.disableCustomButtons == 'false' || !settings.disableCustomButtons) {
+            });
+
             // Eliminate last-seen styling
-            jQuery(this).find('.lastseen').each(function() {
+            jQuery('.lastseen', thread).each(function() {
                 jQuery(this).css("background", "none");
                 jQuery(this).css("border", "none");
             });
+
+            if (thread.attr('class') == 'thread seen') {
+                // If the thread has new posts, display the green shade,
+                // otherwise show the blue shade
+                var darkShade = (newPosts) ? settings.darkNewReplies : settings.darkRead;
+                var lightShade = (newPosts) ? settings.lightNewReplies : settings.lightRead;
+                alert(darkShade+' '+lightShade);
+
+                // Thread icon, author, view count, and last post
+                jQuery(this).children('td.icon, td.author, td.views, td.lastpost').each(function() {
+                    jQuery(this).css({ "background-color" : darkShade, 
+                                       "background-image" : "url('" + chrome.extension.getURL("images/") + "gradient.png')",
+                                       "background-repeat" : "repeat-x"
+                                     });
+                });
+
+                // Thread title, replies, and rating
+                jQuery(this).find('td.title, td.replies, td.rating').each(function() {
+                    jQuery(this).css({ "background-color" : lightShade, 
+                                       "background-image" : "url('" + chrome.extension.getURL("images/") + "gradient.png')",
+                                       "background-repeat" : "repeat-x"
+                                     });
+                });
+            }
         }
 
-        // Don't do inline post counts if the user has custom jump buttons disabled
-        if (settings.inlinePostCounts == 'true' && (settings.disableCustomButtons == 'false' || !settings.disableCustomButtons)) {
-            jQuery(this).find('div.lastseen').each(function() {
-                // Add in number of new replies
-                if (newPostCount != 0) {
-                    var currentHtml = jQuery(this).html();
-        
-                    // Strip HTML tags
-                    newPostCount = parseInt(newPostCount.replace(/(<([^>]+)>)/ig, ""));
-                    // Set the HTML value
-                    jQuery(this).html("<div style='font-size: 12px; float: left; margin-top: 4px; padding-right: 4px;'>(" + newPostCount + ")</div>" + currentHtml);
-                }
-            });
-        }
-
+        // Send threads without unread posts to the end of the list
         if (!newPosts && settings.displayNewPostsFirst == 'true') {
-            var currentThread = jQuery(this);
-
-            currentThread.parent().append(currentThread);
+            thread.parent().append(thread);
         }
-	
-    	// If the thread has new posts, display the green shade,
-    	// otherwise show the blue shade
-    	var darkShade = (newPosts) ? settings.darkNewReplies : settings.darkRead;
-    	var lightShade = (newPosts) ? settings.lightNewReplies : settings.lightRead;
-
-    	// Thread icon, author, view count, and last post
-    	jQuery(this).children('td.icon, td.author, td.views, td.lastpost').each(function() {
-    		jQuery(this).css({ "background-color" : darkShade, 
-    						   "background-image" : "url('" + chrome.extension.getURL("images/") + "gradient.png')",
-    						   "background-repeat" : "repeat-x"
-    						 });
-    	});
-
-    	// Thread title, replies, and rating
-    	jQuery(this).find('td.title, td.replies, td.rating').each(function() {
-    		jQuery(this).css({ "background-color" : lightShade, 
-    						   "background-image" : "url('" + chrome.extension.getURL("images/") + "gradient.png')",
-    						   "background-repeat" : "repeat-x"
-    						 });
-    	});
-
-        if (settings.inlinePostCounts == 'false') {
-            // Display number of new replies for each thread
-            jQuery(this).find('td.replies').each(function() {
-                // Add in number of new replies
-                if (newPostCount != 0) {
-                    var currentHtml = jQuery(this).html();
-        
-                    // Strip HTML tags
-                    newPostCount = parseInt(newPostCount.replace(/(<([^>]+)>)/ig, ""));
-                    // Set the HTML value
-                    jQuery(this).html(currentHtml + "<br /><div style='font-size: 12px;'>(" + newPostCount + ")</div>");
-                }
-            });
-        }
-
-        // Reset post counts
-    	newPosts = false;
-    	newPostCount = 0;
     });
+
 	
 	if(settings.displayConfigureSalr == 'true') {
 		jQuery('#navigation li.first').next('li').next('li').after(" - <a id='configure' href='#'>Configure SALR</a>");
@@ -317,18 +305,6 @@ function updateStyling() {
 	jQuery('#configure').click(function() {
 		openSettings();
 	});
-    
-    // If we need to, move all unseen posts to the end of the list
-    if (settings.displayNewPostsFirst =='true') {
-        jQuery('tr.thread').each(function() {
-            if (jQuery(this).attr('class') == 'thread') {
-                var currentThread = jQuery(this);
-
-                currentThread.parent().append(currentThread);
-            }
-        });
-    }   
-
     
     // Hide header/footer links
     if (settings.hideHeaderLinks == 'true') {
