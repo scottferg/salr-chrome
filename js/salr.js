@@ -896,8 +896,9 @@ function boxQuotes() {
  */
 function highlightOwnUsername() {
     var selector = 'td.postbody:contains("'+settings.username+'")';
+    var re = new RegExp(settings.username, 'g');
     jQuery(selector).each(function() {
-        jQuery(this).html(jQuery(this).html().replace(settings.username, '<span class="usernameHighlight" style="font-weight: bold; color: ' + settings.usernameHighlight + ';">' + settings.username + '</span>'));
+        jQuery(this).html(jQuery(this).html().replace(re, '<span class="usernameHighlight" style="font-weight: bold; color: ' + settings.usernameHighlight + ';">' + settings.username + '</span>'));
     });
 }
 
