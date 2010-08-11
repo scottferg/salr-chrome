@@ -357,7 +357,8 @@ QuickReplyBox.prototype.toggleView = function() {
                 jQuery('#side-bar').first().show();
         });
         (imgId).attr("src", chrome.extension.getURL("images/") + "quick-reply-rolldown.gif");
-        this.quickReplyState.expanded = true;
+        jQuery('#post-message').focus().putCursorAtEnd();
+		this.quickReplyState.expanded = true;
     }
 };
 
