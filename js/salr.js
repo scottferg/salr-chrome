@@ -810,6 +810,7 @@ function displayUserNotes() {
     if (settings.userNotes == null) {
         notes = { "50339" : {'text' : 'SALR Developer', 'color' : '#9933FF'},   // Sebbe
                   "3882420" : {'text' : 'SALR Developer', 'color' : '#9933FF'}, // Onoj
+                  "143511" : {'text' : 'SALR Developer', 'color' : '#9933FF'},  // Sneaking Mission
                   "156041" : {'text' : 'SALR Developer', 'color' : '#9933FF'},  // wmbest2
                   "115838" : {'text' : 'SALR Developer', 'color' : '#9933FF'}}; // Ferg
         port.postMessage({ 'message': 'ChangeSetting',
