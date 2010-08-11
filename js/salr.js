@@ -913,7 +913,8 @@ function boxQuotes() {
  * Highlight the user's username in posts
  */
 function highlightOwnUsername() {
-    jQuery('td.postbody').each(function() {
+    var selector = 'td.postbody:contains("'+settings.username+'")';
+    jQuery(selector).each(function() {
         jQuery(this).html(jQuery(this).html().replace(settings.username, '<span class="usernameHighlight" style="font-weight: bold; color: ' + settings.usernameHighlight + ';">' + settings.username + '</span>'));
     });
 }
