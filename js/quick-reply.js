@@ -233,7 +233,7 @@ QuickReplyBox.prototype.fetchFormCookie = function(threadid) {
 QuickReplyBox.prototype.appendText = function(text) {
     var current_message = jQuery('#post-message').val();
 
-    jQuery('#post-message').html(current_message + text);
+    jQuery('#post-message').val(current_message + text);
 };
 
 QuickReplyBox.prototype.appendQuote = function(username, quote) {
@@ -248,7 +248,7 @@ QuickReplyBox.prototype.appendQuote = function(username, quote) {
 
         quote_string += '[quote="' + username + '"]\n' + jQuery.trim(quote) + '\n[/quote]\n\n';
 
-        jQuery('#post-message').html(current_message + quote_string);
+        jQuery('#post-message').val(current_message + quote_string);
     }
 };
 
