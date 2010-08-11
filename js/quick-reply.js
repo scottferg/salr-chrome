@@ -200,6 +200,7 @@ QuickReplyBox.prototype.show = function() {
     this.quickReplyState.expanded = true;
     jQuery(document).trigger('disableSALRHotkeys');
     jQuery('#quick-reply').show("slow");
+	jQuery('#post-message').focus().putCursorAtEnd();
 };
 
 QuickReplyBox.prototype.hide = function() {
