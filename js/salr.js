@@ -266,29 +266,31 @@ function updateStyling() {
                 jQuery(this).css("border", "none");
             });
 
-            if (thread.attr('class') == 'thread seen') {
-                // If the thread has new posts, display the green shade,
-                // otherwise show the blue shade
-                var darkShade = (newPosts) ? settings.darkNewReplies : settings.darkRead;
-                var lightShade = (newPosts) ? settings.lightNewReplies : settings.lightRead;
-                alert(darkShade+' '+lightShade);
+        }
 
-                // Thread icon, author, view count, and last post
-                jQuery(this).children('td.icon, td.author, td.views, td.lastpost').each(function() {
-                    jQuery(this).css({ "background-color" : darkShade, 
-                                       "background-image" : "url('" + chrome.extension.getURL("images/") + "gradient.png')",
-                                       "background-repeat" : "repeat-x"
-                                     });
-                });
+        // If thread coloring enabled in forum preferences
+        // recolor according to SALR settings
+        if (thread.attr('class') == 'thread seen') {
+            // If the thread has new posts, display the green shade,
+            // otherwise show the blue shade
+            var darkShade = (newPosts) ? settings.darkNewReplies : settings.darkRead;
+            var lightShade = (newPosts) ? settings.lightNewReplies : settings.lightRead;
 
-                // Thread title, replies, and rating
-                jQuery(this).find('td.title, td.replies, td.rating').each(function() {
-                    jQuery(this).css({ "background-color" : lightShade, 
-                                       "background-image" : "url('" + chrome.extension.getURL("images/") + "gradient.png')",
-                                       "background-repeat" : "repeat-x"
-                                     });
-                });
-            }
+            // Thread icon, author, view count, and last post
+            jQuery(this).children('td.icon, td.author, td.views, td.lastpost').each(function() {
+                jQuery(this).css({ "background-color" : darkShade, 
+                                   "background-image" : "url('" + chrome.extension.getURL("images/") + "gradient.png')",
+                                   "background-repeat" : "repeat-x"
+                                 });
+            });
+
+            // Thread title, replies, and rating
+            jQuery(this).find('td.title, td.replies, td.rating').each(function() {
+                jQuery(this).css({ "background-color" : lightShade, 
+                                   "background-image" : "url('" + chrome.extension.getURL("images/") + "gradient.png')",
+                                   "background-repeat" : "repeat-x"
+                                 });
+            });
         }
 
         // Send threads without unread posts to the end of the list
