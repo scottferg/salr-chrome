@@ -27,6 +27,8 @@ function SALR(settings, base_image_uri) {
     this.settings = settings;
     this.base_image_uri = base_image_uri;
 
+    console.log(settings);
+
     this.pageNavigator = null;
     this.quickReply = null;
     this.mouseGesturesContoller = null;
@@ -932,8 +934,8 @@ SALR.prototype.highlightOwnQuotes = function() {
         jQuery(this).parent().css("background-color", that.settings.userQuote);
 
         // Replace the styling from username highlighting
-        var that = jQuery(this);
-        jQuery('.usernameHighlight', that).each(function() {
+        var previous = jQuery(this);
+        jQuery('.usernameHighlight', previous).each(function() {
             jQuery(this).css('color', '#555');
         });
     });

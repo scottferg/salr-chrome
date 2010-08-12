@@ -91,6 +91,7 @@ function setupDefaultPreferences() {
     safari.extension.settings.setItem('darkNewReplies', '#99cc99');
     safari.extension.settings.setItem('lightNewReplies', '#ccffcc');
     safari.extension.settings.setItem('youtubeHighlight', '#ff00ff');
+    safari.extension.settings.setItem('highlightOwnQuotes', 'true');
     safari.extension.settings.setItem('highlightFriendsColor', "#f2babb");
     safari.extension.settings.setItem('highlightSelfColor', "#f2babb");
     safari.extension.settings.setItem('highlightAdminColor', "#ff7256");
