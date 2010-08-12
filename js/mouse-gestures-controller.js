@@ -23,8 +23,10 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-function MouseGesturesController() {
+function MouseGesturesController(base_image_uri) {
     var that = this;
+
+    this.base_image_uri = base_image_uri;
 
     this.gesture_overlay_html = this.buildOverlay();
     this.disabled_gestures = new Array();
@@ -135,18 +137,18 @@ function MouseGesturesController() {
 MouseGesturesController.prototype.buildOverlay = function() {
     html = '<div id="gesture-overlay">' +
            '    <div id="gesture-top">' +
-           '        <img id="top-image" src="' + chrome.extension.getURL("images/") + 'gesturenav-top.png">' +
+           '        <img id="top-image" src="' + this.base_image_uri + 'gesturenav-top.png">' +
            '    </div>' +
            '    <div id="gesture-left">' +
-           '        <img id="left-image" src="' + chrome.extension.getURL("images/") + 'gesturenav-left.png">' +
+           '        <img id="left-image" src="' + this.base_image_uri + 'gesturenav-left.png">' +
            '    </div>' +
            '    <canvas id="gesture-indicator" width="77" height="77">' +
            '    </canvas>' +
            '    <div id="gesture-right">' +
-           '        <img id="right-image" src="' + chrome.extension.getURL("images/") + 'gesturenav-right.png">' +
+           '        <img id="right-image" src="' + this.base_image_uri + 'gesturenav-right.png">' +
            '    </div>' +
            '    <div id="gesture-bottom">' +
-           '        <img id="bottom-image" src="' + chrome.extension.getURL("images/") + 'gesturenav-bottom.png">' +
+           '        <img id="bottom-image" src="' + this.base_image_uri + 'gesturenav-bottom.png">' +
            '    </div>' +
            '</div>';
 
@@ -195,23 +197,23 @@ MouseGesturesController.prototype.updateButtonStyles = function(x_coord, y_coord
     var gesture_left = jQuery('div#gesture-left');
     var gesture_right = jQuery('div#gesture-right');
     
-    jQuery('img#top-image', gesture_top).first().attr('src', chrome.extension.getURL("images/") + 'gesturenav-top.png');
-    jQuery('img#bottom-image', gesture_bottom).first().attr('src', chrome.extension.getURL("images/") + 'gesturenav-bottom.png');
-    jQuery('img#left-image', gesture_left).first().attr('src', chrome.extension.getURL("images/") + 'gesturenav-left.png');
-    jQuery('img#right-image', gesture_right).first().attr('src', chrome.extension.getURL("images/") + 'gesturenav-right.png');
+    jQuery('img#top-image', gesture_top).first().attr('src', this.base_image_uri + 'gesturenav-top.png');
+    jQuery('img#bottom-image', gesture_bottom).first().attr('src', this.base_image_uri + 'gesturenav-bottom.png');
+    jQuery('img#left-image', gesture_left).first().attr('src', this.base_image_uri + 'gesturenav-left.png');
+    jQuery('img#right-image', gesture_right).first().attr('src', this.base_image_uri + 'gesturenav-right.png');
 
     switch (this.determineLocation(x_coord, y_coord)) {
         case 'top':
-            jQuery('img#top-image', gesture_top).first().attr('src', chrome.extension.getURL("images/") + 'gesturenav-top-press.png');
+            jQuery('img#top-image', gesture_top).first().attr('src', this.base_image_uri + 'gesturenav-top-press.png');
             break;
         case 'bottom':
-            jQuery('img#bottom-image', gesture_bottom).first().attr('src', chrome.extension.getURL("images/") + 'gesturenav-bottom-press.png');
+            jQuery('img#bottom-image', gesture_bottom).first().attr('src', this.base_image_uri + 'gesturenav-bottom-press.png');
             break;
         case 'left':
-            jQuery('img#left-image', gesture_left).first().attr('src', chrome.extension.getURL("images/") + 'gesturenav-left-press.png');
+            jQuery('img#left-image', gesture_left).first().attr('src', this.base_image_uri + 'gesturenav-left-press.png');
             break;
         case 'right':
-            jQuery('img#right-image', gesture_right).first().attr('src', chrome.extension.getURL("images/") + 'gesturenav-right-press.png');
+            jQuery('img#right-image', gesture_right).first().attr('src', this.base_image_uri + 'gesturenav-right-press.png');
             break;
         default:
             break;

@@ -28,8 +28,9 @@
 // http://forums.somethingawful.com/newreply.php?action=newreply&postid=379818033
 // http://forums.somethingawful.com/newreply.php?s=&action=newreply&threadid=3208437
 
-function QuickReplyBox(forum_post_key) {
+function QuickReplyBox(forum_post_key, base_image_uri) {
     this.forum_post_key = forum_post_key;
+    this.base_image_uri = base_image_uri;
 
     this.quickReplyState = {
         expanded: false,
@@ -85,18 +86,18 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '           Quick Reply' + 
                 '       </div>' +
                 '       <div id="view-buttons">' + 
-                '          <a id="toggle-view"><img id="quick-reply-rollbutton" class="quick-reply-image" src="' + chrome.extension.getURL("images/") + "quick-reply-rolldown.gif" + '"></a>' +
-                '          <a id="dismiss-quick-reply"><img class="quick-reply-image" src="' + chrome.extension.getURL("images/") + "quick-reply-close.gif" + '"></a>' +
+                '          <a id="toggle-view"><img id="quick-reply-rollbutton" class="quick-reply-image" src="' + this.base_image_uri + "quick-reply-rolldown.gif" + '"></a>' +
+                '          <a id="dismiss-quick-reply"><img class="quick-reply-image" src="' + this.base_image_uri + "quick-reply-close.gif" + '"></a>' +
                 '       </div>' +
                 '       <div id="smiley-menu" class="sidebar-menu">' +
-                '           <img src="' + chrome.extension.getURL("images/") + "quick-reply-smiley.gif" + '" />' +
+                '           <img src="' + this.base_image_uri + "quick-reply-smiley.gif" + '" />' +
                 '       </div>' +
                 '       <div id="tag-menu" class="sidebar-menu">' +
-                '           <img src="' + chrome.extension.getURL("images/") + "quick-reply-tags.gif" + '" />' +
+                '           <img src="' + this.base_image_uri + "quick-reply-tags.gif" + '" />' +
                 '       </div>' +
                 /************************WAFFLE IMAGES************************
                 '       <div id="waffle-images-menu" class="sidebar-menu">' +
-                '           <img src="' + chrome.extension.getURL("images/") + "quick-reply-waffle.gif" + '" />' +
+                '           <img src="' + this.base_image_uri + "quick-reply-waffle.gif" + '" />' +
                 '       </div>' +
                 *************************************************************/
                 '       <div id="post-input-field">' +
@@ -188,7 +189,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
         }
     });
 
-    this.sidebar_html = '<img class="loading-spinner" src="' + chrome.extension.getURL("images/") + 'loading-spinner.gif" />';
+    this.sidebar_html = '<img class="loading-spinner" src="' + this.base_image_uri + 'loading-spinner.gif" />';
     this.emotes = null;
     
     this.fetchFormCookie(findThreadID());
@@ -204,8 +205,8 @@ QuickReplyBox.prototype.show = function() {
 
 QuickReplyBox.prototype.hide = function() {
     jQuery('#side-bar').first().hide();
-    if (pageNavigator) {
-        pageNavigator.display();
+    if (salr_client.pageNavigator) {
+        salr_client.pageNavigator.display();
     }
     jQuery(document).trigger('enableSALRHotkeys');
     jQuery('#quick-reply').hide("slow");
@@ -333,7 +334,7 @@ QuickReplyBox.prototype.toggleView = function() {
         var hideBox = function() {
             jQuery('#side-bar').first().hide();
             quick_reply_box.animate( { height: min } );
-            (imgId).attr("src", chrome.extension.getURL("images/") + "quick-reply-rollup.gif");
+            (imgId).attr("src", this.base_image_uri + "quick-reply-rollup.gif");
             that.quickReplyState.expanded = false;
         };
 
@@ -342,8 +343,8 @@ QuickReplyBox.prototype.toggleView = function() {
         if(this.quickReplyState.sidebar_visible) {
             jQuery('#side-bar').animate( { left: '-=200px' }, 500, function() {
                 that.quickReplyState.sidebar_visible = null;
-                if (pageNavigator) {
-                    pageNavigator.display();
+                if (salr_client.pageNavigator) {
+                    salr_client.pageNavigator.display();
                 }
                 hideBox();
             });
@@ -355,7 +356,7 @@ QuickReplyBox.prototype.toggleView = function() {
                 // Only display the sidebar after the box is shown
                 jQuery('#side-bar').first().show();
         });
-        (imgId).attr("src", chrome.extension.getURL("images/") + "quick-reply-rolldown.gif");
+        (imgId).attr("src", this.base_image_uri + "quick-reply-rolldown.gif");
         this.quickReplyState.expanded = true;
     }
 };
@@ -393,8 +394,8 @@ QuickReplyBox.prototype.toggleSidebar = function(element) {
     // If no sidebar is open, open it
     if ((this.quickReplyState.sidebar_visible) && (this.quickReplyState.sidebar_visible == element.attr('id'))) {
         side_bar.animate( { left: '-=200px' } );
-        if (pageNavigator) {
-            pageNavigator.display();
+        if (salr_client.pageNavigator) {
+            salr_client.pageNavigator.display();
         }
         this.quickReplyState.sidebar_visible = false;
     } else if ((this.quickReplyState.sidebar_visible) && (this.quickReplyState.sidebar_visible != element.attr('id'))) {
@@ -406,8 +407,8 @@ QuickReplyBox.prototype.toggleSidebar = function(element) {
     } else {
         populate_method.call(this);
         side_bar.animate( { left: '+=200px' } );
-        if (pageNavigator) {
-            pageNavigator.hide();
+        if (salr_client.pageNavigator) {
+            salr_client.pageNavigator.hide();
         }
         this.quickReplyState.sidebar_visible = element.attr('id');
     }

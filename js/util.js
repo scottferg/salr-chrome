@@ -34,6 +34,25 @@ function findCurrentPage() {
 }
 
 /**
+ * Returns the current thread ID
+ *
+ */
+function findThreadID() {
+    // Substrings out everything after the domain, then splits on the ?,
+    // defaults to the argument list (right), splits on the &, looks at the first
+    // parameter in the list, and splits on the = to get the result
+    var parameterList = ((window.location.href).substr(33).split('?')[1]).split('&');
+
+    for (var parameter in parameterList) {
+        var currentParam = (parameterList[parameter]).split('=');
+
+        if (currentParam[0] == 'threadid') {
+            return currentParam[1]; 
+        }
+    }
+}
+
+/**
  * Returns the current forum ID
  *
  */

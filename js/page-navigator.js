@@ -23,7 +23,9 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-function PageNavigator() {
+function PageNavigator(base_image_uri) {
+    this.base_image_uri = base_image_uri;
+
     this.pageCount = countPages();
     // Determines if we are on a forum or a thread
     this.rootPageType = (findCurrentPage() == 'forumdisplay.php') ? 'forumid' : 'threadid';
@@ -54,10 +56,10 @@ PageNavigator.prototype.writeNavigatorHtml = function() {
                 '   <div id="nav-body">' +
                 '   <span id="first-page-buttons">' + 
                 '       <a class="nav-button" id="nav-first-page" href="#">' +
-                '           <img src="' + chrome.extension.getURL('images/') + 'nav-firstpage.png" />' + 
+                '           <img src="' + this.base_image_uri + 'nav-firstpage.png" />' + 
                 '       </a>' + 
                 '       <a class="nav-button" id="nav-prev-page" href="#">' +
-                '           <img src="' + chrome.extension.getURL('images/') + 'nav-prevpage.png" />' +
+                '           <img src="' + this.base_image_uri + 'nav-prevpage.png" />' +
                 '       </a>' + 
                 '   </span>' +
                 '   <span id="page-drop-down">' +
@@ -71,13 +73,13 @@ PageNavigator.prototype.writeNavigatorHtml = function() {
                 '   </span>' +
                 '   <span id="last-page-buttons">' +
                 '       <a class="nav-button" id="nav-next-page" href="#">' +
-                '           <img src="' + chrome.extension.getURL('images/') + 'nav-nextpage.png" />' + 
+                '           <img src="' + this.base_image_uri + 'nav-nextpage.png" />' + 
                 '       </a>' + 
                 '       <a class="nav-button" id="nav-last-page" href="#">' +
-                '           <img src="' + chrome.extension.getURL('images/') + 'nav-lastpage.png" />' +
+                '           <img src="' + this.base_image_uri + 'nav-lastpage.png" />' +
                 '       </a>' + 
                 '       <a class="nav-button" id="nav-last-post" >' +
-                '          <img src="' + chrome.extension.getURL('images/') + 'lastpost.png" />' +
+                '          <img src="' + this.base_image_uri + 'lastpost.png" />' +
                 '       </a>' + 
                 '   </span>' +
                 '   </div>' +
