@@ -19,6 +19,7 @@
         "js/jquery/jquery.filedrop.js",
         "js/jquery/jquery.rightclick.js",
         "js/jquery/jquery.fieldselection.js",
+		"js/jquery/jquery.putCursorAtEnd.1.0.js",
         "js/util.js",
         "js/hotkey-manager.js",
         "js/mouse-gestures-controller.js",

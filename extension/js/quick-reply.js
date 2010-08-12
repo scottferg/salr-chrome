@@ -202,6 +202,7 @@ QuickReplyBox.prototype.show = function() {
     this.quickReplyState.expanded = true;
     jQuery(document).trigger('disableSALRHotkeys');
     jQuery('#quick-reply').show("slow");
+	jQuery('#post-message').focus().putCursorAtEnd();
 };
 
 QuickReplyBox.prototype.hide = function() {
@@ -358,6 +359,7 @@ QuickReplyBox.prototype.toggleView = function() {
                 jQuery('#side-bar').first().show();
         });
         (imgId).attr("src", this.base_image_uri + "quick-reply-rolldown.gif");
+        jQuery('#post-message').focus().putCursorAtEnd();
         this.quickReplyState.expanded = true;
     }
 };
