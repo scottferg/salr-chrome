@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>Title</key>
+		<string>Username</string>
+		<key>Type</key>
+		<string>Group</string>
+	</dict>
+	<dict>
+		<key>Key</key>
+		<string>username</string>
+		<key>Password</key>
+		<false/>
+		<key>Title</key>
+		<string>Forums Username</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
+	<dict>
+		<key>Title</key>
+		<string>Highlighting Options</string>
+		<key>Type</key>
+		<string>Group</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<true/>
+		<key>Key</key>
+		<string>highlightOwnQuotes</string>
+		<key>Title</key>
+		<string>Highlight when a post quotes you</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<string>#a2cd5a</string>
+		<key>Key</key>
+		<string>userQuote</string>
+		<key>Title</key>
+		<string>Own quotes color</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<true/>
+		<key>Key</key>
+		<string>highlightOwnUsername</string>
+		<key>Title</key>
+		<string>Highlight your username in posts</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<string>#9933ff</string>
+		<key>Key</key>
+		<string>usernameHighlight</string>
+		<key>Title</key>
+		<string>Username highlighting</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<string>#6699cc</string>
+		<key>Key</key>
+		<string>darkRead</string>
+		<key>Title</key>
+		<string>Previously seen threads (dark shade)</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<string>#99ccff</string>
+		<key>Key</key>
+		<string>lightRead</string>
+		<key>Title</key>
+		<string>Previously seen threads (light shade)</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<string>#99cc99</string>
+		<key>Key</key>
+		<string>darkNewReplies</string>
+		<key>Title</key>
+		<string>Threads with new replies (dark shade)</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<string>#ccffcc</string>
+		<key>Key</key>
+		<string>lightNewReplies</string>
+		<key>Title</key>
+		<string>Threads with new replies (light shade)</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
+	<dict>
+		<key>Key</key>
+		<string>highlightModAdmin</string>
+		<key>Title</key>
+		<string>Highlight moderator/admin posts</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>Title</key>
+		<string>Control Options</string>
+		<key>Type</key>
+		<string>Group</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<true/>
+		<key>Key</key>
+		<string>displayPageNavigator</string>
+		<key>Title</key>
+		<string>Display page navigator</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>inlineVideo</string>
+		<key>Title</key>
+		<string>Display Youtube links inline</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>highlightFriends</string>
+		<key>Title</key>
+		<string>Highlight posts by friends</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>highlightOP</string>
+		<key>Title</key>
+		<string>Highlight OP posts</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>highlightSelf</string>
+		<key>Title</key>
+		<string>Highlight your own posts</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<true/>
+		<key>Key</key>
+		<string>enableUserNotes</string>
+		<key>Title</key>
+		<string>Enable user notes</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>enableQuickReply</string>
+		<key>Title</key>
+		<string>Use quick reply box</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>Key</key>
+		<string>forumPostKey</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>enableThreadNotes</string>
+		<key>Title</key>
+		<string>Enable thread notes</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>searchThreadHide</string>
+		<key>Title</key>
+		<string>Hide thread search field</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>Key</key>
+		<string>qneProtection</string>
+		<key>Title</key>
+		<string>Protect against accidental quotes</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>openAllUnreadLink</string>
+		<key>Title</key>
+		<string>Display "Open all unread" link on control panel</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>enableMouseGestures</string>
+		<key>Title</key>
+		<string>Enable mouse gestures</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>enableKeyboardShortcuts</string>
+		<key>Title</key>
+		<string>Enable keyboard shortcuts</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>Title</key>
+		<string>Forums Display Options</string>
+		<key>Type</key>
+		<string>Group</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>disableCustomButtons</string>
+		<key>Title</key>
+		<string>Disable custom SALR buttons</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>hideHeaderLinks</string>
+		<key>Title</key>
+		<string>Hide header links</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>hideAdvertisements</string>
+		<key>Title</key>
+		<string>Hide advertisements</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>inlinePostCounts</string>
+		<key>Title</key>
+		<string>Display post counts inline</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>boxQuotes</string>
+		<key>Title</key>
+		<string>Display quotes in boxes</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>Title</key>
+		<string>Images Display Options</string>
+		<key>Type</key>
+		<string>Group</string>
+	</dict>
+	<dict>
+		<key>Title</key>
+		<string>Other Options</string>
+		<key>Type</key>
+		<string>Group</string>
+	</dict>
+</array>
+</plist>

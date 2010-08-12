@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Author</key>
+	<string>Scott Ferguson</string>
+	<key>CFBundleDisplayName</key>
+	<string>Something Awful Last Read</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.ferg.salr-safari</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>Chrome</key>
+	<dict>
+		<key>Global Page</key>
+		<string>background.html</string>
+	</dict>
+	<key>Content</key>
+	<dict>
+		<key>Scripts</key>
+		<dict>
+			<key>End</key>
+			<array>
+				<string>js/jquery/jquery.js</string>
+				<string>js/jquery/jquery-ui.js</string>
+				<string>js/jquery/jquery.transform.min.js</string>
+				<string>js/jquery/jquery.filedrop.js</string>
+				<string>js/jquery/jquery.rightclick.js</string>
+				<string>js/jquery/jquery.fieldselection.js</string>
+				<string>js/util.js</string>
+				<string>js/hotkey-manager.js</string>
+				<string>js/mouse-gestures-controller.js</string>
+				<string>js/quick-reply-emote-parser.js</string>
+				<string>js/quick-reply.js</string>
+				<string>js/page-navigator.js</string>
+				<string>js/salr.js</string>
+				<string>js/jquery/colorpicker.js</string>
+			</array>
+		</dict>
+		<key>Stylesheets</key>
+		<array>
+			<string>css/jquery-ui/jquery-ui.custom.css</string>
+			<string>css/mouse-gestures.css</string>
+			<string>css/quick-reply.css</string>
+			<string>css/threadnotes.css</string>
+			<string>css/salr.css</string>
+		</array>
+		<key>Whitelist</key>
+		<array>
+			<string>http://forums.somethingawful.com/*</string>
+		</array>
+	</dict>
+	<key>Description</key>
+	<string>Safari port of the Something Awful Last Read extension</string>
+	<key>ExtensionInfoDictionaryVersion</key>
+	<string>1.0</string>
+	<key>Permissions</key>
+	<dict>
+		<key>Website Access</key>
+		<dict>
+			<key>Include Secure Pages</key>
+			<true/>
+			<key>Level</key>
+			<string>All</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
