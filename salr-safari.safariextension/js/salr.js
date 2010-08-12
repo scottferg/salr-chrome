@@ -559,9 +559,8 @@ SALR.prototype.renderOpenUpdatedThreadsButton = function() {
                 if (other.settings.ignore_bookmark_star != img_name) {
                     if (jQuery('a[class*=count]', this).length > 0) {
                         var href = jQuery('a[class*=count]', this).attr('href');
-                        // TODO: Fix this
                         postMessage({ 'message': 'OpenTab',
-                                           'url'  : 'http://forums.somethingawful.com'+href });
+                                      'url'  : 'http://forums.somethingawful.com' + href });
                     }
                 }
             });
