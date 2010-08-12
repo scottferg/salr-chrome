@@ -105,12 +105,110 @@
 		<string>TextField</string>
 	</dict>
 	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>highlightSelf</string>
+		<key>Title</key>
+		<string>Highlight your own posts</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<string>#f2babb</string>
+		<key>Key</key>
+		<string>highlightSelfColor</string>
+		<key>Title</key>
+		<string>Your own posts color</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>highlightFriends</string>
+		<key>Title</key>
+		<string>Highlight posts by friends</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<string>#f2babb</string>
+		<key>Key</key>
+		<string>highlightFriendsColor</string>
+		<key>Title</key>
+		<string>Highlight friends color</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>highlightOP</string>
+		<key>Title</key>
+		<string>Highlight OP posts</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>Key</key>
+		<string>highlightOPColor</string>
+		<key>Title</key>
+		<string>OP post color</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
+	<dict>
 		<key>Key</key>
 		<string>highlightModAdmin</string>
 		<key>Title</key>
 		<string>Highlight moderator/admin posts</string>
 		<key>Type</key>
 		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>highlightModAdminUsername</string>
+		<key>Title</key>
+		<string>Highlight mod/admin usernames instead of posts</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<string>#b4eeb4</string>
+		<key>Key</key>
+		<string>highlightModeratorColor</string>
+		<key>Title</key>
+		<string>Highlight moderator color</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<string>#ff7256</string>
+		<key>Key</key>
+		<string>highlightAdminColor</string>
+		<key>Title</key>
+		<string>Highlight admin color</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<string>#ff00ff</string>
+		<key>Key</key>
+		<string>youtubeHighlight</string>
+		<key>Title</key>
+		<string>Youtube link highlight color</string>
+		<key>Type</key>
+		<string>TextField</string>
 	</dict>
 	<dict>
 		<key>Title</key>
@@ -128,7 +226,16 @@
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
-
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>displayNewPostsFirst</string>
+		<key>Title</key>
+		<string>Display threads with new posts first</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
 	<dict>
 		<key>DefaultValue</key>
 		<false/>
@@ -136,36 +243,6 @@
 		<string>inlineVideo</string>
 		<key>Title</key>
 		<string>Display Youtube links inline</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<false/>
-		<key>Key</key>
-		<string>highlightFriends</string>
-		<key>Title</key>
-		<string>Highlight posts by friends</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<false/>
-		<key>Key</key>
-		<string>highlightOP</string>
-		<key>Title</key>
-		<string>Highlight OP posts</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<false/>
-		<key>Key</key>
-		<string>highlightSelf</string>
-		<key>Title</key>
-		<string>Highlight your own posts</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
@@ -183,20 +260,6 @@
 		<key>DefaultValue</key>
 		<false/>
 		<key>Key</key>
-		<string>enableQuickReply</string>
-		<key>Title</key>
-		<string>Use quick reply box</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>Key</key>
-		<string>forumPostKey</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<false/>
-		<key>Key</key>
 		<string>enableThreadNotes</string>
 		<key>Title</key>
 		<string>Enable thread notes</string>
@@ -207,27 +270,9 @@
 		<key>DefaultValue</key>
 		<false/>
 		<key>Key</key>
-		<string>searchThreadHide</string>
+		<string>enableKeyboardShortcuts</string>
 		<key>Title</key>
-		<string>Hide thread search field</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>Key</key>
-		<string>qneProtection</string>
-		<key>Title</key>
-		<string>Protect against accidental quotes</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<false/>
-		<key>Key</key>
-		<string>openAllUnreadLink</string>
-		<key>Title</key>
-		<string>Display "Open all unread" link on control panel</string>
+		<string>Enable keyboard shortcuts</string>
 		<key>Type</key>
 		<string>CheckBox</string>
 	</dict>
@@ -245,11 +290,23 @@
 		<key>DefaultValue</key>
 		<false/>
 		<key>Key</key>
-		<string>enableKeyboardShortcuts</string>
+		<string>enableQuickReply</string>
 		<key>Title</key>
-		<string>Enable keyboard shortcuts</string>
+		<string>Use quick reply box</string>
 		<key>Type</key>
 		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>Key</key>
+		<string>quickReplyBookmark</string>
+		<key>Title</key>
+		<string>Bookmark thread by default in quick reply</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>Key</key>
+		<string>forumPostKey</string>
 	</dict>
 	<dict>
 		<key>Title</key>
@@ -309,15 +366,133 @@
 	</dict>
 	<dict>
 		<key>Title</key>
-		<string>Images Display Options</string>
+		<string>Image Options</string>
 		<key>Type</key>
 		<string>Group</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>replaceLinksWithImages</string>
+		<key>Title</key>
+		<string>Replace image links with inline images</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>dontReplaceLinkNWS</string>
+		<key>Title</key>
+		<string>Don't replace NWS image links</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>dontReplaceLinkSpoiler</string>
+		<key>Title</key>
+		<string>Don't replace spoiler image links</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>dontReplaceLinkRead</string>
+		<key>Title</key>
+		<string>Don't replace image links in read posts</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>Type</key>
+		<string>Separator</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>replaceImagesWithLinks</string>
+		<key>Title</key>
+		<string>Replace images with inline URLs</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>replaceImagesReadOnly</string>
+		<key>Title</key>
+		<string>Replace images in read posts only</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>Type</key>
+		<string>Separator</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>restrictImageSize</string>
+		<key>Title</key>
+		<string>Restrict image sizes</string>
+		<key>Type</key>
+		<string>CheckBox</string>
 	</dict>
 	<dict>
 		<key>Title</key>
 		<string>Other Options</string>
 		<key>Type</key>
 		<string>Group</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>searchThreadHide</string>
+		<key>Title</key>
+		<string>Hide thread search field</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>Key</key>
+		<string>qneProtection</string>
+		<key>Title</key>
+		<string>Protect against accidental quotes</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>openAllUnreadLink</string>
+		<key>Title</key>
+		<string>Display "Open all unread" link on control panel</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>displayConfigureSalr</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>displayOmnibarIcon</string>
 	</dict>
 </array>
 </plist>
