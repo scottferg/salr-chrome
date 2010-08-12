@@ -28,9 +28,10 @@
 // http://forums.somethingawful.com/newreply.php?action=newreply&postid=379818033
 // http://forums.somethingawful.com/newreply.php?s=&action=newreply&threadid=3208437
 
-function QuickReplyBox(forum_post_key, base_image_uri) {
+function QuickReplyBox(forum_post_key, base_image_uri, bookmark) {
     this.forum_post_key = forum_post_key;
     this.base_image_uri = base_image_uri;
+    this.bookmark = bookmark;
 
     this.quickReplyState = {
         expanded: false,
@@ -130,7 +131,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
         jQuery('body').append(html);
     }
 
-    if (settings.quickReplyBookmark == 'true') {
+    if (this.bookmark) {
         jQuery('input#quickReplyBookmark').attr('checked', true);
     }
 
@@ -334,7 +335,7 @@ QuickReplyBox.prototype.toggleView = function() {
         var hideBox = function() {
             jQuery('#side-bar').first().hide();
             quick_reply_box.animate( { height: min } );
-            (imgId).attr("src", this.base_image_uri + "quick-reply-rollup.gif");
+            (imgId).attr("src", that.base_image_uri + "quick-reply-rollup.gif");
             that.quickReplyState.expanded = false;
         };
 
