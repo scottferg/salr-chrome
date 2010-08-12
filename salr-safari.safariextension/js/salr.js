@@ -214,7 +214,7 @@ SALR.prototype.updateStyling = function() {
                 jQuery(this).css("padding-right", "11px");
                 jQuery(this).css("background-image", "url('" + other.base_image_uri + "lastpost.png')");
 
-                if (settings.inlinePostCounts) {
+                if (that.settings.inlinePostCounts) {
                     jQuery('div.lastseen', thread).each(function() {
                         // Add in number of new replies
                         var currentHtml = jQuery(this).html();
@@ -268,8 +268,8 @@ SALR.prototype.updateStyling = function() {
         if (thread.attr('class') == 'thread seen') {
             // If the thread has new posts, display the green shade,
             // otherwise show the blue shade
-            var darkShade = (newPosts) ? settings.darkNewReplies : settings.darkRead;
-            var lightShade = (newPosts) ? settings.lightNewReplies : settings.lightRead;
+            var darkShade = (newPosts) ? that.settings.darkNewReplies : that.settings.darkRead;
+            var lightShade = (newPosts) ? that.settings.lightNewReplies : that.settings.lightRead;
 
             // Thread icon, author, view count, and last post
             jQuery(this).children('td.icon, td.author, td.views, td.lastpost').each(function() {
@@ -293,12 +293,12 @@ SALR.prototype.updateStyling = function() {
         }
 
         // Send threads without unread posts to the end of the list
-        if (!newPosts && settings.displayNewPostsFirst) {
+        if (!newPosts && that.settings.displayNewPostsFirst) {
             thread.parent().append(thread);
         }
     });
 	
-	if(settings.displayConfigureSalr) {
+	if(this.settings.displayConfigureSalr) {
 		jQuery('#navigation li.first').next('li').next('li').after(" - <a id='configure' href='#'>Configure SALR</a>");
 	}
 	
@@ -307,7 +307,7 @@ SALR.prototype.updateStyling = function() {
 	});
     
     // Hide header/footer links
-    if (settings.hideHeaderLinks) {
+    if (this.settings.hideHeaderLinks) {
         jQuery('div#globalmenu').each(function() {
             jQuery(this).html('');
             jQuery(this).css('height', '0px');
@@ -320,7 +320,7 @@ SALR.prototype.updateStyling = function() {
     }
 
     // Hide the advertisements
-    if (settings.hideAdvertisements) {
+    if (this.settings.hideAdvertisements) {
         jQuery('div.oma_pal').each(function() {
             jQuery(this).remove();
         });
@@ -333,22 +333,22 @@ SALR.prototype.updateStyling = function() {
 
 SALR.prototype.modifyImages = function() {
 	// Replace Links with Images
-	if (settings.replaceLinksWithImages) {
+	if (this.settings.replaceLinksWithImages) {
 
 		var subset = jQuery('.postbody a');
 
 		//NWS/NMS links
-		if(settings.dontReplaceLinkNWS)
+		if(this.settings.dontReplaceLinkNWS)
 		{
 			subset = subset.not(".postbody:has(img[title=':nws:']) a").not(".postbody:has(img[title=':nms:']) a");
 		}
 
 		//
-		if(settings.dontReplaceLinkSpoiler) {
+		if(this.settings.dontReplaceLinkSpoiler) {
 			subset = subset.not('.bbc-spoiler a');	
 		}
 
-		if(settings.dontReplaceLinkRead) {
+		if(this.settings.dontReplaceLinkRead) {
 			subset = subset.not('.seen1 a').not('.seen2 a');
 		}
 
@@ -363,10 +363,10 @@ SALR.prototype.modifyImages = function() {
 	}
 
 	// Replace inline Images with Links
-	if (settings.replaceImagesWithLinks) {
+	if (this.settings.replaceImagesWithLinks) {
 		var subset = jQuery('.postbody img');
 		
-		if(settings.replaceImagesReadOnly) {
+		if(this.settings.replaceImagesReadOnly) {
 			subset = subset.filter('.seen1 img, .seen2 img');
 		}
 		
@@ -382,7 +382,7 @@ SALR.prototype.modifyImages = function() {
 		});
 	}
 
-	if (settings.restrictImageSize) {
+	if (this.settings.restrictImageSize) {
 		jQuery('.postbody img').each(function() {
             var width = jQuery(this).width();
             var height = jQuery(this).height();
@@ -410,7 +410,7 @@ SALR.prototype.modifyImages = function() {
 SALR.prototype.skimModerators = function() {
     var modList;
     var modupdate = false;
-    if (settings.modList == null) {
+    if (this.settings.modList == null) {
         // Seed administrators. Is there a list for them?
         modList = { "12831" : {'username' :  'elpintogrande', 'mod' : 'A'},
                     "16393" : {'username' :  'Fistgrrl', 'mod' : 'A'},
@@ -428,7 +428,7 @@ SALR.prototype.skimModerators = function() {
                    };
         modupdate = true;
     } else {
-        modList = JSON.parse(settings.modList);
+        modList = JSON.parse(this.settings.modList);
     }
 
     // TODO: How can you tell if a mod has been demodded?
@@ -467,9 +467,11 @@ SALR.prototype.skimModerators = function() {
 };
 
 SALR.prototype.inlineYoutubes = function() {
+    var that = this;
+
 	//sort out youtube links
 	jQuery('.postbody a[href*="youtube.com"]').each(function() {
-			jQuery(this).css("background-color", settings.youtubeHighlight).addClass("salr-video");
+			jQuery(this).css("background-color", that.settings.youtubeHighlight).addClass("salr-video");
 	});
 	
 	jQuery(".salr-video").toggle(function(){ 
@@ -576,7 +578,8 @@ SALR.prototype.updateFriendsList = function() {
  * Highlight the posts of friends
  */
 SALR.prototype.highlightFriendPosts = function() {
-    var friends = JSON.parse(settings.friendsList);
+    var that = this;
+    var friends = JSON.parse(this.settings.friendsList);
     var selector = '';
 
     if (friends == 0) {
@@ -593,7 +596,7 @@ SALR.prototype.highlightFriendPosts = function() {
     jQuery('table.post:has('+selector+') td').each(function () {
         jQuery(this).css({
             'border-collapse' : 'collapse',
-            'background-color' : settings.highlightFriendsColor
+            'background-color' : that.settings.highlightFriendsColor
         });
     });
 };
@@ -602,10 +605,12 @@ SALR.prototype.highlightFriendPosts = function() {
  * Highlight the posts by the OP
  */
 SALR.prototype.highlightOPPosts = function() {
+    var that = this;
+
     jQuery('table.post:has(dt.author.op) td').each(function () {
         jQuery(this).css({
             'border-collapse' : 'collapse',
-            'background-color' : settings.highlightOPColor
+            'background-color' : that.settings.highlightOPColor
         });
     });
 };
@@ -614,10 +619,12 @@ SALR.prototype.highlightOPPosts = function() {
  * Highlight the posts by one self
  */
 SALR.prototype.highlightOwnPosts = function() {
-    jQuery("table.post:has(dt.author:econtains('"+settings.username+"')) td").each(function () {
+    var that = this;
+
+    jQuery("table.post:has(dt.author:econtains('"+that.settings.username+"')) td").each(function () {
         jQuery(this).css({
             'border-collapse' : 'collapse',
-            'background-color' : settings.highlightSelfColor
+            'background-color' : that.settings.highlightSelfColor
         });
     });
 };
@@ -646,10 +653,12 @@ SALR.prototype.highlightModAdminPosts = function() {
  * on the forum display page
  */
 SALR.prototype.highlightModAdminForumDisplay = function() {
-    if (settings.modList == null)
+    var that = this;
+
+    if (this.settings.modList == null)
         return;
 
-    var modList = JSON.parse(settings.modList);
+    var modList = JSON.parse(this.settings.modList);
 
     // Highlight mods and admin thread OPs on forumdisplay.php
     jQuery('td.author > a').each(function() {
@@ -658,10 +667,10 @@ SALR.prototype.highlightModAdminForumDisplay = function() {
             var color;
             switch (modList[userid].mod) {
                 case 'M':
-                    color = settings.highlightModeratorColor;
+                    color = that.settings.highlightModeratorColor;
                     break;
                 case 'A':
-                    color = settings.highlightAdminColor;
+                    color = that.settings.highlightAdminColor;
                     break;
             }
             jQuery(this).css('color', color);
@@ -678,10 +687,10 @@ SALR.prototype.highlightModAdminForumDisplay = function() {
                 var color;
                 switch (modList[userid].mod) {
                     case 'M':
-                        color = settings.highlightModeratorColor;
+                        color = that.settings.highlightModeratorColor;
                         break;
                     case 'A':
-                        color = settings.highlightAdminColor;
+                        color = that.settings.highlightAdminColor;
                         break;
                 }
                 jQuery(this).css('color', color);
@@ -697,26 +706,28 @@ SALR.prototype.highlightModAdminForumDisplay = function() {
  * on the thread display page
  */
 SALR.prototype.highlightModAdminShowThread = function() {
-    if (!settings.highlightModAdminUsername) {
+    var that = this;
+
+    if (!this.settings.highlightModAdminUsername) {
         jQuery('table.post:has(dt.author:has(img[title="Moderator"])) td').each(function () {
             jQuery(this).css({
                 'border-collapse' : 'collapse',
-                'background-color' : settings.highlightModeratorColor
+                'background-color' : that.settings.highlightModeratorColor
             });
         });
         jQuery('table.post:has(dt.author:has(img[title="Admin"])) td').each(function () {
             jQuery(this).css({
                 'border-collapse' : 'collapse',
-                'background-color' : settings.highlightAdminColor
+                'background-color' : that.settings.highlightAdminColor
             });
         });
     } else {
         jQuery('dt.author > img[title="Moderator"]').each(function() {
-            jQuery(this).parent().css('color', settings.highlightModeratorColor);
+            jQuery(this).parent().css('color', that.settings.highlightModeratorColor);
         });
 
         jQuery('dt.author > img[title="Admin"]').each(function() {
-            jQuery(this).parent().css('color', settings.highlightAdminColor);
+            jQuery(this).parent().css('color', that.settings.highlightAdminColor);
         });
     }
 };
@@ -726,10 +737,12 @@ SALR.prototype.highlightModAdminShowThread = function() {
  * on the who posted page
  */
 SALR.prototype.highlightModAdminWhoPosted = function() {
-    if (settings.modList == null)
+    var that = this;
+
+    if (this.settings.modList == null)
         return;
 
-    var modList = JSON.parse(settings.modList);
+    var modList = JSON.parse(this.settings.modList);
 
     jQuery('a[href*=member.php]').each(function() {
         var userid = jQuery(this).attr('href').split('userid=')[1];
@@ -737,10 +750,10 @@ SALR.prototype.highlightModAdminWhoPosted = function() {
             var color;
             switch (modList[userid].mod) {
                 case 'M':
-                    color = settings.highlightModeratorColor;
+                    color = that.settings.highlightModeratorColor;
                     break;
                 case 'A':
-                    color = settings.highlightAdminColor;
+                    color = that.settings.highlightAdminColor;
                     break;
             }
             jQuery(this).css('color', color);
@@ -756,8 +769,8 @@ SALR.prototype.updateForumsList = function() {
     var forums = new Array();
 
     var stickyList = new Array();
-    if (settings.forumsList != null) {
-        var oldForums = JSON.parse(settings.forumsList);
+    if (this.settings.forumsList != null) {
+        var oldForums = JSON.parse(this.settings.forumsList);
         for(i in oldForums) {
             stickyList[oldForums[i].id] = oldForums[i].sticky;
         }
@@ -802,7 +815,7 @@ SALR.prototype.updateUsernameFromCP = function() {
 SALR.prototype.displayUserNotes = function() {
     var notes;
 
-    if (settings.userNotes == null) {
+    if (this.settings.userNotes == null) {
         notes = { "50339" : {'text' : 'SALR Developer', 'color' : '#9933FF'},   // Sebbe
                   "3882420" : {'text' : 'SALR Developer', 'color' : '#9933FF'}, // Onoj
                   "156041" : {'text' : 'SALR Developer', 'color' : '#9933FF'},  // wmbest2
@@ -811,7 +824,7 @@ SALR.prototype.displayUserNotes = function() {
                            'option' : 'userNotes',
                            'value'  : JSON.stringify(notes) });
     } else {
-        notes = JSON.parse(settings.userNotes);
+        notes = JSON.parse(this.settings.userNotes);
     }
 
     jQuery('body').append("<div id='salr-usernotes-config' title='Set note' style='display: none'>"+
@@ -891,9 +904,11 @@ SALR.prototype.boxQuotes = function() {
  * Highlight the user's username in posts
  */
 SALR.prototype.highlightOwnUsername = function() {
-    var selector = 'td.postbody:contains("'+settings.username+'")';
+    var that = this;
+
+    var selector = 'td.postbody:contains("'+this.settings.username+'")';
     jQuery(selector).each(function() {
-        jQuery(this).html(jQuery(this).html().replace(settings.username, '<span class="usernameHighlight" style="font-weight: bold; color: ' + settings.usernameHighlight + ';">' + settings.username + '</span>'));
+        jQuery(this).html(jQuery(this).html().replace(that.settings.username, '<span class="usernameHighlight" style="font-weight: bold; color: ' + that.settings.usernameHighlight + ';">' + that.settings.username + '</span>'));
     });
 };
 
@@ -901,8 +916,10 @@ SALR.prototype.highlightOwnUsername = function() {
  * Highlight the quotes of the user themselves.
  */
 SALR.prototype.highlightOwnQuotes = function() {
-    jQuery('.bbc-block h4:contains(' + settings.username + ')').each(function() {
-        jQuery(this).parent().css("background-color", settings.userQuote);
+    var that = this;
+
+    jQuery('.bbc-block h4:contains(' + this.settings.username + ')').each(function() {
+        jQuery(this).parent().css("background-color", that.settings.userQuote);
 
         // Replace the styling from username highlighting
         var that = jQuery(this);
@@ -968,9 +985,9 @@ SALR.prototype.findFormKey = function() {
  *  the post contains a quote of the current user.
  **/
 SALR.prototype.quoteNotEditProtection = function() {
-    if(settings.username){
-        if(jQuery("textarea[name='message']:contains('quote=\"" + settings.username + "\"')").length > 0 ||
-            jQuery('table.post:first tr > td.userinfo > dl > dt.author:contains("' + settings.username + '")').length > 0)
+    if(this.settings.username){
+        if(jQuery("textarea[name='message']:contains('quote=\"" + this.settings.username + "\"')").length > 0 ||
+            jQuery('table.post:first tr > td.userinfo > dl > dt.author:contains("' + this.settings.username + '")').length > 0)
         {
             jQuery("#main_full").after("<div class='qne_warn'><h4>Warning! Possible Quote/Edit mixup.</h4></div>");
         }
@@ -1004,7 +1021,7 @@ SALR.prototype.threadNotes = function() {
     jQuery('#container').data('showThreadNotes', true);
     
     var notes;
-    if(settings.threadNotes == null)
+    if(this.settings.threadNotes == null)
     {
        	notes = new Object();
        	postMessage({
@@ -1014,7 +1031,7 @@ SALR.prototype.threadNotes = function() {
 		});
     }
     else {
-    	notes = JSON.parse(settings.threadNotes);
+    	notes = JSON.parse(this.settings.threadNotes);
     }
     var basePageID = findForumID();
     var hasNote = notes[String(basePageID)] != null;
