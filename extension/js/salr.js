@@ -221,8 +221,11 @@ SALR.prototype.updateStyling = function() {
             
                         // Strip HTML tags
                         newPostCount = parseInt(newPostCount.replace(/(<([^>]+)>)/ig, ""));
-                        // Set the HTML value
-                        jQuery(this).html("<div style='font-size: 12px; float: left; margin-top: 4px; padding-right: 4px;'>(" + newPostCount + ")</div>" + currentHtml);
+
+                        if (newPostCount) {
+                            // Set the HTML value
+                            jQuery(this).html("<div style='font-size: 12px; float: left; margin-top: 4px; padding-right: 4px;'>(" + newPostCount + ")</div>" + currentHtml);
+                        }
                     });
                 } else {
                     // Display number of new replies for each thread
@@ -232,8 +235,11 @@ SALR.prototype.updateStyling = function() {
             
                         // Strip HTML tags
                         newPostCount = parseInt(newPostCount.replace(/(<([^>]+)>)/ig, ""));
-                        // Set the HTML value
-                        jQuery(this).html(currentHtml + "<br /><div style='font-size: 12px;'>(" + newPostCount + ")</div>");
+
+                        if (newPostCount) {
+                            // Set the HTML value
+                            jQuery(this).html(currentHtml + "<br /><div style='font-size: 12px;'>(" + newPostCount + ")</div>");
+                        }
                     });
                 }
             });
