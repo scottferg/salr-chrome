@@ -827,6 +827,7 @@ SALR.prototype.displayUserNotes = function() {
     if (this.settings.userNotes == null) {
         notes = { "50339" : {'text' : 'SALR Developer', 'color' : '#9933FF'},   // Sebbe
                   "3882420" : {'text' : 'SALR Developer', 'color' : '#9933FF'}, // Onoj
+                  "143511" : {'text' : 'SALR Developer', 'color' : '#9933FF'},  // Sneaking Mission
                   "156041" : {'text' : 'SALR Developer', 'color' : '#9933FF'},  // wmbest2
                   "115838" : {'text' : 'SALR Developer', 'color' : '#9933FF'}}; // Ferg
         postMessage({ 'message': 'ChangeSetting',
@@ -916,8 +917,9 @@ SALR.prototype.highlightOwnUsername = function() {
     var that = this;
 
     var selector = 'td.postbody:contains("'+this.settings.username+'")';
+    var re = new RegExp(this.settings.username, 'g');
     jQuery(selector).each(function() {
-        jQuery(this).html(jQuery(this).html().replace(that.settings.username, '<span class="usernameHighlight" style="font-weight: bold; color: ' + that.settings.usernameHighlight + ';">' + that.settings.username + '</span>'));
+        jQuery(this).html(jQuery(this).html().replace(re, '<span class="usernameHighlight" style="font-weight: bold; color: ' + that.settings.usernameHighlight + ';">' + that.settings.username + '</span>'));
     });
 };
 
