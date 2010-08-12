@@ -41,14 +41,9 @@ function handleScriptQuery(message_event) {
             openNewTab(data.url);
             break;
         case 'GetPageSettings':
-            // Respond with the username
-            message_event.target.page.dispatchMessage('result', getPageSettings());
-            break;
-        case 'GetForumsJumpList':
-            // TODO: Response overkill here
-            message_event.target.page.dispatchMessage('result', getPageSettings());
-            break;
         case 'GetSALRSettings':
+        case 'GetForumsJumpList':
+            // Respond with the username
             message_event.target.page.dispatchMessage('result', getPageSettings());
             break;
         case 'ChangeSALRSetting':
@@ -96,7 +91,6 @@ function setupDefaultPreferences() {
     safari.extension.settings.setItem('darkNewReplies', '#99cc99');
     safari.extension.settings.setItem('lightNewReplies', '#ccffcc');
     safari.extension.settings.setItem('youtubeHighlight', '#ff00ff');
-    safari.extension.settings.setItem('displayConfigureSalr', 'true');
     safari.extension.settings.setItem('highlightFriendsColor', "#f2babb");
     safari.extension.settings.setItem('highlightSelfColor', "#f2babb");
     safari.extension.settings.setItem('highlightAdminColor', "#ff7256");
@@ -120,7 +114,7 @@ function getPageSettings() {
 
     var response = {};
 
-    for ( var index in safari.extension.settings ) {
+    for (var index in safari.extension.settings) {
         response[index] = safari.extension.settings.getItem(index);
     }
 

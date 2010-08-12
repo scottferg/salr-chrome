@@ -26,7 +26,19 @@
 var salr_client = {}
 
 function handleSettings(message_event) {
-    var settings = message_event.message;
+    var settings = {};
+    var message = message_event.message;
+
+    // Safari uses real booleans, Chrome does not
+    for (var index in message) {
+        if (message[index] == true) {
+            message[index] = 'true';
+        } else if (message[index] == false) {
+            message[index] = 'false';
+        }
+
+        settings[index] = message[index];
+    }
 
     salr_client = new SALR(settings, safari.extension.baseURI + "images/");
 }
