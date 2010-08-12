@@ -27,6 +27,8 @@ function SALR(settings, base_image_uri) {
     this.settings = settings;
     this.base_image_uri = base_image_uri;
 
+    console.log(this.settings);
+
     this.pageNavigator = null;
     this.quickReply = null;
     this.mouseGesturesContoller = null;
@@ -874,7 +876,7 @@ SALR.prototype.displayUserNotes = function() {
                     "Delete" : function () {
                         delete notes[userid];
                         // TODO: Fix this
-                        port.postMessage({ 'message': 'ChangeSetting',
+                        postMessage({ 'message': 'ChangeSetting',
                                            'option' : 'userNotes',
                                            'value'  : JSON.stringify(notes) });
                         jQuery(this).dialog('destroy');                    
@@ -984,7 +986,7 @@ SALR.prototype.findFormKey = function() {
     var that = this;
 
     jQuery('input[name="formkey"]').each(function() {
-        that.post({ 'message': 'ChangeSetting',
+        postMessage({ 'message': 'ChangeSetting',
                            'option' : 'forumPostKey',
                            'value'  : jQuery(this).attr('value') });
     });
@@ -1070,8 +1072,7 @@ SALR.prototype.threadNotes = function() {
     		buttons: {
     			"Save" : function() {
     				notes[String(basePageID)] = jQuery('#salr-threadnotes-text').val();
-                    // TODO: Fix this
-    				port.postMessage({ 'message': 'ChangeSetting',
+    				postMessage({ 'message': 'ChangeSetting',
                                        'option' : 'threadNotes',
                                        'value'  : JSON.stringify(notes) });
     				
@@ -1082,7 +1083,7 @@ SALR.prototype.threadNotes = function() {
     			"Delete": function() { 
     				delete notes[String(basePageID)];
                     // TODO: Fix this
-    				port.postMessage({ 'message': 'ChangeSetting',
+    				postMessage({ 'message': 'ChangeSetting',
                                        'option' : 'threadNotes',
                                        'value'  : JSON.stringify(notes) });
     				hasNote = false;
