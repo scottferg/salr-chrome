@@ -23,7 +23,7 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-function HotKeyManager() {
+function HotKeyManager(quickReply) {
     /*****************
      N - Next Post
      P/M - Previous Post
@@ -34,6 +34,7 @@ function HotKeyManager() {
      E - Quick Edit current post
      R - Quick Reply current thread
     *******************/
+    this.quickReply = quickReply;
     this.bindHotKeys();
     
     jQuery(document).data("enableSALRHotkeys", true);
@@ -55,7 +56,7 @@ HotKeyManager.prototype.bindHotKeys = function() {
             return;
 
         /*if (findCurrentPage() == 'showthread.php') {
-            if (quickReply.isExpanded() || quickReply.isVisible()) {
+            if (this.quickReply.isExpanded() || this.quickReply.isVisible()) {
                 quick_reply_block = true;
             }
         }
@@ -281,18 +282,18 @@ HotKeyManager.prototype.quoteCurrentPost = function() {
     // Query for the quote
     var quote = jQuery('tr > td.postbody', current_post).clone();
 
-    quickReply.appendQuote(username, quote);
-    quickReply.show();
+    this.quickReply.appendQuote(username, quote);
+    this.quickReply.show();
 };
 
 HotKeyManager.prototype.displayQuickReply = function() {
     if (findCurrentPage() == 'showthread.php') {
-        quickReply.show();
+        this.quickReply.show();
     }
 };
 
 HotKeyManager.prototype.hideQuickReply = function() {
     if (findCurrentPage() == 'showthread.php') {
-        quickReply.hide();
+        this.quickReply.hide();
     }
 };
