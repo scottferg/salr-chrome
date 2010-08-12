@@ -36,18 +36,7 @@ var salr_client = {}
 var port = chrome.extension.connect();
 
 port.onMessage.addListener(function(data) {
-    settings = {}
-
-    for (var index in data) {
-        // Use real booleans
-        if (data[index] == 'true') {
-            data[index] = true;
-        } else if (data[index] == 'false') {
-            data[index] = false;
-        }
-
-        settings[index] = data[index];
-    }
+    var settings = data;
 
     salr_client = new SALR(settings, chrome.extension.getURL("images/"));
 });
