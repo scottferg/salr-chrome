@@ -39,6 +39,7 @@
 				<string>js/page-navigator.js</string>
 				<string>js/salr.js</string>
 				<string>js/jquery/colorpicker.js</string>
+				<string>js/background.js</string>
 			</array>
 		</dict>
 		<key>Stylesheets</key>

@@ -25,6 +25,12 @@
 
 var salr_client = {}
 
+function handleSettings(message_event) {
+    var settings = message_event.message;
+
+    salr_client = new SALR(settings, safari.extension.baseURI + "images/");
+}
+
 /**
  * Event listener for when a user enters their username within
  * the extension UI.  Currently this only works when you're
@@ -33,29 +39,12 @@ var salr_client = {}
  * within the extension.
  *
  */
-var port = chrome.extension.connect();
+safari.self.addEventListener('message', handleSettings, false);
 
-port.onMessage.addListener(function(data) {
-    settings = {}
-
-    for (var index in data) {
-        // Use real booleans
-        if (data[index] == 'true') {
-            data[index] = true;
-        } else if (data[index] == 'false') {
-            data[index] = false;
-        }
-
-        settings[index] = data[index];
-    }
-
-    salr_client = new SALR(settings, chrome.extension.getURL("images/"));
-});
-
-// Request the settings from the extension
-port.postMessage({'message': 'GetPageSettings'});
+// Request the username from the extension UI
+safari.self.tab.dispatchMessage('message', {'message': 'GetPageSettings'});
 
 // Gateway method for components to post to the extension
 function postMessage(message_object) {
-    port.postMessage(message_object);
+    safari.self.tab.dispatchMessage('message', message_object);
 }

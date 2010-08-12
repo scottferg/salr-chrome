@@ -192,7 +192,7 @@ SALR.prototype.updateStyling = function() {
         var thread = jQuery(this);
         var newPosts = false;
 
-        if (settings.disableCustomButtons != 'true') {
+        if (this.settings.disableCustomButtons != 'true') {
 
             // Re-style the new post count link
             jQuery('a.count', thread).each(function() {

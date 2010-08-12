@@ -28,13 +28,9 @@
  *
  */
 function handleScriptQuery(message_event) {
-    console.log(message_event);
-    var message = message_event.name;
     var data = message_event.message;
 
-    console.log(message);
-
-    switch (message) {
+    switch (data.message) {
         case 'OpenSettings':
             onToolbarClick();
             break;
