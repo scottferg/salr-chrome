@@ -97,16 +97,20 @@ HotKeyManager.prototype.bindHotKeys = function() {
                     break;
                 case 113:
                     // Quick quote current post
-                    that.quoteCurrentPost();
-                    event.preventDefault();
+                    if (findCurrentPage() == 'showthread.php') {
+                        that.quoteCurrentPost();
+                        event.preventDefault();
+                    }
                     break;
                 case 101:
                     // Quick edit current post
                     break;
                 case 114:
                     // TODO: Conditionalize on quick reply being enabled
-                    that.displayQuickReply();
-                    event.preventDefault();
+                    if (findCurrentPage() == 'showthread.php') {
+                        that.displayQuickReply();
+                        event.preventDefault();
+                    }
                     break;
                 case 27:
                     // TODO: Conditionalize on quick reply being enabled
