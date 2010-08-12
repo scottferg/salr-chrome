@@ -27,8 +27,6 @@ function SALR(settings, base_image_uri) {
     this.settings = settings;
     this.base_image_uri = base_image_uri;
 
-    console.log(this.settings);
-
     this.pageNavigator = null;
     this.quickReply = null;
     this.mouseGesturesContoller = null;
@@ -104,7 +102,7 @@ SALR.prototype.pageInit = function() {
 
             if (this.settings.enableQuickReply == 'true') {
                 if (this.settings.forumPostKey) {
-                    this.quickReply = new QuickReplyBox(this.settings.forumPostKey, this.base_image_uri);
+                    this.quickReply = new QuickReplyBox(this.settings.forumPostKey, this.base_image_uri, this.settings.quickReplyBookmark == 'true');
                     this.bindQuickReply();
                 }
             }
