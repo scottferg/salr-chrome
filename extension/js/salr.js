@@ -111,7 +111,7 @@ SALR.prototype.pageInit = function() {
                 this.threadNotes();
             }
 
-            if (this.settings.searchThreadHide != 'true') {
+            if (!this.settings.searchThreadHide) {
                 this.addSearchThreadForm();
             }
 
@@ -192,7 +192,7 @@ SALR.prototype.updateStyling = function() {
         var thread = jQuery(this);
         var newPosts = false;
 
-        if (settings.disableCustomButtons != 'true') {
+        if (!this.settings.disableCustomButtons) {
 
             // Re-style the new post count link
             jQuery('a.count', thread).each(function() {
@@ -544,7 +544,7 @@ SALR.prototype.renderOpenUpdatedThreadsButton = function() {
             jQuery('tr.thread').each( function() {
                 var img_split = jQuery('td.star > img', this).attr('src').split('/');
                 var img_name = img_split[img_split.length-1];
-                if (settings.ignore_bookmark_star != img_name) {
+                if (this.settings.ignore_bookmark_star != img_name) {
                     if (jQuery('a[class*=count]', this).length > 0) {
                         var href = jQuery('a[class*=count]', this).attr('href');
                         // TODO: Fix this
@@ -697,7 +697,7 @@ SALR.prototype.highlightModAdminForumDisplay = function() {
  * on the thread display page
  */
 SALR.prototype.highlightModAdminShowThread = function() {
-    if (settings.highlightModAdminUsername != "true") {
+    if (!settings.highlightModAdminUsername) {
         jQuery('table.post:has(dt.author:has(img[title="Moderator"])) td').each(function () {
             jQuery(this).css({
                 'border-collapse' : 'collapse',
@@ -789,7 +789,7 @@ SALR.prototype.updateForumsList = function() {
 SALR.prototype.updateUsernameFromCP = function() {
     var titleText = jQuery('title').text();
     var username = titleText.match(/- User Control Panel For (.+)/)[1];
-    if (settings.username != username) {
+    if (this.settings.username != username) {
         postMessage({ 'message' : 'ChangeSetting',
                            'option'  : 'username',
                            'value'   : username });
