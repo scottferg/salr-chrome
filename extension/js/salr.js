@@ -142,7 +142,9 @@ SALR.prototype.pageInit = function() {
 
             break;
         case 'bookmarkthreads.php':
-            this.renderOpenUpdatedThreadsButton();
+            if (this.settings.openAllUnreadLink == 'true') {
+                this.renderOpenUpdatedThreadsButton();
+            }
 
             if (this.settings.highlightModAdmin == 'true') {
                 this.highlightModAdminPosts();
