@@ -53,8 +53,10 @@ function handleSettings(message_event) {
  */
 safari.self.addEventListener('message', handleSettings, false);
 
-// Request the username from the extension UI
-safari.self.tab.dispatchMessage('message', {'message': 'GetPageSettings'});
+if (window.top === window) {
+    // Request the username from the extension UI
+    safari.self.tab.dispatchMessage('message', {'message': 'GetPageSettings'});
+}
 
 // Gateway method for components to post to the extension
 function postMessage(message_object) {

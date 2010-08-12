@@ -27,8 +27,6 @@ function SALR(settings, base_image_uri) {
     this.settings = settings;
     this.base_image_uri = base_image_uri;
 
-    console.log(settings);
-
     this.pageNavigator = null;
     this.quickReply = null;
     this.mouseGesturesContoller = null;
