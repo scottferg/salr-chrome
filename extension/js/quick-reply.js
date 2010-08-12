@@ -277,6 +277,9 @@ QuickReplyBox.prototype.parseQuote = function(quote_string) {
             jQuery(this).replaceWith(emoticon);
         } else {
             var image_path = jQuery(this).attr('src');
+            var match = image_path.match(/^attachment\.php\?postid=(\d+)$/);
+            if (match)
+                image_path = 'http://forums.somethingawful.com/'+image_path;
             jQuery(this).replaceWith('[timg]' + image_path + '[/timg]');
         }
     });
