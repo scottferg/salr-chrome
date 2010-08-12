@@ -48,70 +48,70 @@ SALR.prototype.pageInit = function() {
     switch (findCurrentPage()) {
         case '':
         case 'index.php':
-            if (this.settings.highlightModAdmin) {
+            if (this.settings.highlightModAdmin == 'true') {
                 this.skimModerators();
             }
 
             break;
         case 'forumdisplay.php':
         case 'showthread.php':
-            if (this.settings.inlineVideo) {
+            if (this.settings.inlineVideo == 'true') {
                 this.inlineYoutubes();
             }
 
-            if (this.settings.displayPageNavigator) {
+            if (this.settings.displayPageNavigator == 'true') {
                 this.pageNavigator = new PageNavigator(this.base_image_uri);
             }
 
             this.updateForumsList();
             
-            if (this.settings.highlightFriends) {
+            if (this.settings.highlightFriends == 'true') {
                 this.highlightFriendPosts();    
             }
         
-            if (this.settings.highlightOP) {
+            if (this.settings.highlightOP == 'true') {
                 this.highlightOPPosts();    
             }
 
-            if (this.settings.highlightSelf) {
+            if (this.settings.highlightSelf == 'true') {
                 this.highlightOwnPosts();
             }
 
-            if (this.settings.highlightModAdmin) {
+            if (this.settings.highlightModAdmin == 'true') {
                 this.skimModerators();
                 this.highlightModAdminPosts();
             }
 
-            if (this.settings.enableUserNotes) {
+            if (this.settings.enableUserNotes == 'true') {
                 this.displayUserNotes();
             }
 
-            if (this.settings.boxQuotes) {
+            if (this.settings.boxQuotes == 'true') {
                 this.boxQuotes();
             }
 
-            if (this.settings.highlightOwnUsername) {
+            if (this.settings.highlightOwnUsername == 'true') {
                 this.highlightOwnUsername();
             }
 
-            if (this.settings.highlightOwnQuotes) {
+            if (this.settings.highlightOwnQuotes == 'true') {
                 this.highlightOwnQuotes();
             }
 
             this.displaySinglePostLink();
 
-            if (this.settings.enableQuickReply) {
+            if (this.settings.enableQuickReply == 'true') {
                 if (this.settings.forumPostKey) {
                     this.quickReply = new QuickReplyBox(this.settings.forumPostKey, this.base_image_uri);
                     this.bindQuickReply();
                 }
             }
             
-            if (this.settings.enableThreadNotes) {
+            if (this.settings.enableThreadNotes == 'true') {
                 this.threadNotes();
             }
 
-            if (!this.settings.searchThreadHide) {
+            if (!this.settings.searchThreadHide == 'true') {
                 this.addSearchThreadForm();
             }
 
@@ -123,7 +123,7 @@ SALR.prototype.pageInit = function() {
                 this.findFormKey();
             }
             
-            if (this.settings.qneProtection) {
+            if (this.settings.qneProtection == 'true') {
                 this.quoteNotEditProtection();
             }
 
@@ -132,11 +132,11 @@ SALR.prototype.pageInit = function() {
             this.updateUsernameFromCP();
             this.updateFriendsList();
 
-            if (this.settings.openAllUnreadLink) {
+            if (this.settings.openAllUnreadLink == 'true') {
                 this.renderOpenUpdatedThreadsButton();
             }
 
-            if (this.settings.highlightModAdmin) {
+            if (this.settings.highlightModAdmin == 'true') {
                 this.highlightModAdminPosts();
             }
 
@@ -144,7 +144,7 @@ SALR.prototype.pageInit = function() {
         case 'bookmarkthreads.php':
             this.renderOpenUpdatedThreadsButton();
 
-            if (this.settings.highlightModAdmin) {
+            if (this.settings.highlightModAdmin == 'true') {
                 this.highlightModAdminPosts();
             }
 
@@ -161,15 +161,15 @@ SALR.prototype.pageInit = function() {
         this.pageNavigator.display();
     }
 
-    if (this.settings.enableMouseGestures) {
+    if (this.settings.enableMouseGestures == 'true') {
         this.mouseGesturesController = new MouseGesturesController(this.base_image_uri);
     }
 
-    if (this.settings.enableKeyboardShortcuts) {
+    if (this.settings.enableKeyboardShortcuts == 'true') {
         this.hotKeyManager = new HotKeyManager();
     }
 
-    if (this.settings.displayOmnibarIcon) {
+    if (this.settings.displayOmnibarIcon == 'true') {
         // Display the page action
         postMessage({
             'message': 'ShowPageAction'
@@ -192,7 +192,7 @@ SALR.prototype.updateStyling = function() {
         var thread = jQuery(this);
         var newPosts = false;
 
-        if (!this.settings.disableCustomButtons) {
+        if (that.settings.disableCustomButtons == 'false') {
 
             // Re-style the new post count link
             jQuery('a.count', thread).each(function() {
@@ -214,7 +214,7 @@ SALR.prototype.updateStyling = function() {
                 jQuery(this).css("padding-right", "11px");
                 jQuery(this).css("background-image", "url('" + other.base_image_uri + "lastpost.png')");
 
-                if (that.settings.inlinePostCounts) {
+                if (that.settings.inlinePostCounts == 'true') {
                     jQuery('div.lastseen', thread).each(function() {
                         // Add in number of new replies
                         var currentHtml = jQuery(this).html();
@@ -293,12 +293,12 @@ SALR.prototype.updateStyling = function() {
         }
 
         // Send threads without unread posts to the end of the list
-        if (!newPosts && that.settings.displayNewPostsFirst) {
+        if (!newPosts && that.settings.displayNewPostsFirst == 'true') {
             thread.parent().append(thread);
         }
     });
 	
-	if(this.settings.displayConfigureSalr) {
+	if(this.settings.displayConfigureSalr == 'true') {
 		jQuery('#navigation li.first').next('li').next('li').after(" - <a id='configure' href='#'>Configure SALR</a>");
 	}
 	
@@ -307,7 +307,7 @@ SALR.prototype.updateStyling = function() {
 	});
     
     // Hide header/footer links
-    if (this.settings.hideHeaderLinks) {
+    if (this.settings.hideHeaderLinks == 'true') {
         jQuery('div#globalmenu').each(function() {
             jQuery(this).html('');
             jQuery(this).css('height', '0px');
@@ -320,7 +320,7 @@ SALR.prototype.updateStyling = function() {
     }
 
     // Hide the advertisements
-    if (this.settings.hideAdvertisements) {
+    if (this.settings.hideAdvertisements == 'true') {
         jQuery('div.oma_pal').each(function() {
             jQuery(this).remove();
         });
@@ -333,22 +333,22 @@ SALR.prototype.updateStyling = function() {
 
 SALR.prototype.modifyImages = function() {
 	// Replace Links with Images
-	if (this.settings.replaceLinksWithImages) {
+	if (this.settings.replaceLinksWithImages == 'true') {
 
 		var subset = jQuery('.postbody a');
 
 		//NWS/NMS links
-		if(this.settings.dontReplaceLinkNWS)
+		if(this.settings.dontReplaceLinkNWS == 'true')
 		{
 			subset = subset.not(".postbody:has(img[title=':nws:']) a").not(".postbody:has(img[title=':nms:']) a");
 		}
 
 		//
-		if(this.settings.dontReplaceLinkSpoiler) {
+		if(this.settings.dontReplaceLinkSpoiler == 'true') {
 			subset = subset.not('.bbc-spoiler a');	
 		}
 
-		if(this.settings.dontReplaceLinkRead) {
+		if(this.settings.dontReplaceLinkRead == 'true') {
 			subset = subset.not('.seen1 a').not('.seen2 a');
 		}
 
@@ -363,10 +363,10 @@ SALR.prototype.modifyImages = function() {
 	}
 
 	// Replace inline Images with Links
-	if (this.settings.replaceImagesWithLinks) {
+	if (this.settings.replaceImagesWithLinks == 'true') {
 		var subset = jQuery('.postbody img');
 		
-		if(this.settings.replaceImagesReadOnly) {
+		if(this.settings.replaceImagesReadOnly == 'true') {
 			subset = subset.filter('.seen1 img, .seen2 img');
 		}
 		
@@ -382,7 +382,7 @@ SALR.prototype.modifyImages = function() {
 		});
 	}
 
-	if (this.settings.restrictImageSize) {
+	if (this.settings.restrictImageSize == 'true') {
 		jQuery('.postbody img').each(function() {
             var width = jQuery(this).width();
             var height = jQuery(this).height();
@@ -531,6 +531,8 @@ SALR.prototype.renderWhoPostedInThreadLink = function() {
  *
  */
 SALR.prototype.renderOpenUpdatedThreadsButton = function() {
+    var that = this;
+
     jQuery('th.title:first').each( function() {
         var headerHTML = jQuery(this).html();
         var updatedHTML = headerHTML + '<div id="open-updated-threads"' +
@@ -543,10 +545,12 @@ SALR.prototype.renderOpenUpdatedThreadsButton = function() {
 
         // Open all updated threads in tabs
         jQuery('#open-updated-threads').click( function() {
+            var other = that;
+
             jQuery('tr.thread').each( function() {
                 var img_split = jQuery('td.star > img', this).attr('src').split('/');
                 var img_name = img_split[img_split.length-1];
-                if (this.settings.ignore_bookmark_star != img_name) {
+                if (other.settings.ignore_bookmark_star != img_name) {
                     if (jQuery('a[class*=count]', this).length > 0) {
                         var href = jQuery('a[class*=count]', this).attr('href');
                         // TODO: Fix this
@@ -708,7 +712,7 @@ SALR.prototype.highlightModAdminForumDisplay = function() {
 SALR.prototype.highlightModAdminShowThread = function() {
     var that = this;
 
-    if (!this.settings.highlightModAdminUsername) {
+    if (!this.settings.highlightModAdminUsername == 'true') {
         jQuery('table.post:has(dt.author:has(img[title="Moderator"])) td').each(function () {
             jQuery(this).css({
                 'border-collapse' : 'collapse',
