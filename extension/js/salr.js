@@ -918,7 +918,7 @@ SALR.prototype.highlightOwnUsername = function() {
     var that = this;
 
     var selector = 'td.postbody:contains("'+this.settings.username+'")';
-    var re = new RegExp(settings.username, 'g');
+    var re = new RegExp(this.settings.username, 'g');
     jQuery(selector).each(function() {
         jQuery(this).html(jQuery(this).html().replace(re, '<span class="usernameHighlight" style="font-weight: bold; color: ' + that.settings.usernameHighlight + ';">' + that.settings.username + '</span>'));
     });
