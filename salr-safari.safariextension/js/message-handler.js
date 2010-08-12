@@ -76,7 +76,7 @@ function onToolbarClick() {
  *
  */
 function openNewTab(aUrl) {
-    var tab = safari.application.activeBrowserWindow.openTab('background').url = aUrl;
+    safari.application.activeBrowserWindow.openTab('background').url = aUrl;
 }
 
 
