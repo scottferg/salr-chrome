@@ -77,7 +77,7 @@ div.color-select {
 }
 
 div.color-select-box {
-    background-image: url('images/select.png');
+    background-image: url('../images/select.png');
     background-position: 50%;
     height: 24px;
     width: 24px;
