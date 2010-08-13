@@ -111,7 +111,7 @@ SALR.prototype.pageInit = function() {
                 this.threadNotes();
             }
 
-            if (!this.settings.searchThreadHide == 'true') {
+            if (this.settings.searchThreadHide != 'true') {
                 this.addSearchThreadForm();
             }
 
@@ -720,7 +720,7 @@ SALR.prototype.highlightModAdminForumDisplay = function() {
 SALR.prototype.highlightModAdminShowThread = function() {
     var that = this;
 
-    if (!this.settings.highlightModAdminUsername == 'true') {
+    if (this.settings.highlightModAdminUsername != 'true') {
         jQuery('table.post:has(dt.author:has(img[title="Moderator"])) td').each(function () {
             jQuery(this).css({
                 'border-collapse' : 'collapse',
