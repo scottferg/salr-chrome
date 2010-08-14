@@ -953,16 +953,12 @@ SALR.prototype.bindQuickReply = function() {
     jQuery('a > img[alt="Quote"]').each(function() {
         jQuery(this).parent().attr('href', 'javascript:;');
 
-        var parentTable = jQuery(this).parent().parent().parent().parent().parent().parent().parent();
-
-        // Query for the username
-        var username = jQuery('tr > td.userinfo > dl > dt.author', parentTable).html();
-        // Query for the quote
-        var quote = jQuery('tr > td.postbody', parentTable).clone();
+        var parentTable = jQuery(this).parents('table.post');
+        var postid = parentTable.attr('id').substr(4);
 
         // Bind the quick reply box to the button
         jQuery(this).parent().click(function() {
-            that.quickReply.appendQuote(username, quote);
+            that.quickReply.appendQuote(postid);
             that.quickReply.show();
 
             /***********TODO: FIX THIS*********

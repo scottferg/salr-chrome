@@ -32,6 +32,7 @@ function QuickReplyBox(forum_post_key, base_image_uri, bookmark) {
     this.forum_post_key = forum_post_key;
     this.base_image_uri = base_image_uri;
     this.bookmark = bookmark;
+    this.reply_url = 'http://forums.somethingawful.com/newreply.php';
 
     this.quickReplyState = {
         expanded: false,
@@ -223,7 +224,7 @@ QuickReplyBox.prototype.fetchFormCookie = function(threadid) {
         return jQuery('input[name="form_cookie"]', html).val();
     };
 
-    jQuery.get('http://forums.somethingawful.com/newreply.php',
+    jQuery.get(this.reply_url,
                {
                    action: 'newreply',
                    threadid: threadid
@@ -239,100 +240,24 @@ QuickReplyBox.prototype.appendText = function(text) {
     jQuery('#post-message').val(current_message + text);
 };
 
-QuickReplyBox.prototype.appendQuote = function(username, quote) {
-
-    username = username || false;
-    quote = this.parseQuote(quote) || false;
-
-    var quote_string = '';
-
-    if (username && quote) {
-        re = RegExp(/\<.*\> &nbsp;/);
-        username = username.replace(re, '');
-        var current_message = jQuery('#post-message').val();
-
-        quote_string += '[quote="' + username + '"]\n' + jQuery.trim(quote) + '\n[/quote]\n\n';
-
-        jQuery('#post-message').val(current_message + quote_string);
-    }
-};
-
-/********Add all quote parsers here*************/
-QuickReplyBox.prototype.parseQuote = function(quote_string) {
-    var result = quote_string;
+QuickReplyBox.prototype.appendQuote = function(postid) {
     var that = this;
 
-    // Remove any quote blocks within the quote
-    jQuery('div.bbc-block', result).each(function() {
-        jQuery(this).remove();
-    });
-
-    // Remove signatures
-    jQuery('p.signature', result).each(function() {
-        jQuery(this).remove();
-    });
-
-    // Remove any "Edited by" messages
-    jQuery('p.editedby', result).each(function() {
-        jQuery(this).remove();
-    });
-
-    jQuery('img', result).each(function() {
-        var emoticon = that.parseSmilies(jQuery(this).attr('title'));
-
-        if (emoticon) {
-            jQuery(this).replaceWith(emoticon);
-        } else {
-            var image_path = jQuery(this).attr('src');
-            var match = image_path.match(/^attachment\.php\?postid=(\d+)$/);
-            if (match)
-                image_path = 'http://forums.somethingawful.com/'+image_path;
-            jQuery(this).replaceWith('[timg]' + image_path + '[/timg]');
-        }
-    });
-
-    jQuery('a', result).each(function() {
-        var label = jQuery(this).html();
-        var url = jQuery(this).attr('href');
-
-        if (label == '') {
-            jQuery(this).replaceWith('[url]' + url + '[/url]');
-        } else {
-            jQuery(this).replaceWith('[url=' + url + ']' + label + '[/url]');
-        }
-    });
-
-    return this.escapeHtml(result.text());
+    // Call up SA's quote page
+    jQuery.get(this.reply_url,
+                {
+                    action: 'newreply',
+                    postid: postid
+                },
+                function(response) {
+                    // Pull quoted text from reply box
+                    var textarea = jQuery(response).find('textarea[name=message]')
+                    var quote = '';
+                    if (textarea.length)
+                        quote = textarea.val();
+                    that.appendText(quote);
+                });
 };
-
-QuickReplyBox.prototype.parseSmilies = function(quote_string) {
-    var result = false;
-    var end_index = quote_string.length - 1;
-
-    var smilies = {
-        ':(': '',
-        ':)': '',
-        ':D': '',
-        ';)': '',
-        ';-*': '',
-    };
-
-    if (quote_string[0] == ':' && quote_string[end_index] == ':') {
-        result = quote_string;
-    } else if (quote_string in smilies) {
-        result = quote_string;
-    }
-
-    return result;
-};
-
-QuickReplyBox.prototype.escapeHtml = function(html) {
-    return html.
-        replace(/&/gmi, '&amp;').
-        replace(/"/gmi, '&quot;').
-        replace(/>/gmi, '&gt;').
-        replace(/</gmi, '&lt;')
-}
 
 QuickReplyBox.prototype.toggleView = function() {
 
