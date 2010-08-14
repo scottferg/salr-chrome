@@ -161,7 +161,11 @@ SALR.prototype.pageInit = function() {
                 this.highlightModAdminPosts();
             }
 
-        break;
+            break;
+        case 'member.php':
+            this.addRapSheetToProfile();
+
+            break;
     }
 
     if (this.pageNavigator) {
@@ -1164,3 +1168,18 @@ SALR.prototype.addSearchThreadForm = function() {
         keywords.val(keywords.val()+' threadid:'+threadid);
     });
 };
+
+/**
+ *
+ *  Add a rap sheet link to user's profiles
+ *
+ **/
+SALR.prototype.addRapSheetToProfile = function() {
+    var link = jQuery('a[href*=userid]:first');
+    var userid = link.attr('href').split('userid=')[1];
+    var el = link.parent().clone();
+    jQuery('a',el).attr('href','http://forums.somethingawful.com/banlist.php?userid='+userid);
+    jQuery('a',el).text('Rap Sheet');
+    link.parent().append(' ');
+    link.parent().append(el);
+}
