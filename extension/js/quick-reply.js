@@ -267,6 +267,11 @@ QuickReplyBox.prototype.parseQuote = function(quote_string) {
         jQuery(this).remove();
     });
 
+    // Remove signatures
+    jQuery('p.signature', result).each(function() {
+        jQuery(this).remove();
+    });
+
     // Remove any "Edited by" messages
     jQuery('p.editedby', result).each(function() {
         jQuery(this).remove();
