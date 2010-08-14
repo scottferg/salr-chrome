@@ -28,6 +28,32 @@
  *
  */
 jQuery(document).ready(function() {
+    // Don't wipe the settings made by previous versions
+    if (localStorage.getItem('username')) {
+        localStorage.setItem('salrInitialized', 'true');
+    }
+
+    // If we don't have stored settings, set defaults
+    if (!localStorage.getItem('salrInitialized')) {
+        localStorage.setItem('userQuote', '#a2cd5a');
+        localStorage.setItem('darkRead', '#6699cc');
+        localStorage.setItem('lightRead', '#99ccff');
+        localStorage.setItem('darkNewReplies', '#99cc99');
+        localStorage.setItem('lightNewReplies', '#ccffcc');
+        localStorage.setItem('youtubeHighlight', '#ff00ff');
+        localStorage.setItem('displayConfigureSalr', 'true');
+        localStorage.setItem('highlightFriendsColor', "#f2babb");
+        localStorage.setItem('highlightSelfColor', "#f2babb");
+        localStorage.setItem('highlightAdminColor', "#ff7256");
+        localStorage.setItem('highlightModeratorColor', "#b4eeb4");
+        localStorage.setItem('inlinePostCounts', 'false');
+        localStorage.setItem('disableCustomButtons', 'false');
+        localStorage.setItem('highlightOPColor', '#fff2aa');
+        localStorage.setItem('displayPageNavigator', 'true');
+        localStorage.setItem('userNotesEnabled', 'true');
+        localStorage.setItem('salrInitialized', 'true');
+    }
+
     // Initialize text entry fields
     jQuery('input.text-entry').each(function() {
         // Pre-populate settings field
