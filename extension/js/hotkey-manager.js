@@ -294,11 +294,9 @@ HotKeyManager.prototype.quoteCurrentPost = function() {
     }
 
     var current_post = jQuery('div#thread > table.post').eq(this.current_post);
-    var username = jQuery('tr > td.userinfo > dl > dt.author', current_post).html();
-    // Query for the quote
-    var quote = jQuery('tr > td.postbody', current_post).clone();
+    var postid = current_post.attr('id').substr(4);
 
-    this.quickReply.appendQuote(username, quote);
+    this.quickReply.appendQuote(postid);
     this.quickReply.show();
 };
 
