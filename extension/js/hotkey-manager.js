@@ -210,7 +210,6 @@ HotKeyManager.prototype.firstPost = function() {
         return;
     }
 
-    this.first_keypress = false;
     var post = jQuery('div#thread > table.post');
     var current_post = post.eq(this.current_post);
 
@@ -224,7 +223,11 @@ HotKeyManager.prototype.firstPost = function() {
         current_post.addClass('selected-post');
     }
 
+    if (this.first_keypress) {
+        current_post.addClass('selected-post');
+    }
     jQuery(window).scrollTop(current_post.offset().top);
+    this.first_keypress = false;
 };
 
 HotKeyManager.prototype.lastPost = function() {
@@ -232,7 +235,6 @@ HotKeyManager.prototype.lastPost = function() {
         return;
     }
 
-    this.first_keypress = false;
     var post = jQuery('div#thread > table.post');
     var current_post = post.eq(this.current_post);
 
@@ -246,7 +248,11 @@ HotKeyManager.prototype.lastPost = function() {
         current_post.addClass('selected-post');
     }
 
+    if (this.first_keypress) {
+        current_post.addClass('selected-post');
+    }
     jQuery(window).scrollTop(current_post.offset().top);
+    this.first_keypress = false;
 };
 
 HotKeyManager.prototype.anchorThread = function() {
