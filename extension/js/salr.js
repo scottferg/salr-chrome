@@ -595,6 +595,8 @@ SALR.prototype.updateFriendsList = function() {
  */
 SALR.prototype.highlightFriendPosts = function() {
     var that = this;
+    if (!this.settings.friendsList)
+        return;
     var friends = JSON.parse(this.settings.friendsList);
     var selector = '';
 
