@@ -103,6 +103,7 @@ function setupDefaultPreferences() {
     localStorage.setItem('highlightOPColor', '#fff2aa');
     localStorage.setItem('displayPageNavigator', 'true');
     localStorage.setItem('userNotesEnabled', 'true');
+    localStorage.setItem('salrInitialized', 'true');
 }
 
 /**
@@ -110,8 +111,13 @@ function setupDefaultPreferences() {
  *
  */
 function getPageSettings() {
+    // Don't wipe the settings made by previous versions
+    if (localStorage.getItem('username')) {
+        localStorage.setItem('salrInitialized', 'true');
+    }
+
     // If we don't have stored settings, set defaults
-    if (!localStorage.getItem('username')) {
+    if (!localStorage.getItem('salrInitialized')) {
         setupDefaultPreferences();
     }
 
