@@ -247,6 +247,8 @@ QuickReplyBox.prototype.appendQuote = function(username, quote) {
     var quote_string = '';
 
     if (username && quote) {
+        re = RegExp(/\<.*\> &nbsp;/);
+        username = username.replace(re, '');
         var current_message = jQuery('#post-message').val();
 
         quote_string += '[quote="' + username + '"]\n' + jQuery.trim(quote) + '\n[/quote]\n\n';
