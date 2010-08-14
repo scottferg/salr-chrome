@@ -98,6 +98,7 @@ jQuery(document).ready(function() {
 				jQuery(el).val('#' + hex);
 				jQuery(el).ColorPickerHide();
 				jQuery(el).parent().next().children().css('background-color', '#' + hex); //TODO fix this monstrosity.
+                localStorage.setItem(jQuery(el).attr('id'), jQuery(el).val());
 			},
 			onBeforeShow: function () { 
 				jQuery(this).ColorPickerSetColor(this.value);
