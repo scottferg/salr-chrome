@@ -129,6 +129,7 @@ SALR.prototype.pageInit = function() {
 
             break;
         case 'usercp.php':
+        case 'usercp.php#':
             this.updateUsernameFromCP();
             this.updateFriendsList();
 
@@ -138,6 +139,10 @@ SALR.prototype.pageInit = function() {
 
             if (this.settings.highlightModAdmin == 'true') {
                 this.highlightModAdminPosts();
+            }
+
+            if (this.settings.showEditBookmarks == 'true') {
+                jQuery('#bookmark_edit_attach').click();
             }
 
             break;
