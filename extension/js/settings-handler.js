@@ -185,9 +185,11 @@ function populateCheckboxes(element) {
         return;
 
     // If there is a value in localStorage, then set it,
-    // otherwise leave it unchecked
+    // otherwise unchecked it
     if (value == 'true') {
         element.attr('checked', true);
+    } else {
+        element.attr('checked', false);
     }
 }
 
