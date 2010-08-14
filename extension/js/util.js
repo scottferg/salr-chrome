@@ -129,6 +129,8 @@ function findFirstUnreadPost() {
     // Get post number on page from anchor in URL
     var anchor_post = window.location.href.split('#pti')[1];
     if (!isNaN(anchor_post)) {
+        if (anchor_post > thread_post_size)
+            return thread_post_size-1;
         return anchor_post-1;
     }
 
