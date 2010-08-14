@@ -1,6 +1,6 @@
 {
   "name": "Something Awful Last Read", 
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Highlights posts which quote the user", 
   "icons": {
 	  		  "16": "images/logo16.png",
