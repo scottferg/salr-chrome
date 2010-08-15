@@ -24,6 +24,24 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
+ * External message event listener
+ *
+ */
+chrome.extension.onConnectExternal.addListener(function(port) {
+    port.onMessage.addListener(function(data) {
+        switch (data.message) {
+            case 'GetForumsJumpList':
+            case 'GetSALRSettings':
+                port.postMessage(getPageSettings());
+                break;
+            case 'ChangeSALRSetting':
+                localStorage.setItem(data.option, data.value);
+                break;
+        }
+    });
+});
+
+/**
  * Message event listener so that we can talk to the content-script
  *
  */
