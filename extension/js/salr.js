@@ -115,8 +115,8 @@ SALR.prototype.pageInit = function() {
                 this.addSearchThreadForm();
             }
 
-            if (this.settings.highlightCancer == 'true') {
-                this.highlightCancerPosts();
+            if (this.settings.fixCancer == 'true') {
+                this.fixCancerPosts();
             }
 
             this.renderWhoPostedInThreadLink();
@@ -206,8 +206,9 @@ SALR.prototype.updateStyling = function() {
     jQuery('tr.thread').each(function() {
         var thread = jQuery(this);
         var newPosts = false;
+        var seenThread = false;
 
-        if (!that.settings.disableCustomButtons || that.settings.disableCustomButtons == 'false') {
+        if (that.settings.displayCustomButtons == 'true') {
 
             // Re-style the new post count link
             jQuery('a.count', thread).each(function() {
@@ -263,6 +264,8 @@ SALR.prototype.updateStyling = function() {
             jQuery('a.x', thread).each(function() {
                 var other = that;
 
+                seenThread = true;
+
                 // Set the image styles
                 jQuery(this).css("background", "none");
                 jQuery(this).css("background-image", "url('" + other.base_image_uri + "unvisit.png')");
@@ -282,11 +285,11 @@ SALR.prototype.updateStyling = function() {
         } else {
             if (jQuery('a.count', thread).length)
                 newPosts = true;
+            if (jQuery('a.x', thread).length)
+                seenThread = true;
         }
 
-        // If thread coloring enabled in forum preferences
-        // recolor according to SALR settings
-        if (thread.attr('class') == 'thread seen') {
+        if (that.settings.highlightThread=='true' && seenThread && thread.attr('class') == 'thread seen') {
             // If the thread has new posts, display the green shade,
             // otherwise show the blue shade
             var darkShade = (newPosts) ? that.settings.darkNewReplies : that.settings.darkRead;
@@ -1195,10 +1198,9 @@ SALR.prototype.addRapSheetToProfile = function() {
  * 1.0
  *
  */
-SALR.prototype.highlightCancerPosts = function() {
+SALR.prototype.fixCancerPosts = function() {
     jQuery('.cancerous').each(function() {
         jQuery(this).css({
-            'background-color': '#98afc7',
             'opacity': '1.0'
         });
     });
