@@ -574,7 +574,7 @@ SALR.prototype.renderOpenUpdatedThreadsButton = function() {
             jQuery('tr.thread').each( function() {
                 var img_split = jQuery('td.star > img', this).attr('src').split('/');
                 var img_name = img_split[img_split.length-1];
-                if (other.settings.ignore_bookmark_star != img_name) {
+                if (other.settings.ignoreBookmarkStar != img_name) {
                     if (jQuery('a[class*=count]', this).length > 0) {
                         var href = jQuery('a[class*=count]', this).attr('href');
                         // TODO: Fix this
