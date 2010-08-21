@@ -297,6 +297,7 @@ MouseGesturesController.prototype.topAction = function() {
 MouseGesturesController.prototype.rightAction = function() {
     if (this.is_enabled(this.rightAction)) {
         var url = window.location.href;
+        url = url.replace(/#.*$/, '');
         var m = url.match(/pagenumber=(\d+)/);
         if (m) {
             var nextpage = parseInt(m[1])+1;
@@ -311,6 +312,7 @@ MouseGesturesController.prototype.rightAction = function() {
 MouseGesturesController.prototype.leftAction = function() {
     if (this.is_enabled(this.leftAction)) {
         var url = window.location.href;
+        url = url.replace(/#.*$/, '');
         var m = url.match(/pagenumber=(\d+)/);
         if (!m)
             return;
