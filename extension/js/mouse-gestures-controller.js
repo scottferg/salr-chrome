@@ -296,13 +296,27 @@ MouseGesturesController.prototype.topAction = function() {
 
 MouseGesturesController.prototype.rightAction = function() {
     if (this.is_enabled(this.rightAction)) {
-        jumpToPage(buildUrl(this.rootPageType, this.basePageID, this.currentPage + 1));
+        var url = window.location.href;
+        var m = url.match(/pagenumber=(\d+)/);
+        if (m) {
+            var nextpage = parseInt(m[1])+1;
+            url = url.replace(/pagenumber=(\d+)/, 'pagenumber='+nextpage);
+        } else {
+            url = url+'&pagenumber=2';
+        }
+        jumpToPage(url);
     }
 };
 
 MouseGesturesController.prototype.leftAction = function() {
     if (this.is_enabled(this.leftAction)) {
-        jumpToPage(buildUrl(this.rootPageType, this.basePageID, this.currentPage - 1));
+        var url = window.location.href;
+        var m = url.match(/pagenumber=(\d+)/);
+        if (!m)
+            return;
+        var nextpage = parseInt(m[1])-1;
+        url = url.replace(/pagenumber=(\d+)/, 'pagenumber='+nextpage);
+        jumpToPage(url);
     }
 };
 

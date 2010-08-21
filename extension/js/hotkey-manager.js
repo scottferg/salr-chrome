@@ -136,14 +136,19 @@ HotKeyManager.prototype.nextPage = function() {
     switch(findCurrentPage()) {
         case 'forumdisplay.php':
         case 'showthread.php':
-            this.rootPageType = (findCurrentPage() == 'forumdisplay.php') ? 'forumid' : 'threadid';
-            this.basePageID = findForumID();
-            this.currentPage = Number(jQuery('span.curpage').html());
-            if (this.currentPage <= 0)
-                this.currentPage = 1;
-            if (this.currentPage < this.pageCount)
-                jumpToPage(buildUrl(this.rootPageType, this.basePageID, this.currentPage + 1));
-            break;
+            var currentPage = 1;
+            var url = window.location.href;
+            var m = url.match(/pagenumber=(\d+)/);
+            if (m) {
+                currentPage = parseInt(m[1]);
+                var nextPage = currentPage+1;
+                url = url.replace(/pagenumber=(\d+)/, 'pagenumber='+nextPage);
+            } else {
+                url = url+'&pagenumber=2';
+            }
+
+            if (currentPage < this.pageCount)
+                jumpToPage(url);
     }
 };
 
@@ -155,14 +160,17 @@ HotKeyManager.prototype.previousPage = function() {
     switch(findCurrentPage()) {
         case 'forumdisplay.php':
         case 'showthread.php':
-            this.rootPageType = (findCurrentPage() == 'forumdisplay.php') ? 'forumid' : 'threadid';
-            this.basePageID = findForumID();
-            this.currentPage = Number(jQuery('span.curpage').html());
-            if (this.currentPage <= 0)
-                this.currentPage = 1;
-            if (this.currentPage > 1)
-                jumpToPage(buildUrl(this.rootPageType, this.basePageID, this.currentPage - 1));
-            break;
+            var url = window.location.href;
+            var m = url.match(/pagenumber=(\d+)/);
+            if (!m)
+                return;
+
+            var currentPage = parseInt(m[1]);
+            var nextPage = currentPage-1;
+            url = url.replace(/pagenumber=(\d+)/, 'pagenumber='+nextPage);
+
+            if (currentPage > 1)
+                jumpToPage(url);
     }
 };
 
