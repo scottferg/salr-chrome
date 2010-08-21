@@ -109,6 +109,38 @@ function buildUrl(rootPageType, basePageID, page) {
     return 'http://forums.somethingawful.com/' + findCurrentPage() + '?' + rootPageType + '=' + basePageID + '&pagenumber=' + page;
 }
 
+function nextPageUrl() {
+    var url = window.location.href.replace(/#.*$/,'');
+    var m = url.match(/pagenumber=(\d+)/);
+    if (m) {
+        var page = parseInt(m[1])+1;
+        url = url.replace(/pagenumber=(\d+)/, 'pagenumber='+page);
+    } else {
+        url = url+'&pagenumber=2';
+    }
+    return url;
+}
+function prevPageUrl() {
+    var url = window.location.href.replace(/#.*$/,'');
+    var m = url.match(/pagenumber=(\d+)/);
+    if (!m)
+        return url;
+
+    var page = parseInt(m[1])-1;
+    url = url.replace(/pagenumber=(\d+)/, 'pagenumber='+page);
+    return url;
+}
+function getPageUrl(pagenumber) {
+    var url = window.location.href.replace(/#.*$/,'');
+    var m = url.match(/pagenumber=(\d+)/);
+    if (m) {
+        url = url.replace(/pagenumber=(\d+)/, 'pagenumber='+pagenumber);
+    } else {
+        url = url+'&pagenumber='+pagenumber;
+    }
+    return url;
+}
+
 /**
  * Jumps the user to the specified page
  *

@@ -136,20 +136,14 @@ HotKeyManager.prototype.nextPage = function() {
     switch(findCurrentPage()) {
         case 'forumdisplay.php':
         case 'showthread.php':
-            var currentPage = 1;
-            var url = window.location.href;
-            url = url.replace(/#.*$/, '');
-            var m = url.match(/pagenumber=(\d+)/);
-            if (m) {
-                currentPage = parseInt(m[1]);
-                var nextPage = currentPage+1;
-                url = url.replace(/pagenumber=(\d+)/, 'pagenumber='+nextPage);
-            } else {
-                url = url+'&pagenumber=2';
-            }
+            var currentPage = Number(jQuery('span.curpage').html());
+            if (currentPage <= 0)
+                currentPage = 1;
 
-            if (currentPage < this.pageCount)
-                jumpToPage(url);
+            if (currentPage >= this.pageCount)
+                return;
+
+            jumpToPage(nextPageUrl());
     }
 };
 
@@ -161,18 +155,14 @@ HotKeyManager.prototype.previousPage = function() {
     switch(findCurrentPage()) {
         case 'forumdisplay.php':
         case 'showthread.php':
-            var url = window.location.href;
-            url = url.replace(/#.*$/, '');
-            var m = url.match(/pagenumber=(\d+)/);
-            if (!m)
+            var currentPage = Number(jQuery('span.curpage').html());
+            if (currentPage <= 0)
+                currentPage = 1;
+
+            if (currentPage <= 1)
                 return;
 
-            var currentPage = parseInt(m[1]);
-            var nextPage = currentPage-1;
-            url = url.replace(/pagenumber=(\d+)/, 'pagenumber='+nextPage);
-
-            if (currentPage > 1)
-                jumpToPage(url);
+            jumpToPage(prevPageUrl());
     }
 };
 

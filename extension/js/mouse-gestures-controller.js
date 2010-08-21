@@ -296,29 +296,13 @@ MouseGesturesController.prototype.topAction = function() {
 
 MouseGesturesController.prototype.rightAction = function() {
     if (this.is_enabled(this.rightAction)) {
-        var url = window.location.href;
-        url = url.replace(/#.*$/, '');
-        var m = url.match(/pagenumber=(\d+)/);
-        if (m) {
-            var nextpage = parseInt(m[1])+1;
-            url = url.replace(/pagenumber=(\d+)/, 'pagenumber='+nextpage);
-        } else {
-            url = url+'&pagenumber=2';
-        }
-        jumpToPage(url);
+        jumpToPage(nextPageUrl());
     }
 };
 
 MouseGesturesController.prototype.leftAction = function() {
     if (this.is_enabled(this.leftAction)) {
-        var url = window.location.href;
-        url = url.replace(/#.*$/, '');
-        var m = url.match(/pagenumber=(\d+)/);
-        if (!m)
-            return;
-        var nextpage = parseInt(m[1])-1;
-        url = url.replace(/pagenumber=(\d+)/, 'pagenumber='+nextpage);
-        jumpToPage(url);
+        jumpToPage(prevPageUrl());
     }
 };
 
