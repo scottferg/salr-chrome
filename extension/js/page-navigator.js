@@ -105,15 +105,15 @@ PageNavigator.prototype.bindButtonEvents = function() {
     // Add event handlers for each button
     jQuery("select#number-drop-down").change(function () {
         jQuery("select option:selected").each(function () {
-            jumpToPage(buildUrl(that.rootPageType, that.basePageID, jQuery(this).val()));
+            jumpToPage(getPageUrl(jQuery(this).val()));
         });
     });
 
     // If we are on the first page, disable the first two buttons,
     // otherwise setup event handlers
     if (this.currentPage != 1) {
-        jQuery('#nav-first-page').first().attr('href', buildUrl(that.rootPageType, that.basePageID, 1));
-        jQuery('#nav-prev-page').attr('href', buildUrl(that.rootPageType, that.basePageID, that.currentPage - 1));
+        jQuery('#nav-first-page').first().attr('href', getPageUrl(1));
+        jQuery('#nav-prev-page').attr('href', prevPageUrl());
     } else {
         jQuery('#nav-first-page').css('opacity', '0.5');
         jQuery('#nav-prev-page').css('opacity', '0.5');
@@ -122,8 +122,8 @@ PageNavigator.prototype.bindButtonEvents = function() {
     // If we are on the last page, disable the last two buttons,
     // otherwise setup event handlers
     if (this.currentPage != this.pageCount) {
-        jQuery('#nav-last-page').first().attr('href', buildUrl(that.rootPageType, that.basePageID, that.pageCount));
-        jQuery('#nav-next-page').first().attr('href', buildUrl(that.rootPageType, that.basePageID, that.currentPage + 1));
+        jQuery('#nav-last-page').first().attr('href', getPageUrl(that.pageCount));
+        jQuery('#nav-next-page').first().attr('href', nextPageUrl());
     } else {
         jQuery('#nav-last-page').css('opacity', '0.5');
         jQuery('#nav-next-page').css('opacity', '0.5');
