@@ -138,30 +138,54 @@ function highlightExamples() {
     // Thread highlighting samples
     jQuery('tr#thread-read td#thread-light').each(function() {
         if (localStorage.getItem('highlightThread')=='true') {
-            jQuery(this).css('background-color', localStorage.getItem('lightRead'));
+            jQuery(this).css({ "background-color" : localStorage.getItem('lightRead'), 
+                               "background-image" : "url('images/gradient.png')",
+                               "background-repeat" : "repeat-x"
+                             });
         } else {
-            jQuery(this).css('background-color', '');
+            jQuery(this).css({ "background-color" : '', 
+                               "background-image" : '',
+                               "background-repeat" : ''
+                             });
         }
     });
     jQuery('tr#thread-read td#thread-dark').each(function() {
         if (localStorage.getItem('highlightThread')=='true') {
-            jQuery(this).css('background-color', localStorage.getItem('darkRead'));
+            jQuery(this).css({ "background-color" : localStorage.getItem('darkRead'), 
+                               "background-image" : "url('images/gradient.png')",
+                               "background-repeat" : "repeat-x"
+                             });
         } else {
-            jQuery(this).css('background-color', '');
+            jQuery(this).css({ "background-color" : '', 
+                               "background-image" : '',
+                               "background-repeat" : ''
+                             });
         }
     });
     jQuery('tr#thread-unread td#thread-light').each(function() {
         if (localStorage.getItem('highlightThread')=='true') {
-            jQuery(this).css('background-color', localStorage.getItem('lightNewReplies'));
+            jQuery(this).css({ "background-color" : localStorage.getItem('lightNewReplies'), 
+                               "background-image" : "url('images/gradient.png')",
+                               "background-repeat" : "repeat-x"
+                             });
         } else {
-            jQuery(this).css('background-color', '');
+            jQuery(this).css({ "background-color" : '', 
+                               "background-image" : '',
+                               "background-repeat" : ''
+                             });
         }
     });
     jQuery('tr#thread-unread td#thread-dark').each(function() {
         if (localStorage.getItem('highlightThread')=='true') {
-            jQuery(this).css('background-color', localStorage.getItem('darkNewReplies'));
+            jQuery(this).css({ "background-color" : localStorage.getItem('darkNewReplies'), 
+                               "background-image" : "url('images/gradient.png')",
+                               "background-repeat" : "repeat-x"
+                             });
         } else {
-            jQuery(this).css('background-color', '');
+            jQuery(this).css({ "background-color" : '', 
+                               "background-image" : '',
+                               "background-repeat" : ''
+                             });
         }
     });
     jQuery('div#lastseen-forum').each(function() {
