@@ -138,6 +138,7 @@ HotKeyManager.prototype.nextPage = function() {
         case 'showthread.php':
             var currentPage = 1;
             var url = window.location.href;
+            url = url.replace(/#.*$/, '');
             var m = url.match(/pagenumber=(\d+)/);
             if (m) {
                 currentPage = parseInt(m[1]);
@@ -161,6 +162,7 @@ HotKeyManager.prototype.previousPage = function() {
         case 'forumdisplay.php':
         case 'showthread.php':
             var url = window.location.href;
+            url = url.replace(/#.*$/, '');
             var m = url.match(/pagenumber=(\d+)/);
             if (!m)
                 return;
