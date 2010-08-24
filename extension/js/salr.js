@@ -115,11 +115,22 @@ SALR.prototype.pageInit = function() {
                 this.addSearchThreadForm();
             }
 
-            if (this.settings.highlightCancer == 'true') {
-                this.highlightCancerPosts();
+            if (this.settings.fixCancer == 'true') {
+                this.fixCancerPosts();
             }
 
             this.renderWhoPostedInThreadLink();
+
+            if (this.settings.adjustAfterLoad == 'true') {
+                window.onload = function() {
+                    var href = window.location.href;
+                    if (href.indexOf('#pti') >= 0 || href.indexOf('#post') >= 0) {
+                        var first = findFirstUnreadPost();
+                        var post = jQuery('div#thread > table.post').eq(first);
+                        jQuery(window).scrollTop(post.offset().top);
+                    }
+                };
+            }
 
             break;
         case 'newreply.php':
@@ -206,8 +217,9 @@ SALR.prototype.updateStyling = function() {
     jQuery('tr.thread').each(function() {
         var thread = jQuery(this);
         var newPosts = false;
+        var seenThread = false;
 
-        if (!that.settings.disableCustomButtons || that.settings.disableCustomButtons == 'false') {
+        if (that.settings.displayCustomButtons == 'true') {
 
             // Re-style the new post count link
             jQuery('a.count', thread).each(function() {
@@ -263,6 +275,8 @@ SALR.prototype.updateStyling = function() {
             jQuery('a.x', thread).each(function() {
                 var other = that;
 
+                seenThread = true;
+
                 // Set the image styles
                 jQuery(this).css("background", "none");
                 jQuery(this).css("background-image", "url('" + other.base_image_uri + "unvisit.png')");
@@ -282,11 +296,15 @@ SALR.prototype.updateStyling = function() {
         } else {
             if (jQuery('a.count', thread).length)
                 newPosts = true;
+            if (jQuery('a.x', thread).length)
+                seenThread = true;
         }
 
-        // If thread coloring enabled in forum preferences
-        // recolor according to SALR settings
-        if (thread.attr('class') == 'thread seen') {
+        // Use custom highlighting if:
+        //   highlightThread setting is enabled
+        //   this thread has unread posts
+        //   bookmark coloring forums option is disabled
+        if (that.settings.highlightThread=='true' && seenThread && (thread.attr('class') == 'thread seen' || thread.attr('class')=='thread')) {
             // If the thread has new posts, display the green shade,
             // otherwise show the blue shade
             var darkShade = (newPosts) ? that.settings.darkNewReplies : that.settings.darkRead;
@@ -571,7 +589,7 @@ SALR.prototype.renderOpenUpdatedThreadsButton = function() {
             jQuery('tr.thread').each( function() {
                 var img_split = jQuery('td.star > img', this).attr('src').split('/');
                 var img_name = img_split[img_split.length-1];
-                if (other.settings.ignore_bookmark_star != img_name) {
+                if (other.settings.ignoreBookmarkStar != img_name) {
                     if (jQuery('a[class*=count]', this).length > 0) {
                         var href = jQuery('a[class*=count]', this).attr('href');
                         // TODO: Fix this
@@ -1195,10 +1213,9 @@ SALR.prototype.addRapSheetToProfile = function() {
  * 1.0
  *
  */
-SALR.prototype.highlightCancerPosts = function() {
+SALR.prototype.fixCancerPosts = function() {
     jQuery('.cancerous').each(function() {
         jQuery(this).css({
-            'background-color': '#98afc7',
             'opacity': '1.0'
         });
     });

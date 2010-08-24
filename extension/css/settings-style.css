@@ -51,6 +51,7 @@ span.settings-group-title {
 
 div.display-preference {
     padding: 1px;
+    width: 400px;
 }
 
 div.sub-options {
@@ -74,6 +75,7 @@ div.color-select {
     position: relative;
     float: left;
     top: -4px;
+    padding-right: 10px;
 }
 
 div.color-select-box {
