@@ -77,13 +77,13 @@ SALR.prototype.pageInit = function() {
                 this.highlightOwnPosts();
             }
 
+            if (this.settings.enableUserNotes == 'true') {
+                this.displayUserNotes();
+            }
+
             if (this.settings.highlightModAdmin == 'true') {
                 this.skimModerators();
                 this.highlightModAdminPosts();
-            }
-
-            if (this.settings.enableUserNotes == 'true') {
-                this.displayUserNotes();
             }
 
             if (this.settings.boxQuotes == 'true') {
@@ -100,6 +100,11 @@ SALR.prototype.pageInit = function() {
 
             this.displaySinglePostLink();
 
+            // Display Rap Sheet link on single post view
+            if (window.location.href.indexOf('showpost') >= 0) {
+                this.displayRapSheetLink();
+            }
+
             if (this.settings.enableQuickReply == 'true') {
                 if (this.settings.forumPostKey) {
                     this.quickReply = new QuickReplyBox(this.settings.forumPostKey, this.base_image_uri, this.settings.quickReplyBookmark == 'true');
@@ -115,7 +120,22 @@ SALR.prototype.pageInit = function() {
                 this.addSearchThreadForm();
             }
 
+            if (this.settings.fixCancer == 'true') {
+                this.fixCancerPosts();
+            }
+
             this.renderWhoPostedInThreadLink();
+
+            if (this.settings.adjustAfterLoad == 'true') {
+                window.onload = function() {
+                    var href = window.location.href;
+                    if (href.indexOf('#pti') >= 0 || href.indexOf('#post') >= 0) {
+                        var first = findFirstUnreadPost();
+                        var post = jQuery('div#thread > table.post').eq(first);
+                        jQuery(window).scrollTop(post.offset().top);
+                    }
+                };
+            }
 
             break;
         case 'newreply.php':
@@ -129,6 +149,7 @@ SALR.prototype.pageInit = function() {
 
             break;
         case 'usercp.php':
+        case 'usercp.php#':
             this.updateUsernameFromCP();
             this.updateFriendsList();
 
@@ -138,6 +159,10 @@ SALR.prototype.pageInit = function() {
 
             if (this.settings.highlightModAdmin == 'true') {
                 this.highlightModAdminPosts();
+            }
+
+            if (this.settings.showEditBookmarks == 'true') {
+                jQuery('#bookmark_edit_attach').click();
             }
 
             break;
@@ -156,7 +181,13 @@ SALR.prototype.pageInit = function() {
                 this.highlightModAdminPosts();
             }
 
-        break;
+            break;
+        case 'member.php':
+            if (window.location.href.indexOf('action=getinfo') >= 0) {
+                this.addRapSheetToProfile();
+            }
+
+            break;
     }
 
     if (this.pageNavigator) {
@@ -193,8 +224,9 @@ SALR.prototype.updateStyling = function() {
     jQuery('tr.thread').each(function() {
         var thread = jQuery(this);
         var newPosts = false;
+        var seenThread = false;
 
-        if (!that.settings.disableCustomButtons || that.settings.disableCustomButtons == 'false') {
+        if (that.settings.displayCustomButtons == 'true') {
 
             // Re-style the new post count link
             jQuery('a.count', thread).each(function() {
@@ -250,6 +282,8 @@ SALR.prototype.updateStyling = function() {
             jQuery('a.x', thread).each(function() {
                 var other = that;
 
+                seenThread = true;
+
                 // Set the image styles
                 jQuery(this).css("background", "none");
                 jQuery(this).css("background-image", "url('" + other.base_image_uri + "unvisit.png')");
@@ -269,11 +303,15 @@ SALR.prototype.updateStyling = function() {
         } else {
             if (jQuery('a.count', thread).length)
                 newPosts = true;
+            if (jQuery('a.x', thread).length)
+                seenThread = true;
         }
 
-        // If thread coloring enabled in forum preferences
-        // recolor according to SALR settings
-        if (thread.attr('class') == 'thread seen') {
+        // Use custom highlighting if:
+        //   highlightThread setting is enabled
+        //   this thread has unread posts
+        //   bookmark coloring forums option is disabled
+        if (that.settings.highlightThread=='true' && seenThread && (thread.attr('class') == 'thread seen' || thread.attr('class')=='thread')) {
             // If the thread has new posts, display the green shade,
             // otherwise show the blue shade
             var darkShade = (newPosts) ? that.settings.darkNewReplies : that.settings.darkRead;
@@ -519,6 +557,27 @@ SALR.prototype.displaySinglePostLink = function() {
     });
 };
 
+ /**
+ * Display Rap Sheet link under a users post
+ *
+ *
+ */
+SALR.prototype.displayRapSheetLink = function() {
+    var that = this;
+    
+    var getUserID = function(element) {
+        var queryString = jQuery('li:first > a', element).attr('href');
+
+        // Holy hardcore string manipulation, Batman!
+        return (queryString.split('&')[1]).split('=')[1];
+    };
+
+    jQuery('ul.profilelinks').each(function() {
+        jQuery(this).append('<li><a href="http://forums.somethingawful.com/banlist.php?userid=' + getUserID(jQuery(this)) + '">Rap Sheet</a></li>');
+    });
+}
+
+
 /**
  * Open the list of who posted in a thread
  *
@@ -558,7 +617,7 @@ SALR.prototype.renderOpenUpdatedThreadsButton = function() {
             jQuery('tr.thread').each( function() {
                 var img_split = jQuery('td.star > img', this).attr('src').split('/');
                 var img_name = img_split[img_split.length-1];
-                if (other.settings.ignore_bookmark_star != img_name) {
+                if (other.settings.ignoreBookmarkStar != img_name) {
                     if (jQuery('a[class*=count]', this).length > 0) {
                         var href = jQuery('a[class*=count]', this).attr('href');
                         // TODO: Fix this
@@ -591,6 +650,8 @@ SALR.prototype.updateFriendsList = function() {
  */
 SALR.prototype.highlightFriendPosts = function() {
     var that = this;
+    if (!this.settings.friendsList)
+        return;
     var friends = JSON.parse(this.settings.friendsList);
     var selector = '';
 
@@ -726,20 +787,32 @@ SALR.prototype.highlightModAdminShowThread = function() {
                 'border-collapse' : 'collapse',
                 'background-color' : that.settings.highlightModeratorColor
             });
+            jQuery('dt.author', this).after(
+                '<dd style="font-weight: bold; ">Forum Moderator</dd>'
+            );
         });
         jQuery('table.post:has(dt.author:has(img[title="Admin"])) td').each(function () {
             jQuery(this).css({
                 'border-collapse' : 'collapse',
                 'background-color' : that.settings.highlightAdminColor
             });
+            jQuery('dt.author', this).after(
+                '<dd style="font-weight: bold; ">Forum Moderator</dd>'
+            );
         });
     } else {
         jQuery('dt.author > img[title="Moderator"]').each(function() {
             jQuery(this).parent().css('color', that.settings.highlightModeratorColor);
+            jQuery(this).parent().after(
+                '<dd style="font-weight: bold; color: ' + that.settings.highlightModeratorColor+ '">Forum Moderator</dd>'
+            );
         });
 
         jQuery('dt.author > img[title="Admin"]').each(function() {
             jQuery(this).parent().css('color', that.settings.highlightAdminColor);
+            jQuery(this).parent().after(
+                '<dd style="font-weight: bold; color: ' + that.settings.highlightAdminColor+ '">Forum Administrator</dd>'
+            );
         });
     }
 };
@@ -1155,3 +1228,31 @@ SALR.prototype.addSearchThreadForm = function() {
         keywords.val(keywords.val()+' threadid:'+threadid);
     });
 };
+
+/**
+ *
+ *  Add a rap sheet link to user's profiles
+ *
+ **/
+SALR.prototype.addRapSheetToProfile = function() {
+    var link = jQuery('a[href*=userid]:first');
+    var userid = link.attr('href').split('userid=')[1];
+    var el = link.parent().clone();
+    jQuery('a',el).attr('href','http://forums.somethingawful.com/banlist.php?userid='+userid);
+    jQuery('a',el).text('Rap Sheet');
+    link.parent().append(' ');
+    link.parent().append(el);
+}
+
+/**
+ * Highlight forums cancer posts with a light gray and set opacity to
+ * 1.0
+ *
+ */
+SALR.prototype.fixCancerPosts = function() {
+    jQuery('.cancerous').each(function() {
+        jQuery(this).css({
+            'opacity': '1.0'
+        });
+    });
+}

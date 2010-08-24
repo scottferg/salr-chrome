@@ -24,6 +24,24 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
+ * External message event listener
+ *
+ */
+chrome.extension.onConnectExternal.addListener(function(port) {
+    port.onMessage.addListener(function(data) {
+        switch (data.message) {
+            case 'GetForumsJumpList':
+            case 'GetSALRSettings':
+                port.postMessage(getPageSettings());
+                break;
+            case 'ChangeSALRSetting':
+                localStorage.setItem(data.option, data.value);
+                break;
+        }
+    });
+});
+
+/**
  * Message event listener so that we can talk to the content-script
  *
  */
@@ -99,10 +117,10 @@ function setupDefaultPreferences() {
     localStorage.setItem('highlightAdminColor', "#ff7256");
     localStorage.setItem('highlightModeratorColor', "#b4eeb4");
     localStorage.setItem('inlinePostCounts', 'false');
-    localStorage.setItem('disableCustomButtons', 'false');
     localStorage.setItem('highlightOPColor', '#fff2aa');
     localStorage.setItem('displayPageNavigator', 'true');
     localStorage.setItem('userNotesEnabled', 'true');
+    localStorage.setItem('displayCustomButtons', 'true');
     localStorage.setItem('salrInitialized', 'true');
 }
 
@@ -121,6 +139,8 @@ function getPageSettings() {
         setupDefaultPreferences();
     }
 
+    fixSettings();
+
     var response = {};
 
     for ( var index in localStorage ) {
@@ -129,3 +149,25 @@ function getPageSettings() {
 
     return response;
 } 
+
+/**
+ * Update settings from old versions
+ *
+ */
+function fixSettings() {
+    if (localStorage.getItem('disableCustomButtons') == 'true') {
+        localStorage.setItem('displayCustomButtons', 'false');
+        localStorage.removeItem('disableCustomButtons');
+    } else if (localStorage.getItem('disableCustomButtons') == 'false') {
+        localStorage.setItem('displayCustomButtons', 'true');
+        localStorage.removeItem('disableCustomButtons');
+    }
+    if (localStorage.getItem('ignore_bookmark_star')) {
+        localStorage.setItem('ignoreBookmarkStar', localStorage.getItem('ignore_bookmark_star'));
+        localStorage.removeItem('ignore_bookmark_star');
+    }
+    if (localStorage.getItem('highlightCancer')) {
+        localStorage.setItem('fixCancer', localStorage.getItem('highlightCancer'));
+        localStorage.removeItem('highlightCancer');
+    }
+}

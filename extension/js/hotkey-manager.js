@@ -136,14 +136,14 @@ HotKeyManager.prototype.nextPage = function() {
     switch(findCurrentPage()) {
         case 'forumdisplay.php':
         case 'showthread.php':
-            this.rootPageType = (findCurrentPage() == 'forumdisplay.php') ? 'forumid' : 'threadid';
-            this.basePageID = findForumID();
-            this.currentPage = Number(jQuery('span.curpage').html());
-            if (this.currentPage <= 0)
-                this.currentPage = 1;
-            if (this.currentPage < this.pageCount)
-                jumpToPage(buildUrl(this.rootPageType, this.basePageID, this.currentPage + 1));
-            break;
+            var currentPage = Number(jQuery('span.curpage').html());
+            if (currentPage <= 0)
+                currentPage = 1;
+
+            if (currentPage >= this.pageCount)
+                return;
+
+            jumpToPage(nextPageUrl());
     }
 };
 
@@ -155,14 +155,14 @@ HotKeyManager.prototype.previousPage = function() {
     switch(findCurrentPage()) {
         case 'forumdisplay.php':
         case 'showthread.php':
-            this.rootPageType = (findCurrentPage() == 'forumdisplay.php') ? 'forumid' : 'threadid';
-            this.basePageID = findForumID();
-            this.currentPage = Number(jQuery('span.curpage').html());
-            if (this.currentPage <= 0)
-                this.currentPage = 1;
-            if (this.currentPage > 1)
-                jumpToPage(buildUrl(this.rootPageType, this.basePageID, this.currentPage - 1));
-            break;
+            var currentPage = Number(jQuery('span.curpage').html());
+            if (currentPage <= 0)
+                currentPage = 1;
+
+            if (currentPage <= 1)
+                return;
+
+            jumpToPage(prevPageUrl());
     }
 };
 
