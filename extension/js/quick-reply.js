@@ -106,18 +106,26 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '</textarea>' +
                 '       </div>' +
                 '       <div id="post-options">' +
+                '           <label>' +
                 '           <input type="checkbox" name="parseurl" value="yes" checked>' +
                 '              <span class="post-options">Parse URLs</span>' +
                 '           </input>' + 
+                '           </label>' + 
+                '           <label>' +
                 '           <input type="checkbox" id="quickReplyBookmark" name="bookmark" value="yes">' + 
                 '              <span class="post-options">Bookmark thread</span>' +
                 '           </input>' + 
+                '           </label>' + 
+                '           <label>' +
                 '           <input type="checkbox" name="disablesmilies" value="yes">' + 
                 '               <span class="post-options">Disable smilies</span>' +
                 '           </input>' + 
+                '           </label>' + 
+                '           <label>' +
                 '           <input type="checkbox" name="signature" value="yes">' + 
                 '               <span class="post-options">Show signature</span>' +
                 '          </input>' + 
+                '           </label>' + 
                 '       </div>' +
                 '       <div id="submit-buttons">' +
                 '           <input type="submit" class="bginput" name="preview" value="Preview Reply">' + 
