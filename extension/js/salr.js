@@ -465,7 +465,7 @@ SALR.prototype.skimModerators = function() {
                     "23684" : {'username' :  'mons all madden', 'mod' : 'A'},
                     "24587" : {'username' :  'hoodrow trillson', 'mod' : 'A'},
                     "27691" : {'username' :  'Lowtax', 'mod' : 'A'},
-                    "51697" : {'username' :  'angerbotSD', 'mod' : 'A'},
+                    "51697" : {'username' :  'angerbot', 'mod' : 'A'},
                     "62392" : {'username' :  'Tiny Fistpump', 'mod' : 'A'},
                     "114975" : {'username' : 'SA Support Robot', 'mod' : 'A'},
                     "137488" : {'username' : 'Garbage Day', 'mod' : 'A'},
@@ -475,6 +475,11 @@ SALR.prototype.skimModerators = function() {
         modupdate = true;
     } else {
         modList = JSON.parse(this.settings.modList);
+        // Administrator names changes
+        if (modList['51697'].username == 'angerbotSD') {
+            modList['51697'].username = 'angerbot';
+            modupdate=true;
+        }
     }
 
     // TODO: How can you tell if a mod has been demodded?
