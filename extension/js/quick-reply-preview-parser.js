@@ -28,6 +28,7 @@ function PreviewParser(post_text, emote_list) {
     this.emote_list = emote_list;
     
     this.parseSmilies();
+    this.parseBBCodes();
 }
 
 PreviewParser.prototype.fetchResult = function() {
@@ -43,4 +44,8 @@ PreviewParser.prototype.parseSmilies = function() {
             this.post_text = this.post_text.replace(title, '<img src="' + img + '" title="' + title + '" border="0" alt="" />');
         }
     }
+};
+
+PreviewParser.prototype.parseBBCodes = function() {
+    this.post_text = parseBBCode(this.post_text);
 };
