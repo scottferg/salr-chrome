@@ -26,7 +26,7 @@
 function EmoteParser(observer) {
     this.emote_url = "http://forums.somethingawful.com/misc.php"
     this.observer = observer;
-    this.emotes = new Array();
+    this.emotes = {};
 
     this.construct()
 }
