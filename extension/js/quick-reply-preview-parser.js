@@ -29,6 +29,7 @@ function PreviewParser(post_text, emote_list) {
     
     this.parseSmilies();
     this.parseBBCodes();
+    this.parseQuotes();
 }
 
 PreviewParser.prototype.fetchResult = function() {
@@ -48,4 +49,11 @@ PreviewParser.prototype.parseSmilies = function() {
 
 PreviewParser.prototype.parseBBCodes = function() {
     this.post_text = parseBBCode(this.post_text);
+};
+
+PreviewParser.prototype.parseQuotes = function() {
+    var quote_re = /\[quote\="?(.*?)"?\](.*?)\[\/quote\]/g;
+    var quote_format = '<div class="bbc-block"><h4>$1 posted:</h4><blockquote>$2</blockquote></div>'
+
+    this.post_text = this.post_text.replace(quote_re, quote_format);
 };
