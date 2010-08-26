@@ -787,7 +787,6 @@ SALR.prototype.highlightModAdminShowThread = function() {
     var that = this;
 
     if (this.settings.highlightModAdminUsername != 'true') {
-        //jQuery('table.post:has(dt.author:has(img[title="Moderator"])) td').each(function () {
         jQuery('dt.author.role-mod').parents('table').find('td').each(function() {
             jQuery(this).css({
                 'border-collapse' : 'collapse',
