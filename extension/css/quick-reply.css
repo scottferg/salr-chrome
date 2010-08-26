@@ -78,14 +78,14 @@ div#side-bar {
 }
 
 div#top-bar {
-    width: 500px;
+    width: 570px;
     height: 300px;
     display: none;
     float: right;
     position: fixed;
     bottom: 80px;
     left: 50%;
-    margin-left: -250px;
+    margin-left: -285px;
     padding: 20px;
     border: solid 1px #999;
     background: -webkit-gradient(linear, left top, left bottom, from(rgb(255,255,255)), to(rgb(230,230,230)));
@@ -95,9 +95,11 @@ div#top-bar {
 }
 
 div#topbar-preview {
-    width: 500px;
+    width: 570px;
     height: 270px;
     background: #eee;
+    overflow-y: auto;
+    word-wrap: break-word;
     border: 1px solid #999;
 }
 
