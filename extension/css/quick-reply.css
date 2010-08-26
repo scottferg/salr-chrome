@@ -77,6 +77,30 @@ div#side-bar {
     -webkit-border-top-right-radius: 6px;
 }
 
+div#top-bar {
+    width: 500px;
+    height: 300px;
+    display: none;
+    float: right;
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    margin-left: -250px;
+    padding: 20px;
+    border: solid 1px #999;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(255,255,255)), to(rgb(230,230,230)));
+    -webkit-box-shadow: -1px -1px 12px rgba(0,0,0,0.25);
+    -webkit-border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;
+}
+
+div#topbar-preview {
+    width: 500px;
+    height: 270px;
+    background: #eee;
+    border: 1px solid #999;
+}
+
 textarea#post-message {
     width: 590px;
 }

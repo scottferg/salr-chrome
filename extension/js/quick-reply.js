@@ -37,7 +37,8 @@ function QuickReplyBox(forum_post_key, base_image_uri, bookmark) {
     this.quickReplyState = {
         expanded: false,
         visible: false,
-        sidebar_visible: false
+        sidebar_visible: false,
+        topbar_visible: false
     };
 
     // TODO: Pull these from the extension, cache them there
@@ -78,6 +79,10 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '   <div id="sidebar-list">' +
                 '   </div>' +
                 '</div>' +
+                '<div id="top-bar">' +
+                '   <div id="topbar-preview">' +
+                '   </div>' +
+                '</div>' + 
                 '<div id="quick-reply"> ' + 
                 '   <form enctype="multipart/form-data" action="newreply.php" name="vbform" method="POST" onsubmit="return validate(this)">' +
                 '       <input type="hidden" name="action" value="postreply">' + 
@@ -125,6 +130,11 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '           <label>' +
                 '           <input type="checkbox" name="signature" value="yes">' + 
                 '               <span class="post-options">Show signature</span>' +
+                '          </input>' + 
+                '           </label>' + 
+                '           <label>' +
+                '           <input type="checkbox" id="live-preview" value="yes">' + 
+                '               <span class="post-options">Show live preview</span>' +
                 '          </input>' + 
                 '           </label>' + 
                 '       </div>' +
@@ -178,6 +188,14 @@ QuickReplyBox.prototype.create = function(username, quote) {
         });
     });
 
+    jQuery('#live-preview').change(function() {
+        that.toggleTopbar();
+    });
+
+    jQuery('#post-message').keyup(function() {
+        jQuery('#topbar-preview').html(jQuery(this).val());
+    });
+
     jQuery('div.sidebar-menu-item').live('click', function() {
         var selected_item = jQuery('div.menu-item-code', this).first().html();
 
@@ -216,6 +234,8 @@ QuickReplyBox.prototype.show = function() {
 
 QuickReplyBox.prototype.hide = function() {
     jQuery('#side-bar').first().hide();
+    jQuery('#top-bar').first().hide();
+    jQuery('#live-preview').attr('checked', '');
     if (salr_client.pageNavigator) {
         salr_client.pageNavigator.display();
     }
@@ -278,20 +298,27 @@ QuickReplyBox.prototype.toggleView = function() {
     if(this.quickReplyState.expanded) {
         var hideBox = function() {
             jQuery('#side-bar').first().hide();
+            jQuery('#top-bar').first().hide();
+            jQuery('#live-preview').attr('checked', '');
             quick_reply_box.animate( { height: min } );
             (imgId).attr("src", that.base_image_uri + "quick-reply-rollup.gif");
             that.quickReplyState.expanded = false;
         };
 
-        // If the sidebar is open when we're trying to rolldown the box, animate
-        // the sidebar as we tuck it away
+        // Keep trying to close the sidebar until we're ready
         if(this.quickReplyState.sidebar_visible) {
             jQuery('#side-bar').animate( { left: '-=200px' }, 500, function() {
                 that.quickReplyState.sidebar_visible = null;
                 if (salr_client.pageNavigator) {
                     salr_client.pageNavigator.display();
                 }
-                hideBox();
+
+                that.toggleView();
+            });
+        } else if (this.quickReplyState.topbar_visible) {
+            jQuery('#top-bar').animate( { bottom: '-=320px' }, 500, function() {
+                that.quickReplyState.topbar_visible = false;
+                that.toggleView();
             });
         } else {
             hideBox();
@@ -359,6 +386,25 @@ QuickReplyBox.prototype.toggleSidebar = function(element) {
         this.quickReplyState.sidebar_visible = element.attr('id');
     }
 
+};
+
+QuickReplyBox.prototype.toggleTopbar = function() {
+    top_bar = jQuery('#top-bar');
+
+    if (!top_bar.is(':visible')) {
+        top_bar.css('display', 'block');
+    }
+    
+    if (this.quickReplyState.topbar_visible) {
+        top_bar.animate( { bottom: '-=320px' } );
+        if (salr_client.pageNavigator) {
+            salr_client.pageNavigator.display();
+        }
+        this.quickReplyState.topbar_visible = false;
+    } else {
+        top_bar.animate( { bottom: '+=320px' } );
+        this.quickReplyState.topbar_visible = true;
+    }
 };
 
 QuickReplyBox.prototype.notify = function(emotes) {
