@@ -262,6 +262,9 @@ QuickReplyBox.prototype.appendText = function(text) {
     var current_message = jQuery('#post-message').val();
 
     jQuery('#post-message').val(current_message + text);
+
+    var parser = new PreviewParser(jQuery('#post-message').val(), this.emotes);
+    jQuery('#topbar-preview').html(parser.fetchResult());
 };
 
 QuickReplyBox.prototype.appendQuote = function(postid) {
