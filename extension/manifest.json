@@ -24,6 +24,7 @@
         "js/hotkey-manager.js",
         "js/mouse-gestures-controller.js",
         "js/quick-reply-emote-parser.js",
+        "js/quick-reply-preview-parser.js",
         "js/quick-reply.js",
         "js/page-navigator.js",
         "js/salr.js",

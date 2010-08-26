@@ -192,10 +192,6 @@ QuickReplyBox.prototype.create = function(username, quote) {
         that.toggleTopbar();
     });
 
-    jQuery('#post-message').keyup(function() {
-        jQuery('#topbar-preview').html(jQuery(this).val());
-    });
-
     jQuery('div.sidebar-menu-item').live('click', function() {
         var selected_item = jQuery('div.menu-item-code', this).first().html();
 
@@ -408,7 +404,13 @@ QuickReplyBox.prototype.toggleTopbar = function() {
 };
 
 QuickReplyBox.prototype.notify = function(emotes) {
+    var that = this;
     this.emotes = emotes;
+
+    jQuery('#post-message').keyup(function() {
+        var parser = new PreviewParser(jQuery(this).val(), emotes);
+        jQuery('#topbar-preview').html(parser.fetchResult());
+    });
 
     this.setEmoteSidebar();
 };
