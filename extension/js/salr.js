@@ -787,7 +787,7 @@ SALR.prototype.highlightModAdminShowThread = function() {
     var that = this;
 
     if (this.settings.highlightModAdminUsername != 'true') {
-        jQuery('table.post:has(dt.author:has(img[title="Moderator"])) td').each(function () {
+        jQuery('table.post:has(dt.role-mod) td').each(function () {
             jQuery(this).css({
                 'border-collapse' : 'collapse',
                 'background-color' : that.settings.highlightModeratorColor
@@ -796,7 +796,7 @@ SALR.prototype.highlightModAdminShowThread = function() {
                 '<dd style="font-weight: bold; ">Forum Moderator</dd>'
             );
         });
-        jQuery('table.post:has(dt.author:has(img[title="Admin"])) td').each(function () {
+        jQuery('table.post:has(dt.role-admin) td').each(function () {
             jQuery(this).css({
                 'border-collapse' : 'collapse',
                 'background-color' : that.settings.highlightAdminColor
@@ -806,16 +806,16 @@ SALR.prototype.highlightModAdminShowThread = function() {
             );
         });
     } else {
-        jQuery('dt.author > img[title="Moderator"]').each(function() {
-            jQuery(this).parent().css('color', that.settings.highlightModeratorColor);
-            jQuery(this).parent().after(
+        jQuery('dt.role-mod').each(function() {
+            jQuery(this).css('color', that.settings.highlightModeratorColor);
+            jQuery(this).after(
                 '<dd style="font-weight: bold; color: ' + that.settings.highlightModeratorColor+ '">Forum Moderator</dd>'
             );
         });
 
-        jQuery('dt.author > img[title="Admin"]').each(function() {
-            jQuery(this).parent().css('color', that.settings.highlightAdminColor);
-            jQuery(this).parent().after(
+        jQuery('dt.role-admin').each(function() {
+            jQuery(this).css('color', that.settings.highlightAdminColor);
+            jQuery(this).after(
                 '<dd style="font-weight: bold; color: ' + that.settings.highlightAdminColor+ '">Forum Administrator</dd>'
             );
         });
