@@ -58,7 +58,7 @@ jQuery(document).ready(function() {
     defaultSettings['topPurchaseOtherAva']          = 'true';
     defaultSettings['topPurchaseArchives']          = 'true';
     defaultSettings['topPurchaseNoAds']             = 'true';
-    defaultSettings['topPurchaseNewUsername']       = 'true';
+    defaultSettings['topPurchaseUsername']          = 'true';
     defaultSettings['topPurchaseNonProfAd']         = 'true';
     defaultSettings['topPurchaseForProfAd']         = 'true';
     defaultSettings['topPurchaseEmoticon']          = 'true';
@@ -79,7 +79,7 @@ jQuery(document).ready(function() {
   
     // Check stored settings, if value not set, set to default value
     for ( var key in defaultSettings ) {
-        if ( localStorage.getItem(key) === undefined ) {
+        if ( localStorage.getItem(key) == undefined ) {
             localStorage.setItem(key, defaultSettings[key]);
         }
     }
