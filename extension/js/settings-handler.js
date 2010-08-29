@@ -47,7 +47,7 @@ jQuery(document).ready(function() {
     defaultSettings['highlightAdminColor']          = '#ff7256';
     defaultSettings['highlightModeratorColor']      = '#b4eeb4';
     defaultSettings['inlinePostCounts']             = 'false';
-    defaultSettings['disableCustomButtons']         = 'false';
+    defaultSettings['displayCustomButtons']         = 'true';
     defaultSettings['highlightOPColor']             = '#fff2aa';
     defaultSettings['displayPageNavigator']         = 'true';
     defaultSettings['userNotesEnabled']             = 'true';
