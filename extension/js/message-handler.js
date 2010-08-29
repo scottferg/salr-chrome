@@ -107,7 +107,7 @@ defaultSettings['topPurchaseAva']               = 'true';
 defaultSettings['topPurchaseOtherAva']          = 'true';
 defaultSettings['topPurchaseArchives']          = 'true';
 defaultSettings['topPurchaseNoAds']             = 'true';
-defaultSettings['topPurchaseNewUsername']       = 'true';
+defaultSettings['topPurchaseUsername']          = 'true';
 defaultSettings['topPurchaseNonProfAd']         = 'true';
 defaultSettings['topPurchaseForProfAd']         = 'true';
 defaultSettings['topPurchaseEmoticon']          = 'true';
@@ -152,7 +152,7 @@ function openNewTab(aUrl) {
 function setupDefaultPreferences() {
     // New, more scalable method for setting default prefs.
     for ( var key in defaultSettings ) {
-        if ( localStorage.getItem(key) === undefined ) {
+        if ( localStorage.getItem(key) == undefined ) {
             localStorage.setItem(key, defaultSettings[key]);
         }
     }
