@@ -506,6 +506,8 @@ function configWindow() {
             continue;
         if (key == 'modList')
             continue;
+        if (key == 'userNotes')
+            continue;
         win.document.write('<tr><td>'+key+'</td>');
         win.document.writeln('<td>'+localStorage[key]+'</td></tr>');
     }
