@@ -34,101 +34,55 @@ jQuery(document).ready(function() {
     }
 
   // Setting names.
-  var settingNames = [
-    'userQuote',
-    'darkRead',
-    'lightRead',
-    'darkNewReplies',
-    'lightNewReplies',
-    'youtubeHighlight',
-    'displayConfigureSalr',
-    'highlightFriendsColor',
-    'highlightSelfColor',
-    'highlightAdminColor',
-    'highlightModeratorColor',
-    'inlinePostCounts',
-    'disableCustomButtons',
-    'highlightOPColor',
-    'displayPageNavigator',
-    'userNotesEnabled',
-    'salrInitialized',
-    'topPurchaseAcc',
-    'topPurchasePlat',
-    'topPurchaseAva',
-    'topPurchaseOtherAva',
-    'topPurchaseArchives',
-    'topPurchaseNoAds',
-    'topPurchaseNewUsername',
-    'topPurchaseNonProfAd',
-    'topPurchaseForProfAd',
-    'topPurchaseEmoticon',
-    'topPurchaseSticky',
-    'topPurchaseGiftCert',
-    'topSAForums',
-    'topSearch',
-    'topUserCP',
-    'topPrivMsgs',
-    'topForumRules',
-    'topSaclopedia',
-    'topGloryhole',
-    'topLepersColony',
-    'topSupport',
-    'topLogout',
-    'showPurchases',
-    'showNavigation',
-  ]
+    var defaultSettings = [];
+    defaultSettings['userQuote']                    = '#a2cd5a';
+    defaultSettings['darkRead']                     = '#6699cc';
+    defaultSettings['lightRead']                    = '#99ccff';
+    defaultSettings['darkNewReplies']               = '#99cc99';
+    defaultSettings['lightNewReplies']              = '#ccffcc';
+    defaultSettings['youtubeHighlight']             = '#ff00ff';
+    defaultSettings['displayConfigureSalr']         = 'true';
+    defaultSettings['highlightFriendsColor']        = '#f2babb';
+    defaultSettings['highlightSelfColor']           = '#f2babb';
+    defaultSettings['highlightAdminColor']          = '#ff7256';
+    defaultSettings['highlightModeratorColor']      = '#b4eeb4';
+    defaultSettings['inlinePostCounts']             = 'false';
+    defaultSettings['disableCustomButtons']         = 'false';
+    defaultSettings['highlightOPColor']             = '#fff2aa';
+    defaultSettings['displayPageNavigator']         = 'true';
+    defaultSettings['userNotesEnabled']             = 'true';
+    defaultSettings['salrInitialized']              = 'true';
+    defaultSettings['topPurchaseAcc']               = 'true';
+    defaultSettings['topPurchasePlat']              = 'true';
+    defaultSettings['topPurchaseAva']               = 'true';
+    defaultSettings['topPurchaseOtherAva']          = 'true';
+    defaultSettings['topPurchaseArchives']          = 'true';
+    defaultSettings['topPurchaseNoAds']             = 'true';
+    defaultSettings['topPurchaseNewUsername']       = 'true';
+    defaultSettings['topPurchaseNonProfAd']         = 'true';
+    defaultSettings['topPurchaseForProfAd']         = 'true';
+    defaultSettings['topPurchaseEmoticon']          = 'true';
+    defaultSettings['topPurchaseSticky']            = 'true';
+    defaultSettings['topPurchaseGiftCert']          = 'true';
+    defaultSettings['topSAForums']                  = 'true';
+    defaultSettings['topSearch']                    = 'true';
+    defaultSettings['topUserCP']                    = 'true';
+    defaultSettings['topPrivMsgs']                  = 'true';
+    defaultSettings['topForumRules']                = 'true';
+    defaultSettings['topSaclopedia']                = 'true';
+    defaultSettings['topGloryhole']                 = 'true';
+    defaultSettings['topLepersColony']              = 'true';
+    defaultSettings['topSupport']                   = 'true';
+    defaultSettings['topLogout']                    = 'true';
+    defaultSettings['showPurchases']                = 'true';
+    defaultSettings['showNavigation']               = 'true';
   
-  // Setting defaults.
-  var settingDefaults = [
-    '#a2cd5a',
-    '#6699cc',
-    '#99ccff',
-    '#99cc99',
-    '#ccffcc',
-    '#ff00ff',
-    'true',
-    '#f2babb',
-    '#f2babb',
-    '#ff7256',
-    '#b4eeb4',
-    'false',
-    'false',
-    '#fff2aa',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-    'true',
-  ]
-  
-  // Check stored settings, if value not set, set to default value
-  for ( var i=0, len=settingNames.length; i<len; ++i) {
-    if (!localStorage.getItem(settingNames[i])) {
-      localStorage.setItem(settingNames[i], settingDefaults[i]);
+    // Check stored settings, if value not set, set to default value
+    for ( var key in defaultSettings ) {
+        if ( localStorage.getItem(key) === undefined ) {
+            localStorage.setItem(key, defaultSettings[key]);
+        }
     }
-  }
 
     // Initialize text entry fields
     jQuery('input.text-entry').each(function() {
