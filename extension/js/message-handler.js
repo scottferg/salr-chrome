@@ -82,6 +82,51 @@ chrome.extension.onConnect.addListener(function(port) {
     });
 });
 
+// New assoc array for storing default settings.
+var defaultSettings = [];
+defaultSettings['userQuote']                    = '#a2cd5a';
+defaultSettings['darkRead']                     = '#6699cc';
+defaultSettings['lightRead']                    = '#99ccff';
+defaultSettings['darkNewReplies']               = '#99cc99';
+defaultSettings['lightNewReplies']              = '#ccffcc';
+defaultSettings['youtubeHighlight']             = '#ff00ff';
+defaultSettings['displayConfigureSalr']         = 'true';
+defaultSettings['highlightFriendsColor']        = '#f2babb';
+defaultSettings['highlightSelfColor']           = '#f2babb';
+defaultSettings['highlightAdminColor']          = '#ff7256';
+defaultSettings['highlightModeratorColor']      = '#b4eeb4';
+defaultSettings['inlinePostCounts']             = 'false';
+defaultSettings['disableCustomButtons']         = 'false';
+defaultSettings['highlightOPColor']             = '#fff2aa';
+defaultSettings['displayPageNavigator']         = 'true';
+defaultSettings['userNotesEnabled']             = 'true';
+defaultSettings['salrInitialized']              = 'true';
+defaultSettings['topPurchaseAcc']               = 'true';
+defaultSettings['topPurchasePlat']              = 'true';
+defaultSettings['topPurchaseAva']               = 'true';
+defaultSettings['topPurchaseOtherAva']          = 'true';
+defaultSettings['topPurchaseArchives']          = 'true';
+defaultSettings['topPurchaseNoAds']             = 'true';
+defaultSettings['topPurchaseNewUsername']       = 'true';
+defaultSettings['topPurchaseNonProfAd']         = 'true';
+defaultSettings['topPurchaseForProfAd']         = 'true';
+defaultSettings['topPurchaseEmoticon']          = 'true';
+defaultSettings['topPurchaseSticky']            = 'true';
+defaultSettings['topPurchaseGiftCert']          = 'true';
+defaultSettings['topSAForums']                  = 'true';
+defaultSettings['topSearch']                    = 'true';
+defaultSettings['topUserCP']                    = 'true';
+defaultSettings['topPrivMsgs']                  = 'true';
+defaultSettings['topForumRules']                = 'true';
+defaultSettings['topSaclopedia']                = 'true';
+defaultSettings['topGloryhole']                 = 'true';
+defaultSettings['topLepersColony']              = 'true';
+defaultSettings['topSupport']                   = 'true';
+defaultSettings['topLogout']                    = 'true';
+defaultSettings['showPurchases']                = 'true';
+defaultSettings['showNavigation']               = 'true';
+
+
 /**
  * Event handler for clicking on the toolstrip logo
  *
@@ -101,27 +146,16 @@ function openNewTab(aUrl) {
 }
 
 /**
- * Sets up default preferences for highlighting only
+ * Sets up default preferences for highlighting and menus only
  *
  */
 function setupDefaultPreferences() {
-    localStorage.setItem('userQuote', '#a2cd5a');
-    localStorage.setItem('darkRead', '#6699cc');
-    localStorage.setItem('lightRead', '#99ccff');
-    localStorage.setItem('darkNewReplies', '#99cc99');
-    localStorage.setItem('lightNewReplies', '#ccffcc');
-    localStorage.setItem('youtubeHighlight', '#ff00ff');
-    localStorage.setItem('displayConfigureSalr', 'true');
-    localStorage.setItem('highlightFriendsColor', "#f2babb");
-    localStorage.setItem('highlightSelfColor', "#f2babb");
-    localStorage.setItem('highlightAdminColor', "#ff7256");
-    localStorage.setItem('highlightModeratorColor', "#b4eeb4");
-    localStorage.setItem('inlinePostCounts', 'false');
-    localStorage.setItem('highlightOPColor', '#fff2aa');
-    localStorage.setItem('displayPageNavigator', 'true');
-    localStorage.setItem('userNotesEnabled', 'true');
-    localStorage.setItem('displayCustomButtons', 'true');
-    localStorage.setItem('salrInitialized', 'true');
+    // New, more scalable method for setting default prefs.
+    for ( var key in defaultSettings ) {
+        if ( localStorage.getItem(key) === undefined ) {
+            localStorage.setItem(key, defaultSettings[key]);
+        }
+    }
 }
 
 /**
@@ -135,9 +169,7 @@ function getPageSettings() {
     }
 
     // If we don't have stored settings, set defaults
-    if (!localStorage.getItem('salrInitialized')) {
-        setupDefaultPreferences();
-    }
+    setupDefaultPreferences();
 
     fixSettings();
 
