@@ -33,26 +33,102 @@ jQuery(document).ready(function() {
         localStorage.setItem('salrInitialized', 'true');
     }
 
-    // If we don't have stored settings, set defaults
-    if (!localStorage.getItem('salrInitialized')) {
-        localStorage.setItem('userQuote', '#a2cd5a');
-        localStorage.setItem('darkRead', '#6699cc');
-        localStorage.setItem('lightRead', '#99ccff');
-        localStorage.setItem('darkNewReplies', '#99cc99');
-        localStorage.setItem('lightNewReplies', '#ccffcc');
-        localStorage.setItem('youtubeHighlight', '#ff00ff');
-        localStorage.setItem('displayConfigureSalr', 'true');
-        localStorage.setItem('highlightFriendsColor', "#f2babb");
-        localStorage.setItem('highlightSelfColor', "#f2babb");
-        localStorage.setItem('highlightAdminColor', "#ff7256");
-        localStorage.setItem('highlightModeratorColor', "#b4eeb4");
-        localStorage.setItem('inlinePostCounts', 'false');
-        localStorage.setItem('disableCustomButtons', 'false');
-        localStorage.setItem('highlightOPColor', '#fff2aa');
-        localStorage.setItem('displayPageNavigator', 'true');
-        localStorage.setItem('userNotesEnabled', 'true');
-        localStorage.setItem('salrInitialized', 'true');
-    }
+	// Setting names.
+	var settingNames = [
+		'userQuote',
+		'darkRead',
+		'lightRead',
+		'darkNewReplies',
+		'lightNewReplies',
+		'youtubeHighlight',
+		'displayConfigureSalr',
+		'highlightFriendsColor',
+		'highlightSelfColor',
+		'highlightAdminColor',
+		'highlightModeratorColor',
+		'inlinePostCounts',
+		'disableCustomButtons',
+		'highlightOPColor',
+		'displayPageNavigator',
+		'userNotesEnabled',
+		'salrInitialized',
+		'topPurchaseAcc',
+		'topPurchasePlat',
+		'topPurchaseAva',
+		'topPurchaseOtherAva',
+		'topPurchaseArchives',
+		'topPurchaseNoAds',
+		'topPurchaseNewUsername',
+		'topPurchaseNonProfAd',
+		'topPurchaseForProfAd',
+		'topPurchaseEmoticon',
+		'topPurchaseSticky',
+		'topPurchaseGiftCert',
+		'topSAForums',
+		'topSearch',
+		'topUserCP',
+		'topPrivMsgs',
+		'topForumRules',
+		'topSaclopedia',
+		'topGloryhole',
+		'topLepersColony',
+		'topSupport',
+		'topLogout',
+		'showPurchases',
+		'showNavigation',
+	]
+	
+	// Setting defaults.
+	var settingDefaults = [
+		'#a2cd5a',
+		'#6699cc',
+		'#99ccff',
+		'#99cc99',
+		'#ccffcc',
+		'#ff00ff',
+		'true',
+		'#f2babb',
+		'#f2babb',
+		'#ff7256',
+		'#b4eeb4',
+		'false',
+		'false',
+		'#fff2aa',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+		'true',
+	]
+	
+	// Check stored settings, if value not set, set to default value
+	for ( var i=0, len=settingNames.length; i<len; ++i) {
+		if (!localStorage.getItem(settingNames[i])) {
+			localStorage.setItem(settingNames[i], settingDefaults[i]);
+		}
+	}
 
     // Initialize text entry fields
     jQuery('input.text-entry').each(function() {

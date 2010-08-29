@@ -911,6 +911,7 @@ SALR.prototype.displayUserNotes = function() {
                   "143511" : {'text' : 'SALR Developer', 'color' : '#9933FF'},  // Sneaking Mission
                   "156041" : {'text' : 'SALR Developer', 'color' : '#9933FF'},  // wmbest2
                   "115838" : {'text' : 'SALR Developer', 'color' : '#9933FF'}}; // Ferg
+                  "101547" : {'text' : 'SALR Developer', 'color' : '#9933FF'}}; // Rohaq
         postMessage({ 'message': 'ChangeSetting',
                            'option' : 'userNotes',
                            'value'  : JSON.stringify(notes) });
