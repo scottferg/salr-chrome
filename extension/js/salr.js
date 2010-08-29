@@ -836,6 +836,11 @@ SALR.prototype.highlightOPPosts = function() {
             'background-color' : that.settings.highlightOPColor
         });
     });
+    jQuery('dt.author.op').each(function() {
+        jQuery(this).after(
+            '<dd style="color: #07A; font-weight: bold; ">Thread Poster</dd>'
+        );
+    });
 };
 
 /**
