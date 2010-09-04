@@ -1200,6 +1200,19 @@ SALR.prototype.bindQuickReply = function() {
             **********************************/
         });
     });
+
+    jQuery('a > img[alt="Edit"]').each(function() {
+        jQuery(this).parent().attr('href', 'javascript:;');
+
+        var parentTable = jQuery(this).parents('table.post');
+        var postid = parentTable.attr('id').substr(4);
+
+        // Bind the quick edit box to the button
+        jQuery(this).parent().click(function() {
+            that.quickReply.editPost(postid);
+            that.quickReply.show();
+        });
+    });
     
     jQuery('a > img[alt="Reply"]').each(function() {
         jQuery(this).parent().attr('href', 'javascript:void();');
