@@ -307,11 +307,14 @@ SALR.prototype.updateStyling = function() {
                 seenThread = true;
         }
 
+        var noStars = (jQuery('td.star').css('display') == 'none');
+
         // Use custom highlighting if:
         //   highlightThread setting is enabled
         //   this thread has unread posts
         //   bookmark coloring forums option is disabled
-        if (that.settings.highlightThread=='true' && seenThread && (thread.attr('class') == 'thread seen' || thread.attr('class')=='thread')) {
+        //      or stars is disabled
+        if (that.settings.highlightThread=='true' && seenThread && (thread.attr('class') == 'thread seen' || thread.attr('class')=='thread' || noStars)) {
             // If the thread has new posts, display the green shade,
             // otherwise show the blue shade
             var darkShade = (newPosts) ? that.settings.darkNewReplies : that.settings.darkRead;
