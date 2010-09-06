@@ -606,26 +606,29 @@ SALR.prototype.skimModerators = function() {
     var modupdate = false;
     if (this.settings.modList == null) {
         // Seed administrators. Is there a list for them?
-        modList = { "12831" : {'username' :  'elpintogrande', 'mod' : 'A'},
-                    "16393" : {'username' :  'Fistgrrl', 'mod' : 'A'},
-                    "17553" : {'username' :  'Livestock', 'mod' : 'A'},
-                    "22720" : {'username' :  'Ozma', 'mod' : 'A'},
-                    "23684" : {'username' :  'mons all madden', 'mod' : 'A'},
-                    "24587" : {'username' :  'hoodrow trillson', 'mod' : 'A'},
-                    "27691" : {'username' :  'Lowtax', 'mod' : 'A'},
-                    "51697" : {'username' :  'angerbot', 'mod' : 'A'},
-                    "62392" : {'username' :  'Tiny Fistpump', 'mod' : 'A'},
-                    "114975" : {'username' : 'SA Support Robot', 'mod' : 'A'},
-                    "137488" : {'username' : 'Garbage Day', 'mod' : 'A'},
-                    "147983" : {'username' : 'Peatpot', 'mod' : 'A'},
-                    "158420" : {'username' : 'Badvertising', 'mod' : 'A'},
+        // Also old moderator name changes
+        modList = { "12831"  : {'username' : ['elpintogrande'], 'mod' : 'A'},
+                    "16393"  : {'username' : ['Fistgrrl'], 'mod' : 'A'},
+                    "17553"  : {'username' : ['Livestock'], 'mod' : 'A'},
+                    "22720"  : {'username' : ['Ozma'], 'mod' : 'A'},
+                    "23684"  : {'username' : ['mons all madden','mons al-madeen'], 'mod' : 'A'},
+                    "24587"  : {'username' : ['hoodrow trillson'], 'mod' : 'A'},
+                    "27691"  : {'username' : ['Lowtax'], 'mod' : 'A'},
+                    "51697"  : {'username' : ['angerbotSD','angerbot'], 'mod' : 'A'},
+                    "62392"  : {'username' : ['Tiny Fistpump'], 'mod' : 'A'},
+                    "114975" : {'username' : ['SA Support Robot'], 'mod' : 'A'},
+                    "137488" : {'username' : ['Garbage Day'], 'mod' : 'A'},
+                    "147983" : {'username' : ['Peatpot'], 'mod' : 'A'},
+                    "158420" : {'username' : ['Badvertising'], 'mod' : 'A'},
+                    "42786"  : {'username' : ['strwrsxprt'], 'mod' : 'M'},
                    };
         modupdate = true;
     } else {
         modList = JSON.parse(this.settings.modList);
-        // Administrator names changes
-        if (modList['51697'].username == 'angerbotSD') {
-            modList['51697'].username = 'angerbot';
+
+        // If old style of modList is detected, force reset
+        if (typeof(modList['23684'].username) == 'string') {
+            modList=null;
             modupdate=true;
         }
     }
@@ -637,10 +640,15 @@ SALR.prototype.skimModerators = function() {
         var userid = jQuery(this).attr('href').split('userid=')[1];
         var username = jQuery(this).html();
         if (modList[userid] == null) {
-            modList[userid] = {'username' : username, 'mod' : 'M'};
+            modList[userid] = {'username' : [username], 'mod' : 'M'};
             modupdate = true;
-        } else if (modList[userid].username != username) {
-            modList[userid].username = username;
+        } else {
+            var namechange=true;
+            for (unum in modList[userid].username)
+                if (username == modList[userid].username[unum])
+                    namechange=false;
+            if (namechange)
+                modList[userid].username.push(username);
             modupdate = true;
         }
     });
@@ -650,10 +658,15 @@ SALR.prototype.skimModerators = function() {
         var userid = jQuery(this).attr('href').split('userid=')[1];
         var username = jQuery(this).html();
         if (modList[userid] == null) {
-            modList[userid] = {'username' : username, 'mod' : 'M'};
+            modList[userid] = {'username' : [username], 'mod' : 'M'};
             modupdate = true;
         } else if (modList[userid].username != username) {
-            modList[userid].username = username;
+            var namechange=true;
+            for (unum in modList[userid].username)
+                if (username == modList[userid].username[unum])
+                    namechange=false;
+            if (namechange)
+                modList[userid].username.push(username);
             modupdate = true;
         }
     });
@@ -914,7 +927,9 @@ SALR.prototype.highlightModAdminForumDisplay = function() {
         var username = jQuery(this).html();
         // No userid in this column so we have to loop
         for(userid in modList) {
-            if (username == modList[userid].username) {
+            for (unum in modList[userid].username) {
+                if (username != modList[userid].username[unum])
+                    continue;
                 var color;
                 switch (modList[userid].mod) {
                     case 'M':
