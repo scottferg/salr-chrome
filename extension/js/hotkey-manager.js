@@ -286,6 +286,8 @@ HotKeyManager.prototype.quoteCurrentPost = function() {
     if (this.current_post == -1) {
         return;
     }
+    if (!this.quickReply)
+        return;
 
     var current_post = jQuery('div#thread > table.post').eq(this.current_post);
     var postid = current_post.attr('id').substr(4);
@@ -307,12 +309,16 @@ HotKeyManager.prototype.editCurrentPost = function() {
 };
 
 HotKeyManager.prototype.displayQuickReply = function() {
+    if (!this.quickReply)
+        return;
     if (findCurrentPage() == 'showthread.php') {
         this.quickReply.show();
     }
 };
 
 HotKeyManager.prototype.hideQuickReply = function() {
+    if (!this.quickReply)
+        return;
     if (findCurrentPage() == 'showthread.php') {
         this.quickReply.hide();
     }
