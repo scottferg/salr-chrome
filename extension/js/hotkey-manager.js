@@ -300,6 +300,8 @@ HotKeyManager.prototype.editCurrentPost = function() {
     if (this.current_post == -1) {
         return;
     }
+    if (!this.quickReply)
+        return;
 
     var current_post = jQuery('div#thread > table.post').eq(this.current_post);
     var postid = current_post.attr('id').substr(4);
