@@ -39,7 +39,7 @@ function QuickReplyBox(forum_post_key, base_image_uri, bookmark) {
         visible: false,
         sidebar_visible: false,
         topbar_visible: false,
-        first_quote: true
+        wait_for_quote: false
     };
 
     // TODO: Pull these from the extension, cache them there
@@ -240,7 +240,6 @@ QuickReplyBox.prototype.hide = function() {
     jQuery('#quick-reply').hide("slow");
     jQuery('#post-message').val('');
     this.quickReplyState.expanded = false;
-    this.quickReplyState.first_quote = true;
 };
 
 QuickReplyBox.prototype.fetchFormCookie = function(threadid) {
@@ -281,6 +280,9 @@ QuickReplyBox.prototype.prependText = function(text) {
 QuickReplyBox.prototype.appendQuote = function(postid) {
     var that = this;
 
+    if (!this.quickReplyState.expanded)
+        this.quickReplyState.wait_for_quote = true;
+
     // Call up SA's quote page
     jQuery.get(this.reply_url,
                 {
@@ -294,9 +296,9 @@ QuickReplyBox.prototype.appendQuote = function(postid) {
                     if (textarea.length)
                         quote = textarea.val();
 
-                    if (that.quickReplyState.first_quote) {
+                    if (that.quickReplyState.wait_for_quote) {
                         that.prependText(quote);
-                        that.quickReplyState.first_quote=false;
+                        that.quickReplyState.wait_for_quote=false;
                     } else {
                         that.appendText(quote);
                     }
