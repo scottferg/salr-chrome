@@ -39,7 +39,8 @@ function QuickReplyBox(forum_post_key, base_image_uri, bookmark) {
         expanded: false,
         visible: false,
         sidebar_visible: false,
-        topbar_visible: false
+        topbar_visible: false,
+        first_quote: true
     };
 
     // TODO: Pull these from the extension, cache them there
@@ -248,6 +249,7 @@ QuickReplyBox.prototype.hide = function() {
     jQuery('input#quick-reply-postid').val('');
 
     this.quickReplyState.expanded = false;
+    this.quickReplyState.first_quote = true;
 };
 
 QuickReplyBox.prototype.fetchFormCookie = function(threadid) {
@@ -276,6 +278,15 @@ QuickReplyBox.prototype.appendText = function(text) {
     jQuery('#topbar-preview').html(parser.fetchResult());
 };
 
+QuickReplyBox.prototype.prependText = function(text) {
+    var current_message = jQuery('#post-message').val();
+
+    jQuery('#post-message').val(text + current_message);
+
+    var parser = new PreviewParser(jQuery('#post-message').val(), this.emotes);
+    jQuery('#topbar-preview').html(parser.fetchResult());
+};
+
 QuickReplyBox.prototype.appendQuote = function(postid) {
     var that = this;
 
@@ -291,7 +302,13 @@ QuickReplyBox.prototype.appendQuote = function(postid) {
                     var quote = '';
                     if (textarea.length)
                         quote = textarea.val();
-                    that.appendText(quote);
+
+                    if (that.quickReplyState.first_quote) {
+                        that.prependText(quote);
+                        that.quickReplyState.first_quote=false;
+                    } else {
+                        that.appendText(quote);
+                    }
                 });
 };
 
