@@ -135,11 +135,13 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '               <span class="post-options">Show signature</span>' +
                 '          </input>' + 
                 '           </label>' + 
+                /*********************BLOCKED FOR THIS RELEASE****************
                 '           <label>' +
                 '           <input type="checkbox" id="live-preview" value="yes">' + 
                 '               <span class="post-options">Show live preview</span>' +
                 '          </input>' + 
                 '           </label>' + 
+                *************************************************************/
                 '       </div>' +
                 '       <div id="submit-buttons">' +
                 '           <input type="submit" class="bginput" name="preview" value="Preview Reply">' + 
