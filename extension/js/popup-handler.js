@@ -59,32 +59,26 @@ function toggleSticky(forumID) {
 function populateMenu() {
     var forums = JSON.parse(settings.forumsList);
     var newHTML = '';
-    var numSeps = 0;
     var color = '#ffffff';
     
     jQuery(forums).each( function() {
-        var splitUp = this.name.match(/^(-*)(.*)/);
+        var indent = this.level;
+        var title = this.name;
         
-        var indent = splitUp[1].length;
-        var title = splitUp[2];
-        
-        if (indent > 10) { // Separator
-            if (numSeps > 0) {
-                // Loop through forum list and add stickied forums
-                for(i in forums) {
-                    if (forums[i].sticky == true)  {
-                        newHTML += populateMenuHelper(forums[i], color, true);
-                        if (color == '#ffffff') {
-                            color = '#eeeeee';
-                        } else {
-                            color = '#ffffff';
-                        }
+        if (indent == -1) { // Separator
+            // Loop through forum list and add stickied forums
+            for(i in forums) {
+                if (forums[i].sticky == true)  {
+                    newHTML += populateMenuHelper(forums[i], color, true);
+                    if (color == '#ffffff') {
+                        color = '#eeeeee';
+                    } else {
+                        color = '#ffffff';
                     }
                 }
-                
-                newHTML += '<hr/>';
             }
-            numSeps ++;
+            
+            newHTML += '<hr/>';
         } else if (indent == 0) {
             newHTML += '<div class="header-link">';
             newHTML += '<a onclick="javascript:openTab(\'http://forums.somethingawful.com/forumdisplay.php?forumid=' + this.id + '\')" href="javascript:" class="link link'+ indent +'">' + title + '</a><br/>';
@@ -107,11 +101,10 @@ function populateMenu() {
 function populateMenuHelper(forum, color, stuck) {
     var subHTML = '';
 
-    var splitUp = forum.name.match(/^(-*)(.*)/);
-    var indent = splitUp[1].length;
+    var indent = 2*forum.level;
     if (stuck == true)
         indent=2;
-    var title = splitUp[2];
+    var title = forum.name;
 
     // Add sticky controls to popup window
     if (forum.sticky == true)
