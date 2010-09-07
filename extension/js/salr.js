@@ -48,6 +48,8 @@ SALR.prototype.pageInit = function() {
     switch (findCurrentPage()) {
         case '':
         case 'index.php':
+            this.updateForumsListIndex();
+
             if (this.settings.highlightModAdmin == 'true') {
                 this.skimModerators();
             }
@@ -63,7 +65,7 @@ SALR.prototype.pageInit = function() {
                 this.pageNavigator = new PageNavigator(this.base_image_uri);
             }
 
-            this.updateForumsList();
+            //this.updateForumsList();
             
             if (this.settings.highlightFriends == 'true') {
                 this.highlightFriendPosts();    
@@ -1021,6 +1023,126 @@ SALR.prototype.highlightModAdminWhoPosted = function() {
 };
 
 /**
+ * Update the list of forums from the index.
+ */
+SALR.prototype.updateForumsListIndex = function() {
+    var forums = new Array();
+
+    forums.push({ 'name'   : 'Private Messages',
+                  'id'     : 'pm',
+                  'level'  : 0,
+                  'sticky' : false,
+                });
+    forums.push({ 'name'   : 'User Control Panel',
+                  'id'     : 'cp',
+                  'level'  : 0,
+                  'sticky' : false,
+                });
+    forums.push({ 'name'   : 'Search Forums',
+                  'id'     : 'search',
+                  'level'  : 0,
+                  'sticky' : false,
+                });
+    forums.push({ 'name'   : 'Forums Home',
+                  'id'     : 'home',
+                  'level'  : 0,
+                  'sticky' : false,
+                });
+    forums.push({ 'name'   : 'Leper\'s Colony',
+                  'id'     : 'lc',
+                  'level'  : 0,
+                  'sticky' : false,
+                });
+    forums.push({ 'name'   : '',
+                  'id'     : '',
+                  'level'  : -1,
+                  'sticky' : false,
+                });
+
+    var stickyList = new Array();
+    if (this.settings.forumsList != null) {
+        var oldForums = JSON.parse(this.settings.forumsList);
+        for(i in oldForums) {
+            stickyList[oldForums[i].id] = oldForums[i].sticky;
+        }
+    }
+
+    jQuery('table#forums tr').each(function() {
+        var row = this;
+
+        // Categories
+        jQuery('th.category a', this).each(function() {
+            var match = jQuery(this).attr('href').match(/forumid=(\d+)/);
+            var forumid = -1;
+            var title = jQuery(this).text();
+            if (match != null)
+                forumid = match[1];
+
+            forums.push({ 'name'   : title,
+                          'id'     : forumid,
+                          'level'  : 0,
+                          'sticky' : (stickyList[forumid]==true),
+                        });
+        });
+
+        // Forums
+        jQuery('td.title > a', this).each(function() {
+            var match = jQuery(this).attr('href').match(/forumid=(\d+)/);
+            var forumid = -1;
+            var title = jQuery(this).text();
+            if (match != null)
+                forumid = match[1];
+
+            forums.push({ 'name'   : title,
+                          'id'     : forumid,
+                          'level'  : 1,
+                          'sticky' : (stickyList[forumid]==true),
+                        });
+
+            // Subforums
+            jQuery('div.subforums a', jQuery(this).parent()).each(function() {
+                var match = jQuery(this).attr('href').match(/forumid=(\d+)/);
+                var forumid = -1;
+                var title = jQuery(this).text();
+                if (match != null)
+                    forumid = match[1];
+                
+                forums.push({ 'name'   : title,
+                              'id'     : forumid,
+                              'level'  : 2,
+                              'sticky' : (stickyList[forumid]==true),
+                            });
+
+                if (forumid == '103') {
+                    forums.push({ 'name'   : 'TG Discussion',
+                                  'id'     : '234',
+                                  'level'  : 3,
+                                  'sticky' : (stickyList['234']==true),
+                                });
+                } else if (forumid == '145') {
+                    forums.push({ 'name'   : 'WoW: Goon Squad',
+                                  'id'     : '146',
+                                  'level'  : 3,
+                                  'sticky' : (stickyList['146']==true),
+                                });
+                    forums.push({ 'name'   : 'The StarCraft II Zealot Zone',
+                                  'id'     : '250',
+                                  'level'  : 3,
+                                  'sticky' : (stickyList['250']==true),
+                                });
+                }
+            });
+        });
+    });
+
+    if (forums.length > 0) {
+        postMessage({ 'message': 'ChangeSetting',
+                           'option' : 'forumsList',
+                           'value'  : JSON.stringify(forums) });
+    }
+};
+
+/**
  * Update the list of forums.
  */
 SALR.prototype.updateForumsList = function() {
@@ -1038,13 +1160,17 @@ SALR.prototype.updateForumsList = function() {
         if (this.text == "Please select one:")
             return;
 
-        var sticky = false;
-        if (stickyList[this.value] == true)
-            sticky = true;
+        var splitUp = this.text.match(/^(-*)(.*)/);
+        var indent = splitUp[1].length/2;
+        if (indent > 10)
+            indent=-1;
+        var title = splitUp[2];
 
-        forums.push({ 'name' : this.text,
-                       'id'  : this.value,
-                       'sticky'  : sticky });
+        forums.push({ 'name'   : title,
+                      'id'     : this.value,
+                      'level'  : indent,
+                      'sticky' : (stickyList[this.value]==true),
+                    });
     });
 
     if (forums.length > 0) {
