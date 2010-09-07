@@ -1112,6 +1112,14 @@ SALR.prototype.updateForumsListIndex = function() {
                               'level'  : 2,
                               'sticky' : (stickyList[forumid]==true),
                             });
+
+                if (forumid == '103') {
+                    forums.push({ 'name'   : 'TG Discussion',
+                                  'id'     : '234',
+                                  'level'  : 3,
+                                  'sticky' : (stickyList['234']==true),
+                                });
+                }
             });
         });
     });
