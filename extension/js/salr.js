@@ -1119,6 +1119,17 @@ SALR.prototype.updateForumsListIndex = function() {
                                   'level'  : 3,
                                   'sticky' : (stickyList['234']==true),
                                 });
+                } else if (forumid == '145') {
+                    forums.push({ 'name'   : 'WoW: Goon Squad',
+                                  'id'     : '146',
+                                  'level'  : 3,
+                                  'sticky' : (stickyList['146']==true),
+                                });
+                    forums.push({ 'name'   : 'The StarCraft II Zealot Zone',
+                                  'id'     : '250',
+                                  'level'  : 3,
+                                  'sticky' : (stickyList['250']==true),
+                                });
                 }
             });
         });
