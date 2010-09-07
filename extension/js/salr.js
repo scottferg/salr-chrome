@@ -628,8 +628,8 @@ SALR.prototype.skimModerators = function() {
 
         // If old style of modList is detected, force reset
         if (typeof(modList['23684'].username) == 'string') {
-            modList=null;
-            modupdate=true;
+            localStorage.removeItem('modList');
+            return;
         }
     }
 
