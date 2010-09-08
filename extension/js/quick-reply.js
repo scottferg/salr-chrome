@@ -105,11 +105,9 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '       <div id="tag-menu" class="sidebar-menu">' +
                 '           <img src="' + this.base_image_uri + "quick-reply-tags.gif" + '" />' +
                 '       </div>' +
-                /************************WAFFLE IMAGES************************
                 '       <div id="waffle-images-menu" class="sidebar-menu">' +
                 '           <img src="' + this.base_image_uri + "quick-reply-waffle.gif" + '" />' +
                 '       </div>' +
-                *************************************************************/
                 '       <div id="post-input-field">' +
                 '<textarea name="message" rows="18" size="10" id="post-message">' +
                 '</textarea>' +
@@ -135,13 +133,11 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '               <span class="post-options">Show signature</span>' +
                 '          </input>' + 
                 '           </label>' + 
-                /*********************BLOCKED FOR THIS RELEASE****************
                 '           <label>' +
                 '           <input type="checkbox" id="live-preview" value="yes">' + 
                 '               <span class="post-options">Show live preview</span>' +
                 '          </input>' + 
                 '           </label>' + 
-                *************************************************************/
                 '       </div>' +
                 '       <div id="submit-buttons">' +
                 '           <input type="submit" class="bginput" name="preview" value="Preview Reply">' + 

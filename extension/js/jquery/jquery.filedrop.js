@@ -62,147 +62,15 @@
      
 	function drop(e) {
 		opts.drop(e);
-		upload(e.dataTransfer.files);
+        console.log(e.dataTransfer.files[0]);
+
+        postMessage({
+            'message': 'UploadWaffleImages',
+            'files': e.dataTransfer.files
+        });
+        
 		e.preventDefault();
 		return false;
-	}
-	
-	function getBuilder(filename, filedata, boundary) {
-		var dashdash = '--',
-			crlf = '\r\n',
-			builder = '';
-
-		$.each(opts.data, function(i, val) {
-	    	if (typeof val === 'function') val = val();
-			builder += dashdash;
-			builder += boundary;
-			builder += crlf;
-			builder += 'Content-Disposition: form-data; name="'+i+'"';
-			builder += crlf;
-			builder += val;
-			builder += crlf;
-		});
-        
-		builder += dashdash;
-		builder += boundary;
-		builder += crlf;
-		builder += 'Content-Disposition: form-data; name="'+opts.paramname+'"';
-		builder += '; filename="' + filename + '"';
-		builder += crlf;
-		
-		builder += 'Content-Type: application/octet-stream';
-		builder += crlf;
-		builder += crlf; 
-		
-		builder += filedata;
-		builder += crlf;
-		
-		builder += dashdash;
-		builder += boundary;
-		builder += crlf;
-        
-		builder += dashdash;
-		builder += boundary;
-		builder += dashdash;
-		builder += crlf;
-		return builder;
-	}
-
-	function progress(e) {
-		if (e.lengthComputable) {
-			var percentage = Math.round((e.loaded * 100) / e.total);
-			if (this.currentProgress != percentage) {
-				
-				this.currentProgress = percentage;
-				opts.progressUpdated(this.index, this.file, this.currentProgress);
-				
-				var elapsed = new Date().getTime();
-				var diffTime = elapsed - this.currentStart;
-				if (diffTime >= opts.refresh) {
-					var diffData = e.loaded - this.startData;
-					var speed = diffData / diffTime; // KB per second
-					opts.speedUpdated(this.index, this.file, speed);
-					this.startData = e.loaded;
-					this.currentStart = elapsed;
-				}
-			}
-		}
-	}
-    
-    
-    
-	function upload(files) {
-		stop_loop = false;
-		if (!files) {
-			opts.error(errors[0]);
-            console.log('Not files!');
-			return false;
-		}
-		var len = files.length;
-		
-		if (len > opts.maxfiles) {
-		    opts.error(errors[1]);
-		    return false;
-		}
-
-		for (var i=0; i<len; i++) {
-			if (stop_loop) return false;
-			try {
-				if (i === len) return;
-				var reader = new FileReader(),
-					max_file_size = 1048576 * opts.maxfilesize;
-					
-				reader.index = i;
-				reader.file = files[i];
-				reader.len = len;
-				if (reader.file.size > max_file_size) {
-					opts.error(errors[2], reader.file);
-					return false;
-				}
-		    	
-				reader.onloadend = send;
-				reader.readAsBinaryString(files[i]);
-			} catch(err) {
-                console.log(err);
-				opts.error(errors[0]);
-				return false;
-			}
-		}
-	    
-		function send(e) {
-			var xhr = new XMLHttpRequest(),
-				upload = xhr.upload,
-				file = e.target.file,
-				index = e.target.index,
-				start_time = new Date().getTime(),
-				boundary = '------multipartformboundary' + (new Date).getTime(),
-				builder = getBuilder(file.name, e.target.result, boundary);
-			
-			upload.index = index;
-			upload.file = file;
-			upload.downloadStartTime = start_time;
-			upload.currentStart = start_time;
-			upload.currentProgress = 0;
-			upload.startData = 0;
-			upload.addEventListener("progress", progress, false);
-			
-			xhr.open("POST", opts.url, true);
-			xhr.setRequestHeader('content-type', 'multipart/form-data; boundary=' 
-			    + boundary);
-			    
-			xhr.sendAsBinary(builder);  
-			
-			opts.uploadStarted(index, file, e.target.len);  
-			
-			xhr.onload = function() { 
-			    if (xhr.responseText) {
-				var now = new Date().getTime(),
-				    timeDiff = now - start_time,
-				    result = opts.uploadFinished(index, file, eval( '[' + xhr.responseText + ']' ), timeDiff);
-			    if (result === false) stop_loop = true;
-			    }
-			};
-		}
 	}
     
 	function dragEnter(e) {

@@ -75,6 +75,9 @@ chrome.extension.onConnect.addListener(function(port) {
                 break;
             case 'ChangeSALRSetting':
                 localStorage.setItem(data.option, data.value);
+            case 'UploadWaffleImages':
+                uploadWaffleImagesFile(data);
+                break;
             case 'log':
             default:
                 console.log(data);
@@ -201,5 +204,153 @@ function fixSettings() {
     if (localStorage.getItem('highlightCancer')) {
         localStorage.setItem('fixCancer', localStorage.getItem('highlightCancer'));
         localStorage.removeItem('highlightCancer');
+    }
+}
+
+/**
+ * We handle the waffle images upload here so that we can leverage the cross-XHR
+ * permissions in Chrome.
+ *
+ */
+function uploadWaffleImagesFile(param) {
+    var data = {
+        files: param.files,
+        params: {
+            mode: 'file',
+            tg_format: 'xml'
+        },
+        url: 'http://waffleimages.com/upload',
+    };
+
+    upload(data);
+    /*
+    sendMultipleFiles({
+        url: 'http://waffleimages.com/upload',
+        files: param.files,
+        onloadstart:function(){
+        },
+        onprogress:function(rpe){
+        },
+        onload:function(rpe, xhr){
+            console.log(xhr.responseText);
+        },
+        onerror:function(){
+        }
+    });
+    */
+}
+
+function getBuilder(filename, filedata, boundary, data) {
+    var dashdash = '--',
+        crlf = '\r\n',
+        builder = '';
+
+    for (var i in data.params) {
+        builder += dashdash;
+        builder += boundary;
+        builder += crlf;
+        builder += 'Content-Disposition: form-data; name="'+i+'"';
+        builder += crlf;
+        builder += data.params[i];
+        builder += crlf;
+    }
+    
+    builder += dashdash;
+    builder += boundary;
+    builder += crlf;
+    builder += 'Content-Disposition: form-data; name="file"';
+    builder += '; filename="' + filename + '"';
+    builder += crlf;
+
+    builder += 'Content-Type: application/octet-stream';
+    builder += crlf;
+    builder += crlf; 
+
+    builder += filedata;
+    builder += crlf;
+
+    builder += dashdash;
+    builder += boundary;
+    builder += crlf;
+    
+    builder += dashdash;
+    builder += boundary;
+    builder += dashdash;
+    builder += crlf;
+    return builder;
+}
+
+function upload(data) {
+    stop_loop = false;
+    if (!data.files) {
+        console.log('Not data.files!');
+        return false;
+    }
+    var len = data.files.length;
+
+    if (len > 25) {
+        console.log("Too many!");
+        return false;
+    }
+
+    var send = function(e) {
+        var xhr = new XMLHttpRequest(),
+            upload = xhr.upload,
+            file = e.file,
+            index = e.index,
+            start_time = new Date().getTime(),
+            boundary = '------multipartformboundary' + (new Date).getTime(),
+            builder = getBuilder(file.name, e.result, boundary, data);
+
+        upload.index = index;
+        upload.file = file;
+        upload.downloadStartTime = start_time;
+        upload.currentStart = start_time;
+        upload.currentProgress = 0;
+        upload.startData = 0;
+
+        console.log('Starting to transfer');
+
+        xhr.open("POST", data.url, true);
+        xhr.setRequestHeader('content-type', 'multipart/form-data; boundary=' 
+            + boundary);
+
+        xhr.send(builder);  
+
+        console.log(xhr);
+
+        xhr.onload = function() { 
+            console.log(xhr);
+            if (xhr.responseText) {
+            console.log(xhr.responseText);
+            if (result === false) stop_loop = true;
+            }
+        };
+    };
+
+    for (var i=0; i<len; i++) {
+        if (stop_loop) return false;
+        try {
+            if (i === len) return;
+            var reader = new FileReader(),
+                max_file_size = 1048576;
+
+            reader.index = i;
+            reader.file = data.files[i];
+            reader.len = len;
+            if (reader.file.size > max_file_size) {
+                console.log("Too big!");
+                return false;
+            }
+
+            reader.onloadend = send;
+            // TODO: Per the W3C spec readAsBinaryString should set the result property
+            // of the FileReader object to a binary string.  This is not currently happening
+            // in Chrome 6.
+            reader.readAsBinaryString(data.files[i]);
+        } catch(err) {
+            console.log(err);
+            return false;
+        }
     }
 }
