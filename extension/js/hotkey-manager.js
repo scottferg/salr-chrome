@@ -304,6 +304,8 @@ HotKeyManager.prototype.editCurrentPost = function() {
         return;
 
     var current_post = jQuery('div#thread > table.post').eq(this.current_post);
+    if (current_post.has('img[alt="Edit"]').length == 0)
+        return;
     var postid = current_post.attr('id').substr(4);
 
     this.quickReply.editPost(postid);
