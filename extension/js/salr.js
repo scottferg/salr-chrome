@@ -65,7 +65,7 @@ SALR.prototype.pageInit = function() {
                 this.pageNavigator = new PageNavigator(this.base_image_uri);
             }
 
-            //this.updateForumsList();
+            this.updateForumsList();
             
             if (this.settings.highlightFriends == 'true') {
                 this.highlightFriendPosts();    
@@ -1156,14 +1156,20 @@ SALR.prototype.updateForumsList = function() {
         }
     }
 
+    var numSeps = 0;
     jQuery('select[name="forumid"]>option').each(function() {
         if (this.text == "Please select one:")
             return;
 
         var splitUp = this.text.match(/^(-*)(.*)/);
         var indent = splitUp[1].length/2;
-        if (indent > 10)
+        if (indent >= 10) {
+            numSeps++;
+            // Ignore first separator
+            if (numSeps == 1)
+                return;
             indent=-1;
+        }
         var title = splitUp[2];
 
         forums.push({ 'name'   : title,
@@ -1173,7 +1179,8 @@ SALR.prototype.updateForumsList = function() {
                     });
     });
 
-    if (forums.length > 0) {
+    // Make sure drop down contains full list of forums
+    if (forums.length > 15) {
         postMessage({ 'message': 'ChangeSetting',
                            'option' : 'forumsList',
                            'value'  : JSON.stringify(forums) });
