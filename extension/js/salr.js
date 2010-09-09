@@ -1334,7 +1334,9 @@ SALR.prototype.bindQuickReply = function() {
 
         // Bind the quick edit box to the button
         jQuery(this).parent().click(function() {
-            that.quickReply.editPost(postid);
+            var subscribe = jQuery('.subscribe > a').html().indexOf('Unbookmark') == 0 ? true : false;
+
+            that.quickReply.editPost(postid, subscribe);
             that.quickReply.show();
         });
     });
