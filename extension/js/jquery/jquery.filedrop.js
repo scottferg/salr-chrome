@@ -25,107 +25,46 @@
  */
 (function($){
     
-	var opts = {},
-		default_opts = {
+	var opts = {};
+
+	var default_opts = {
 			url: '',
-			refresh: 1000,
 			paramname: 'userfile',
-			maxfiles: 25,
-			maxfilesize: 1, // MBs
 			data: {},
-			drop: empty,
-			dragEnter: empty,
-			dragOver: empty,
-			dragLeave: empty,
-			docEnter: empty,
-			docOver: empty,
-			docLeave: empty,
-			error: function(err, file){alert(err);},
-			uploadStarted: empty,
-			uploadFinished: empty,
-			progressUpdated: empty,
-			speedUpdated: empty
-		},
-		errors = ["BrowserNotSupported", "TooManyFiles", "FileTooLarge"],
-		doc_leave_timer,
-		stop_loop = false;
+			onDrop: empty,
+			onDragEnter: empty,
+			onDragOver: empty,
+			onDragLeave: empty,
+		};
 
 	$.fn.filedrop = function(options) {
-		opts = $.extend( {}, default_opts, options );
+		opts = $.extend({}, default_opts, options);
 		
-		this.get(0).addEventListener("drop", drop, true);
-		this.bind('dragenter', dragEnter).bind('dragover', dragOver).bind('dragleave', dragLeave);
-		
-		document.addEventListener("drop", docDrop, true);
-		$(document).bind('dragenter', docEnter).bind('dragover', docOver).bind('dragleave', docLeave);
+		this.get(0).addEventListener("drop", onDrop, true);
+		this.bind('dragenter', onDragEnter);
+        this.bind('dragover', onDragOver);
+        this.bind('dragleave', onDragLeave);
 	};
      
-	function drop(e) {
-		opts.drop(e);
-
-        // Prepare the file for upload before sending it
-        // to the extension for the actual upload
-        var reader = new FileReader();
-        reader.index = 0;
-        reader.file = e.dataTransfer.files[0];
-        reader.len = e.dataTransfer.files.length;
-
-        reader.onloadend = function(e) {
-            postMessage({
-                'message': 'UploadWaffleImages',
-                'file': e.target
-            });
-        };
-
-        reader.readAsBinaryString(e.dataTransfer.files[0]);
-        
+	function onDrop(e) {
+		opts.onDrop(e);
 		e.preventDefault();
 		return false;
 	}
     
-	function dragEnter(e) {
-		clearTimeout(doc_leave_timer);
+	function onDragEnter(e) {
 		e.preventDefault();
-		opts.dragEnter(e);
+		opts.onDragEnter(e);
 	}
 	
-	function dragOver(e) {
-		clearTimeout(doc_leave_timer);
+	function onDragOver(e) {
 		e.preventDefault();
-		opts.docOver(e);
-		opts.dragOver(e);
+		opts.onDragOver(e);
 	}
 	 
-	function dragLeave(e) {
-		clearTimeout(doc_leave_timer);
-		opts.dragLeave(e);
+	function onDragLeave(e) {
+		opts.onDragLeave(e);
 		e.stopPropagation();
-	}
-	 
-	function docDrop(e) {
-		e.preventDefault();
-		opts.docLeave(e);
-		return false;
-	}
-	 
-	function docEnter(e) {
-		clearTimeout(doc_leave_timer);
-		e.preventDefault();
-		opts.docEnter(e);
-		return false;
-	}
-	 
-	function docOver(e) {
-		clearTimeout(doc_leave_timer);
-		e.preventDefault();
-		opts.docOver(e);
-		return false;
-	}
-	 
-	function docLeave(e) {
-		doc_leave_timer = setTimeout(function(){
-			opts.docLeave(e);
-		}, 200);
 	}
 	 
 	function empty(){}

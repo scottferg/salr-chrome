@@ -512,64 +512,37 @@ QuickReplyBox.prototype.setWaffleImagesSidebar = function() {
 
     this.sidebar_html = html;
 
-    $('div#dropzone').filedrop({
-        url: 'http://waffleimages.com/upload',              // upload handler, handles each file separately
-        paramname: 'file',          // POST parameter name used on serverside to reference file
+    jQuery('div#dropzone').filedrop({
+        url: 'http://waffleimages.com/upload',
+        paramname: 'file',
         data: { 
-            mode: 'file',           // send POST variables
+            mode: 'file',
             tg_format: 'xml',
         },
-        error: function(err, file) {
-            switch(err) {
-                case 'BrowserNotSupported':
-                    alert('browser does not support html5 drag and drop')
-                    break;
-                case 'TooManyFiles':
-                    // user uploaded more than 'maxfiles'
-                    break;
-                case 'FileTooLarge':
-                    // program encountered a file whose size is greater than 'maxfilesize'
-                    // FileTooLarge also has access to the file which was too large
-                    // use file.name to reference the filename of the culprit file
-                    break;
-                default:
-                    break;
-            }
+        onDrop: function(event) {
+            // Prepare the file for upload before sending it
+            // to the extension for the actual upload
+            var reader = new FileReader();
+            reader.index = 0;
+            reader.file = event.dataTransfer.files[0];
+            reader.len = event.dataTransfer.files.length;
+
+            reader.onloadend = function(e) {
+                postMessage({
+                    'message': 'UploadWaffleImages',
+                    'file': e.target
+                });
+            };
+
+            reader.readAsBinaryString(event.dataTransfer.files[0]);
+            console.log('Dropped!!');
         },
-        maxfiles: 25,
-        maxfilesize: 20,    // max file size in MBs
-        dragOver: function() {
-            // user dragging files over #dropzone
+        onDragOver: function(event) {
+            console.log('Over!');
         },
-        dragLeave: function() {
-            // user dragging files out of #dropzone
+        onDragLeave: function(event) {
+            console.log('Out!');
         },
-        docOver: function() {
-            // user dragging files anywhere inside the browser document window
-        },
-        docLeave: function() {
-            // user dragging files out of the browser document window
-        },
-        drop: function() {
-            // user drops file
-        },
-        uploadStarted: function(i, file, len){
-            // a file began uploading
-            // i = index => 0, 1, 2, 3, 4 etc
-            // file is the actual file of the index
-            // len = total files user dropped
-        },
-        uploadFinished: function(i, file, response, time) {
-            // response is the data you got back from server in JSON format.
-            console.log(response);
-        },
-        progressUpdated: function(i, file, progress) {
-            // this function is used for large files and updates intermittently
-            // progress is the integer value of file being uploaded percentage to completion
-        },
-        speedUpdated: function(i, file, speed) {
-            // speed in kb/s
-        }
     });
 };
 

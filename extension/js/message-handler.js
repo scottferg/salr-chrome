@@ -213,112 +213,15 @@ function fixSettings() {
  *
  */
 function uploadWaffleImagesFile(param) {
-    var data = {
-        file: param.file,
-        params: {
-            mode: 'file',
-            tg_format: 'xml'
-        },
-        url: 'http://waffleimages.com/upload',
-    };
+    var uploader = new WaffleImagesUploader();
 
-    upload(data);
-    /*
-    sendMultipleFiles({
-        url: 'http://waffleimages.com/upload',
-        files: param.files,
-        onloadstart:function(){
-        },
-        onprogress:function(rpe){
-        },
-        onload:function(rpe, xhr){
-            console.log(xhr.responseText);
-        },
-        onerror:function(){
-        }
+    uploader.bind('onComplete', function(event) {
+        console.log(event.response);
     });
-    */
-}
 
-function getBuilder(filename, filedata, boundary, data) {
-    var dashdash = '--',
-        crlf = '\r\n',
-        builder = '';
+    uploader.bind('onError', function(event) {
+        console.log('An error occurred');
+    });
 
-    for (var i in data.params) {
-        builder += dashdash;
-        builder += boundary;
-        builder += crlf;
-        builder += 'Content-Disposition: form-data; name="'+i+'"';
-        builder += crlf;
-        builder += data.params[i];
-        builder += crlf;
-    }
-    
-    builder += dashdash;
-    builder += boundary;
-    builder += crlf;
-    builder += 'Content-Disposition: form-data; name="file"';
-    builder += '; filename="' + filename + '"';
-    builder += crlf;
-
-    builder += 'Content-Type: application/octet-stream';
-    builder += crlf;
-    builder += crlf; 
-
-    builder += filedata;
-    builder += crlf;
-
-    builder += dashdash;
-    builder += boundary;
-    builder += crlf;
-    
-    builder += dashdash;
-    builder += boundary;
-    builder += dashdash;
-    builder += crlf;
-    console.log(builder);
-    return builder;
-}
-
-function upload(data) {
-    var send = function(e) {
-        var xhr = new XMLHttpRequest(),
-            upload = xhr.upload,
-            file = e.file,
-            index = e.index,
-            start_time = new Date().getTime(),
-            boundary = '------multipartformboundary' + (new Date).getTime(),
-            builder = getBuilder(file.name, e.result, boundary, data);
-
-        console.log(data);
-
-        upload.index = index;
-        upload.file = file;
-        upload.downloadStartTime = start_time;
-        upload.currentStart = start_time;
-        upload.currentProgress = 0;
-        upload.startData = 0;
-
-        console.log('Starting to transfer');
-
-        xhr.open("POST", data.url, true);
-        xhr.setRequestHeader('content-type', 'multipart/form-data; boundary=' 
-            + boundary);
-
-        xhr.send(builder);  
-
-        xhr.onload = function() { 
-            if (xhr.responseText) {
-                console.log(xhr.responseText);
-            }
-        };
-    };
-
-    try {
-        send(data.file);
-    } catch(err) {
-        console.log(err);
-        return false;
-    }
+    uploader.upload(param.file);
 }
