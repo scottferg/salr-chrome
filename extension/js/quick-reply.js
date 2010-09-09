@@ -312,8 +312,12 @@ QuickReplyBox.prototype.appendQuote = function(postid) {
                 });
 };
 
-QuickReplyBox.prototype.editPost = function(postid) {
+QuickReplyBox.prototype.editPost = function(postid, subscribe) {
     var that = this;
+
+    if (subscribe) {
+        jQuery('input#quickReplyBookmark').attr('checked', true);
+    }
 
     // Call up SA's quote page
     jQuery.get(this.edit_url,
