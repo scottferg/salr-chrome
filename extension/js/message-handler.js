@@ -214,7 +214,7 @@ function fixSettings() {
  */
 function uploadWaffleImagesFile(param) {
     var data = {
-        files: param.files,
+        file: param.file,
         params: {
             mode: 'file',
             tg_format: 'xml'
@@ -277,22 +277,11 @@ function getBuilder(filename, filedata, boundary, data) {
     builder += boundary;
     builder += dashdash;
     builder += crlf;
+    console.log(builder);
     return builder;
 }
 
 function upload(data) {
-    stop_loop = false;
-    if (!data.files) {
-        console.log('Not data.files!');
-        return false;
-    }
-    var len = data.files.length;
-
-    if (len > 25) {
-        console.log("Too many!");
-        return false;
-    }
-
     var send = function(e) {
         var xhr = new XMLHttpRequest(),
             upload = xhr.upload,
@@ -301,6 +290,8 @@ function upload(data) {
             start_time = new Date().getTime(),
             boundary = '------multipartformboundary' + (new Date).getTime(),
             builder = getBuilder(file.name, e.result, boundary, data);
+
+        console.log(data);
 
         upload.index = index;
         upload.file = file;
@@ -317,40 +308,17 @@ function upload(data) {
 
         xhr.send(builder);  
 
-        console.log(xhr);
-
         xhr.onload = function() { 
-            console.log(xhr);
             if (xhr.responseText) {
-            console.log(xhr.responseText);
-            if (result === false) stop_loop = true;
+                console.log(xhr.responseText);
             }
         };
     };
 
-    for (var i=0; i<len; i++) {
-        if (stop_loop) return false;
-        try {
-            if (i === len) return;
-            var reader = new FileReader(),
-                max_file_size = 1048576;
-
-            reader.index = i;
-            reader.file = data.files[i];
-            reader.len = len;
-            if (reader.file.size > max_file_size) {
-                console.log("Too big!");
-                return false;
-            }
-
-            reader.onloadend = send;
-            // TODO: Per the W3C spec readAsBinaryString should set the result property
-            // of the FileReader object to a binary string.  This is not currently happening
-            // in Chrome 6.
-            reader.readAsBinaryString(data.files[i]);
-        } catch(err) {
-            console.log(err);
-            return false;
-        }
+    try {
+        send(data.file);
+    } catch(err) {
+        console.log(err);
+        return false;
     }
 }

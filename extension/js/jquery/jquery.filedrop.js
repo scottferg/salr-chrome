@@ -62,12 +62,22 @@
      
 	function drop(e) {
 		opts.drop(e);
-        console.log(e.dataTransfer.files[0]);
 
-        postMessage({
-            'message': 'UploadWaffleImages',
-            'files': e.dataTransfer.files
-        });
+        // Prepare the file for upload before sending it
+        // to the extension for the actual upload
+        var reader = new FileReader();
+        reader.index = 0;
+        reader.file = e.dataTransfer.files[0];
+        reader.len = e.dataTransfer.files.length;
+
+        reader.onloadend = function(e) {
+            postMessage({
+                'message': 'UploadWaffleImages',
+                'file': e.target
+            });
+        };
+
+        reader.readAsBinaryString(e.dataTransfer.files[0]);
         
 		e.preventDefault();
 		return false;
