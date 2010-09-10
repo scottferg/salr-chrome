@@ -30,6 +30,7 @@ function PreviewParser(post_text, emote_list) {
     this.parseSmilies();
     this.parseBBCodes();
     this.parseQuotes();
+    this.parseImages();
 }
 
 PreviewParser.prototype.fetchResult = function() {
@@ -56,4 +57,14 @@ PreviewParser.prototype.parseQuotes = function() {
     var quote_format = '<div class="bbc-block"><h4>$1 posted:</h4><blockquote>$2</blockquote></div>'
 
     this.post_text = this.post_text.replace(quote_re, quote_format);
+};
+
+PreviewParser.prototype.parseImages = function() {
+    var image_re = /\[img\](.*?)\[\/img\]/g;
+    var thumb_image_re = /\[timg\](.*?)\[\/timg\]/g;
+    var image_format = '<img src="$1" />'
+    var thumb_image_format = '<img class="timg loading" src="$1" />'
+
+    this.post_text = this.post_text.replace(image_re, image_format);
+    this.post_text = this.post_text.replace(thumb_image_re, thumb_image_format);
 };
