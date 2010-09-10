@@ -1548,6 +1548,94 @@ SALR.prototype.threadNotes = function() {
     });
 };
 
+SALR.prototype.addYOSPOSProFeatures = function() {
+    this.addEmptyQuoteButton();
+    this.addSnypaAimbot();
+    this.frontPageSnypa();
+};
+
+SALR.prototype.frontPageSnypa = function() {
+	var that=this;
+    jQuery('tr.thread').each(function() {
+        var tr = jQuery(this);
+        var re = jQuery(this).find('td.replies a');
+        var href = re.attr('href');
+        if (href === undefined)
+            return;
+
+        var threadid = href.match(/threadid=(\d+)/)[1];
+        re.removeAttr('href');
+        re.bind('click', function() {
+            var colspan = jQuery('td', tr).length;
+            var quicksnipe = '<tr id="quicksnipe-'+threadid+'">'+
+                             '<td colspan="8">'+
+                             '<iframe width="100%" id="quicksnipeframe-'+threadid+'" src="newreply.php?action=newreply&threadid='+threadid+'"/>'+
+                             '</td></tr>';
+            tr.after(quicksnipe);
+            var iframe = jQuery('iframe#quicksnipeframe-'+threadid);
+            iframe.load(function() {
+                var form = jQuery(this).contents().find('form');
+                jQuery(this).contents().find('div#globalmenu').hide();
+                jQuery(this).contents().find('div#globalmenu').after(form);
+                jQuery(this).contents().find('div#container').hide();
+                jQuery(this).contents().find('table.standard tr:eq(1)').hide();
+                jQuery(this).contents().find('table.standard tr:eq(2) td:first').hide();
+                jQuery(this).contents().find('table.standard tr:eq(3)').hide();
+                jQuery(this).contents().find('table.standard tr:eq(4)').hide();
+                var submit = jQuery(this).contents().find('input[type=submit]:first');
+                submit.attr('value','snype that shit');
+                submit.click(function() {
+                    jQuery('tr#quicksnipe-'+threadid).hide();
+                });
+                jQuery(this).contents().find('textarea').after(submit);
+                jQuery(this).contents().find('textarea').css('vertical-align','top');
+            });
+        });
+    });
+};
+SALR.prototype.addSnypaAimbot = function() {
+	var that=this;
+    jQuery('tr.thread td.replies a').each(function() {
+        var replies = jQuery(this).text();
+        if (isNaN(replies))
+            return;
+        if (replies % 40 == 39)
+            jQuery(this).parent().css('background-color','red');
+        else if (replies % 40 == 38)
+            jQuery(this).parent().css('background-color','yellow');
+    });
+};
+SALR.prototype.addEmptyQuoteButton = function() {
+	var that=this;
+
+    jQuery('<iframe id="eqframe" name="eqframe" style="position:absolute;left:-1000px;top:-1000px;width:1px;height:1px" />').appendTo('body');
+    jQuery('iframe#eqframe').load(function() {
+        var textarea = jQuery('iframe#eqframe').contents().find('textarea');
+        textarea.val(textarea.val().replace('[timg]','[img]').replace('[/timg]','[/img]'));
+        jQuery('iframe#eqframe').contents().find('input[name=submit]').click();
+    });
+
+    jQuery('table.post').each(function() {
+        var post = jQuery(this);
+        var postid = post.attr('id').substring(4)
+        var replyurl = 'http://forums.somethingawful.com/newreply.php?action=newreply&postid='+postid;
+
+        jQuery('ul.postbuttons', post).each(function() {
+            jQuery(this).prepend('<img id="probutton" src="'+that.base_image_uri+'emptyquote_button.png" />');
+            var probutton = jQuery('img#probutton', this);
+            probutton.css('cursor', 'pointer');
+            probutton.click(function() {
+                if (confirm('check yo self')) {
+                    jQuery('iframe#eqframe').attr('src',replyurl);
+                    jQuery(this).attr('src',that.base_image_uri+'emptyquote_done.gif');
+                    jQuery('img[src$=rate5.gif]').click();
+                }
+            });
+        });
+    });
+};
+
+
 /**
  *
  *  Add search bar to threads
