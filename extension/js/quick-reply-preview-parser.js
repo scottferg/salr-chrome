@@ -54,7 +54,7 @@ PreviewParser.prototype.parseBBCodes = function() {
 
 PreviewParser.prototype.parseQuotes = function() {
     var quote_re = /\[quote\="?(.*?)"?\](.*?)\[\/quote\]/g;
-    var quote_format = '<div class="bbc-block"><h4>$1 posted:</h4><blockquote>$2</blockquote></div>'
+    var quote_format = '<div style="margin: 0px 6px;" class="bbc-block"><h4>$1 posted:</h4><blockquote>$2</blockquote></div>'
 
     this.post_text = this.post_text.replace(quote_re, quote_format);
 };
