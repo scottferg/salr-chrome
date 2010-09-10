@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="js/jquery/jquery.js"></script>
+<script type="text/javascript" src="js/waffle-images-uploader.js"></script>
+<script type="text/javascript" src="js/message-handler.js"></script>
+<style type="text/css">
+    div#dropzone {
+        position: relative;
+    }
+    div#dropzone input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+    }
+</style>
+</head>
+<body>
+    <div id="dropzone">
+        <h1>Drop files here</h1>
+        <p>To upload them to Imgur</p>
+        <input type="file" multiple="true" id="filesUpload" />
+    </div>
+    <script type="text/javascript">
+        var port = chrome.extension.connect();
+
+        jQuery('input#filesUpload').change(function(event) {
+            console.log(jQuery(this).get(0).files);
+            var uploader = new ImageUploader(
+                'http://api.imgur.com/2/upload.xml?key=c0f6805130359ed37a5dbf3832aee4bc',
+                {
+                    key: 'c0f6805130359ed37a5dbf3832aee4bc',
+                    type: 'file'
+                });
+
+            uploader.bind('onComplete', function(event) {
+                console.log(event.response);
+
+                jQuery('original', event.response).each(function() {
+                    console.log(jQuery(this).html());
+                });
+            });
+
+            uploader.bind('onError', function(event) {
+                console.log('An error occurred');
+            });
+
+            uploader.upload(this.files[0], 'image');
+        });
+    </script>
+</body>
+</html>

@@ -213,7 +213,26 @@ function fixSettings() {
  *
  */
 function uploadWaffleImagesFile(param) {
-    var uploader = new WaffleImagesUploader();
+    /*
+    var uploader = new ImageUploader({
+        mode: 'file',
+        tg_format: 'xml'
+    }, 'http://waffleimages.com/upload');
+    */
+
+    var uploader = new ImageUploader(
+        'http://api.imgur.com/2/upload.json?key=c0f6805130359ed37a5dbf3832aee4bc',
+        {
+            key: 'c0f6805130359ed37a5dbf3832aee4bc',
+            type: 'file'
+        });
+
+    uploader = new ImageUploader(
+        'http://dev.vokalinteractive.com/m4/photos/upload/',
+        {
+            username: 'scottwferg@gmail.com',
+            password: 'test'
+        });
 
     uploader.bind('onComplete', function(event) {
         console.log(event.response);
@@ -223,5 +242,7 @@ function uploadWaffleImagesFile(param) {
         console.log('An error occurred');
     });
 
-    uploader.upload(param.file);
+    console.log(param);
+
+    uploader.upload(param.file, 'photo');
 }

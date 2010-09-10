@@ -16,7 +16,6 @@
         "js/jquery/jquery.js",
         "js/jquery/jquery-ui.js",
         "js/jquery/jquery.transform.min.js",
-        "js/jquery/jquery.filedrop.js",
         "js/jquery/jquery.rightclick.js",
         "js/jquery/jquery.fieldselection.js",
 		"js/jquery/jquery.putCursorAtEnd.1.0.js",
@@ -47,7 +46,9 @@
   ], 
   "permissions": [
         "tabs",
-        "http://waffleimages.com/*"
+        "http://waffleimages.com/*",
+        "http://api.imgur.com/*",
+        "http://dev.vokalinteractive.com/m4/*"
   ],
   "page_actions": [
     {

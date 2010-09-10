@@ -140,6 +140,10 @@ div#waffle-images-menu {
     top: 125px;
 }
 
+div#imgur-images-menu {
+    top: 150px;
+}
+
 div#sidebar-list {
     border: solid 1px #999;
     position: relative;
@@ -165,16 +169,4 @@ div.sidebar-menu-item {
 div.sidebar-menu-item:hover {
     background: #ccc;
     cursor: pointer;
-}
-
-div#dropzone {
-    position: relative;
-}
-div#dropzone input {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0;
 }
