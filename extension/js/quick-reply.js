@@ -107,12 +107,14 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '       <div id="tag-menu" class="sidebar-menu">' +
                 '           <img src="' + this.base_image_uri + "quick-reply-tags.gif" + '" />' +
                 '       </div>' +
-                '       <div id="waffle-images-menu" class="sidebar-menu">' +
-                '           <img src="' + this.base_image_uri + "quick-reply-waffle.gif" + '" />' +
-                '       </div>' +
                 '       <div id="imgur-images-menu" class="sidebar-menu">' +
                 '           <img src="' + this.base_image_uri + "quick-reply-imgur.png" + '" />' +
                 '       </div>' +
+                /**********************WAFFLE IMAGES IS DOWN*******************
+                '       <div id="waffle-images-menu" class="sidebar-menu">' +
+                '           <img src="' + this.base_image_uri + "quick-reply-waffle.gif" + '" />' +
+                '       </div>' +
+                **************************************************************/
                 '       <div id="post-input-field">' +
                 '<textarea name="message" rows="18" size="10" id="post-message">' +
                 '</textarea>' +
