@@ -101,6 +101,7 @@ SALR.prototype.pageInit = function() {
             }
 
             this.displaySinglePostLink();
+            this.tldrQuotes();
 
             // Display Rap Sheet link on single post view
             if (window.location.href.indexOf('showpost') >= 0) {
@@ -1265,6 +1266,73 @@ SALR.prototype.boxQuotes = function() {
 
     jQuery('.bbc-block blockquote').css({
         'padding': '7px 7px 7px 7px'
+    });
+};
+
+/**
+*   Automatically hide long quotes
+*
+ *  @author Scott Lyons (Captain Capacitor)
+*/
+SALR.prototype.tldrQuotes = function() {
+    var that = this;
+    
+    function tldrHideQuote(obj) {
+        if(obj.currentTarget != undefined)
+            obj = this;
+        var blockquote = jQuery("blockquote:last", obj);
+        var hidden = jQuery(obj).data("tldrHidden");
+        var clickText = jQuery("span.tldrclick", obj);
+        
+        if(hidden == true)
+        {
+            jQuery("span.tldr", obj).remove();
+            blockquote.css({display:"block"});
+            clickText.text("Click quote to collapse");
+        }
+        else
+        {
+            var imageCount = jQuery("img", blockquote).length;
+            var wordCount = blockquote.text().split(" ").length;
+            
+            var imageStr, wordStr;
+            if(imageCount == 1)
+                imageStr = "1 image";
+            else if(imageCount > 1)
+                imageStr = imageCount + " images";
+            
+            if(wordCount == 1)
+                wordStr = "1 word";
+            else if(wordCount > 1)
+                wordStr = wordCount + " words";
+            
+            var tldrSpan = "<span class='tldr'><strong>TLDR:</strong> ";
+            if(wordCount > 0)
+                tldrSpan+= wordStr;
+            if(wordCount > 0 && imageCount > 0)
+                tldrSpan+= " and ";
+            if(imageCount > 0)
+                tldrSpan+= imageStr;
+            tldrSpan+="</span>";
+            
+            blockquote.before(tldrSpan);
+
+            blockquote.css({display:"none"});
+            clickText.text("Click quote to expand");
+        }
+        jQuery(obj).data("tldrHidden", !hidden);
+    }
+    
+    jQuery("div.bbc-block").each(function(i, obj){
+        jQuery(obj).data("tldrHidden", false);
+        jQuery(obj).click(tldrHideQuote);
+        
+        jQuery("h4", obj).before("<span class='tldrclick' style='font-size: 70%; text-transform: uppercase; float: right; margin: 2px; font-weight: bold;'>Click quote to collapse</span>");
+        
+        if(that.settings.autoTLDR && jQuery(obj).height() > 400){
+            tldrHideQuote(obj);
+            jQuery("span.tldrclick", obj).text("Click quote to expand");
+        }
     });
 };
 
