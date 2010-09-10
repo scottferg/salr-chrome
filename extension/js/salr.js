@@ -1329,7 +1329,7 @@ SALR.prototype.tldrQuotes = function() {
         
         jQuery("h4", obj).before("<span class='tldrclick' style='font-size: 70%; text-transform: uppercase; float: right; margin: 2px; font-weight: bold;'>Click quote to collapse</span>");
         
-        if(that.settings.autoTLDR && jQuery(obj).height() > 400){
+        if(that.settings.autoTLDR == 'true' && jQuery(obj).height() > 400){
             tldrHideQuote(obj);
             jQuery("span.tldrclick", obj).text("Click quote to expand");
         }
