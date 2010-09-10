@@ -1295,7 +1295,7 @@ SALR.prototype.tldrQuotes = function() {
         {
             jQuery("span.tldr", obj).remove();
             blockquote.css({display:"block"});
-            clickText.text("Click quote to collapse");
+            clickText.text("Double-Click quote to collapse");
         }
         else
         {
@@ -1325,20 +1325,20 @@ SALR.prototype.tldrQuotes = function() {
             blockquote.before(tldrSpan);
 
             blockquote.css({display:"none"});
-            clickText.text("Click quote to expand");
+            clickText.text("Double-Click quote to expand");
         }
         jQuery(obj).data("tldrHidden", !hidden);
     }
     
     jQuery("div.bbc-block").each(function(i, obj){
         jQuery(obj).data("tldrHidden", false);
-        jQuery(obj).click(tldrHideQuote);
+        jQuery(obj).dblclick(tldrHideQuote);
         
-        jQuery("h4", obj).before("<span class='tldrclick' style='font-size: 70%; text-transform: uppercase; float: right; margin: 2px; font-weight: bold;'>Click quote to collapse</span>");
+        jQuery("h4", obj).before("<span class='tldrclick' style='font-size: 70%; text-transform: uppercase; float: right; margin: 2px; font-weight: bold;'>Double-Click quote to collapse</span>");
         
         if(that.settings.autoTLDR == 'true' && jQuery(obj).height() > 400){
             tldrHideQuote(obj);
-            jQuery("span.tldrclick", obj).text("Click quote to expand");
+            jQuery("span.tldrclick", obj).text("Double-Click quote to expand");
         }
     });
 };
