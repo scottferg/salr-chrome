@@ -110,10 +110,10 @@ ImageUploader.prototype.upload = function(image, paramname) {
     };
 };
 
-ImageUploader.prototype.uploadUrl = function(image_url) {
+ImageUploader.prototype.uploadUrl = function(image_url, paramname) {
     var that = this;
 
-    this.params['image'] = image_url;
+    this.params[paramname] = image_url;
 
     jQuery.post(this.url,
                this.params,
