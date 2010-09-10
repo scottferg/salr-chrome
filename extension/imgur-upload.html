@@ -82,7 +82,12 @@
     </div>
     <div id="enter-url">
         - OR -<br /><br />
-        Click <a href="#" style="font-size: 12pt">here</a> to upload an image via URL
+        <div>
+            <input type="text" size="25" placeholder="Enter an image URL" id="image-url" />
+        </div>
+        <div style="text-align: right; margin-top: 2px; margin-left: 72px;">
+            <input id="url-submit-button" type="button" value="Upload URL" />
+        </div>
     </div>
     <div id="img-result">
         <div style="text-align: center;"><img id="result-src" /></div>
@@ -96,50 +101,55 @@
     </div>
     <script type="text/javascript">
         var port = chrome.extension.connect();
+        var uploader = new ImageUploader(
+            'http://api.imgur.com/2/upload.xml',
+            {
+                key: 'c0f6805130359ed37a5dbf3832aee4bc'
+            });
+
+        uploader.bind('onProgress', function(event) {
+            console.log('Progress!');
+            jQuery('#progress-bar > span').each(function() {
+                jQuery(this).css('width', ((event.loaded * 152 / event.total) >> 0) + "px");
+            });
+        });
+
+        uploader.bind('onComplete', function(event) {
+            var original_image = jQuery('original', event.response).text();
+            var square_thumbnail = jQuery('small_square', event.response).text();
+
+            jQuery('#dropzone').css('display', 'none');
+            jQuery('#img-result').css('display', 'block');
+            jQuery('#result-src').attr('src', square_thumbnail);
+            jQuery('input#submit-button').click(function() {
+                var type = $("input[@name=type]:checked").attr('value');
+
+                port.postMessage({
+                    message: 'AppendUploadedImage',
+                    original: original_image,
+                    thumbnail: square_thumbnail,
+                    type: type
+                });
+            });
+        });
+
+        uploader.bind('onError', function(event) {
+            console.log('An error occurred');
+        });
 
         jQuery('input#filesUpload').change(function(event) {
             jQuery('#dropzone').removeClass('drag-over');
             console.log(jQuery(this).get(0).files);
-            var uploader = new ImageUploader(
-                'http://api.imgur.com/2/upload.xml',
-                {
-                    key: 'c0f6805130359ed37a5dbf3832aee4bc'
-                });
-
-            uploader.bind('onProgress', function(event) {
-                console.log('Progress!');
-                jQuery('#progress-bar > span').each(function() {
-                    jQuery(this).css('width', ((event.loaded * 152 / event.total) >> 0) + "px");
-                });
-            });
-
-            uploader.bind('onComplete', function(event) {
-                var original_image = jQuery('original', event.response).html();
-                var square_thumbnail = jQuery('small_square', event.response).html();
-
-                jQuery('#dropzone').css('display', 'none');
-                jQuery('#img-result').css('display', 'block');
-                jQuery('#result-src').attr('src', square_thumbnail);
-                jQuery('input#submit-button').click(function() {
-                    var type = $("input[@name=type]:checked").attr('value');
-
-                    port.postMessage({
-                        message: 'AppendUploadedImage',
-                        original: original_image,
-                        thumbnail: square_thumbnail,
-                        type: type
-                    });
-                });
-            });
-
-            uploader.bind('onError', function(event) {
-                console.log('An error occurred');
-            });
 
             uploader.upload(this.files[0], 'image');
 
             jQuery('#upload-label').css('display', 'block');
             jQuery('#dropzone > h1').css('display', 'none');
+            jQuery('#enter-url').css('display', 'none');
+        });
+
+        jQuery('input#url-submit-button').click(function() {
+            uploader.uploadUrl(jQuery('input#image-url').val());            
             jQuery('#enter-url').css('display', 'none');
         });
 
