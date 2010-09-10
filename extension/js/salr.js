@@ -65,7 +65,7 @@ SALR.prototype.pageInit = function() {
                 this.pageNavigator = new PageNavigator(this.base_image_uri);
             }
 
-            //this.updateForumsList();
+            this.updateForumsList();
             
             if (this.settings.highlightFriends == 'true') {
                 this.highlightFriendPosts();    
@@ -101,6 +101,7 @@ SALR.prototype.pageInit = function() {
             }
 
             this.displaySinglePostLink();
+            this.tldrQuotes();
 
             // Display Rap Sheet link on single post view
             if (window.location.href.indexOf('showpost') >= 0) {
@@ -1137,14 +1138,20 @@ SALR.prototype.updateForumsList = function() {
         }
     }
 
+    var numSeps = 0;
     jQuery('select[name="forumid"]>option').each(function() {
         if (this.text == "Please select one:")
             return;
 
         var splitUp = this.text.match(/^(-*)(.*)/);
         var indent = splitUp[1].length/2;
-        if (indent > 10)
+        if (indent >= 10) {
+            numSeps++;
+            // Ignore first separator
+            if (numSeps == 1)
+                return;
             indent=-1;
+        }
         var title = splitUp[2];
 
         forums.push({ 'name'   : title,
@@ -1154,7 +1161,8 @@ SALR.prototype.updateForumsList = function() {
                     });
     });
 
-    if (forums.length > 0) {
+    // Make sure drop down contains full list of forums
+    if (forums.length > 15) {
         postMessage({ 'message': 'ChangeSetting',
                            'option' : 'forumsList',
                            'value'  : JSON.stringify(forums) });
@@ -1265,6 +1273,73 @@ SALR.prototype.boxQuotes = function() {
 
     jQuery('.bbc-block blockquote').css({
         'padding': '7px 7px 7px 7px'
+    });
+};
+
+/**
+*   Automatically hide long quotes
+*
+ *  @author Scott Lyons (Captain Capacitor)
+*/
+SALR.prototype.tldrQuotes = function() {
+    var that = this;
+    
+    function tldrHideQuote(obj) {
+        if(obj.currentTarget != undefined)
+            obj = this;
+        var blockquote = jQuery("blockquote:last", obj);
+        var hidden = jQuery(obj).data("tldrHidden");
+        var clickText = jQuery("span.tldrclick", obj);
+        
+        if(hidden == true)
+        {
+            jQuery("span.tldr", obj).remove();
+            blockquote.css({display:"block"});
+            clickText.text("Click quote to collapse");
+        }
+        else
+        {
+            var imageCount = jQuery("img", blockquote).length;
+            var wordCount = blockquote.text().split(" ").length;
+            
+            var imageStr, wordStr;
+            if(imageCount == 1)
+                imageStr = "1 image";
+            else if(imageCount > 1)
+                imageStr = imageCount + " images";
+            
+            if(wordCount == 1)
+                wordStr = "1 word";
+            else if(wordCount > 1)
+                wordStr = wordCount + " words";
+            
+            var tldrSpan = "<span class='tldr'><strong>TLDR:</strong> ";
+            if(wordCount > 0)
+                tldrSpan+= wordStr;
+            if(wordCount > 0 && imageCount > 0)
+                tldrSpan+= " and ";
+            if(imageCount > 0)
+                tldrSpan+= imageStr;
+            tldrSpan+="</span>";
+            
+            blockquote.before(tldrSpan);
+
+            blockquote.css({display:"none"});
+            clickText.text("Click quote to expand");
+        }
+        jQuery(obj).data("tldrHidden", !hidden);
+    }
+    
+    jQuery("div.bbc-block").each(function(i, obj){
+        jQuery(obj).data("tldrHidden", false);
+        jQuery(obj).click(tldrHideQuote);
+        
+        jQuery("h4", obj).before("<span class='tldrclick' style='font-size: 70%; text-transform: uppercase; float: right; margin: 2px; font-weight: bold;'>Click quote to collapse</span>");
+        
+        if(that.settings.autoTLDR && jQuery(obj).height() > 400){
+            tldrHideQuote(obj);
+            jQuery("span.tldrclick", obj).text("Click quote to expand");
+        }
     });
 };
 
