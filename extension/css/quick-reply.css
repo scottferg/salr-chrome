@@ -103,6 +103,10 @@ div#topbar-preview {
     border: 1px solid #999;
 }
 
+div#preview-content {
+    margin: 12px 12px;
+}
+
 textarea#post-message {
     width: 590px;
 }
