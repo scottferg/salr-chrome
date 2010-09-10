@@ -108,6 +108,9 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '       <div id="waffle-images-menu" class="sidebar-menu">' +
                 '           <img src="' + this.base_image_uri + "quick-reply-waffle.gif" + '" />' +
                 '       </div>' +
+                '       <div id="imgur-images-menu" class="sidebar-menu">' +
+                '           <img src="' + this.base_image_uri + "quick-reply-imgur.png" + '" />' +
+                '       </div>' +
                 '       <div id="post-input-field">' +
                 '<textarea name="message" rows="18" size="10" id="post-message">' +
                 '</textarea>' +
@@ -409,6 +412,9 @@ QuickReplyBox.prototype.toggleSidebar = function(element) {
         case 'waffle-images-menu':
             populate_method = this.setWaffleImagesSidebar;
             break;
+        case 'imgur-images-menu':
+            populate_method = this.setImgurImagesSidebar;
+            break;
     }
 
     // If there is a sidebar open, and the button clicked is the same
@@ -508,7 +514,7 @@ QuickReplyBox.prototype.setBBCodeSidebar = function() {
 QuickReplyBox.prototype.setWaffleImagesSidebar = function() {
     html = '<div id="dropzone">' +
            '    <h1>Drop files here</h1>' +
-           '    <p>To add them as attachments</p>' +
+           '    <p>To upload them to Waffle Images</p>' +
            '    <input type="file" multiple="true" id="filesUpload" />' +
            '</div>';
 
@@ -516,38 +522,20 @@ QuickReplyBox.prototype.setWaffleImagesSidebar = function() {
 
     this.sidebar_html = html;
 
-    jQuery('div#dropzone').filedrop({
-        url: 'http://waffleimages.com/upload',
-        paramname: 'file',
-        data: { 
-            mode: 'file',
-            tg_format: 'xml',
-        },
-        onDrop: function(event) {
-            // Prepare the file for upload before sending it
-            // to the extension for the actual upload
-            var reader = new FileReader();
-            reader.index = 0;
-            reader.file = event.dataTransfer.files[0];
-            reader.len = event.dataTransfer.files.length;
-
-            reader.onloadend = function(e) {
-                postMessage({
-                    'message': 'UploadWaffleImages',
-                    'file': e.target
-                });
-            };
-
-            reader.readAsBinaryString(event.dataTransfer.files[0]);
-            console.log('Dropped!!');
-        },
-        onDragOver: function(event) {
-            console.log('Over!');
-        },
-        onDragLeave: function(event) {
-            console.log('Out!');
-        },
+    jQuery('input#filesUpload').change(function(event) {
+        console.log(jQuery(this).get(0).files);
+        postMessage({
+            'message': 'UploadWaffleImages',
+            'file': jQuery(this).get(0).files[0]
+        });
     });
+};
+
+QuickReplyBox.prototype.setImgurImagesSidebar = function() {
+    html = '<iframe src="' + chrome.extension.getURL('/') + 'imgur-upload.html" width="162" height="245" frameborder="0"></iframe>';
+    jQuery('#sidebar-list').html(html);
+
+    this.sidebar_html = html;
 };
 
 QuickReplyBox.prototype.isExpanded = function() {
