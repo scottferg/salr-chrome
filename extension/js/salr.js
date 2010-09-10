@@ -1392,6 +1392,12 @@ SALR.prototype.highlightOwnQuotes = function() {
     });
 };
 
+SALR.prototype.appendImage = function(original, thumbnail, type) {
+    if (this.quickReply) {
+        this.quickReply.appendImage(original, thumbnail, type);
+    }
+};
+
 /**
  * Binds quick-reply box to reply/quote buttons
  *

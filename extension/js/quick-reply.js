@@ -315,6 +315,19 @@ QuickReplyBox.prototype.appendQuote = function(postid) {
                 });
 };
 
+QuickReplyBox.prototype.appendImage = function(original, thumbnail, type) {
+    var result = null;
+
+    if (type == 'thumbnail') {
+        result = '[timg]' + thumbnail + '[/timg]\n';
+        result += '[url=' + original + ']Click here to view the full image[/url]\n';
+    } else {
+        result = '[img]' + original + '[/img]\n';
+    }
+
+    this.appendText(result);
+};
+
 QuickReplyBox.prototype.editPost = function(postid, subscribe) {
     var that = this;
 
