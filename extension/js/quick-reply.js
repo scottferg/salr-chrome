@@ -271,13 +271,20 @@ QuickReplyBox.prototype.fetchFormCookie = function(threadid) {
                });
 };
 
+QuickReplyBox.prototype.updatePreview = function() {
+    var parser = new PreviewParser(jQuery('#post-message').val(), this.emotes);
+    jQuery('#preview-content').html(parser.fetchResult());
+
+    var content = document.getElementById('topbar-preview');
+    content.scrollTop = content.scrollHeight;
+};
+
 QuickReplyBox.prototype.appendText = function(text) {
     var current_message = jQuery('#post-message').val();
 
     jQuery('#post-message').val(current_message + text);
 
-    var parser = new PreviewParser(jQuery('#post-message').val(), this.emotes);
-    jQuery('#preview-content').html(parser.fetchResult());
+    this.updatePreview();
 };
 
 QuickReplyBox.prototype.prependText = function(text) {
@@ -285,8 +292,7 @@ QuickReplyBox.prototype.prependText = function(text) {
 
     jQuery('#post-message').val(text + current_message);
 
-    var parser = new PreviewParser(jQuery('#post-message').val(), this.emotes);
-    jQuery('#preview-content').html(parser.fetchResult());
+    this.updatePreview();
 };
 
 QuickReplyBox.prototype.appendQuote = function(postid) {
@@ -486,8 +492,7 @@ QuickReplyBox.prototype.notify = function(emotes) {
     this.emotes = emotes;
 
     jQuery('#post-message').keyup(function() {
-        var parser = new PreviewParser(jQuery(this).val(), emotes);
-        jQuery('#preview-content').html(parser.fetchResult());
+        that.updatePreview();
     });
 
     this.setEmoteSidebar();
