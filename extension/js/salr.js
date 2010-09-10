@@ -385,19 +385,19 @@ SALR.prototype.updateStyling = function() {
 	
 	// Hide individual top menu items
 	if (this.settings.topPurchaseAcc == 'false') {
-		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/forumsystem/index.php?item=register'])").each(function() {
+		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/products/register.php'])").each(function() {
 			jQuery(this).remove();
 		});
 	}
 
 	if (this.settings.topPurchasePlat == 'false') {
-		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/forumsystem/index.php?item=platinum'])").each(function() {
+		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/products/platinum.php'])").each(function() {
 			jQuery(this).remove();
 		});
 	}
 	
 	if (this.settings.topPurchaseAva == 'false') {
-		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/forumsystem/index.php?item=custom_title'])").each(function() {
+		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/products/titlechange.php'])").each(function() {
 			jQuery(this).remove();
 		});
 	}
@@ -409,13 +409,13 @@ SALR.prototype.updateStyling = function() {
 	}
 
 	if (this.settings.topPurchaseArchives == 'false') {
-		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/forumsystem/index.php?item=archive'])").each(function() {
+		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/products/archives.php'])").each(function() {
 			jQuery(this).remove();
 		});
 	}
 
 		if (this.settings.topPurchaseNoAds == 'false') {
-		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/forumsystem/index.php?item=noads'])").each(function() {
+		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/products/noads.php'])").each(function() {
 			jQuery(this).remove();
 		});
 	}
