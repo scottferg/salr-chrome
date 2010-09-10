@@ -83,6 +83,8 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '</div>' +
                 '<div id="top-bar">' +
                 '   <div id="topbar-preview">' +
+                '      <div id="preview-content">' +
+                '      </div>' +
                 '   </div>' +
                 '</div>' + 
                 '<div id="quick-reply"> ' + 
@@ -275,7 +277,7 @@ QuickReplyBox.prototype.appendText = function(text) {
     jQuery('#post-message').val(current_message + text);
 
     var parser = new PreviewParser(jQuery('#post-message').val(), this.emotes);
-    jQuery('#topbar-preview').html(parser.fetchResult());
+    jQuery('#preview-content').html(parser.fetchResult());
 };
 
 QuickReplyBox.prototype.prependText = function(text) {
@@ -284,7 +286,7 @@ QuickReplyBox.prototype.prependText = function(text) {
     jQuery('#post-message').val(text + current_message);
 
     var parser = new PreviewParser(jQuery('#post-message').val(), this.emotes);
-    jQuery('#topbar-preview').html(parser.fetchResult());
+    jQuery('#preview-content').html(parser.fetchResult());
 };
 
 QuickReplyBox.prototype.appendQuote = function(postid) {
@@ -485,7 +487,7 @@ QuickReplyBox.prototype.notify = function(emotes) {
 
     jQuery('#post-message').keyup(function() {
         var parser = new PreviewParser(jQuery(this).val(), emotes);
-        jQuery('#topbar-preview').html(parser.fetchResult());
+        jQuery('#preview-content').html(parser.fetchResult());
     });
 
     this.setEmoteSidebar();
