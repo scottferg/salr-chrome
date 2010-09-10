@@ -109,3 +109,18 @@ ImageUploader.prototype.upload = function(image, paramname) {
         that.fireEvent(result);
     };
 };
+
+ImageUploader.prototype.uploadUrl = function(image_url) {
+    var that = this;
+
+    this.params['image'] = image_url;
+
+    jQuery.post(this.url,
+               this.params,
+               function(response) {
+                   that.fireEvent({
+                       type: 'onComplete',
+                       response: response 
+                   });
+               });
+};
