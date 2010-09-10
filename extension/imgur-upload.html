@@ -23,6 +23,9 @@
         <h1>Drop files here</h1>
         <p>To upload them to Imgur</p>
         <input type="file" multiple="true" id="filesUpload" />
+        <div id="progress-bar" style="width: 152px; border: 1px solid #000;">
+            <span style="width: 0px; background: #000; display: block; height: 10px;"></span>
+        </div>
     </div>
     <script type="text/javascript">
         var port = chrome.extension.connect();
@@ -30,11 +33,17 @@
         jQuery('input#filesUpload').change(function(event) {
             console.log(jQuery(this).get(0).files);
             var uploader = new ImageUploader(
-                'http://api.imgur.com/2/upload.xml?key=c0f6805130359ed37a5dbf3832aee4bc',
+                'http://api.imgur.com/2/upload.xml',
                 {
-                    key: 'c0f6805130359ed37a5dbf3832aee4bc',
-                    type: 'file'
+                    key: 'c0f6805130359ed37a5dbf3832aee4bc'
                 });
+
+            uploader.bind('onProgress', function(event) {
+                console.log('Progress!');
+                jQuery('#progress-bar > span').each(function() {
+                    jQuery(this).css('width', ((event.loaded * 152 / event.total) >> 0) + "px");
+                });
+            });
 
             uploader.bind('onComplete', function(event) {
                 console.log(event.response);
