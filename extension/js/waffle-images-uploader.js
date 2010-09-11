@@ -76,6 +76,9 @@ ImageUploader.prototype.upload = function(image, paramname) {
         });
     };
 
+    // TODO: There needs to be a better way to send parameters
+    // in the POST header but FormData seems to drop the file
+    // when appending it.
     var parameter_url = this.url + "?";
 
     for (var key in this.params) {
