@@ -1346,6 +1346,9 @@ SALR.prototype.tldrQuotes = function() {
             blockquote.css({display:"none"});
             clickText.text("Double-Click quote to expand");
         }
+        
+        window.getSelection().removeAllRanges();
+        
         jQuery(obj).data("tldrHidden", !hidden);
     }
     
