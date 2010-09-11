@@ -23,7 +23,7 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-var salr_client = {}
+var salr_client = false; 
 
 /**
  * Event listener for when a user enters their username within
@@ -36,9 +36,13 @@ var salr_client = {}
 var port = chrome.extension.connect();
 
 port.onMessage.addListener(function(data) {
-    var settings = data;
+    if (!salr_client) {
+        salr_client = new SALR(data, chrome.extension.getURL("images/"));
+    }
+});
 
-    salr_client = new SALR(settings, chrome.extension.getURL("images/"));
+chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+    salr_client.appendImage(request.original, request.thumbnail, request.type);
 });
 
 // Request the settings from the extension

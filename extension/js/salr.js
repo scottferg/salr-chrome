@@ -65,7 +65,7 @@ SALR.prototype.pageInit = function() {
                 this.pageNavigator = new PageNavigator(this.base_image_uri);
             }
 
-            //this.updateForumsList();
+            this.updateForumsList();
             
             if (this.settings.highlightFriends == 'true') {
                 this.highlightFriendPosts();    
@@ -385,19 +385,19 @@ SALR.prototype.updateStyling = function() {
 	
 	// Hide individual top menu items
 	if (this.settings.topPurchaseAcc == 'false') {
-		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/forumsystem/index.php?item=register'])").each(function() {
+		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/products/register.php'])").each(function() {
 			jQuery(this).remove();
 		});
 	}
 
 	if (this.settings.topPurchasePlat == 'false') {
-		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/forumsystem/index.php?item=platinum'])").each(function() {
+		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/products/platinum.php'])").each(function() {
 			jQuery(this).remove();
 		});
 	}
 	
 	if (this.settings.topPurchaseAva == 'false') {
-		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/forumsystem/index.php?item=custom_title'])").each(function() {
+		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/products/titlechange.php'])").each(function() {
 			jQuery(this).remove();
 		});
 	}
@@ -409,13 +409,13 @@ SALR.prototype.updateStyling = function() {
 	}
 
 	if (this.settings.topPurchaseArchives == 'false') {
-		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/forumsystem/index.php?item=archive'])").each(function() {
+		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/products/archives.php'])").each(function() {
 			jQuery(this).remove();
 		});
 	}
 
 		if (this.settings.topPurchaseNoAds == 'false') {
-		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/forumsystem/index.php?item=noads'])").each(function() {
+		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/products/noads.php'])").each(function() {
 			jQuery(this).remove();
 		});
 	}
@@ -1138,14 +1138,20 @@ SALR.prototype.updateForumsList = function() {
         }
     }
 
+    var numSeps = 0;
     jQuery('select[name="forumid"]>option').each(function() {
         if (this.text == "Please select one:")
             return;
 
         var splitUp = this.text.match(/^(-*)(.*)/);
         var indent = splitUp[1].length/2;
-        if (indent > 10)
+        if (indent >= 10) {
+            numSeps++;
+            // Ignore first separator
+            if (numSeps == 1)
+                return;
             indent=-1;
+        }
         var title = splitUp[2];
 
         forums.push({ 'name'   : title,
@@ -1155,7 +1161,8 @@ SALR.prototype.updateForumsList = function() {
                     });
     });
 
-    if (forums.length > 0) {
+    // Make sure drop down contains full list of forums
+    if (forums.length > 15) {
         postMessage({ 'message': 'ChangeSetting',
                            'option' : 'forumsList',
                            'value'  : JSON.stringify(forums) });
@@ -1364,6 +1371,12 @@ SALR.prototype.highlightOwnQuotes = function() {
             jQuery(this).css('color', '#555');
         });
     });
+};
+
+SALR.prototype.appendImage = function(original, thumbnail, type) {
+    if (this.quickReply) {
+        this.quickReply.appendImage(original, thumbnail, type);
+    }
 };
 
 /**

@@ -83,6 +83,8 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '</div>' +
                 '<div id="top-bar">' +
                 '   <div id="topbar-preview">' +
+                '      <div id="preview-content">' +
+                '      </div>' +
                 '   </div>' +
                 '</div>' + 
                 '<div id="quick-reply"> ' + 
@@ -105,12 +107,14 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '       <div id="tag-menu" class="sidebar-menu">' +
                 '           <img src="' + this.base_image_uri + "quick-reply-tags.gif" + '" />' +
                 '       </div>' +
-                '       <div id="waffle-images-menu" class="sidebar-menu">' +
-                '           <img src="' + this.base_image_uri + "quick-reply-waffle.gif" + '" />' +
-                '       </div>' +
                 '       <div id="imgur-images-menu" class="sidebar-menu">' +
                 '           <img src="' + this.base_image_uri + "quick-reply-imgur.png" + '" />' +
                 '       </div>' +
+                /**********************WAFFLE IMAGES IS DOWN*******************
+                '       <div id="waffle-images-menu" class="sidebar-menu">' +
+                '           <img src="' + this.base_image_uri + "quick-reply-waffle.gif" + '" />' +
+                '       </div>' +
+                **************************************************************/
                 '       <div id="post-input-field">' +
                 '<textarea name="message" rows="18" size="10" id="post-message">' +
                 '</textarea>' +
@@ -269,13 +273,20 @@ QuickReplyBox.prototype.fetchFormCookie = function(threadid) {
                });
 };
 
+QuickReplyBox.prototype.updatePreview = function() {
+    var parser = new PreviewParser(jQuery('#post-message').val(), this.emotes);
+    jQuery('#preview-content').html(parser.fetchResult());
+
+    var content = document.getElementById('topbar-preview');
+    content.scrollTop = content.scrollHeight;
+};
+
 QuickReplyBox.prototype.appendText = function(text) {
     var current_message = jQuery('#post-message').val();
 
     jQuery('#post-message').val(current_message + text);
 
-    var parser = new PreviewParser(jQuery('#post-message').val(), this.emotes);
-    jQuery('#topbar-preview').html(parser.fetchResult());
+    this.updatePreview();
 };
 
 QuickReplyBox.prototype.prependText = function(text) {
@@ -283,8 +294,7 @@ QuickReplyBox.prototype.prependText = function(text) {
 
     jQuery('#post-message').val(text + current_message);
 
-    var parser = new PreviewParser(jQuery('#post-message').val(), this.emotes);
-    jQuery('#topbar-preview').html(parser.fetchResult());
+    this.updatePreview();
 };
 
 QuickReplyBox.prototype.appendQuote = function(postid) {
@@ -313,6 +323,19 @@ QuickReplyBox.prototype.appendQuote = function(postid) {
                         that.appendText(quote);
                     }
                 });
+};
+
+QuickReplyBox.prototype.appendImage = function(original, thumbnail, type) {
+    var result = null;
+
+    if (type == 'thumbnail') {
+        result = '[timg]' + thumbnail + '[/timg]\n';
+        result += '[url=' + original + ']Click here to view the full image[/url]\n';
+    } else {
+        result = '[img]' + original + '[/img]\n';
+    }
+
+    this.appendText(result);
 };
 
 QuickReplyBox.prototype.editPost = function(postid, subscribe) {
@@ -471,8 +494,7 @@ QuickReplyBox.prototype.notify = function(emotes) {
     this.emotes = emotes;
 
     jQuery('#post-message').keyup(function() {
-        var parser = new PreviewParser(jQuery(this).val(), emotes);
-        jQuery('#topbar-preview').html(parser.fetchResult());
+        that.updatePreview();
     });
 
     this.setEmoteSidebar();

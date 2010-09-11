@@ -304,9 +304,12 @@ HotKeyManager.prototype.editCurrentPost = function() {
         return;
 
     var current_post = jQuery('div#thread > table.post').eq(this.current_post);
+    if (current_post.has('img[alt="Edit"]').length == 0)
+        return;
     var postid = current_post.attr('id').substr(4);
+    var subscribe = jQuery('.subscribe > a').html().indexOf('Unbookmark') == 0 ? true : false;
 
-    this.quickReply.editPost(postid);
+    this.quickReply.editPost(postid, subscribe);
     this.quickReply.show();
 };
 

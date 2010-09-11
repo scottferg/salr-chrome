@@ -66,17 +66,26 @@ ImageUploader.prototype.upload = function(image, paramname) {
     var that = this;
 
     var xhr = new XMLHttpRequest();
+    var upload = xhr.upload;
 
-    xhr.open("POST", this.url, true);
-    xhr.setRequestHeader("Content-Type", "multipart/form-data");
+    upload.onprogress = function(event) {
+        that.fireEvent({
+            type: 'onProgress',
+            loaded: event.loaded,
+            total: event.total
+        });
+    };
 
-    var f = new FormData();
+    var parameter_url = this.url + "?";
 
     for (var key in this.params) {
-        f.append(key, this.params[key]);
+        parameter_url += key + "=" + this.params[key];
     }
 
-    f.append(paramname, image);
+    console.log(parameter_url);
+
+    xhr.open("POST", parameter_url, true);
+    xhr.setRequestHeader("Content-Type", "multipart/form-data");
     
     xhr.send(image);  
 
@@ -99,4 +108,19 @@ ImageUploader.prototype.upload = function(image, paramname) {
 
         that.fireEvent(result);
     };
+};
+
+ImageUploader.prototype.uploadUrl = function(image_url, paramname) {
+    var that = this;
+
+    this.params[paramname] = image_url;
+
+    jQuery.post(this.url,
+               this.params,
+               function(response) {
+                   that.fireEvent({
+                       type: 'onComplete',
+                       response: response 
+                   });
+               });
 };

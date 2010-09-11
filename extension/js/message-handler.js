@@ -78,6 +78,14 @@ chrome.extension.onConnect.addListener(function(port) {
             case 'UploadWaffleImages':
                 uploadWaffleImagesFile(data);
                 break;
+            case 'AppendUploadedImage':
+                console.log('Got request!');
+                chrome.tabs.getSelected(null, function(tab) {
+                    chrome.tabs.sendRequest(tab.id, data, function(response) {
+                        console.log(response.farewell);
+                    });
+                });
+                break;
             case 'log':
             default:
                 console.log(data);
@@ -181,6 +189,8 @@ function getPageSettings() {
     for ( var index in localStorage ) {
         response[index] = localStorage.getItem(index);
     }
+
+    response['message'] = 'SettingsResult';
 
     return response;
 } 
