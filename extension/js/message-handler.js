@@ -75,9 +75,6 @@ chrome.extension.onConnect.addListener(function(port) {
                 break;
             case 'ChangeSALRSetting':
                 localStorage.setItem(data.option, data.value);
-            case 'UploadWaffleImages':
-                uploadWaffleImagesFile(data);
-                break;
             case 'AppendUploadedImage':
                 console.log('Got request!');
                 chrome.tabs.getSelected(null, function(tab) {
@@ -215,44 +212,4 @@ function fixSettings() {
         localStorage.setItem('fixCancer', localStorage.getItem('highlightCancer'));
         localStorage.removeItem('highlightCancer');
     }
-}
-
-/**
- * We handle the waffle images upload here so that we can leverage the cross-XHR
- * permissions in Chrome.
- *
- */
-function uploadWaffleImagesFile(param) {
-    /*
-    var uploader = new ImageUploader({
-        mode: 'file',
-        tg_format: 'xml'
-    }, 'http://waffleimages.com/upload');
-    */
-
-    var uploader = new ImageUploader(
-        'http://api.imgur.com/2/upload.json?key=c0f6805130359ed37a5dbf3832aee4bc',
-        {
-            key: 'c0f6805130359ed37a5dbf3832aee4bc',
-            type: 'file'
-        });
-
-    uploader = new ImageUploader(
-        'http://dev.vokalinteractive.com/m4/photos/upload/',
-        {
-            username: 'scottwferg@gmail.com',
-            password: 'test'
-        });
-
-    uploader.bind('onComplete', function(event) {
-        console.log(event.response);
-    });
-
-    uploader.bind('onError', function(event) {
-        console.log('An error occurred');
-    });
-
-    console.log(param);
-
-    uploader.upload(param.file, 'photo');
 }
