@@ -116,7 +116,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '       </div>' +
                 **************************************************************/
                 '       <div id="post-input-field">' +
-                '<textarea name="message" rows="18" size="10" id="post-message">' +
+                '<textarea name="message" rows="18" size="10" id="post-message" tabindex="1">' +
                 '</textarea>' +
                 '       </div>' +
                 '       <div id="post-options">' +
@@ -147,8 +147,8 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '           </label>' + 
                 '       </div>' +
                 '       <div id="submit-buttons">' +
-                '           <input type="submit" class="bginput" name="preview" value="Preview Reply">' + 
-                '           <input type="submit" class="bginput" name="submit" value="Submit Reply">' + 
+                '           <input type="submit" class="bginput" name="preview" value="Preview Reply" tabindex="3">' + 
+                '           <input type="submit" class="bginput" name="submit" value="Submit Reply" tabindex="2">' + 
                 '       </div>' +
                 '   </form>' +
                '</div>';
