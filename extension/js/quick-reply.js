@@ -252,6 +252,7 @@ QuickReplyBox.prototype.hide = function() {
     jQuery('form#quick-reply-form').attr('action', 'newreply.php');
     jQuery('input#quick-reply-action').val('postreply');
     jQuery('input#quick-reply-postid').val('');
+    jQuery('input[name="submit"]').attr('value', 'Submit Reply');
 
     this.quickReplyState.expanded = false;
 };
@@ -341,12 +342,6 @@ QuickReplyBox.prototype.appendImage = function(original, thumbnail, type) {
 QuickReplyBox.prototype.editPost = function(postid, subscribe) {
     var that = this;
 
-    if (subscribe) {
-        jQuery('input#quickReplyBookmark').attr('checked', true);
-    }
-
-    jQuery('input[name="submit"]').attr('value', 'Edit Post');
-
     // Call up SA's quote page
     jQuery.get(this.edit_url,
                 {
@@ -366,6 +361,12 @@ QuickReplyBox.prototype.editPost = function(postid, subscribe) {
     jQuery('form#quick-reply-form').attr('action', 'editpost.php');
     jQuery('input#quick-reply-action').val('updatepost');
     jQuery('input#quick-reply-postid').val(postid);
+    jQuery('input[name="submit"]').attr('value', 'Edit Post');
+
+    if (subscribe) {
+        jQuery('input#quickReplyBookmark').attr('checked', true);
+    }
+
 };
 
 QuickReplyBox.prototype.toggleView = function() {
