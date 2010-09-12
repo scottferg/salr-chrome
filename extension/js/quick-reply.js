@@ -345,6 +345,8 @@ QuickReplyBox.prototype.editPost = function(postid, subscribe) {
         jQuery('input#quickReplyBookmark').attr('checked', true);
     }
 
+    jQuery('input[name="submit"]').attr('value', 'Edit Post');
+
     // Call up SA's quote page
     jQuery.get(this.edit_url,
                 {
