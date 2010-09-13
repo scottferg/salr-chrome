@@ -1410,7 +1410,7 @@ SALR.prototype.bindQuickReply = function() {
         });
     });
 
-    jQuery('a > img[alt="Edit"]').each(function() {
+    jQuery('a[href*=editpost.php] > img[alt="Edit"]').each(function() {
         jQuery(this).parent().attr('href', 'javascript:;');
 
         var parentTable = jQuery(this).parents('table.post');
