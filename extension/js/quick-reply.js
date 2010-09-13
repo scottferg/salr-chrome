@@ -231,6 +231,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
 
 QuickReplyBox.prototype.show = function() {
     this.quickReplyState.expanded = true;
+    this.quickReplyState.visible = true;
     jQuery(document).trigger('disableSALRHotkeys');
     jQuery('#quick-reply').show("slow");
 	jQuery('#post-message').focus().putCursorAtEnd();
@@ -255,6 +256,7 @@ QuickReplyBox.prototype.hide = function() {
     jQuery('input[name="submit"]').attr('value', 'Submit Reply');
 
     this.quickReplyState.expanded = false;
+    this.quickReplyState.visible = false;
 };
 
 QuickReplyBox.prototype.fetchFormCookie = function(threadid) {

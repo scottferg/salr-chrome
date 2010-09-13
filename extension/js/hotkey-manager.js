@@ -49,6 +49,17 @@ function HotKeyManager(quickReply) {
 HotKeyManager.prototype.bindHotKeys = function() {
     var that = this;
 
+    jQuery(document).keydown(function(event) {
+        switch(event.keyCode) {
+            case 27: /* esc */
+                that.hideQuickReply();
+                break;
+            case 77: /* m */
+                if (event.altKey)
+                    that.toggleQuickReply();
+                break;
+        }
+    });
     jQuery(document).keypress(function(event) {
         var quick_reply_block = false;
         
@@ -116,10 +127,6 @@ HotKeyManager.prototype.bindHotKeys = function() {
                         that.displayQuickReply();
                         event.preventDefault();
                     }
-                    break;
-                case 27:
-                    // TODO: Conditionalize on quick reply being enabled
-                    that.hideQuickReply();
                     break;
             }
         //}
@@ -321,8 +328,20 @@ HotKeyManager.prototype.displayQuickReply = function() {
     }
 };
 
+HotKeyManager.prototype.toggleQuickReply = function() {
+    if (!this.quickReply)
+        return;
+    if (!this.quickReply.isVisible())
+        return;
+    if (findCurrentPage() == 'showthread.php') {
+        this.quickReply.toggleView();
+    }
+};
+
 HotKeyManager.prototype.hideQuickReply = function() {
     if (!this.quickReply)
+        return;
+    if (!this.quickReply.isVisible())
         return;
     if (findCurrentPage() == 'showthread.php') {
         this.quickReply.hide();
