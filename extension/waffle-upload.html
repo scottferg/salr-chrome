@@ -41,9 +41,9 @@
     <script type="text/javascript">
         var port = chrome.extension.connect();
         var uploader = new ImageUploader(
-            'http://api.imgur.com/2/upload.xml',
+            'http://waffleimages.com/upload',
             {
-                key: 'c0f6805130359ed37a5dbf3832aee4bc'
+                tg_format: 'xml'
             });
 
         uploader.bind('onProgress', function(event) {
@@ -53,8 +53,8 @@
         });
 
         uploader.bind('onComplete', function(event) {
-            var original_image = jQuery('original', event.response).text();
-            var square_thumbnail = jQuery('small_square', event.response).text();
+            var original_image = jQuery('imageurl', event.response).text();
+            var square_thumbnail = jQuery('thumburl', event.response).text();
 
             console.log(event.response);
 
@@ -83,9 +83,9 @@
 
         jQuery('input#filesUpload').change(function(event) {
             jQuery('#dropzone').removeClass('drag-over');
-            console.log(jQuery(this).get(0).files);
 
-            uploader.upload(this.files[0], 'image');
+            // uploader.addParam('mode', 'file');
+            uploader.upload(this.files[0], 'file');
 
             jQuery('#upload-label').css('display', 'block');
             jQuery('#dropzone > h1').css('display', 'none');
@@ -93,7 +93,8 @@
         });
 
         jQuery('input#url-submit-button').click(function() {
-            uploader.uploadUrl(jQuery('input#image-url').val(), 'image');            
+            uploader.addParam('mode', 'url');
+            uploader.uploadUrl(jQuery('input#image-url').val(), 'url');            
             jQuery('#enter-url').css('display', 'none');
         });
 
