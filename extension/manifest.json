@@ -47,8 +47,7 @@
   "permissions": [
         "tabs",
         "http://waffleimages.com/*",
-        "http://api.imgur.com/*",
-        "http://dev.vokalinteractive.com/m4/*"
+        "http://api.imgur.com/*"
   ],
   "page_actions": [
     {

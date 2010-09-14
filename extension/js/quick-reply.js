@@ -110,11 +110,9 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '       <div id="imgur-images-menu" class="sidebar-menu">' +
                 '           <img src="' + this.base_image_uri + "quick-reply-imgur.png" + '" />' +
                 '       </div>' +
-                /**********************WAFFLE IMAGES IS DOWN*******************
                 '       <div id="waffle-images-menu" class="sidebar-menu">' +
                 '           <img src="' + this.base_image_uri + "quick-reply-waffle.gif" + '" />' +
                 '       </div>' +
-                **************************************************************/
                 '       <div id="post-input-field">' +
                 '<textarea name="message" rows="18" size="10" id="post-message" tabindex="1">' +
                 '</textarea>' +
@@ -539,23 +537,10 @@ QuickReplyBox.prototype.setBBCodeSidebar = function() {
 };
 
 QuickReplyBox.prototype.setWaffleImagesSidebar = function() {
-    html = '<div id="dropzone">' +
-           '    <h1>Drop files here</h1>' +
-           '    <p>To upload them to Waffle Images</p>' +
-           '    <input type="file" multiple="true" id="filesUpload" />' +
-           '</div>';
-
+    html = '<iframe src="' + chrome.extension.getURL('/') + 'waffle-upload.html" width="162" height="245" frameborder="0"></iframe>';
     jQuery('#sidebar-list').html(html);
 
     this.sidebar_html = html;
-
-    jQuery('input#filesUpload').change(function(event) {
-        console.log(jQuery(this).get(0).files);
-        postMessage({
-            'message': 'UploadWaffleImages',
-            'file': jQuery(this).get(0).files[0]
-        });
-    });
 };
 
 QuickReplyBox.prototype.setImgurImagesSidebar = function() {
