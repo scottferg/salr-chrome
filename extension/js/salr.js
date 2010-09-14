@@ -421,7 +421,7 @@ SALR.prototype.updateStyling = function() {
 	}
 
 	if (this.settings.topPurchaseNewUsername == 'false') {
-		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/forumsystem/index.php?item=rename'])").each(function() {
+		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/products/namechange.php'])").each(function() {
 			jQuery(this).remove();
 		});
 	}
