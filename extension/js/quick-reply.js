@@ -110,9 +110,11 @@ QuickReplyBox.prototype.create = function(username, quote) {
                 '       <div id="imgur-images-menu" class="sidebar-menu">' +
                 '           <img src="' + this.base_image_uri + "quick-reply-imgur.png" + '" />' +
                 '       </div>' +
+                /*****************BROKEN****************
                 '       <div id="waffle-images-menu" class="sidebar-menu">' +
                 '           <img src="' + this.base_image_uri + "quick-reply-waffle.gif" + '" />' +
                 '       </div>' +
+                ***************************************/
                 '       <div id="post-input-field">' +
                 '<textarea name="message" rows="18" size="10" id="post-message" tabindex="1">' +
                 '</textarea>' +
