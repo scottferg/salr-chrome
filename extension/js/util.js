@@ -115,8 +115,10 @@ function nextPageUrl() {
     if (m) {
         var page = parseInt(m[1])+1;
         url = url.replace(/pagenumber=(\d+)/, 'pagenumber='+page);
-    } else {
+    } else if (url.indexOf('?') >= 0) {
         url = url+'&pagenumber=2';
+    } else {
+        url = url+'?pagenumber=2';
     }
     return url;
 }
