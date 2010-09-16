@@ -44,7 +44,7 @@ var noparse = false;    // ignore BBCode tags?
 var urlstart = -1;      // beginning of the URL if zero or greater (ignored if -1)
 
 // aceptable BBcode tags, optionally prefixed with a slash
-var tagname_re = /^\/?(?:b|i|u|pre|samp|code|colou?r|size|noparse|url|s|q|blockquote)$/;
+var tagname_re = /^\/?(?:b|i|u|pre|samp|code|colou?r|size|noparse|url|s|q|blockquote|list|\*)$/;
 
 // color names or hex color
 var color_re = /^(:?black|silver|gray|white|maroon|red|purple|fuchsia|green|lime|olive|yellow|navy|blue|teal|aqua|#(?:[0-9a-f]{3})?[0-9a-f]{3})$/i;
@@ -56,7 +56,7 @@ var number_re = /^[\\.0-9]{1,8}$/i;
 var uri_re = /^[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z]{1,512}$/i;
 
 // main regular expression: CRLF, [tag=option], [tag] or [/tag]
-var postfmt_re = /([\r\n])|(?:\[([a-z]{1,16})(?:=([^\x00-\x1F"'\(\)<>\[\]]{1,256}))?\])|(?:\[\/([a-z]{1,16})\])/ig;
+var postfmt_re = /([\r\n])|(?:\[([a-z]{1,16}|\*)(?:=([^\x00-\x1F"'\(\)<>\[\]]{1,256}))?\])|(?:\[\/([a-z]{1,16})\])/ig;
 
 // stack frame object
 function taginfo_t(bbtag, etag)
@@ -161,6 +161,15 @@ function textToHtmlCB(mstr, m1, m2, m3, m4, offset, string)
          case "blockquote":
             opentags.push(new taginfo_t(m2, "</" + m2 + ">"));
             return m3 && m3.length && uri_re.test(m3) ? "<" + m2 + " cite=\"" + m3 + "\">" : "<" + m2 + ">";
+
+         case "pre":
+            opentags.push(new taginfo_t(m2, "</ul>"));
+            crlf2br = false;
+            return "<ul>";
+
+         case "*":
+            crlf2br = false;
+            return "<li>";
 
          default:
             // [samp], [b], [i] and [u] don't need special processing
