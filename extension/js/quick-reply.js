@@ -158,6 +158,10 @@ QuickReplyBox.prototype.create = function(username, quote) {
         jQuery('body').append(html);
     }
 
+    jQuery('textarea[name=message]').keydown(function(event) {
+        that.formatText(event);
+    });
+
     if (this.bookmark) {
         jQuery('input#quickReplyBookmark').attr('checked', true);
     }
@@ -558,4 +562,70 @@ QuickReplyBox.prototype.isExpanded = function() {
 
 QuickReplyBox.prototype.isVisible = function() {
     return this.quickReplyState.visible;
+};
+
+QuickReplyBox.prototype.formatText = function() {
+    if (!event.ctrlKey)
+        return;
+
+    var key = String.fromCharCode(event.keyCode);
+    var src = event.srcElement;
+    var selStart = src.selectionStart;
+    var selEnd = src.selectionEnd;
+
+    var text = src.value;
+    var pre = text.substring(0, selStart);
+    var sel = text.substring(selStart, selEnd);
+    var post = text.substring(selEnd);
+
+    if (key == 'B') {
+        // Bold
+        src.value = pre+'[b]'+sel+'[/b]'+post;
+        event.preventDefault();
+        src.selectionStart = selStart+3;
+        src.selectionEnd = selEnd+3;
+    } else if (key == 'I') {
+        // Italics
+        src.value = pre+'[i]'+sel+'[/i]'+post;
+        event.preventDefault();
+        src.selectionStart = selStart+3;
+        src.selectionEnd = selEnd+3;
+    } else if (key == 'U') {
+        // Underline
+        src.value = pre+'[u]'+sel+'[/u]'+post;
+        event.preventDefault();
+        src.selectionStart = selStart+3;
+        src.selectionEnd = selEnd+3;
+    } else if (key == 'S') {
+        // Strikeout
+        src.value = pre+'[s]'+sel+'[/s]'+post;
+        event.preventDefault();
+        src.selectionStart = selStart+3;
+        src.selectionEnd = selEnd+3;
+    } else if (key == 'F') {
+        // Fixed
+        src.value = pre+'[fixed]'+sel+'[/fixed]'+post;
+        event.preventDefault();
+        src.selectionStart = selStart+7;
+        src.selectionEnd = selEnd+7;
+    } else if (key == 'P') {
+        // Spoiler
+        src.value = pre+'[spoiler]'+sel+'[/spoiler]'+post;
+        event.preventDefault();
+        src.selectionStart = selStart+9;
+        src.selectionEnd = selEnd+9;
+    } else if (key == '8') {
+        // List Item
+
+        // Check if we need to add a list tag
+        var list = text.indexOf('[list]');
+        if (list == -1 || list > src.selectionStart) {
+            pre = pre+"[list]\n";
+            post = "\n[/list]"+post;
+        }
+        // Put a [*] on at the start of each line
+        sel = sel.replace(/\n/g, "\n[*]");
+        src.value = pre+'[*]'+sel+post;
+        event.preventDefault();
+    }
 };
