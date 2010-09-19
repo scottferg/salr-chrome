@@ -361,6 +361,7 @@ QuickReplyBox.prototype.editPost = function(postid, subscribe) {
                     if (textarea.length)
                         edit = textarea.val();
                     jQuery('#post-message').val(edit);
+                    that.updatePreview();
                 });
 
     jQuery('div#title-bar').text('Quick Edit');
