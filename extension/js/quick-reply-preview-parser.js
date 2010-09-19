@@ -45,7 +45,8 @@ PreviewParser.prototype.parseSmilies = function() {
         var img = this.emote_list[index].image;
 
         if (this.post_text.indexOf(title) != -1) {
-            this.post_text = this.post_text.replace(title, '<img src="' + img + '" title="' + title + '" border="0" alt="" />');
+            var re = new RegExp(title, 'g');
+            this.post_text = this.post_text.replace(re, '<img src="' + img + '" title="' + title + '" border="0" alt="" />');
         }
     }
 };
