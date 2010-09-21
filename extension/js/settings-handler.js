@@ -59,8 +59,7 @@ jQuery(document).ready(function() {
     defaultSettings['topPurchaseArchives']          = 'true';
     defaultSettings['topPurchaseNoAds']             = 'true';
     defaultSettings['topPurchaseUsername']          = 'true';
-    defaultSettings['topPurchaseNonProfAd']         = 'true';
-    defaultSettings['topPurchaseForProfAd']         = 'true';
+    defaultSettings['topPurchaseBannerAd']          = 'true';
     defaultSettings['topPurchaseEmoticon']          = 'true';
     defaultSettings['topPurchaseSticky']            = 'true';
     defaultSettings['topPurchaseGiftCert']          = 'true';
