@@ -426,14 +426,8 @@ SALR.prototype.updateStyling = function() {
 		});
 	}
 
-	if (this.settings.topPurchaseNonProfAd == 'false') {
-		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/forumsystem/index.php?item=banner_ad_internal'])").each(function() {
-			jQuery(this).remove();
-		});
-	}
-
-	if (this.settings.topPurchaseForProfAd == 'false') {
-		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/forumsystem/index.php?item=banner_ad'])").each(function() {
+	if (this.settings.topPurchaseBannerAd == 'false') {
+		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/products/ad-banner.php'])").each(function() {
 			jQuery(this).remove();
 		});
 	}
