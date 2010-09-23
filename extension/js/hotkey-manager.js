@@ -149,6 +149,7 @@ HotKeyManager.prototype.nextPage = function() {
         case 'showthread.php':
         case 'bookmarkthreads.php':
         case 'search.php':
+        case 'banlist.php':
             var currentPage = Number(jQuery('span.curpage').html());
             if (currentPage <= 0)
                 currentPage = 1;
@@ -170,6 +171,7 @@ HotKeyManager.prototype.previousPage = function() {
         case 'showthread.php':
         case 'bookmarkthreads.php':
         case 'search.php':
+        case 'banlist.php':
             var currentPage = Number(jQuery('span.curpage').html());
             if (currentPage <= 0)
                 currentPage = 1;
