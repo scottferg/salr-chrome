@@ -433,7 +433,7 @@ SALR.prototype.updateStyling = function() {
 	}
 
 	if (this.settings.topPurchaseEmoticon == 'false') {
-		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/forumsystem/index.php?item=smilie'])").each(function() {
+		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/products/sticky-thread.php'])").each(function() {
 			jQuery(this).remove();
 		});
 	}
