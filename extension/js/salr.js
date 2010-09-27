@@ -612,7 +612,7 @@ SALR.prototype.skimModerators = function() {
                     "24587"  : {'username' : ['hoodrow trillson'], 'mod' : 'A'},
                     "27691"  : {'username' : ['Lowtax'], 'mod' : 'A'},
                     "51697"  : {'username' : ['angerbotSD','angerbot'], 'mod' : 'A'},
-                    "62392"  : {'username' : ['Tiny Fistpump'], 'mod' : 'A'},
+                    "62392"  : {'username' : ['Tiny Fistpump','T. Finn'], 'mod' : 'A'},
                     "114975" : {'username' : ['SA Support Robot'], 'mod' : 'A'},
                     "137488" : {'username' : ['Garbage Day'], 'mod' : 'A'},
                     "147983" : {'username' : ['Peatpot'], 'mod' : 'A'},
