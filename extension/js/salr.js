@@ -433,13 +433,13 @@ SALR.prototype.updateStyling = function() {
 	}
 
 	if (this.settings.topPurchaseEmoticon == 'false') {
-		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/products/sticky-thread.php'])").each(function() {
+		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/products/smilie.php'])").each(function() {
 			jQuery(this).remove();
 		});
 	}
 
 	if (this.settings.topPurchaseSticky == 'false') {
-		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/forumsystem/index.php?item=sticky'])").each(function() {
+		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/products/sticky-thread.php'])").each(function() {
 			jQuery(this).remove();
 		});
 	}
