@@ -515,7 +515,7 @@ SALR.prototype.updateStyling = function() {
 	}
 
 	if (this.settings.topLogout == 'false') {
-		jQuery("#navigation li:has(a[href='/account.php?s=&action=logout&ma=0339831a'])").each(function() {
+		jQuery("#navigation li:has(a[href*='account.php?action=logout'])").each(function() {
 			jQuery(this).remove();
 		});
 	}
