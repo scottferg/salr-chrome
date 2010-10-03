@@ -430,7 +430,7 @@ SALR.prototype.updateStyling = function() {
 		});
 	}
 
-	if (this.settings.topPurchaseNewUsername == 'false') {
+	if (this.settings.topPurchaseUsername == 'false') {
 		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/products/namechange.php'])").each(function() {
 			jQuery(this).remove();
 		});
