@@ -101,7 +101,10 @@ SALR.prototype.pageInit = function() {
             }
 
             this.displaySinglePostLink();
-            this.tldrQuotes();
+
+            if (this.settings.collapseTldrQuotes == 'true') {
+                this.tldrQuotes();
+            }
 
             // Display Rap Sheet link on single post view
             if (window.location.href.indexOf('showpost') >= 0) {
