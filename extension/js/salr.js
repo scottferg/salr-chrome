@@ -700,13 +700,12 @@ SALR.prototype.inlineYoutubes = function() {
 			var match = jQuery(this).attr('href').match(/^http\:\/\/((?:www|[a-z]{2})\.)?youtube\.com\/watch\?v=([-_0-9a-zA-Z]+)/); //get youtube video id
 			var videoId = match[2];
 
-			jQuery(this).after("<p><embed class = 'salr-player' /></p>"); //make new embed for video
-			jQuery(".salr-player").attr("id",videoId);
-			jQuery(".salr-player").attr("src","http://www.youtube.com/v/" + videoId);
-			jQuery(".salr-player").attr("width","450");
-			jQuery(".salr-player").attr("height","370");
-			jQuery(".salr-player").attr("type","application/x-shockwave-flash");
-			jQuery(".salr-player").attr("wmode","transparent");
+            jQuery(this).after('<iframe class="salr-player youtube-player"></iframe>');
+			jQuery(".salr-player").attr("src", "http://www.youtube.com/embed/" + videoId);
+			jQuery(".salr-player").attr("width","640");
+			jQuery(".salr-player").attr("height","385");
+			jQuery(".salr-player").attr("type","text/html");
+			jQuery(".salr-player").attr("frameborder","0");
 
 			return false;
 		},
