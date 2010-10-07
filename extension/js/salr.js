@@ -1217,7 +1217,7 @@ SALR.prototype.displayUserNotes = function() {
     "</div>");
     
     jQuery('table.post').each(function () {
-        var userid = jQuery(this).find('ul.profilelinks a')[0].href.match(/\d+$/)[0];
+        var userid = jQuery(this).find('a[href*=userid]')[0].href.match(/userid=(\d+)/)[1];
         var hasNote = notes[userid] != null;
         
         if (hasNote) {
