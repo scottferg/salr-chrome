@@ -204,6 +204,11 @@ SALR.prototype.pageInit = function() {
             }
 
             break;
+        case 'banlist.php':
+            jQuery('a[target=new]').each(function() {
+                jQuery(this).attr('target','_blank');
+            });
+            break;
     }
 
     if (this.pageNavigator) {
