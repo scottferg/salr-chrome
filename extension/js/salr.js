@@ -57,7 +57,7 @@ SALR.prototype.pageInit = function() {
             break;
         case 'forumdisplay.php':
         case 'showthread.php':
-            if (window.location.href.indexOf('showpost') >= 0) {
+            if (window.location.href.indexOf('postid=') >= 0) {
                 // Single post view doesn't work for archived threads
                 // Switch to a goto post link
                 if (jQuery('td.postbody').length == 0) {
