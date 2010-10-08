@@ -123,7 +123,7 @@ SALR.prototype.pageInit = function() {
 
             if (this.settings.enableQuickReply == 'true') {
                 if (this.settings.forumPostKey) {
-                    this.quickReply = new QuickReplyBox(this.settings.forumPostKey, this.base_image_uri, this.settings.quickReplyBookmark == 'true');
+                    this.quickReply = new QuickReplyBox(this.settings.forumPostKey, this.base_image_uri, this.settings);
                     this.bindQuickReply();
                 }
             }

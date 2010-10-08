@@ -28,10 +28,10 @@
 // http://forums.somethingawful.com/newreply.php?action=newreply&postid=379818033
 // http://forums.somethingawful.com/newreply.php?s=&action=newreply&threadid=3208437
 
-function QuickReplyBox(forum_post_key, base_image_uri, bookmark) {
+function QuickReplyBox(forum_post_key, base_image_uri, settings) {
     this.forum_post_key = forum_post_key;
     this.base_image_uri = base_image_uri;
-    this.bookmark = bookmark;
+    this.settings = settings;
     this.reply_url = 'http://forums.somethingawful.com/newreply.php';
     this.edit_url = 'http://forums.somethingawful.com/editpost.php';
 
@@ -158,11 +158,13 @@ QuickReplyBox.prototype.create = function(username, quote) {
         jQuery('body').append(html);
     }
 
-    jQuery('textarea[name=message]').keydown(function(event) {
-        that.formatText(event);
-    });
+    if (this.settings.enableKeyboardShortcuts == 'true') {
+        jQuery('textarea[name=message]').keydown(function(event) {
+            that.formatText(event);
+        });
+    }
 
-    if (this.bookmark) {
+    if (this.settings.quickReplyBookmark == 'true') {
         jQuery('input#quickReplyBookmark').attr('checked', true);
     }
 
