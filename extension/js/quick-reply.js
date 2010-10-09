@@ -568,6 +568,7 @@ QuickReplyBox.prototype.isVisible = function() {
 };
 
 QuickReplyBox.prototype.formatText = function() {
+    //FIXME Do not active on AltGR. How do we detect this?
     if (!event.ctrlKey)
         return;
 
