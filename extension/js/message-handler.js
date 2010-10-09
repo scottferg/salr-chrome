@@ -133,6 +133,7 @@ defaultSettings['topSupport']                   = 'true';
 defaultSettings['topLogout']                    = 'true';
 defaultSettings['showPurchases']                = 'true';
 defaultSettings['showNavigation']               = 'true';
+defaultSettings['quickReplyFormat']             = 'true';
 
 
 /**

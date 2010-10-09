@@ -76,6 +76,7 @@ jQuery(document).ready(function() {
     defaultSettings['showPurchases']                = 'true';
     defaultSettings['showNavigation']               = 'true';
     defaultSettings['autoTLDR']                     = 'false';
+    defaultSettings['quickReplyFormat']             = 'true';
   
     // Check stored settings, if value not set, set to default value
     for ( var key in defaultSettings ) {

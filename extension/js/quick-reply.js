@@ -158,7 +158,7 @@ QuickReplyBox.prototype.create = function(username, quote) {
         jQuery('body').append(html);
     }
 
-    if (this.settings.enableKeyboardShortcuts == 'true') {
+    if (this.settings.quickReplyFormat == 'true') {
         jQuery('textarea[name=message]').keydown(function(event) {
             that.formatText(event);
         });
