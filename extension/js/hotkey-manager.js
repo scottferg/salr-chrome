@@ -136,9 +136,16 @@ HotKeyManager.prototype.bindHotKeys = function() {
                     }
                     break;
                 case 98: /* b */
-                    // Open all bookmarks
-                    if (findCurrentPage() == 'bookmarkthreads.php') {
+                    // Open unread threads
+                    var curr_page = findCurrentPage();
+                    if (curr_page == 'bookmarkthreads.php') {
                         if (that.b_count == 2) {
+                            that.b_count=0;
+                            that.openAllBookmarks();
+                            event.preventDefault();
+                        }
+                    } else if (curr_page == 'forumdisplay.php') {
+                        if (that.b_count == 3) {
                             that.b_count=0;
                             that.openAllBookmarks();
                             event.preventDefault();
