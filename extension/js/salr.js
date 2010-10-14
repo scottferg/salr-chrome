@@ -220,7 +220,7 @@ SALR.prototype.pageInit = function() {
     }
 
     if (this.settings.enableKeyboardShortcuts == 'true') {
-        this.hotKeyManager = new HotKeyManager(this.quickReply);
+        this.hotKeyManager = new HotKeyManager(this.quickReply, this.settings);
     }
 
     if (this.settings.displayOmnibarIcon == 'true') {

@@ -23,7 +23,7 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-function HotKeyManager(quickReply) {
+function HotKeyManager(quickReply, settings) {
     /*****************
      N - Next Post
      P/M - Previous Post
@@ -35,6 +35,7 @@ function HotKeyManager(quickReply) {
      R - Quick Reply current thread
     *******************/
     this.quickReply = quickReply;
+    this.settings = settings;
     this.bindHotKeys();
     
     jQuery(document).data("enableSALRHotkeys", true);
@@ -44,6 +45,7 @@ function HotKeyManager(quickReply) {
     this.thread_post_size = jQuery('div#thread > table.post').size();
     this.current_post = findFirstUnreadPost();
     this.first_keypress = true;
+    this.b_count = 0;
 }
 
 HotKeyManager.prototype.bindHotKeys = function() {
@@ -65,6 +67,11 @@ HotKeyManager.prototype.bindHotKeys = function() {
         
         if(!jQuery(document).data("enableSALRHotkeys"))
             return;
+
+        if (event.keyCode == 98)
+            that.b_count++;
+        else
+            that.b_count=0;
 
         /*if (findCurrentPage() == 'showthread.php') {
             if (this.quickReply.isExpanded() || this.quickReply.isVisible()) {
@@ -126,6 +133,16 @@ HotKeyManager.prototype.bindHotKeys = function() {
                     if (findCurrentPage() == 'showthread.php') {
                         that.displayQuickReply();
                         event.preventDefault();
+                    }
+                    break;
+                case 98: /* b */
+                    // Open all bookmarks
+                    if (findCurrentPage() == 'bookmarkthreads.php') {
+                        if (that.b_count == 2) {
+                            that.b_count=0;
+                            that.openAllBookmarks();
+                            event.preventDefault();
+                        }
                     }
                     break;
             }
@@ -353,3 +370,19 @@ HotKeyManager.prototype.hideQuickReply = function() {
         this.quickReply.hide();
     }
 };
+
+HotKeyManager.prototype.openAllBookmarks = function() {
+    var that = this;
+
+    jQuery('tr.thread').each( function() {
+        var img_split = jQuery('td.star > img', this).attr('src').split('/');
+        var img_name = img_split[img_split.length-1];
+        if (that.settings.ignoreBookmarkStar != img_name) {
+            if (jQuery('a[class*=count]', this).length > 0) {
+                var href = jQuery('a[class*=count]', this).attr('href');
+                postMessage({ 'message': 'OpenTab',
+                    'url'  : 'http://forums.somethingawful.com'+href });
+            }
+        }
+    });
+}
