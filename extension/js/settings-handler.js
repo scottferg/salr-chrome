@@ -76,6 +76,8 @@ jQuery(document).ready(function() {
     defaultSettings['showPurchases']                = 'true';
     defaultSettings['showNavigation']               = 'true';
     defaultSettings['autoTLDR']                     = 'false';
+	defaultSettings['showLastThreePages']			= 'false';
+	defaultSettings['postsPerPage']					= 'default';
     defaultSettings['quickReplyFormat']             = 'true';
   
     // Check stored settings, if value not set, set to default value
