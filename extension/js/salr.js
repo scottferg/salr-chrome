@@ -115,6 +115,10 @@ SALR.prototype.pageInit = function() {
             if (this.settings.collapseTldrQuotes == 'true') {
                 this.tldrQuotes();
             }
+			
+			if (this.settings.showLastThreePages == 'true') {
+				this.showLastThreePages();
+			}
 
             // Display Rap Sheet link on single post view
             if (window.location.href.indexOf('showpost') >= 0) {
@@ -180,6 +184,10 @@ SALR.prototype.pageInit = function() {
             if (this.settings.showEditBookmarks == 'true') {
                 jQuery('#bookmark_edit_attach').click();
             }
+			
+			if (this.settings.showLastThreePages == 'true') {
+				this.showLastThreePages();
+			}
 
             break;
         case 'bookmarkthreads.php':
@@ -1375,6 +1383,177 @@ SALR.prototype.tldrQuotes = function() {
         }
     });
 };
+
+/**
+ * Change pages display to show links to first three and (if applicable)
+ * last three pages of thread
+ * 
+ * @author Nathan Skillen (nuvan)
+ */
+ SALR.prototype.showLastThreePages = function() {
+	var that = this;
+	var ppp = (that.settings.postsPerPage == 'default') ? 40 : parseInt(that.settings.postsPerPage);
+
+	switch( findCurrentPage() ) {
+	case 'forumdisplay.php':
+	case 'usercp.php':
+	case 'usercp.php#':
+		jQuery('tr.thread').has('div.title_pages').each(function() {
+			// how many posts in the thread
+			var numPosts = parseInt(jQuery('td.replies > a', jQuery(this)).text());
+			// how many pages does that make?
+			var pages = Math.ceil(numPosts / ppp);
+			// get thread id
+			var threadid = this.id.match(/thread(\d+)/);
+			
+			if( pages > 7 ) { // forum default is fine for <= 7 pages
+				jQuery('div.title_pages', jQuery(this)).each(function() {
+					jQuery(this).empty();
+					jQuery(this).append( 'Pages: ' )
+								.append( jQuery('<a>')
+									.attr({ href : 'showthread.php?threadid='+threadid[1]+'&pagenumber=1' })
+									.addClass('pagenumber')
+									.text('1'))
+								.append( jQuery('<a>')
+									.attr({ href : 'showthread.php?threadid='+threadid[1]+'&pagenumber=2' })
+									.addClass('pagenumber')
+									.text('2'))
+								.append( jQuery('<a>')
+									.attr({ href : 'showthread.php?threadid='+threadid[1]+'&pagenumber=3' })
+									.addClass('pagenumber')
+									.text('3'))
+								.append( ' ... ' )
+								.append( jQuery('<a>')
+									.attr({ href : 'showthread.php?threadid='+threadid[1]+'&pagenumber='+(pages - 2) })
+									.addClass('pagenumber')
+									.text(pages - 2))
+								.append( jQuery('<a>')
+									.attr({ href : 'showthread.php?threadid='+threadid[1]+'&pagenumber='+(pages - 1) })
+									.addClass('pagenumber')
+									.text(pages - 1))
+								.append( jQuery('<a>')
+									.attr({ href : 'showthread.php?threadid='+threadid[1]+'&pagenumber='+pages })
+									.addClass('pagenumber')
+									.text(pages));
+				});
+			}
+		});
+		break;
+	case 'showthread.php':
+		jQuery('div.pages').each(function() {
+			// number of pages in thread
+			var pages = parseInt( jQuery(this).text().match(/\((\d+)\)/)[1] );
+			
+			// current page being viewed
+			var curpage = (window.location.href.indexOf('pagenumber') >= 0) ?
+				parseInt( window.location.href.match(/pagenumber=(\d+)/)[1] ) : 1;
+			
+			// thread ID
+			var threadid = parseInt( window.location.href.match(/threadid=(\d+)/)[1] );
+			
+			// only showing posts of userID
+			var userid = (window.location.href.indexOf('userid') >= 0) ?
+				parseInt( window.location.href.match(/userid=(\d+)/)[1] ) : 0;
+			
+			// showing x posts per page
+			var perpage = (window.location.href.indexOf('perpage') >= 0) ?
+				parseInt( window.location.href.match(/perpage=(\d+)/)[1] ) : ppp;
+			
+			// are we too close to the first or last page for ellipses?
+			var nobeginellipses = curpage < 6;
+			var noendellipses = curpage > pages - 5;
+			
+			// used to find out how many page links we'll be making
+			Object.size = function(obj) {
+				var size = 0, key;
+				for(key in obj) {
+					if(obj.hasOwnProperty(key)) size++;
+				}
+				return size;
+			};
+			
+			// if there's fewer than 5 pages, let the forum handle it
+			if( pages > 5 ) {
+				var links = {};
+				for(var i = 0; i < 3; i++) {
+					switch(i) {
+					case 0: // pages 1,2,3
+						links['1'] = jQuery('<a>')
+							.attr({ href : 'showthread.php?threadid='+threadid+'&userid='+userid+'&perpage='+perpage+'&pagenumber=1' })
+							.addClass('pagenumber')
+							.text('1');
+						links['2'] = jQuery('<a>')
+							.attr({ href : 'showthread.php?threadid='+threadid+'&userid='+userid+'&perpage='+perpage+'&pagenumber=2' })
+							.addClass('pagenumber')
+							.text('2');
+						links['3'] = jQuery('<a>')
+							.attr({ href : 'showthread.php?threadid='+threadid+'&userid='+userid+'&perpage='+perpage+'&pagenumber=3' })
+							.addClass('pagenumber')
+							.text('3');
+						break;
+					case 1: // pages n-2,n-1,n
+						links[(pages - 2)+''] = jQuery('<a>')
+							.attr({ href : 'showthread.php?threadid='+threadid+'&userid='+userid+'&perpage='+perpage+'&pagenumber='+(pages - 2) })
+							.addClass('pagenumber')
+							.text(pages - 2);
+						links[(pages - 1)+''] = jQuery('<a>')
+							.attr({ href : 'showthread.php?threadid='+threadid+'&userid='+userid+'&perpage='+perpage+'&pagenumber='+(pages - 1) })
+							.addClass('pagenumber')
+							.text(pages - 1);
+						links[pages+''] = jQuery('<a>')
+							.attr({ href : 'showthread.php?threadid='+threadid+'&userid='+userid+'&perpage='+perpage+'&pagenumber='+pages })
+							.addClass('pagenumber')
+							.text(pages);
+						break;
+					case 2: // pages [cur-1,]cur[,cur+1]
+						if( curpage > 1 ) links[(curpage - 1)+''] = jQuery('<a>')
+							.attr({ href : 'showthread.php?threadid='+threadid+'&userid='+userid+'&perpage='+perpage+'&pagenumber='+(curpage - 1) })
+							.addClass('pagenumber')
+							.text(curpage - 1);
+						links[curpage+''] = jQuery('<span>')
+							.addClass('curpage')
+							.text(curpage);
+						if( curpage < pages ) links[(curpage + 1)+''] = jQuery('<a>')
+							.attr({ href : 'showthread.php?threadid='+threadid+'&userid='+userid+'&perpage='+perpage+'&pagenumber='+(curpage + 1) })
+							.addClass('pagenumber')
+							.text(curpage + 1);
+						break;
+					}
+				}
+				var pagelinks = Object.size(links);
+				
+				// rebuild top and bottom page links
+				jQuery(this).empty().append('Pages: ');
+				var b = jQuery('<b>');
+				if( curpage != 1 )
+					b.append( jQuery('<a>')
+						.attr({ href : 'showthread.php?threadid='+threadid+'&userid='+userid+'&perpage='+perpage+'&pagenumber='+(curpage - 1) })
+						.addClass('pagenumber')
+						.text('< Prev ') );
+				
+				var i = 0;
+				for(key in links) {
+					++i;
+					b.append(links[key]);
+					
+					if( i == 3 && !nobeginellipses )
+						b.append(' ... ');
+					else if( i == (pagelinks - 3) && !noendellipses )
+						b.append(' ... ');
+				}
+				
+				if( curpage != pages )
+					b.append( jQuery('<a>')
+						.attr({ href : 'showthread.php?threadid='+threadid+'&userid='+userid+'&perpage='+perpage+'&pagenumber='+(curpage + 1) })
+						.addClass('pagenumber')
+						.text(' Next >') );
+						
+				jQuery(this).append(b);
+			}
+		});
+		break;
+	}
+ }
 
 /**
  * Highlight the user's username in posts
