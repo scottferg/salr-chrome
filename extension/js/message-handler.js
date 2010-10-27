@@ -112,7 +112,6 @@ defaultSettings['salrInitialized']              = 'true';
 defaultSettings['topPurchaseAcc']               = 'true';
 defaultSettings['topPurchasePlat']              = 'true';
 defaultSettings['topPurchaseAva']               = 'true';
-defaultSettings['topPurchaseOtherAva']          = 'true';
 defaultSettings['topPurchaseArchives']          = 'true';
 defaultSettings['topPurchaseNoAds']             = 'true';
 defaultSettings['topPurchaseUsername']          = 'true';

@@ -428,12 +428,6 @@ SALR.prototype.updateStyling = function() {
 		});
 	}
 
-	if (this.settings.topPurchaseOtherAva == 'false') {
-		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/forumsystem/index.php?item=others_custom_title'])").each(function() {
-			jQuery(this).remove();
-		});
-	}
-
 	if (this.settings.topPurchaseArchives == 'false') {
 		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/products/archives.php'])").each(function() {
 			jQuery(this).remove();
@@ -471,7 +465,7 @@ SALR.prototype.updateStyling = function() {
 	}
 
 	if (this.settings.topPurchaseGiftCert == 'false') {
-		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/forumsystem/index.php?item=gift_cert'])").each(function() {
+		jQuery("#nav_purchase li:has(a[href='https://secure.somethingawful.com/products/gift-certificate.php'])").each(function() {
 			jQuery(this).remove();
 		});
 	}
