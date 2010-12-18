@@ -121,11 +121,6 @@ SALR.prototype.pageInit = function() {
 				this.showLastThreePages();
 			}
 
-            // Display Rap Sheet link on single post view
-            if (window.location.href.indexOf('showpost') >= 0) {
-                this.displayRapSheetLink();
-            }
-
             if (this.settings.enableQuickReply == 'true') {
                 if (this.settings.forumPostKey) {
                     this.quickReply = new QuickReplyBox(this.settings.forumPostKey, this.base_image_uri, this.settings);
