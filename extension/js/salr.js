@@ -543,6 +543,9 @@ SALR.prototype.updateStyling = function() {
 };
 
 SALR.prototype.modifyImages = function() {
+	// fix timg, because it's broken
+	if(this.settings.fixTimg == 'true') this.fixTimg();
+	
 	// Replace Links with Images
 	if (this.settings.replaceLinksWithImages == 'true') {
 
@@ -554,11 +557,12 @@ SALR.prototype.modifyImages = function() {
 			subset = subset.not(".postbody:has(img[title=':nws:']) a").not(".postbody:has(img[title=':nms:']) a");
 		}
 
-		//
+		// spoiler'd links
 		if(this.settings.dontReplaceLinkSpoiler == 'true') {
 			subset = subset.not('.bbc-spoiler a');	
 		}
 
+		// seen posts
 		if(this.settings.dontReplaceLinkRead == 'true') {
 			subset = subset.not('.seen1 a').not('.seen2 a');
 		}
@@ -1365,7 +1369,7 @@ SALR.prototype.tldrQuotes = function() {
  * 
  * @author Nathan Skillen (nuvan)
  */
- SALR.prototype.showLastThreePages = function() {
+SALR.prototype.showLastThreePages = function() {
 	var that = this;
 	var ppp = (that.settings.postsPerPage == 'default') ? 40 : parseInt(that.settings.postsPerPage);
 
@@ -1519,7 +1523,17 @@ SALR.prototype.tldrQuotes = function() {
 		});
 		break;
 	}
- }
+}
+
+/**
+ * Fix thumbnailed images
+ *
+ * @author Nathan Skillen (nuvan)
+ */
+SALR.prototype.fixTimg = function() {
+	var fix_timg = new timg_fix();
+	fix_timg.init();
+}
 
 /**
  * Highlight the user's username in posts

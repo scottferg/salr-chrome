@@ -27,6 +27,7 @@
         "js/quick-reply-preview-parser.js",
         "js/quick-reply.js",
         "js/page-navigator.js",
+		"js/timg_fix.js",
         "js/salr.js",
 		"js/jquery/colorpicker.js",
         "js/background.js"
