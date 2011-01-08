@@ -1374,12 +1374,9 @@ SALR.prototype.tldrQuotes = function() {
 	case 'usercp.php':
 	case 'usercp.php#':
 		jQuery('tr.thread').has('div.title_pages').each(function() {
-			// how many posts in the thread
-			var numPosts = parseInt(jQuery('td.replies > a', jQuery(this)).text());
-			// how many pages does that make?
-			var pages = Math.ceil(numPosts / ppp);
-			// get thread id
-			var threadid = this.id.match(/thread(\d+)/);
+			var numPosts = parseInt(jQuery('td.replies > a', jQuery(this)).text());	// how many posts in the thread
+			var pages = Math.ceil(numPosts / ppp);									// how many pages does that make?
+			var threadid = this.id.match(/thread(\d+)/);							// get thread id
 			
 			if( pages > 7 ) { // forum default is fine for <= 7 pages
 				jQuery('div.title_pages', jQuery(this)).each(function() {
@@ -1416,15 +1413,9 @@ SALR.prototype.tldrQuotes = function() {
 		break;
 	case 'showthread.php':
 		jQuery('div.pages').each(function() {
-			// number of pages in thread
-			var pages = parseInt( jQuery(this).text().match(/\((\d+)\)/)[1] );
-			
-			// current page being viewed
-			var curpage = (window.location.href.indexOf('pagenumber') >= 0) ?
-				parseInt( window.location.href.match(/pagenumber=(\d+)/)[1] ) : 1;
-			
-			// thread ID
-			var threadid = parseInt( window.location.href.match(/threadid=(\d+)/)[1] );
+			var pages = parseInt( jQuery('.pages.top').text().match(/\((\d+)\)/)[1] );	// number of pages in thread
+			var curpage = parseInt(jQuery('.pages.top span.curpage').text());			// current page being viewed
+			var threadid = parseInt( window.location.href.match(/threadid=(\d+)/)[1] );	// thread ID
 			
 			// only showing posts of userID
 			var userid = (window.location.href.indexOf('userid') >= 0) ?
@@ -1447,7 +1438,7 @@ SALR.prototype.tldrQuotes = function() {
 				return size;
 			};
 			
-			// if there's fewer than 5 pages, let the forum handle it
+			// let the forum handle 5 or fewer pages, otherwise, rebuild the page links.
 			if( pages > 5 ) {
 				var links = {};
 				for(var i = 0; i < 3; i++) {
