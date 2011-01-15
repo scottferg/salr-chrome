@@ -27,7 +27,6 @@
         "js/quick-reply-preview-parser.js",
         "js/quick-reply.js",
         "js/page-navigator.js",
-		"js/timg_fix.js",
         "js/salr.js",
 		"js/jquery/colorpicker.js",
         "js/background.js"
@@ -37,6 +36,7 @@
         "css/mouse-gestures.css",
         "css/quick-reply.css",
         "css/threadnotes.css",
+		"css/timg-fix.css",
         "css/salr.css"
       ],
       "matches": [
