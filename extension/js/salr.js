@@ -1571,10 +1571,8 @@ SALR.prototype.fixTimg = function(forceAll) {
 			.removeAttr('border')
 			.addClass('timg-fix squished');
 		
-		// STEP 4: add SPAN to each squashed image, showing full-size dimensions
+		// STEP 2: add a DIV for each squashed image, showing full-size dimensions
 		jQuery('img.timg-fix').each(function() {
-			//var span = jQuery('<SPAN>').addClass('timg-fix container');
-			
 			var that = this;
 			var div = jQuery('<DIV>')
 						.addClass('timg-fix note')
@@ -1585,14 +1583,12 @@ SALR.prototype.fixTimg = function(forceAll) {
 						.attr('title', 'Click to toggle size')
 						.click(function() { jQuery(that).toggleClass('squished expanded'); jQuery(this).toggleClass('expanded'); })
 						.hover(function() { div.css('display', 'block'); }, function() { div.css('display', 'none'); });
-			
-			//span.append(div);
 			jQuery(this)
 				.before(div)
 				.hover(function() { div.css('display', 'block'); }, function() { div.css('display', 'none'); });
 		});
 		
-		// STEP 2: add event handler to each squashed image so that it expands to full-size on click
+		// STEP 3: add event handler to each squashed image so that it expands to full-size on click
 		//			replacing squashed class with expanded class, and setting an event handler to
 		//			squash on subsequent click
 		jQuery('img.squished').click(function(evt) {
