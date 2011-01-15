@@ -56,6 +56,7 @@ SALR.prototype.pageInit = function() {
 
             break;
         case 'forumdisplay.php':
+            this.queryVisibleThreads();
         case 'showthread.php':
             if (window.location.href.indexOf('postid=') >= 0) {
                 // Single post view doesn't work for archived threads
@@ -1835,3 +1836,28 @@ SALR.prototype.fixCancerPosts = function() {
         });
     });
 }
+
+SALR.prototype.queryVisibleThreads = function() {
+    var post_history = new PostHistory(this.tagPostedThreads);
+
+    jQuery('tr.thread').each(function() {
+        var thread_id = jQuery(this).attr('id').substr(6);
+
+        post_history.getThreadStatus(thread_id);
+    });
+};
+
+/**
+ * Asynchronous callback that updates thread postcount highlighting if the user
+ * has posted in that thread before
+ *
+ */
+SALR.prototype.tagPostedThreads = function(result, thread_id) {
+    result = (result == true) || false;
+
+    if (result == true) {
+        jQuery('tr#thread3208437 > td.replies').each(function() {
+            jQuery(this).css('background-color', 'yellow');
+        });
+    }
+};
