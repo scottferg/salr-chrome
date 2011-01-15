@@ -1,0 +1,41 @@
+.timg-fix.squished {
+	max-width: 200px;
+	max-height: 170px;
+}
+
+.timg-fix.expanded {
+	max-width: none;
+	max-height: none;
+}
+
+.timg-fix.container {
+	z-index: 5;
+	position: relative;
+	white-space: nowrap;
+	height: 0px;
+}
+
+.timg-fix.note {
+	z-index: 20;
+	opacity: 0.65;
+	background-color: blue;
+    background-image:url('http://i.somethingawful.com/core/icon/fsilk/shape_move_backwards.png');
+    background-repeat:no-repeat;
+    position:absolute;
+	top:0;
+	left:0;
+	font-size:9px;
+	color:#fff;
+    padding:2px 6px;
+	cursor:pointer;
+	margin:11px 5px;
+	margin-top: 1px;
+	margin-left: 1px;
+    padding-left:22px;
+    background-position: 4px 0;
+    border:1px #ccc dotted;
+}
+
+.timg-fix.note.expanded {
+	background-image:url('http://i.somethingawful.com/core/icon/fsilk/shape_move_forwards.png');
+}

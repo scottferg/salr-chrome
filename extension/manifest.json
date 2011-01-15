@@ -38,6 +38,7 @@
         "css/mouse-gestures.css",
         "css/quick-reply.css",
         "css/threadnotes.css",
+		"css/timg-fix.css",
         "css/salr.css"
       ],
       "matches": [
