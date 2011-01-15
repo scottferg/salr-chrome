@@ -547,7 +547,7 @@ SALR.prototype.updateStyling = function() {
 
 SALR.prototype.modifyImages = function() {
 	// fix timg, because it's broken
-	if(this.settings.fixTimg == 'true') this.fixTimg();
+	if(this.settings.fixTimg == 'true') this.fixTimg(this.settings.forceTimg == 'true');
 	
 	// Replace Links with Images
 	if (this.settings.replaceLinksWithImages == 'true') {
@@ -1561,9 +1561,45 @@ SALR.prototype.showLastThreePages = function() {
  *
  * @author Nathan Skillen (nuvan)
  */
-SALR.prototype.fixTimg = function() {
-	var fix_timg = new timg_fix();
-	fix_timg.init();
+SALR.prototype.fixTimg = function(forceAll) {
+	jQuery(window).load(function() {
+		// STEP 1: reclass all timg images to timg-fix class, remove any other classes
+		jQuery('.postbody '+(forceAll ? 'img' : 'img.timg'))
+			.removeClass('timg peewee expanded loading complete')
+			.removeAttr('width')
+			.removeAttr('height')
+			.removeAttr('border')
+			.addClass('timg-fix squished');
+		
+		// STEP 4: add SPAN to each squashed image, showing full-size dimensions
+		jQuery('img.timg-fix').each(function() {
+			//var span = jQuery('<SPAN>').addClass('timg-fix container');
+			
+			var that = this;
+			var div = jQuery('<DIV>')
+						.addClass('timg-fix note')
+						.text(this.naturalWidth+'x'+this.naturalHeight)
+						.css('display', 'none')
+						.css('top', jQuery(this).offset().top)
+						.css('left', jQuery(this).offset().left)
+						.attr('title', 'Click to toggle size')
+						.click(function() { jQuery(that).toggleClass('squished expanded'); jQuery(this).toggleClass('expanded'); })
+						.hover(function() { div.css('display', 'block'); }, function() { div.css('display', 'none'); });
+			
+			//span.append(div);
+			jQuery(this)
+				.before(div)
+				.hover(function() { div.css('display', 'block'); }, function() { div.css('display', 'none'); });
+		});
+		
+		// STEP 2: add event handler to each squashed image so that it expands to full-size on click
+		//			replacing squashed class with expanded class, and setting an event handler to
+		//			squash on subsequent click
+		jQuery('img.squished').click(function(evt) {
+			jQuery(this).toggleClass('squished expanded');
+			jQuery(this).prev().toggleClass('expanded');
+		});
+	});
 }
 
 /**
