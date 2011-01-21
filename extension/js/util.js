@@ -205,3 +205,9 @@ function findFirstUnreadPost() {
 
     return index;
 }
+
+function addThreadToCache(thread_id) {
+    var post_history = new PostHistory();
+
+    post_history.addThread(thread_id);
+}
