@@ -56,7 +56,9 @@ SALR.prototype.pageInit = function() {
 
             break;
         case 'forumdisplay.php':
-            this.queryVisibleThreads();
+            if (this.settings.threadCaching == 'true') {
+                this.queryVisibleThreads();
+            }
         case 'showthread.php':
             if (window.location.href.indexOf('postid=') >= 0) {
                 // Single post view doesn't work for archived threads
@@ -126,8 +128,8 @@ SALR.prototype.pageInit = function() {
                     this.quickReply = new QuickReplyBox(this.settings.forumPostKey, this.base_image_uri, this.settings);
                     this.bindQuickReply();
                 }
-            }
-            
+            }             
+
             if (this.settings.enableThreadNotes == 'true') {
                 this.threadNotes();
             }
@@ -161,6 +163,11 @@ SALR.prototype.pageInit = function() {
             
             if (this.settings.qneProtection == 'true') {
                 this.quoteNotEditProtection();
+            }
+            
+        case 'editpost.php':
+            if (this.settings.threadCaching == 'true') {
+                this.bindThreadCaching();
             }
 
             break;
@@ -1641,6 +1648,24 @@ SALR.prototype.findFormKey = function() {
                            'option' : 'forumPostKey',
                            'value'  : jQuery(this).attr('value') });
     });
+};
+
+/**
+ * Binds thread ID caching callback to the post button if user isn't
+ * using Quick Reply
+ *
+ */
+SALR.prototype.bindThreadCaching = function() {
+    var form = jQuery('form[name="vbform"]');
+    var submit_function = form.attr('onsubmit');
+
+    var modified_submit = function() {
+        addThreadToCache(findThreadID());
+        submit_function();
+    };
+    
+    form.removeAttr('onsubmit')
+    form.submit(modified_submit);
 };
 
 /**

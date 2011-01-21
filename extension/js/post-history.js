@@ -25,7 +25,7 @@
 
 function PostHistory(callback) {
     this.database = window.openDatabase("post_history_db", "0.1", "SALR Post History", 1024 * 1024);
-    this.callback = callback;
+    this.callback = callback || false;
 
     if (!this.database) {
         console.log("Error opening database");
