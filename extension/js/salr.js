@@ -175,6 +175,10 @@ SALR.prototype.pageInit = function() {
             this.updateUsernameFromCP();
             this.updateFriendsList();
 
+            if (this.settings.threadCaching == 'true') {
+                this.queryVisibleThreads();
+            }
+
             if (this.settings.openAllUnreadLink == 'true') {
                 this.renderOpenUpdatedThreadsButton();
             }
