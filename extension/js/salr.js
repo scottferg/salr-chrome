@@ -164,7 +164,6 @@ SALR.prototype.pageInit = function() {
             if (this.settings.qneProtection == 'true') {
                 this.quoteNotEditProtection();
             }
-            
         case 'editpost.php':
             if (this.settings.threadCaching == 'true') {
                 this.bindThreadCaching();
@@ -1683,16 +1682,10 @@ SALR.prototype.findFormKey = function() {
  *
  */
 SALR.prototype.bindThreadCaching = function() {
-    var form = jQuery('form[name="vbform"]');
-    var submit_function = form.attr('onsubmit');
-
-    var modified_submit = function() {
+    if (this.settings.enableQuickReply == 'false') {
+        // Yeah that's right. I'm doing this on page loads because I can't think of a better way.
         addThreadToCache(findThreadID());
-        submit_function();
-    };
-    
-    form.removeAttr('onsubmit')
-    form.submit(modified_submit);
+    }
 };
 
 /**
