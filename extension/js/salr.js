@@ -48,7 +48,7 @@ SALR.prototype.pageInit = function() {
     switch (findCurrentPage()) {
         case '':
         case 'index.php':
-            this.updateForumsListIndex();
+            //this.updateForumsListIndex();
 
             if (this.settings.highlightModAdmin == 'true') {
                 this.skimModerators();
@@ -1048,6 +1048,7 @@ SALR.prototype.highlightModAdminWhoPosted = function() {
 
 /**
  * Update the list of forums from the index.
+ * Use this in case dropdown at bottom breaks again
  */
 SALR.prototype.updateForumsListIndex = function() {
     var forums = new Array();
@@ -1144,6 +1145,11 @@ SALR.prototype.updateForumsListIndex = function() {
                                   'sticky' : (stickyList['234']==true),
                                 });
                 } else if (forumid == '145') {
+                    forums.push({ 'name'   : 'Rift: Goon Squad HQ',
+                                  'id'     : '254',
+                                  'level'  : 3,
+                                  'sticky' : (stickyList['254']==true),
+                                });
                     forums.push({ 'name'   : 'WoW: Goon Squad',
                                   'id'     : '146',
                                   'level'  : 3,
