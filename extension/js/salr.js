@@ -1139,10 +1139,17 @@ SALR.prototype.updateForumsListIndex = function() {
                             });
 
                 if (forumid == '103') {
-                    forums.push({ 'name'   : 'TG Discussion',
-                                  'id'     : '234',
+                    //This is now a regular subforum, but may go back
+                    //forums.push({ 'name'   : 'Traditional Games Discussion',
+                    //              'id'     : '234',
+                    //              'level'  : 3,
+                    //              'sticky' : (stickyList['234']==true),
+                    //            });
+                } else if (forumid == '234') {
+                    forums.push({ 'name'   : 'Traditional Games',
+                                  'id'     : '103',
                                   'level'  : 3,
-                                  'sticky' : (stickyList['234']==true),
+                                  'sticky' : (stickyList['103']==true),
                                 });
                 } else if (forumid == '145') {
                     forums.push({ 'name'   : 'Rift: Goon Squad HQ',
