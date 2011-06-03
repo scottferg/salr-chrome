@@ -1146,7 +1146,7 @@ SALR.prototype.updateForumsListIndex = function() {
                     //              'sticky' : (stickyList['234']==true),
                     //            });
                 } else if (forumid == '234') {
-                    forums.push({ 'name'   : 'Traditional Games Play-by-post',
+                    forums.push({ 'name'   : 'Play by Post',
                                   'id'     : '103',
                                   'level'  : 3,
                                   'sticky' : (stickyList['103']==true),
