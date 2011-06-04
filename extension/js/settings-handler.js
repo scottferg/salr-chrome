@@ -46,6 +46,7 @@ jQuery(document).ready(function() {
     defaultSettings['highlightSelfColor']           = '#f2babb';
     defaultSettings['highlightAdminColor']          = '#ff7256';
     defaultSettings['highlightModeratorColor']      = '#b4eeb4';
+    defaultSettings['usernameHighlight']            = '#9933ff';
     defaultSettings['inlinePostCounts']             = 'false';
     defaultSettings['displayCustomButtons']         = 'true';
     defaultSettings['highlightOPColor']             = '#fff2aa';
