@@ -108,7 +108,7 @@ SALR.prototype.pageInit = function() {
             if (this.settings.highlightOwnUsername == 'true') {
                 this.highlightOwnUsername();
             }
-
+            
             if (this.settings.highlightOwnQuotes == 'true') {
                 this.highlightOwnQuotes();
             }
@@ -1586,12 +1586,36 @@ SALR.prototype.fixTimg = function(forceAll) {
  * Highlight the user's username in posts
  */
 SALR.prototype.highlightOwnUsername = function() {
+    function getTextNodesIn(node) {
+        var textNodes = [];
+
+        function getTextNodes(node) {
+            if (node.nodeType == 3) {
+                textNodes.push(node);
+            } else {
+                for (var i = 0, len = node.childNodes.length; i < len; ++i) {
+                    getTextNodes(node.childNodes[i]);
+                }
+            }
+        }
+
+        getTextNodes(node);
+        return textNodes;
+    }
+
     var that = this;
 
     var selector = 'td.postbody:contains("'+this.settings.username+'")';
+    
     var re = new RegExp(this.settings.username, 'g');
     jQuery(selector).each(function() {
-        jQuery(this).html(jQuery(this).html().replace(re, '<span class="usernameHighlight" style="font-weight: bold; color: ' + that.settings.usernameHighlight + ';">' + that.settings.username + '</span>'));
+        getTextNodesIn(this).forEach(function(node) {
+            if(node.wholeText.match(re)) {
+                newNode = node.ownerDocument.createElement("span");
+                jQuery(newNode).html(node.wholeText.replace(re, '<span class="usernameHighlight" style="font-weight: bold; color: ' + that.settings.usernameHighlight + ';">' + that.settings.username + '</span>'));
+                node.parentNode.replaceChild(newNode, node);
+            }
+        });
     });
 };
 
