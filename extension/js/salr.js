@@ -1634,7 +1634,10 @@ SALR.prototype.highlightOwnUsername = function() {
 SALR.prototype.highlightOwnQuotes = function() {
     var that = this;
 
-    jQuery('.bbc-block h4:contains(' + that.settings.username + ')').each(function() {
+    var usernameQuoteMatch = that.settings.username+' posted:';
+    jQuery('.bbc-block h4:contains(' + usernameQuoteMatch + ')').each(function() {
+        if (jQuery(this).text() != usernameQuoteMatch)
+            return;
         jQuery(this).parent().css("background-color", that.settings.userQuote);
 
         // Replace the styling from username highlighting
