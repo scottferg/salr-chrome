@@ -48,7 +48,7 @@ SALR.prototype.pageInit = function() {
     switch (findCurrentPage()) {
         case '':
         case 'index.php':
-            this.updateForumsListIndex();
+            //this.updateForumsListIndex();
 
             if (this.settings.highlightModAdmin == 'true') {
                 this.skimModerators();
@@ -637,11 +637,11 @@ SALR.prototype.skimModerators = function() {
         modList = { "12831"  : {'username' : ['elpintogrande'], 'mod' : 'A'},
                     "16393"  : {'username' : ['Fistgrrl'], 'mod' : 'A'},
                     "17553"  : {'username' : ['Livestock'], 'mod' : 'A'},
-                    "22720"  : {'username' : ['Ozma'], 'mod' : 'A'},
+                    "22720"  : {'username' : ['Ozma','Ozmaugh'], 'mod' : 'A'},
                     "23684"  : {'username' : ['mons all madden','mons al-madeen'], 'mod' : 'A'},
                     "24587"  : {'username' : ['hoodrow trillson'], 'mod' : 'A'},
                     "27691"  : {'username' : ['Lowtax'], 'mod' : 'A'},
-                    "51697"  : {'username' : ['angerbotSD','angerbot'], 'mod' : 'A'},
+                    "51697"  : {'username' : ['angerbotSD','angerbot','angerbeet'], 'mod' : 'A'},
                     "62392"  : {'username' : ['Tiny Fistpump','T. Finn'], 'mod' : 'A'},
                     "114975" : {'username' : ['SA Support Robot'], 'mod' : 'A'},
                     "137488" : {'username' : ['Garbage Day'], 'mod' : 'A'},
@@ -1048,6 +1048,7 @@ SALR.prototype.highlightModAdminWhoPosted = function() {
 
 /**
  * Update the list of forums from the index.
+ * Use this in case dropdown at bottom breaks again
  */
 SALR.prototype.updateForumsListIndex = function() {
     var forums = new Array();
@@ -1136,6 +1137,37 @@ SALR.prototype.updateForumsListIndex = function() {
                               'level'  : 2,
                               'sticky' : (stickyList[forumid]==true),
                             });
+
+                if (forumid == '103') {
+                    //This is now a regular subforum, but may go back
+                    //forums.push({ 'name'   : 'Traditional Games Discussion',
+                    //              'id'     : '234',
+                    //              'level'  : 3,
+                    //              'sticky' : (stickyList['234']==true),
+                    //            });
+                } else if (forumid == '234') {
+                    forums.push({ 'name'   : 'Play by Post',
+                                  'id'     : '103',
+                                  'level'  : 3,
+                                  'sticky' : (stickyList['103']==true),
+                                });
+                } else if (forumid == '145') {
+                    forums.push({ 'name'   : 'Rift: Goon Squad HQ',
+                                  'id'     : '254',
+                                  'level'  : 3,
+                                  'sticky' : (stickyList['254']==true),
+                                });
+                    forums.push({ 'name'   : 'WoW: Goon Squad',
+                                  'id'     : '146',
+                                  'level'  : 3,
+                                  'sticky' : (stickyList['146']==true),
+                                });
+                    forums.push({ 'name'   : 'The StarCraft II Zealot Zone',
+                                  'id'     : '250',
+                                  'level'  : 3,
+                                  'sticky' : (stickyList['250']==true),
+                                });
+                }
             });
         });
     });
@@ -1590,8 +1622,9 @@ SALR.prototype.highlightOwnUsername = function() {
 
     var selector = 'td.postbody:contains("'+this.settings.username+'")';
     var re = new RegExp(this.settings.username, 'g');
+    var styled = '<span class="usernameHighlight" style="font-weight: bold; color: ' + that.settings.usernameHighlight + ';">' + that.settings.username + '</span>';
     jQuery(selector).each(function() {
-        jQuery(this).html(jQuery(this).html().replace(re, '<span class="usernameHighlight" style="font-weight: bold; color: ' + that.settings.usernameHighlight + ';">' + that.settings.username + '</span>'));
+        jQuery(this).replaceText(re, styled);
     });
 };
 
@@ -1601,7 +1634,10 @@ SALR.prototype.highlightOwnUsername = function() {
 SALR.prototype.highlightOwnQuotes = function() {
     var that = this;
 
-    jQuery('.bbc-block h4:contains(' + that.settings.username + ')').each(function() {
+    var usernameQuoteMatch = that.settings.username+' posted:';
+    jQuery('.bbc-block h4:contains(' + usernameQuoteMatch + ')').each(function() {
+        if (jQuery(this).text() != usernameQuoteMatch)
+            return;
         jQuery(this).parent().css("background-color", that.settings.userQuote);
 
         // Replace the styling from username highlighting
