@@ -931,7 +931,7 @@ SALR.prototype.highlightModAdminForumDisplay = function() {
     var modList = JSON.parse(this.settings.modList);
 
     // Highlight mods and admin thread OPs on forumdisplay.php
-    jQuery('td.author > a').each(function() {
+    jQuery('td.author > a, a.author').each(function() {
         var userid = jQuery(this).attr('href').split('userid=')[1];
         if (modList[userid] != null) {
             var color;
