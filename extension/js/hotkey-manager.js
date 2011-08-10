@@ -382,7 +382,7 @@ HotKeyManager.prototype.openAllBookmarks = function() {
     var that = this;
 
     jQuery('tr.thread').each( function() {
-        var star_img = jQuery('td.star > img', this);
+        var star_img = jQuery('img[src*="/style/bookmarks/star"]', this);
         if (star_img.size() == 0)
             return;
         var img_split = star_img.attr('src').split('/');
