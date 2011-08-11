@@ -830,14 +830,16 @@ SALR.prototype.renderOpenUpdatedThreadsButton = function() {
             var other = that;
 
             jQuery('tr.thread').each( function() {
-                var img_split = jQuery('td.star > img', this).attr('src').split('/');
+                var star_img = jQuery('img[src*="/star"]', this);
+                if (star_img.size() == 0)
+                    return;
+                var img_split = star_img.attr('src').split('/');
                 var img_name = img_split[img_split.length-1];
-                if (other.settings.ignoreBookmarkStar != img_name) {
+                if (that.settings.ignoreBookmarkStar != img_name) {
                     if (jQuery('a[class*=count]', this).length > 0) {
                         var href = jQuery('a[class*=count]', this).attr('href');
-                        // TODO: Fix this
                         postMessage({ 'message': 'OpenTab',
-                                           'url'  : 'http://forums.somethingawful.com'+href });
+                            'url'  : 'http://forums.somethingawful.com'+href });
                     }
                 }
             });
