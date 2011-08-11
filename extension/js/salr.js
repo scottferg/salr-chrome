@@ -138,9 +138,15 @@ SALR.prototype.pageInit = function() {
                 this.fixCancerPosts();
             }
 
-            this.addSalrBar();
+            if (this.settings.whoPostedHide != 'true' ||
+                this.settings.searchThreadHide != 'true')
+            {
+                this.addSalrBar();
+            }
 
-            this.renderWhoPostedInThreadLink();
+            if (this.settings.whoPostedHide != 'true') {
+                this.renderWhoPostedInThreadLink();
+            }
 
             if (this.settings.searchThreadHide != 'true') {
                 this.addSearchThreadForm();
