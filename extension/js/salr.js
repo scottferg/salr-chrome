@@ -134,15 +134,17 @@ SALR.prototype.pageInit = function() {
                 this.threadNotes();
             }
 
-            if (this.settings.searchThreadHide != 'true') {
-                this.addSearchThreadForm();
-            }
-
             if (this.settings.fixCancer == 'true') {
                 this.fixCancerPosts();
             }
 
+            this.addSalrBar();
+
             this.renderWhoPostedInThreadLink();
+
+            if (this.settings.searchThreadHide != 'true') {
+                this.addSearchThreadForm();
+            }
 
             if (this.settings.adjustAfterLoad == 'true') {
                 window.onload = function() {
@@ -663,6 +665,7 @@ SALR.prototype.skimModerators = function() {
     // TODO: How can you tell if a mod has been demodded?
 
     // Moderator list on forumdisplay.php
+    if (findRealForumID() != 26) {
     jQuery('div#mods > b > a').each(function() {
         var userid = jQuery(this).attr('href').split('userid=')[1];
         var username = jQuery(this).html();
@@ -679,6 +682,7 @@ SALR.prototype.skimModerators = function() {
             modupdate = true;
         }
     });
+    }
 
     // Moderator lists on index.php
     jQuery('td.moderators > a').each(function() {
@@ -769,20 +773,39 @@ SALR.prototype.displayRapSheetLink = function() {
     });
 }
 
+/**
+ * Bar above a thread to contain SALR tools
+ *
+ */
+SALR.prototype.addSalrBar = function() {
+    //  Only valid on thread pages
+    if(findCurrentPage() != 'showthread.php')
+        return;
+
+    jQuery('div.threadbar.top').before('<div id="salrbar"></div>');
+    var salr_logo = this.base_image_uri+"/logo16.png";
+    jQuery('#salrbar').append('<div id="salrlogo"><img src="'+salr_logo+'" /> SALR</div>');
+
+    if (findRealForumID() == 219) {
+        jQuery('#salrbar').css('background-color','black');
+        jQuery('#salrbar #salrlogo').css('background-color','black');
+    }
+};
+
 
 /**
  * Open the list of who posted in a thread
  *
  */
 SALR.prototype.renderWhoPostedInThreadLink = function() {
-    var threadbar = jQuery('div.threadbar.top');
-    if (!threadbar.length)
+    var salrbar = jQuery('#salrbar');
+    if (!salrbar.length)
         return;
 
     var threadid = findThreadID();
     var href = 'http://forums.somethingawful.com/misc.php?action=whoposted&threadid='+threadid;
-    var linkHTML = '<div style="float:left;"><a href="'+href+'">Who Posted</a></div>';
-    threadbar.prepend(linkHTML);
+    var linkHTML = '<a href="'+href+'">Who Posted?</a>';
+    salrbar.append(linkHTML);
 };
 
 /**
@@ -1869,17 +1892,16 @@ SALR.prototype.addSearchThreadForm = function() {
     if(findCurrentPage() != 'showthread.php')
         return;
 
-    var threadbar = jQuery('div.threadbar.top');
-    if (!threadbar.length)
+    var salrbar = jQuery('#salrbar');
+    if (!salrbar.length)
         return;
 
-    threadbar.css('overflow','hidden');
     var forumid = findRealForumID();
     var threadid = findThreadID();
-    searchHTML = '<form id="salrSearchForm" '+
+    searchHTML = '<div style="float: right;">'+
+           '<form id="salrSearchForm" '+
             'action="http://forums.somethingawful.com/f/search/submit" '+
-            'method="post" class="threadsearch">'+
-           '<div style="margin-left: 100px">'+
+            'method="post">'+
            '<input type="hidden" name="forumids" value="'+forumid+'">'+
            '<input type="hidden" name="groupmode" value="0">'+
            '<input type="hidden" name="opt_search_posts" value="on">'+
@@ -1893,10 +1915,10 @@ SALR.prototype.addSearchThreadForm = function() {
            '<input type="hidden" name="username_filter" value="type a username">'+
            '<input id="salrSearch" name="keywords" size="25" style="">'+
            '<input type="submit" value="Search thread">'+
-           '</div>'+
-           '</form>';
+           '</form>'+
+           '</div>';
 
-    threadbar.prepend(searchHTML);
+    salrbar.append(searchHTML);
 
     jQuery('input#salrSearch').keypress( function(evt) {
         // Press Enter, Submit Form
