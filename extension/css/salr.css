@@ -52,3 +52,18 @@ select#number-drop-down {
 table.selected-post {
     -webkit-box-shadow: orange 0px 0px 15px;
 }
+
+#salrbar {
+    background-color: #dddddd;
+    width: 100%;
+    height: 25px;
+    vertical-align: bottom;
+}
+#salrbar #salrlogo {
+    /*height:100%;*/
+    /*font-size:85%;*/
+    float:left;
+    background-color:#eeeeee;
+    margin-right:50px;
+    padding: 3px 10px 2px 3px;
+}

@@ -49,7 +49,6 @@
   ], 
   "permissions": [
         "tabs",
-        "http://waffleimages.com/*",
         "http://api.imgur.com/*"
   ],
   "page_actions": [
