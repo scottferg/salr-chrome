@@ -788,11 +788,19 @@ SALR.prototype.addSalrBar = function() {
     if(findCurrentPage() != 'showthread.php')
         return;
 
-    jQuery('div.threadbar.top').prepend('<span id="salrbar"></span>');
+    var fancySA = false;
+
+    if (fancySA) {
+        jQuery('div.threadbar.top').before('<div id="salrbar"></div>');
+        jQuery("#salrbar").css({'float':'none','padding':'3px 3px 0px 3px'});
+        if (findRealForumID() != 219)
+            jQuery("#salrbar").css({'background-color':'#dddddd'});
+    } else {
+        jQuery('div.threadbar.top').prepend('<div id="salrbar"></div>');
+        jQuery('.threadbar').css({'height':'25px'});
+    }
     var salr_logo = this.base_image_uri+"/logo16.png";
     jQuery('#salrbar').append('<span id="salrlogo"><img src="'+salr_logo+'" /> SALR</span>');
-
-    jQuery('.threadbar').css({'height':'25px'});
 };
 
 
