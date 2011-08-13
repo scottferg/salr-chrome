@@ -799,7 +799,7 @@ SALR.prototype.addSalrBar = function() {
         jQuery('div.threadbar.top').prepend('<div id="salrbar"></div>');
         jQuery('.threadbar').css({'height':'25px'});
     }
-    var salr_logo = this.base_image_uri+"/logo16.png";
+    var salr_logo = this.base_image_uri+"/logo16_trans.png";
     jQuery('#salrbar').append('<span id="salrlogo"><img src="'+salr_logo+'" /> SALR</span>');
 };
 
