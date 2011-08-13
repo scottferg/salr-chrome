@@ -780,7 +780,7 @@ SALR.prototype.displayRapSheetLink = function() {
 }
 
 SALR.prototype.detectFancySA = function() {
-    var fancyId = 'ohlohgldhcaajjhadleledokhlpgamjm':
+    var fancyId = 'ohlohgldhcaajjhadleledokhlpgamjm';
     chrome.extension.sendRequest(fancyId, {message:"installcheck"}, function(response) {
         if (response.message != "yes")
             return;
