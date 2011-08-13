@@ -780,11 +780,8 @@ SALR.prototype.displayRapSheetLink = function() {
 }
 
 SALR.prototype.detectFancySA = function() {
-    var fancyId = [
-        'ohlohgldhcaajjhadleledokhlpgamjm', //official
-        'ogfiobleeepacjbojpoppppniapdhoka' //sneakingmission dev
-    ];
-    chrome.extension.sendRequest(fancyId[0], {message:"installcheck"}, function(response) {
+    var fancyId = 'ohlohgldhcaajjhadleledokhlpgamjm':
+    chrome.extension.sendRequest(fancyId, {message:"installcheck"}, function(response) {
         if (response.message != "yes")
             return;
 
