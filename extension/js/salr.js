@@ -779,6 +779,22 @@ SALR.prototype.displayRapSheetLink = function() {
     });
 }
 
+SALR.prototype.detectFancySA = function() {
+    var fancyId = [
+        'ohlohgldhcaajjhadleledokhlpgamjm', //official
+        'ogfiobleeepacjbojpoppppniapdhoka' //sneakingmission dev
+    ];
+    chrome.extension.sendRequest(fancyId[0], {message:"installcheck"}, function(response) {
+        if (response.message != "yes")
+            return;
+
+        jQuery('div.threadbar.top').before($("#salrbar"));
+        jQuery("#salrbar").css({'float':'none','padding':'3px 3px 0px 3px'});
+        if (findRealForumID() != 219)
+            jQuery("#salrbar").css({'background-color':'#dddddd'});
+    });
+}
+
 /**
  * Bar above a thread to contain SALR tools
  *
@@ -788,19 +804,13 @@ SALR.prototype.addSalrBar = function() {
     if(findCurrentPage() != 'showthread.php')
         return;
 
-    var fancySA = false;
+    jQuery('div.threadbar.top').prepend('<div id="salrbar"></div>');
+    jQuery('.threadbar').css({'height':'25px'});
 
-    if (fancySA) {
-        jQuery('div.threadbar.top').before('<div id="salrbar"></div>');
-        jQuery("#salrbar").css({'float':'none','padding':'3px 3px 0px 3px'});
-        if (findRealForumID() != 219)
-            jQuery("#salrbar").css({'background-color':'#dddddd'});
-    } else {
-        jQuery('div.threadbar.top').prepend('<div id="salrbar"></div>');
-        jQuery('.threadbar').css({'height':'25px'});
-    }
     var salr_logo = this.base_image_uri+"/logo16_trans.png";
     jQuery('#salrbar').append('<span id="salrlogo"><img src="'+salr_logo+'" /> SALR</span>');
+
+    this.detectFancySA();
 };
 
 
