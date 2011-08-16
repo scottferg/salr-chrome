@@ -54,16 +54,16 @@ table.selected-post {
 }
 
 #salrbar {
-    background-color: #dddddd;
-    width: 100%;
+    float: left;
     height: 25px;
-    vertical-align: bottom;
 }
 #salrbar #salrlogo {
-    /*height:100%;*/
-    /*font-size:85%;*/
-    float:left;
-    background-color:#eeeeee;
-    margin-right:50px;
-    padding: 3px 10px 2px 3px;
+    margin-right:30px;
+}
+#salrbar #salrsearch {
+    float: right;
+    margin-left: 50px;
+}
+#salrsearch input {
+    margin: 0;
 }

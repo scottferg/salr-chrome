@@ -138,9 +138,15 @@ SALR.prototype.pageInit = function() {
                 this.fixCancerPosts();
             }
 
-            this.addSalrBar();
+            if (this.settings.whoPostedHide != 'true' ||
+                this.settings.searchThreadHide != 'true')
+            {
+                this.addSalrBar();
+            }
 
-            this.renderWhoPostedInThreadLink();
+            if (this.settings.whoPostedHide != 'true') {
+                this.renderWhoPostedInThreadLink();
+            }
 
             if (this.settings.searchThreadHide != 'true') {
                 this.addSearchThreadForm();
@@ -773,6 +779,19 @@ SALR.prototype.displayRapSheetLink = function() {
     });
 }
 
+SALR.prototype.detectFancySA = function() {
+    var fancyId = 'ohlohgldhcaajjhadleledokhlpgamjm';
+    chrome.extension.sendRequest(fancyId, {message:"installcheck"}, function(response) {
+        if (response.message != "yes")
+            return;
+
+        jQuery('div.threadbar.top').before($("#salrbar"));
+        jQuery("#salrbar").css({'float':'none','padding':'3px 3px 0px 3px'});
+        if (findRealForumID() != 219)
+            jQuery("#salrbar").css({'background-color':'#dddddd'});
+    });
+}
+
 /**
  * Bar above a thread to contain SALR tools
  *
@@ -782,14 +801,13 @@ SALR.prototype.addSalrBar = function() {
     if(findCurrentPage() != 'showthread.php')
         return;
 
-    jQuery('div.threadbar.top').before('<div id="salrbar"></div>');
-    var salr_logo = this.base_image_uri+"/logo16.png";
-    jQuery('#salrbar').append('<div id="salrlogo"><img src="'+salr_logo+'" /> SALR</div>');
+    jQuery('div.threadbar.top').prepend('<div id="salrbar"></div>');
+    jQuery('.threadbar').css({'height':'25px'});
 
-    if (findRealForumID() == 219) {
-        jQuery('#salrbar').css('background-color','black');
-        jQuery('#salrbar #salrlogo').css('background-color','black');
-    }
+    var salr_logo = this.base_image_uri+"/logo16_trans.png";
+    jQuery('#salrbar').append('<span id="salrlogo"><img src="'+salr_logo+'" /> SALR</span>');
+
+    this.detectFancySA();
 };
 
 
@@ -807,6 +825,65 @@ SALR.prototype.renderWhoPostedInThreadLink = function() {
     var linkHTML = '<a href="'+href+'">Who Posted?</a>';
     salrbar.append(linkHTML);
 };
+
+/**
+ *
+ *  Add search bar to threads
+ *
+ **/
+SALR.prototype.addSearchThreadForm = function() {
+    //  Only valid on thread pages
+    if(findCurrentPage() != 'showthread.php')
+        return;
+
+    var salrbar = jQuery('#salrbar');
+    if (!salrbar.length)
+        return;
+
+    var forumid = findRealForumID();
+    var threadid = findThreadID();
+    searchHTML = '<span id="salrsearch">'+
+           '<form id="salrSearchForm" '+
+            'action="http://forums.somethingawful.com/f/search/submit" '+
+            'method="post">'+
+           '<input type="hidden" name="forumids" value="'+forumid+'">'+
+           '<input type="hidden" name="groupmode" value="0">'+
+           '<input type="hidden" name="opt_search_posts" value="on">'+
+           '<input type="hidden" name="opt_search_titles" value="on">'+
+           '<input type="hidden" name="perpage" value="20">'+
+           '<input type="hidden" name="search_mode" value="ext">'+
+           '<input type="hidden" name="show_post_previews" value="1">'+
+           '<input type="hidden" name="sortmode" value="1">'+
+           '<input type="hidden" name="uf_posts" value="on">'+
+           '<input type="hidden" name="userid_filters" value="">'+
+           '<input type="hidden" name="username_filter" value="type a username">'+
+           '<input id="salrSearch" name="keywords" size="25" style="">'+
+           '<input type="submit" value="Search thread">'+
+           '</form>'+
+           '</span>';
+
+    salrbar.append(searchHTML);
+
+    jQuery('input#salrSearch').keypress( function(evt) {
+        // Press Enter, Submit Form
+        if (evt.keyCode == 13) {
+            jQuery('form#salrSearchForm').submit();
+            return false;
+        }
+        // Prevent hotkeys from receiving keypress
+        evt.stopPropagation();
+    });
+
+    jQuery('form#salrSearchForm').submit( function() {
+        var keywords = jQuery('input#salrSearch');
+        // Don't submit a blank search
+        if (keywords.val().trim() == '')
+            return false;
+        // Append threadid to search string
+        keywords.val(keywords.val()+' threadid:'+threadid);
+    });
+};
+
 
 /**
  * Open all of your tracked and updated threads in a new tab
@@ -830,14 +907,16 @@ SALR.prototype.renderOpenUpdatedThreadsButton = function() {
             var other = that;
 
             jQuery('tr.thread').each( function() {
-                var img_split = jQuery('td.star > img', this).attr('src').split('/');
+                var star_img = jQuery('img[src*="/star"]', this);
+                if (star_img.size() == 0)
+                    return;
+                var img_split = star_img.attr('src').split('/');
                 var img_name = img_split[img_split.length-1];
-                if (other.settings.ignoreBookmarkStar != img_name) {
+                if (that.settings.ignoreBookmarkStar != img_name) {
                     if (jQuery('a[class*=count]', this).length > 0) {
                         var href = jQuery('a[class*=count]', this).attr('href');
-                        // TODO: Fix this
                         postMessage({ 'message': 'OpenTab',
-                                           'url'  : 'http://forums.somethingawful.com'+href });
+                            'url'  : 'http://forums.somethingawful.com'+href });
                     }
                 }
             });
@@ -1879,64 +1958,6 @@ SALR.prototype.threadNotes = function() {
     			}
     		}
     	});
-    });
-};
-
-/**
- *
- *  Add search bar to threads
- *
- **/
-SALR.prototype.addSearchThreadForm = function() {
-    //  Only valid on thread pages
-    if(findCurrentPage() != 'showthread.php')
-        return;
-
-    var salrbar = jQuery('#salrbar');
-    if (!salrbar.length)
-        return;
-
-    var forumid = findRealForumID();
-    var threadid = findThreadID();
-    searchHTML = '<div style="float: right;">'+
-           '<form id="salrSearchForm" '+
-            'action="http://forums.somethingawful.com/f/search/submit" '+
-            'method="post">'+
-           '<input type="hidden" name="forumids" value="'+forumid+'">'+
-           '<input type="hidden" name="groupmode" value="0">'+
-           '<input type="hidden" name="opt_search_posts" value="on">'+
-           '<input type="hidden" name="opt_search_titles" value="on">'+
-           '<input type="hidden" name="perpage" value="20">'+
-           '<input type="hidden" name="search_mode" value="ext">'+
-           '<input type="hidden" name="show_post_previews" value="1">'+
-           '<input type="hidden" name="sortmode" value="1">'+
-           '<input type="hidden" name="uf_posts" value="on">'+
-           '<input type="hidden" name="userid_filters" value="">'+
-           '<input type="hidden" name="username_filter" value="type a username">'+
-           '<input id="salrSearch" name="keywords" size="25" style="">'+
-           '<input type="submit" value="Search thread">'+
-           '</form>'+
-           '</div>';
-
-    salrbar.append(searchHTML);
-
-    jQuery('input#salrSearch').keypress( function(evt) {
-        // Press Enter, Submit Form
-        if (evt.keyCode == 13) {
-            jQuery('form#salrSearchForm').submit();
-            return false;
-        }
-        // Prevent hotkeys from receiving keypress
-        evt.stopPropagation();
-    });
-
-    jQuery('form#salrSearchForm').submit( function() {
-        var keywords = jQuery('input#salrSearch');
-        // Don't submit a blank search
-        if (keywords.val().trim() == '')
-            return false;
-        // Append threadid to search string
-        keywords.val(keywords.val()+' threadid:'+threadid);
     });
 };
 
