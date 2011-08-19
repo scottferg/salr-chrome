@@ -894,34 +894,27 @@ SALR.prototype.addSearchThreadForm = function() {
 SALR.prototype.renderOpenUpdatedThreadsButton = function() {
     var that = this;
 
-    jQuery('th.title:first').each( function() {
-        var headerHTML = jQuery(this).html();
-        var updatedHTML = headerHTML + '<div id="open-updated-threads"' +
-                                       '     style="float:right; ' +
-                                       '            cursor:pointer; ' +
-                                       '            text-decoration: underline;">' +
-                                       'Open updated threads</div>';
+    jQuery('th.title:first').append('<div id="open-updated-threads"' +
+                                    '     style="float:right; ' +
+                                    '            cursor:pointer; ' +
+                                    '            text-decoration: underline;">' +
+                                    'Open updated threads</div>');
 
-        jQuery(this).html(updatedHTML);
-
-        // Open all updated threads in tabs
-        jQuery('#open-updated-threads').click( function() {
-            var other = that;
-
-            jQuery('tr.thread').each( function() {
-                var star_img = jQuery('img[src*="/star"]', this);
-                if (star_img.size() == 0)
-                    return;
-                var img_split = star_img.attr('src').split('/');
-                var img_name = img_split[img_split.length-1];
-                if (that.settings.ignoreBookmarkStar != img_name) {
-                    if (jQuery('a[class*=count]', this).length > 0) {
-                        var href = jQuery('a[class*=count]', this).attr('href');
-                        postMessage({ 'message': 'OpenTab',
-                            'url'  : 'http://forums.somethingawful.com'+href });
-                    }
+    // Open all updated threads in tabs
+    jQuery('#open-updated-threads').click( function() {
+        jQuery('tr.thread').each( function() {
+            var star_img = jQuery('img[src*="/star"]', this);
+            if (star_img.size() == 0)
+                return;
+            var img_split = star_img.attr('src').split('/');
+            var img_name = img_split[img_split.length-1];
+            if (that.settings.ignoreBookmarkStar != img_name) {
+                if (jQuery('a[class*=count]', this).length > 0) {
+                    var href = jQuery('a[class*=count]', this).attr('href');
+                    postMessage({ 'message': 'OpenTab',
+                        'url'  : 'http://forums.somethingawful.com'+href });
                 }
-            });
+            }
         });
     });
 };
