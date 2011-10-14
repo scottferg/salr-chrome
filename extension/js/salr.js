@@ -134,6 +134,20 @@ SALR.prototype.pageInit = function() {
                 this.threadNotes();
             }
 
+			//zephmod - hide/show avatar image
+			if (this.settings.showUserAvatarImage == 'true') {
+				jQuery("#thread dl.userinfo dd.title img").css({ "display" : "block" });
+			} else {
+				jQuery("#thread dl.userinfo dd.title img").css({ "display" : "none !important" });
+			}
+
+			//zephmod - hide/show avatar entirely
+			if (this.settings.showUserAvatar == 'true') {
+				jQuery("#thread dl.userinfo dd.title").css({ "display" : "block" });
+			} else {
+				jQuery("#thread dl.userinfo dd.title").css({ "display" : "none !important" });
+			}
+
             if (this.settings.fixCancer == 'true') {
                 this.fixCancerPosts();
             }

@@ -133,6 +133,9 @@ defaultSettings['topLogout']                    = 'true';
 defaultSettings['showPurchases']                = 'true';
 defaultSettings['showNavigation']               = 'true';
 defaultSettings['quickReplyFormat']             = 'true';
+//zephmod
+defaultSettings['showUserAvatarImage']			= 'true';
+defaultSettings['showUserAvatar']				= 'true';
 
 
 /**
