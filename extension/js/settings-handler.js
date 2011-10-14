@@ -79,6 +79,9 @@ jQuery(document).ready(function() {
 	defaultSettings['showLastThreePages']			= 'false';
 	defaultSettings['postsPerPage']					= 'default';
     defaultSettings['quickReplyFormat']             = 'true';
+	//zephmod
+	defaultSettings['showUserAvatarImage']			= 'true';
+	defaultSettings['showUserAvatar']				= 'true';
   
     // Check stored settings, if value not set, set to default value
     for ( var key in defaultSettings ) {
