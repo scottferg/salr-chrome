@@ -135,17 +135,13 @@ SALR.prototype.pageInit = function() {
             }
 
 			//zephmod - hide/show avatar image
-			if (this.settings.showUserAvatarImage == 'true') {
-				jQuery("#thread dl.userinfo dd.title img").css({ "display" : "block" });
-			} else {
-				jQuery("#thread dl.userinfo dd.title img").css({ "display" : "none !important" });
+			if (this.settings.showUserAvatarImage != 'true') {
+				jQuery("#thread dl.userinfo dd.title img").remove();
 			}
 
 			//zephmod - hide/show avatar entirely
-			if (this.settings.showUserAvatar == 'true') {
-				jQuery("#thread dl.userinfo dd.title").css({ "display" : "block" });
-			} else {
-				jQuery("#thread dl.userinfo dd.title").css({ "display" : "none !important" });
+			if (this.settings.showUserAvatar != 'true') {
+				jQuery("#thread dl.userinfo dd.title").remove();
 			}
 
             if (this.settings.fixCancer == 'true') {
