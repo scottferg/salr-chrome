@@ -43,9 +43,14 @@ PreviewParser.prototype.parseSmilies = function() {
     for (var index in this.emote_list) {
         var title = this.emote_list[index].emote;
         var img = this.emote_list[index].image;
+		var re;
 
-        if (this.post_text.indexOf(title) != -1) {
-            var re = new RegExp(title, 'g');
+        if (this.post_text.indexOf(title) != -1)
+		{
+			//faces have noses. come on.
+			if (title == ":)" || title == ":-)") { re = (title == ":-)") ? ":-)" : ":)"; }
+			else if (title == ":(" || title == ":-(") { re = (title == ":-(") ? ":-(" : ":("; }
+			else { re = new RegExp(title, 'g'); /* this is invalid if :( or :) is entered cause lol */ }
             this.post_text = this.post_text.replace(re, '<img src="' + img + '" title="' + title + '" border="0" alt="" />');
         }
     }

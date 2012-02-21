@@ -42,20 +42,37 @@ EmoteParser.prototype.construct = function() {
 };
 
 EmoteParser.prototype.parseResponse = function(response) {
-    var that = this;
-    var index = 0;
+    var that = this,
+		index = 0;
 
     jQuery('li.smilie', response).each(function() {
-        var emote = jQuery('div.text', this).first().html();
-        var image = jQuery('img', this).first().attr('src');
-        var title = 'emote-' + index;
+        var emote = jQuery('div.text', this).first().html(),
+			image = jQuery('img', this).first().attr('src'),
+			title;
 
+		//additional entries that, frankly, just make sense.
+		if (emote == ":)")
+		{
+			title = 'emote-' + index;
+			that.emotes[title] = {'emote': ':-)', 'image': image};
+			index++;
+		}
+
+		if (emote == ":(")
+		{
+			title = 'emote-' + index;
+			that.emotes[title] = {'emote': ':-(', 'image': image};
+			index++;
+		}
+
+		title = 'emote-' + index;
         that.emotes[title] = {'emote': emote, 'image': image};    
 
         index++;
     });
 
     this.observer.notify(this.emotes);
+	console.log(this.emotes);
 };
 
 EmoteParser.prototype.getEmotes = function() {
