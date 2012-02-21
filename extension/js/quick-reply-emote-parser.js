@@ -72,7 +72,6 @@ EmoteParser.prototype.parseResponse = function(response) {
     });
 
     this.observer.notify(this.emotes);
-	console.log(this.emotes);
 };
 
 EmoteParser.prototype.getEmotes = function() {
