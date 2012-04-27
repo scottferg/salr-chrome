@@ -51,12 +51,10 @@
         "tabs",
         "http://api.imgur.com/*"
   ],
-  "page_actions": [
+  "page_action":
     {
-        "id": "forums_jump_list",
-        "name": "Forum Jump List",
-        "popup": "popup.html",
-        "icons": ["images/logo16.png"]
+        "default_icon": "images/logo16.png",
+        "default_title": "Forum Jump List",
+        "default_popup": "popup.html"
     }
-  ]
 }

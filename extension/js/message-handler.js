@@ -58,15 +58,7 @@ chrome.extension.onConnect.addListener(function(port) {
                 openNewTab(data.url);
                 break;
             case 'ShowPageAction':
-                // Register the tab with the tagging page action
-                chrome.pageActions.enableForTab("forums_jump_list",
-                                                { 
-                                                    tabId: port.tab.id,
-                                                    url: port.tab.url,
-                                                    title: "Click to open forum jump list",
-                                                    iconId: 0
-                                                });
-
+                chrome.pageAction.show(port.tab.id);
                 break;
             case 'GetPageSettings':
             case 'GetSALRSettings':
