@@ -1972,7 +1972,7 @@ SALR.prototype.threadNotes = function() {
  *
  **/
 SALR.prototype.addRapSheetToProfile = function() {
-    var link = jQuery('a[href*=userid]:first');
+    var link = jQuery('table a[href*=userid]:first');
     var userid = link.attr('href').split('userid=')[1];
     var el = link.parent().clone();
     jQuery('a',el).attr('href','http://forums.somethingawful.com/banlist.php?userid='+userid);
