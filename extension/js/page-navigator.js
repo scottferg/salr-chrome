@@ -52,37 +52,37 @@ PageNavigator.prototype.writeNavigatorHtml = function() {
         return;
     }
 
-    var html = '<nav id="page-nav"> ' + 
-                '<div id="nav-body">' +
-                '<span id="first-page-buttons">' + 
-                '<a class="nav-button" id="nav-first-page" href="#">' +
-                '<img src="' + this.base_image_uri + 'nav-firstpage.png" />' + 
-                '</a>' + 
-                '<a class="nav-button" id="nav-prev-page" href="#">' +
-                '<img src="' + this.base_image_uri + 'nav-prevpage.png" />' +
-                '</a>' + 
-                '</span>' +
-                '<span id="page-drop-down">' +
-                '<select id="number-drop-down" name="page-number">';
+    var html =  '<nav id="page-nav"> ' + 
+                    '<div id="nav-body">' +
+                    '<span id="first-page-buttons">' + 
+                        '<a class="nav-button" id="nav-first-page" href="#">' +
+                            '<img src="' + this.base_image_uri + 'nav-firstpage.png" />' + 
+                        '</a>' + 
+                        '<a class="nav-button" id="nav-prev-page" href="#">' +
+                            '<img src="' + this.base_image_uri + 'nav-prevpage.png" />' +
+                        '</a>' + 
+                    '</span>' +
+                    '<span id="page-drop-down">' +
+                    '<select id="number-drop-down" name="page-number">';
 
     for (var i = 1; i < (this.pageCount + 1); i++) {
         html += '<option value="' + i + '">' + i + '</option>';
     }
 
-    html +=     '</select>' +
-                '</span>' +
-                '<span id="last-page-buttons">' +
-                '<a class="nav-button" id="nav-next-page" href="#">' +
-                '<img src="' + this.base_image_uri + 'nav-nextpage.png" />' + 
-                '</a>' + 
-                '<a class="nav-button" id="nav-last-page" href="#">' +
-                '<img src="' + this.base_image_uri + 'nav-lastpage.png" />' +
-                '</a>' + 
-                '<a class="nav-button" id="nav-last-post" >' +
-                '<img src="' + this.base_image_uri + 'lastpost.png" />' +
-                '</a>' + 
-                '</span>' +
-                '</div>' +
+    html +=         '</select>' +
+                    '</span>' +
+                    '<span id="last-page-buttons">' +
+                        '<a class="nav-button" id="nav-next-page" href="#">' +
+                            '<img src="' + this.base_image_uri + 'nav-nextpage.png" />' + 
+                        '</a>' + 
+                        '<a class="nav-button" id="nav-last-page" href="#">' +
+                            '<img src="' + this.base_image_uri + 'nav-lastpage.png" />' +
+                        '</a>' + 
+                        '<a class="nav-button" id="nav-last-post" >' +
+                            '<img src="' + this.base_image_uri + 'lastpost.png" />' +
+                        '</a>' + 
+                    '</span>' +
+                    '</div>' +
                 '</nav>';
 
     // Add the navigator to the DOM
