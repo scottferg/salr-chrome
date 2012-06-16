@@ -272,6 +272,8 @@ SALR.prototype.openSettings = function() {
 // once we're ready
 SALR.prototype.updateStyling = function() {
 
+    jQuery('div.jump_top.right').css("right","-100px");
+    
     var that = this;
 
     jQuery('tr.thread').each(function() {
