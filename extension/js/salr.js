@@ -274,6 +274,13 @@ SALR.prototype.updateStyling = function() {
 
     var that = this;
 
+	// remove TOP button from bottom right
+	if (this.settings.displayPageNavigator == 'true')
+	{
+		jQuery('div.jump_top.right').css("right","-100px");
+	}
+    
+	
     jQuery('tr.thread').each(function() {
         var thread = jQuery(this);
         var newPosts = false;
