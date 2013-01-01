@@ -826,8 +826,6 @@ SALR.prototype.addSalrBar = function() {
 
     var salr_logo = this.base_image_uri+"logo16_trans.png";
     jQuery('#salrbar').append('<span id="salrlogo"><img src="'+salr_logo+'" /> SALR</span>');
-
-    this.detectFancySA();
 };
 
 
