@@ -319,7 +319,7 @@ SALR.prototype.updateStyling = function() {
 
                         if (newPostCount) {
                             // Set the HTML value
-                            jQuery(this).html("<div style='font-size: 12px; float: left; margin-top: 4px; padding-right: 4px;'>(" + newPostCount + ")</div>" + currentHtml);
+                            jQuery(this).html("<div class='count' style='font-size: 12px; float: left; margin-top: 4px; padding-right: 4px;'>(" + newPostCount + ")</div>" + currentHtml);
                         }
                     });
                 } else {
@@ -333,7 +333,7 @@ SALR.prototype.updateStyling = function() {
 
                         if (newPostCount) {
                             // Set the HTML value
-                            jQuery(this).html(currentHtml + "<br /><div style='font-size: 12px;'>(" + newPostCount + ")</div>");
+                            jQuery(this).html(currentHtml + "<br /><div class='count' style='font-size: 12px;'>(" + newPostCount + ")</div>");
                         }
                     });
                 }
@@ -919,17 +919,27 @@ SALR.prototype.renderOpenUpdatedThreadsButton = function() {
     // Open all updated threads in tabs
     jQuery('#open-updated-threads').click( function() {
         jQuery('tr.thread').each( function() {
+            var other = this;
+
+            var open_thread = function() {
+                if (jQuery('a[class*=count]', other).length > 0) {
+                    var href = jQuery('a[class*=count]', other).attr('href');
+                    postMessage({ 'message': 'OpenTab',
+                        'url'  : 'http://forums.somethingawful.com'+href });
+                }
+            };
+
+            if (that.settings.ignoreBookmarkStar === undefined) {
+                open_thread();
+            }
+
             var star_img = jQuery('img[src*="/star"]', this);
             if (star_img.size() == 0)
                 return;
             var img_split = star_img.attr('src').split('/');
             var img_name = img_split[img_split.length-1];
             if (that.settings.ignoreBookmarkStar != img_name) {
-                if (jQuery('a[class*=count]', this).length > 0) {
-                    var href = jQuery('a[class*=count]', this).attr('href');
-                    postMessage({ 'message': 'OpenTab',
-                        'url'  : 'http://forums.somethingawful.com'+href });
-                }
+                open_thread();
             }
         });
     });
