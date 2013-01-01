@@ -86,23 +86,8 @@ function findRealForumID() {
  *
  */
 function countPages() {
-
-    var index = (findCurrentPage() == 'forumdisplay.php') ? 5 : 3;
-
-    var result;
-
-    jQuery('.pages').each(function() {
-        var text = jQuery(this).html();
-        var firstIndex = text.indexOf('(');
-        var endIndex = text.indexOf(')');
-
-        result = text.substr(firstIndex + 1, endIndex - (firstIndex + 1));
-        if (result=='' || isNaN(result)) {
-            result = 1;
-        }
-    });
-
-    return Number(result);
+    var pages = jQuery('div.pages').get(0);
+    return jQuery('option', pages).length;
 }
 
 function buildUrl(rootPageType, basePageID, page) {

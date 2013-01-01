@@ -33,7 +33,7 @@ function PageNavigator(base_image_uri) {
     // currently viewing
     this.basePageID = findForumID();
     // Current page
-    this.currentPage = Number(jQuery('span.curpage').html());
+    this.currentPage = Number(jQuery('option[selected="selected"]').val());
 
     this.writeNavigatorHtml();
     this.selectPage(this.currentPage);
@@ -55,10 +55,10 @@ PageNavigator.prototype.writeNavigatorHtml = function() {
     var html = '<nav id="page-nav"> ' + 
                 '   <div id="nav-body">' +
                 '   <span id="first-page-buttons">' + 
-                '       <a class="nav-button" id="nav-first-page" href="#">' +
+                '       <a class="nav-button" id="nav-first-page">' +
                 '           <img src="' + this.base_image_uri + 'nav-firstpage.png" />' + 
                 '       </a>' + 
-                '       <a class="nav-button" id="nav-prev-page" href="#">' +
+                '       <a class="nav-button" id="nav-prev-page">' +
                 '           <img src="' + this.base_image_uri + 'nav-prevpage.png" />' +
                 '       </a>' + 
                 '   </span>' +
@@ -72,10 +72,10 @@ PageNavigator.prototype.writeNavigatorHtml = function() {
     html +=     '       </select>' +
                 '   </span>' +
                 '   <span id="last-page-buttons">' +
-                '       <a class="nav-button" id="nav-next-page" href="#">' +
+                '       <a class="nav-button" id="nav-next-page">' +
                 '           <img src="' + this.base_image_uri + 'nav-nextpage.png" />' + 
                 '       </a>' + 
-                '       <a class="nav-button" id="nav-last-page" href="#">' +
+                '       <a class="nav-button" id="nav-last-page">' +
                 '           <img src="' + this.base_image_uri + 'nav-lastpage.png" />' +
                 '       </a>' + 
                 '       <a class="nav-button" id="nav-last-post" >' +
@@ -86,7 +86,6 @@ PageNavigator.prototype.writeNavigatorHtml = function() {
                '</nav>';
 
     // Add the navigator to the DOM
-    console.log(html);
     jQuery('#container').append(html);
 
     var navigatorWidth = (this.pageCount > 100) ? 219 : 212;
