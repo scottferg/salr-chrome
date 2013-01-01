@@ -75,6 +75,7 @@ SALR.prototype.pageInit = function() {
             }
 
             if (this.settings.displayPageNavigator == 'true') {
+                console.log("Displaying page nav");
                 this.pageNavigator = new PageNavigator(this.base_image_uri);
             }
 
@@ -798,7 +799,7 @@ SALR.prototype.displayRapSheetLink = function() {
 
 SALR.prototype.detectFancySA = function() {
     var fancyId = 'ohlohgldhcaajjhadleledokhlpgamjm';
-    chrome.extension.sendRequest(fancyId, {message:"installcheck"}, function(response) {
+    chrome.extension.sendMessage(fancyId, {message:"installcheck"}, function(response) {
         if (response === undefined)
             return;
         if (response.message != "yes")
@@ -823,7 +824,7 @@ SALR.prototype.addSalrBar = function() {
     jQuery('div.threadbar.top').prepend('<div id="salrbar"></div>');
     jQuery('.threadbar').css({'height':'25px'});
 
-    var salr_logo = this.base_image_uri+"/logo16_trans.png";
+    var salr_logo = this.base_image_uri+"logo16_trans.png";
     jQuery('#salrbar').append('<span id="salrlogo"><img src="'+salr_logo+'" /> SALR</span>');
 
     this.detectFancySA();

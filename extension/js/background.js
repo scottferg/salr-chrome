@@ -41,7 +41,7 @@ port.onMessage.addListener(function(data) {
     }
 });
 
-chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     salr_client.appendImage(request.original, request.thumbnail, request.type);
 });
 

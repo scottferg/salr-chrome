@@ -70,7 +70,7 @@ chrome.extension.onConnect.addListener(function(port) {
             case 'AppendUploadedImage':
                 console.log('Got request!');
                 chrome.tabs.getSelected(null, function(tab) {
-                    chrome.tabs.sendRequest(tab.id, data, function(response) {
+                    chrome.tabs.sendMessage(tab.id, data, function(response) {
                         console.log(response.farewell);
                     });
                 });
