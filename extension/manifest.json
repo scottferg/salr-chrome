@@ -1,6 +1,6 @@
 {
   "name": "Something Awful Last Read", 
-  "version": "1.4.3",
+  "version": "1.5.1",
   "manifest_version": 2,
   "description": "Highlights posts which quote the user", 
   "icons": {
@@ -14,7 +14,7 @@
           "js/waffle-images-uploader.js", 
           "js/message-handler.js"
       ],
-      "persistent": true
+      "persistent": false
   },
   "options_page":"settings.html",
   "content_scripts": [
@@ -56,7 +56,7 @@
   ], 
   "permissions": [
         "tabs",
-        "http://api.imgur.com/*"
+        "https://api.imgur.com/*"
   ],
   "page_action":
     {
@@ -128,6 +128,7 @@
     "images/star2.gif",
     "images/sticky_off.gif",
     "images/sticky_on.gif",
-    "images/unvisit.png"
+    "images/unvisit.png",
+    "imgur-upload.html"
   ]
 }

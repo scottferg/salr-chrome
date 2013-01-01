@@ -352,7 +352,7 @@ SALR.prototype.updateStyling = function() {
                 jQuery(this).css("width", "14px");
 
                 // Remove the 'X' from the anchor tag
-                jQuery(this).html('');
+                jQuery(this).text('');
             });
 
             // Eliminate last-seen styling
