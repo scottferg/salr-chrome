@@ -52,7 +52,7 @@ function MouseGesturesController(base_image_uri) {
             break;
     }
     // Current page
-    this.currentPage = Number(jQuery('span.curpage').html());
+    this.currentPage = Number(jQuery('option[selected="selected"]').val());
     if (this.currentPage <= 0)
         this.currentPage = 1;
 

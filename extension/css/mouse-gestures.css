@@ -10,6 +10,10 @@ div#gesture-top, div#gesture-bottom {
     margin-left: -38px;
 }
 
+div#gesture-bottom {
+    left: 0%;
+}
+
 div#gesture-right {
     float: right;
 }

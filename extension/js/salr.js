@@ -75,7 +75,6 @@ SALR.prototype.pageInit = function() {
             }
 
             if (this.settings.displayPageNavigator == 'true') {
-                console.log("Displaying page nav");
                 this.pageNavigator = new PageNavigator(this.base_image_uri);
             }
 

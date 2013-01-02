@@ -1,6 +1,6 @@
 {
   "name": "Something Awful Last Read", 
-  "version": "1.5.1",
+  "version": "1.5.3",
   "manifest_version": 2,
   "description": "Highlights posts which quote the user", 
   "icons": {
