@@ -129,6 +129,7 @@
     "images/sticky_off.gif",
     "images/sticky_on.gif",
     "images/unvisit.png",
-    "imgur-upload.html"
+    "imgur-upload.html",
+	"images/emoticons/*"
   ]
 }
