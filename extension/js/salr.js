@@ -318,7 +318,7 @@ SALR.prototype.updateStyling = function() {
 
                         if (newPostCount) {
                             // Set the HTML value
-                            jQuery(this).html("<div class='count' style='font-size: 12px; float: left; margin-top: 4px; padding-right: 4px;'>(" + newPostCount + ")</div>" + currentHtml);
+                            jQuery(this).append("<div class='count' style='font-size: 12px; float: left; margin-top: 4px; padding-right: 4px;'>(" + newPostCount + ")</div>");
                         }
                     });
                 } else {
@@ -386,7 +386,8 @@ SALR.prototype.updateStyling = function() {
 
                 jQuery(this).css({ "background-color" : darkShade, 
                                    "background-image" : "url('" + other.base_image_uri + "gradient.png')",
-                                   "background-repeat" : "repeat-x"
+                                   "background-repeat" : "repeat-x",
+                                   "background-position" : "left"
                                  });
             });
 
@@ -396,7 +397,8 @@ SALR.prototype.updateStyling = function() {
 
                 jQuery(this).css({ "background-color" : lightShade, 
                                    "background-image" : "url('" + other.base_image_uri + "gradient.png')",
-                                   "background-repeat" : "repeat-x"
+                                   "background-repeat" : "repeat-x",
+                                   "background-position" : "left"
                                  });
             });
         }
