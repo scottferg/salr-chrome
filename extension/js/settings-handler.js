@@ -82,6 +82,8 @@ jQuery(document).ready(function() {
 	//zephmod
 	defaultSettings['showUserAvatarImage']			= 'true';
 	defaultSettings['showUserAvatar']				= 'true';
+	
+	defaultSettings['retinaImages']					= 'false';
   
     // Check stored settings, if value not set, set to default value
     for ( var key in defaultSettings ) {
