@@ -309,30 +309,24 @@ SALR.prototype.updateStyling = function() {
                 jQuery(this).css("background-image", "url('" + other.base_image_uri + "lastpost.png')");
 
                 if (that.settings.inlinePostCounts == 'true') {
-                    jQuery('div.lastseen', thread).each(function() {
-                        // Add in number of new replies
-                        var currentHtml = jQuery(this).html();
-            
+                    jQuery('div.lastseen', thread).each(function() {          
                         // Strip HTML tags
                         newPostCount = parseInt(newPostCount.replace(/(<([^>]+)>)/ig, ""));
 
                         if (newPostCount) {
                             // Set the HTML value
-                            jQuery(this).append("<div class='count' style='font-size: 12px; float: left; margin-top: 4px; padding-right: 4px;'>(" + newPostCount + ")</div>");
+                            jQuery(this).prepend("<div class='count' style='font-size: 12px; float: left; margin-top: 4px; padding-right: 4px;'>(" + newPostCount + ")</div>");
                         }
                     });
                 } else {
                     // Display number of new replies for each thread
-                    jQuery('td.replies', thread).each(function() {
-                        // Add in number of new replies
-                        var currentHtml = jQuery(this).html();
-            
+                    jQuery('td.replies', thread).each(function() {           
                         // Strip HTML tags
                         newPostCount = parseInt(newPostCount.replace(/(<([^>]+)>)/ig, ""));
 
                         if (newPostCount) {
                             // Set the HTML value
-                            jQuery(this).html(currentHtml + "<br /><div class='count' style='font-size: 12px;'>(" + newPostCount + ")</div>");
+                            jQuery(this).append("<br /><div class='count' style='font-size: 12px;'>(" + newPostCount + ")</div>");
                         }
                     });
                 }
