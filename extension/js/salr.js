@@ -161,6 +161,10 @@ SALR.prototype.pageInit = function() {
             if (this.settings.searchThreadHide != 'true') {
                 this.addSearchThreadForm();
             }
+			
+            if (this.settings.retinaImages == 'true') {
+                this.swapRetinaEmotes();
+            }
 
             if (this.settings.adjustAfterLoad == 'true') {
                 window.onload = function() {
@@ -2011,6 +2015,7 @@ SALR.prototype.fixCancerPosts = function() {
     });
 }
 
+
 SALR.prototype.queryVisibleThreads = function() {
     var post_history = new PostHistory(this.tagPostedThreads);
 
@@ -2035,3 +2040,49 @@ SALR.prototype.tagPostedThreads = function(result, thread_id) {
         });
     }
 };
+
+
+SALR.prototype.swapRetinaEmotes = function() {
+	var test = jQuery('.postbody img');
+	jQuery('.postbody img').each(function() {
+		
+		var item = $(this);
+  		if (
+			(item.attr('src').indexOf('i.somethingawful.com/forumsystem/emoticons/') > -1 || 
+			item.attr('src').indexOf('http://fi.somethingawful.com/images/smilies/') > -1) && 
+		item.attr('src').indexOf('@2x') == -1 ) {
+  			
+  			var height = item.attr('offsetHeight');
+  			var width = item.attr('offsetWidth');
+  			
+  			//console.log('found ' + item.src + '; ' + width + 'x' + height);
+  			
+  			item.attr('height', height);
+  			item.attr('width', width);
+  			
+			doesFileExist(item);
+  		}
+	});
+	
+}
+
+function doesFileExist(img) {
+	//test if file exists
+	var segments = img.attr('src').split('/');
+	var filename = segments[segments.length - 1];
+	
+	var filenameSegments = filename.split('.');
+	filenameSegments[filenameSegments.length - 2] = filenameSegments[filenameSegments.length-2] + '@2x';
+	
+	var retinaFilename = filenameSegments.join('.')
+	
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", chrome.extension.getURL('/images/emoticons/' + retinaFilename), true);
+	xhr.onreadystatechange = function() {
+		if (xhr.status==200) {
+			console.log('swapping ' + filename);
+			img.attr('src',chrome.extension.getURL('/images/emoticons/'+retinaFilename));
+		}
+	};
+	xhr.send();
+}
