@@ -177,6 +177,10 @@ SALR.prototype.pageInit = function() {
                 };
             }
 
+            if (this.settings.hidePostButtonInThread == 'true') {
+                this.hidePostButtonInThread();
+            }
+
             break;
         case 'newreply.php':
             if (!this.settings.forumPostKey) {
@@ -2058,6 +2062,10 @@ SALR.prototype.swapRetinaEmotes = function() {
   		}
 	});
 	
+}
+
+SALR.prototype.hidePostButtonInThread = function() {
+    jQuery('ul.postbuttons li a[href^="newthread.php"]').hide();
 }
 
 function doesFileExist(img) {
