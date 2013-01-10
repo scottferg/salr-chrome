@@ -2058,29 +2058,30 @@ SALR.prototype.swapRetinaEmotes = function() {
   			item.attr('height', height);
   			item.attr('width', width);
   			
-			doesFileExist(item);
+			$.getJSON(chrome.extension.getURL('/images/emoticons/emoticons.json'), function(list) {
+				var f = retinaFilename(item);
+				
+				if (list.indexOf(f) > 0) {
+					console.log('swapping in' + f);
+					item.attr('src',chrome.extension.getURL('/images/emoticons/'+f));
+				}
+				
+			});
+			
   		}
 	});
 	
 }
 
-function doesFileExist(img) {
-	//test if file exists
+function retinaFilename(img) {
+	//build retina filename
 	var segments = img.attr('src').split('/');
 	var filename = segments[segments.length - 1];
 	
 	var filenameSegments = filename.split('.');
 	filenameSegments[filenameSegments.length - 2] = filenameSegments[filenameSegments.length-2] + '@2x';
 	
-	var retinaFilename = filenameSegments.join('.')
+	var f = filenameSegments.join('.')
+	return f;
 	
-	var xhr = new XMLHttpRequest();
-	xhr.open("GET", chrome.extension.getURL('/images/emoticons/' + retinaFilename), true);
-	xhr.onreadystatechange = function() {
-		if (xhr.status==200) {
-			console.log('swapping ' + filename);
-			img.attr('src',chrome.extension.getURL('/images/emoticons/'+retinaFilename));
-		}
-	};
-	xhr.send();
 }
