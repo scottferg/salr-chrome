@@ -2041,34 +2041,36 @@ SALR.prototype.tagPostedThreads = function(result, thread_id) {
 
 
 SALR.prototype.swapRetinaEmotes = function() {
-	var test = jQuery('.postbody img');
-	jQuery('.postbody img').each(function() {
+	$(function() {
+		$.getJSON(chrome.extension.getURL('/images/emoticons/emoticons.json'), function(list) {
+			
+			jQuery('.postbody img').each(function() {
 		
-		var item = $(this);
-  		if (
-			(item.attr('src').indexOf('i.somethingawful.com/forumsystem/emoticons/') > -1 || 
-			item.attr('src').indexOf('http://fi.somethingawful.com/images/smilies/') > -1) && 
-		item.attr('src').indexOf('@2x') == -1 ) {
-  			
-  			var height = item.attr('offsetHeight');
-  			var width = item.attr('offsetWidth');
-  			
-  			//console.log('found ' + item.src + '; ' + width + 'x' + height);
-  			
-  			item.attr('height', height);
-  			item.attr('width', width);
-  			
-			doesFileExist(item);
-  		}
-	});
+			var item = $(this);
+	  		if (
+				(item.attr('src').indexOf('i.somethingawful.com/forumsystem/emoticons/') > -1 || 
+				item.attr('src').indexOf('http://fi.somethingawful.com/images/smilies/') > -1) && 
+				item.attr('src').indexOf('@2x') == -1 ) {
+
+					var f = retinaFilename(item);
+				
+					if (list.indexOf(f) > 0) {
+						console.log('swapping in' + f);
+						var height = item.height();
+						var width = item.width();
+						item.attr('src',chrome.extension.getURL('/images/emoticons/'+f))
+							.width(width)
+							.height(height);
+					}
+				
+				}
+			}); //each
+		}); //getjson
+	});//$
 	
 }
 
-SALR.prototype.hidePostButtonInThread = function() {
-    jQuery('ul.postbuttons li a[href^="newthread.php"]').hide();
-}
-
-function doesFileExist(img) {
+function retinaFilename(img) {
 	//test if file exists
 	var segments = img.attr('src').split('/');
 	var filename = segments[segments.length - 1];
@@ -2076,15 +2078,13 @@ function doesFileExist(img) {
 	var filenameSegments = filename.split('.');
 	filenameSegments[filenameSegments.length - 2] = filenameSegments[filenameSegments.length-2] + '@2x';
 	
-	var retinaFilename = filenameSegments.join('.')
+	var f = filenameSegments.join('.')
+	return f;
 	
-	var xhr = new XMLHttpRequest();
-	xhr.open("GET", chrome.extension.getURL('/images/emoticons/' + retinaFilename), true);
-	xhr.onreadystatechange = function() {
-		if (xhr.status==200) {
-			console.log('swapping ' + filename);
-			img.attr('src',chrome.extension.getURL('/images/emoticons/'+retinaFilename));
-		}
-	};
-	xhr.send();
 }
+
+SALR.prototype.hidePostButtonInThread = function() {
+    jQuery('ul.postbuttons li a[href^="newthread.php"]').hide();
+}
+
+
