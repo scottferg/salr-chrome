@@ -1,14 +1,14 @@
 {
   "name": "Something Awful Last Read", 
-  "version": "1.5.4",
+  "version": "1.5.5.1",
   "manifest_version": 2,
   "description": "Highlights posts which quote the user", 
   "icons": {
-	  		  "16": "images/logo16.png",
-			  "32": "images/logo32.png",
-			  "48": "images/logo48.png",
-			  "128": "images/logo128.png"
-		   },
+           "16": "images/logo16.png",
+           "32": "images/logo32.png",
+           "48": "images/logo48.png",
+           "128": "images/logo128.png"
+         },
   "background": {
       "scripts": [
           "js/waffle-images-uploader.js", 
@@ -25,7 +25,7 @@
         "js/jquery/jquery.transform.min.js",
         "js/jquery/jquery.rightclick.js",
         "js/jquery/jquery.fieldselection.js",
-		"js/jquery/jquery.putCursorAtEnd.1.0.js",
+      "js/jquery/jquery.putCursorAtEnd.1.0.js",
         "js/jquery/jquery.ba-replacetext.js",
         "js/bbcode.js",
         "js/util.js",
@@ -37,7 +37,7 @@
         "js/page-navigator.js",
         "js/post-history.js",
         "js/salr.js",
-		"js/jquery/colorpicker.js",
+      "js/jquery/colorpicker.js",
         "js/background.js"
       ],
       "css" : [
@@ -45,7 +45,7 @@
         "css/mouse-gestures.css",
         "css/quick-reply.css",
         "css/threadnotes.css",
-		"css/timg-fix.css",
+      "css/timg-fix.css",
         "css/salr.css"
       ],
       "matches": [
@@ -130,6 +130,6 @@
     "images/sticky_on.gif",
     "images/unvisit.png",
     "imgur-upload.html",
-	"images/emoticons/*"
+   "images/emoticons/*"
   ]
 }

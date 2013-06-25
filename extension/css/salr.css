@@ -67,3 +67,7 @@ table.selected-post {
 #salrsearch input {
     margin: 0;
 }
+
+.no-after:after {
+    content: "" !important;
+}
