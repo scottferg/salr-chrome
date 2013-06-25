@@ -36,6 +36,23 @@ function SALR(settings, base_image_uri) {
 };
 
 SALR.prototype.pageInit = function() {
+    if (this.settings.DontShowEOLWarning != 'true') {
+        var warning = "<div id='eol-warning' class='qne_warn' style='margin: auto; align:center; text-align:center; width:630px'>" +
+        "<b><img src='http://fi.somethingawful.com/images/smilies/emot-siren.gif' /> Update to " +
+        "<a href='https://chrome.google.com/webstore/detail/something-awful-last-read/bogegdelcjhoaakaepmoglademmhiboo'>" +
+        "SALR Redux</a> as this extension is no longer updated! (<a id='warning-ignore' href='#'>Ignore</a>) " +
+        "<img src='http://fi.somethingawful.com/images/smilies/emot-siren.gif' /></b></div>"; 
+        jQuery("#content").before(warning);
+        jQuery("#warning-ignore").click(function() {
+            postMessage({
+                'message': 'ChangeSALRSetting',
+                'option' : 'DontShowEOLWarning',
+                'value'  : 'true'
+            });
+            jQuery('#eol-warning').remove();
+        });
+    }
+
     // Update the styles now that we have
     // the settings
     this.updateStyling();
@@ -177,10 +194,6 @@ SALR.prototype.pageInit = function() {
                 };
             }
 
-            if (this.settings.hidePostButtonInThread == 'true') {
-                this.hidePostButtonInThread();
-            }
-
             break;
         case 'newreply.php':
             if (!this.settings.forumPostKey) {
@@ -295,7 +308,6 @@ SALR.prototype.updateStyling = function() {
         var seenThread = false;
 
         if (that.settings.displayCustomButtons == 'true') {
-
             // Re-style the new post count link
             jQuery('a.count', thread).each(function() {
 
@@ -314,7 +326,12 @@ SALR.prototype.updateStyling = function() {
                 jQuery(this).css("width", "7px");
                 jQuery(this).css("height", "16px");
                 jQuery(this).css("padding-right", "11px");
-                jQuery(this).css("background-image", "url('" + other.base_image_uri + "lastpost.png')");
+                jQuery(this).css("background", "url('" + other.base_image_uri + "lastpost.png') no-repeat");
+                jQuery(this).css("min-width", "0px");
+                jQuery(this).addClass('no-after');
+
+                jQuery(this).parent().css("box-shadow", "0 0 0px #fff");
+            
 
                 if (that.settings.inlinePostCounts == 'true') {
                     jQuery('div.lastseen', thread).each(function() {          
@@ -351,6 +368,9 @@ SALR.prototype.updateStyling = function() {
                 jQuery(this).css("background-image", "url('" + other.base_image_uri + "unvisit.png')");
                 jQuery(this).css("height", "16px");
                 jQuery(this).css("width", "14px");
+
+                jQuery(this).parent().css("box-shadow", "0 0 0px #fff");
+                jQuery(this).addClass('no-after');
 
                 // Remove the 'X' from the anchor tag
                 jQuery(this).text('');
@@ -2041,36 +2061,30 @@ SALR.prototype.tagPostedThreads = function(result, thread_id) {
 
 
 SALR.prototype.swapRetinaEmotes = function() {
-	$(function() {
-		$.getJSON(chrome.extension.getURL('/images/emoticons/emoticons.json'), function(list) {
-			
-			jQuery('.postbody img').each(function() {
+	var test = jQuery('.postbody img');
+	jQuery('.postbody img').each(function() {
 		
-			var item = $(this);
-	  		if (
-				(item.attr('src').indexOf('i.somethingawful.com/forumsystem/emoticons/') > -1 || 
-				item.attr('src').indexOf('http://fi.somethingawful.com/images/smilies/') > -1) && 
-				item.attr('src').indexOf('@2x') == -1 ) {
-
-					var f = retinaFilename(item);
-				
-					if (list.indexOf(f) > 0) {
-						console.log('swapping in' + f);
-						var height = item.height();
-						var width = item.width();
-						item.attr('src',chrome.extension.getURL('/images/emoticons/'+f))
-							.width(width)
-							.height(height);
-					}
-				
-				}
-			}); //each
-		}); //getjson
-	});//$
+		var item = $(this);
+  		if (
+			(item.attr('src').indexOf('i.somethingawful.com/forumsystem/emoticons/') > -1 || 
+			item.attr('src').indexOf('http://fi.somethingawful.com/images/smilies/') > -1) && 
+		item.attr('src').indexOf('@2x') == -1 ) {
+  			
+  			var height = item.attr('offsetHeight');
+  			var width = item.attr('offsetWidth');
+  			
+  			//console.log('found ' + item.src + '; ' + width + 'x' + height);
+  			
+  			item.attr('height', height);
+  			item.attr('width', width);
+  			
+			doesFileExist(item);
+  		}
+	});
 	
 }
 
-function retinaFilename(img) {
+function doesFileExist(img) {
 	//test if file exists
 	var segments = img.attr('src').split('/');
 	var filename = segments[segments.length - 1];
@@ -2078,13 +2092,15 @@ function retinaFilename(img) {
 	var filenameSegments = filename.split('.');
 	filenameSegments[filenameSegments.length - 2] = filenameSegments[filenameSegments.length-2] + '@2x';
 	
-	var f = filenameSegments.join('.')
-	return f;
+	var retinaFilename = filenameSegments.join('.')
 	
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", chrome.extension.getURL('/images/emoticons/' + retinaFilename), true);
+	xhr.onreadystatechange = function() {
+		if (xhr.status==200) {
+			console.log('swapping ' + filename);
+			img.attr('src',chrome.extension.getURL('/images/emoticons/'+retinaFilename));
+		}
+	};
+	xhr.send();
 }
-
-SALR.prototype.hidePostButtonInThread = function() {
-    jQuery('ul.postbuttons li a[href^="newthread.php"]').hide();
-}
-
-
